@@ -3,7 +3,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">A Minimal Book Example</a></li>
+        <li><a href="./">Spatial Analysis in R</a></li>
       after: |
         <li><a href="https://github.com/paezha/spatial-analysis-R" target="blank">Published with bookdown</a></li>
     edit: https://github.com/paezha/spatial-analysis-R/edit/master/%s

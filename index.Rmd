@@ -1,5 +1,5 @@
 --- 
-title: "Applied Spatial Statistics with `R`"
+title: "An Introduction to Spatial Statistics: A Course in `R`"
 author: "Antonio Paez"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
