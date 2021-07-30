@@ -38,7 +38,7 @@ jobs:
 
       - name: Install packages
         run: |
-          R -e 'install.packages("renv")'
+          R -e 'install.packages("renv", "bookdown")'
           R -e 'renv::restore()'
 
       - name: Build site
