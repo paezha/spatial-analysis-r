@@ -1,5 +1,5 @@
 --- 
-title: "A Minimal Book Example Used as Test"
+title: "Applied Spatial Statistics with `R`"
 author: "Antonio Paez"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
