@@ -51,6 +51,9 @@ jobs:
         run: |
           R -e 'install.packages("renv")'
           R -e 'install.packages("bookdown")'
+          R -e 'install.packages("sf")'
+          R -e 'install.packages("tidyverse")'
+          R -e 'remotes::install_github("paezha/Spatial-Statistics-Course", subdir = "geog4ga3")'
           R -e 'renv::restore()'
 
       - name: Build site
