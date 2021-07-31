@@ -6,4 +6,5 @@ You can find the preview of this example at https://bookdown.org/yihui/bookdown-
 
 <!-- badges: start -->
   [![R-CMD-check](https://github.com/paezha/spatial-analysis-R/workflows/R-CMD-check/badge.svg)](https://github.com/paezha/spatial-analysis-R/actions)
-  <!-- badges: end -->
+  [![Netlify Status](https://api.netlify.com/api/v1/badges/2867ef30-f33c-4043-9940-fac934c27341/deploy-status)](https://app.netlify.com/sites/spatial-analysis-r/deploys)
+<!-- badges: end -->

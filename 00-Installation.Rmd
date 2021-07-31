@@ -20,7 +20,7 @@ Modeling is a process that further extracts information from the data, typically
 All of the tasks mentioned above, and many more, can be handled easily in a variety of software applications. For this course, you will use the statistical computing language `R`. 
 
 ```{r data-analysis-process, fig.cap= "\\label{fig:data-analysis-process} The process of doing data analysis (from Wickham and Grolemund, 2016)", echo=FALSE}
-knitr::include_graphics(rep("00-Figure-1.png"))
+knitr::include_graphics(rep("figures/00-Figure-1.png"))
 ```
 
 ## Learning Objectives
@@ -60,7 +60,7 @@ Before introducing some basic functionality in `R`, lets quickly take a tour of 
 The RStudio IDE provides a very complete interface to interact with the language `R`, and do much more in addition. It consists of a window with several panes. Some panes include, in addition, several tabs. There are the usual drop-down menus for common operations, such as creating new files, saving, common commands for editing, etc. See Figure \@ref(fig:RStudio-IDE) below.
 
 ```{r RStudio-IDE, fig.cap= "\\label{fig:RStudio-IDE}The RStudio IDE", echo=FALSE}
-knitr::include_graphics(rep("00-Figure-2.png"))
+knitr::include_graphics(rep("figures/00-Figure-2.png"))
 ```
 
 The editor pane allows you to open and work with text and other files, where you can write instructions that can be passed on to the program. Writing something in the editor does not execute any instructions, it merely records them for possible future use. In fact, much of what is written in the editor will not be instructions, but rather comments, discussion, and other text that is useful to understand code.
@@ -100,9 +100,9 @@ This analogy suggests that I can have many packages in my library, only some of 
 library(devtools)
 ```
 
-This allows you to use all the functions in the package `devtools`. In particular, at this point you want to use a function that allows you to retrieve other packages! With the functionality of `devtools::install_github` you can download and install the companion package for the book by running the following instruction:
+This allows you to use all the functions in the package `remotes`. In particular, at this point you want to use a function that allows you to retrieve other packages! With the functionality of `remotes::install_github` you can download and install the companion package for the book by running the following instruction:
 ```{r eval=FALSE}
-devtools::install_github("paezha/Spatial-Statistics-Course", subdir="geog4ga3")
+remotes::install_github("paezha/geog4ga3")
 ```
 
 This will install the package (i.e., put it in your library) so that you can also benefit from its functionality.
