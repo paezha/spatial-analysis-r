@@ -6,7 +6,9 @@ bookdown::gitbook:
         <li><a href="./">Spatial Analysis in R</a></li>
       after: |
         <li><a href="https://github.com/paezha/spatial-analysis-R" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/paezha/spatial-analysis-R/edit/master/%s
+    edit:
+      link: https://github.com/paezha/spatial-analysis-R/edit/master/%s
+      text: "Edit"
     download: ["pdf", "epub"]
 bookdown::pdf_book:
   includes:
