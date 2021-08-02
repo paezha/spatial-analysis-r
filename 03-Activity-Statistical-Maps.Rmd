@@ -1,0 +1,108 @@
+---
+title: "Activity 1: Statistical Maps I"
+output: html_notebook
+---
+
+# Activity 1: Statistical Maps I
+
+Remember, you can download the source file for this activity from [here](https://github.com/paezha/Spatial-Statistics-Course).
+
+## Housekeeping Questions
+
+Answer the following questions:
+
+1. What are the office hours of your instructor this term?
+
+2. How are assignments graded?
+
+3. What is the policy for late assignments in this course?
+
+## Learning Objectives
+
+In this activity you will:
+
+1. Discuss statistical maps and what makes them interesting.
+
+## Preliminaries
+
+In the practice that preceded this activity, you used `ggmap` to create a proportional symbol map, a mapping technique used in spatial statistics for visualization of geocoded event information. As well, you implemented a simple technique called kernel analysis to the map to explore the distribution of events in the case of the cholera outbreak of Soho in London in 1854. Geocoded events are often called _point patterns_, so with the cholera data you were working with a point pattern.
+
+In this activity, we will map another type of spatial data, called _areal data_. Areas are often administrative or political jurisdictions.
+
+For this activity you will need the following:
+
+* An R markdown notebook version of this document (the source file).
+
+* A package called `geog4ga3`.
+
+It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+```{r}
+rm(list = ls())
+```
+
+Note that `ls()` lists all objects currently on the workspace.
+
+Load the libraries you will use in this activity:
+```{r message=FALSE}
+library(tidyverse)
+library(sf)
+library(geog4ga3)
+```
+
+## Creating a simple thematic map
+
+If you successfully loaded package `geog4ga3` a dataset called `HamiltonDAs` should be available for analysis:
+```{r}
+data(HamiltonDAs)
+```
+
+Check the class of this object:
+```{r}
+class(HamiltonDAs)
+```
+
+As you can see, this is an object of class `sf`, which stands for _simple features_. Objects of this class are used in the R package `sf` (see [here](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html)) to implement standards for [spatial objects](https://en.wikipedia.org/wiki/Simple_Features).
+
+You can examine the contents of the dataset by means of `head` (which will show the top rows):
+```{r}
+head(HamiltonDAs)
+```
+
+Or obtain the summary statistics by means of `summary`:
+```{r}
+summary(HamiltonDAs)
+```
+
+The above will include a column for the geometry of the spatial features.
+
+The dataframe includes all _Dissemination Areas_ (or DAs for short) for the Hamilton Census Metropolitan Area in Canada. DAs are a type of geography used by the Census of Canada, in fact the smallest geography that is publicly available.
+
+To create a simple map we can use `ggplot2`, which previously we used to map points. Now, the geom for objects of class `sf` can be used to plot areas. To create such a map, we layer a geom object of type `sf` on a `ggplot2` object. For instance, to plot the DAs:
+```{r}
+#head(HamiltonDAs)
+ggplot(HamiltonDAs) + 
+  geom_sf(fill = "gray", color = "black", alpha = .3, size = .3)
+```
+
+We selected color "black" for the polygons, with a transparency alpha = 0.3 (alpha = 0 is completely transparent, alpha = 1 is completely opaque, try it!), and line size 0.3.
+
+This map only shows the DAs, which is nice. However, as you saw in the summary of the dataframe above, in addition to the geometric information, a set of (generic) variables is also included, called VAR1, VAR2,..., VAR5.
+
+Thematic maps can be created using these variables. The next chunk of code plots the DAs and adds info. The `fill` argument is used to select a variable to color the polygons. The function `cut_number` is used to classify the values of the variable in $k$ groups of equal size, in this case 5 (notice that the lines of the polygons are still black). The `scale_fill_brewer` function can be used to select different _palettes_ or coloring schemes):
+```{r}
+ggplot(HamiltonDAs) +
+  geom_sf(aes(fill = cut_number(HamiltonDAs$VAR1, 5)), color = "black", alpha = 1, size = .3) +
+  scale_fill_brewer(palette = "Reds") +
+  coord_sf() +
+  labs(fill = "Variable")
+```
+
+Now you have seen how to create a thematic map with polygons (areal data), you are ready for the following activity.
+
+## Activity
+
+**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).
+
+1. (*)Create thematic maps for variables VAR1 through VAR5 in the dataframe `HamiltonDAs`. Remember that you can introduce new chunks of code.
+
+2. Imagine that these maps were found, and for some reason the variables were not labeled. They may represent income, or population density, or something else. Which of the five maps you just created is more interesting? Rank the five maps from most to least interesting. Explain the reasons for your ranking.
