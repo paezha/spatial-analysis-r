@@ -59,7 +59,7 @@ jobs:
           R -e 'install.packages("sf")'
           R -e 'install.packages("spatstat")'
           R -e 'install.packages("tidyverse")'
-          R -e 'remotes::install.packages("vcdExtra")'
+          R -e 'install.packages("vcdExtra")'
           R -e 'renv::restore()'
 
       - name: Build site
