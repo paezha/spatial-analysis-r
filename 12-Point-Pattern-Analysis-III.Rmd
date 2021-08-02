@@ -50,9 +50,9 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r message=FALSE, warning=FALSE}
-library(tidyverse)
-library(spatstat)
 library(geog4ga3)
+library(spatstat)
+library(tidyverse)
 ```
 
 Load the dataset that you will use for this practice:

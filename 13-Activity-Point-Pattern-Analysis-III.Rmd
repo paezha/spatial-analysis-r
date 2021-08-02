@@ -46,11 +46,11 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `spatstat`, a package designed for the analysis of point patterns (you can learn about `spatstat` [here](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) and [here](http://spatstat.org/resources/spatstatJSSpaper.pdf)):
 ```{r message=FALSE, warning=FALSE}
-library(tidyverse)
-library(spatstat)
-library(maptools) # Needed to convert `SpatialPolygons` into `owin` object
-library(sf)
 library(geog4ga3)
+library(maptools) # Needed to convert `SpatialPolygons` into `owin` object
+library(tidyverse)
+library(sf)
+library(spatstat)
 ```
 
 In the practice that preceded this activity, you learned about the concepts of intensity and density, about quadrats, and also how to create density maps. For this practice, you will use the data that you first encountered in Activity 4, that is, the business locations in Toronto.

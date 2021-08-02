@@ -46,11 +46,11 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `spatstat`, a package designed for the analysis of point patterns (you can learn about `spatstat` [here](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) and [here](http://spatstat.org/resources/spatstatJSSpaper.pdf)):
 ```{r message=FALSE, warning=FALSE}
-library(tidyverse)
-library(spatstat)
+library(geog4ga3)
 library(maptools) # Needed to convert `SpatialPolygons` into `owin`-class object
 library(sf)
-library(geog4ga3)
+library(spatstat)
+library(tidyverse)
 ```
 
 For this activity, you will use the same datasets that you used in Activity 6, including the geospatial files for Toronto's city boundary:
