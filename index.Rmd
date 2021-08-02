@@ -12,10 +12,6 @@ github-repo: paezha/spatial-analysis-R
 description: "This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad, and Alexis Polidoro."
 ---
 
-```{r cover, echo=FALSE, out.width="50%"}
-knitr::include_graphics(rep("images/cover.png"))
-```
-
 <!--
 NOTE: echo=is_html does not work
 
@@ -29,11 +25,16 @@ The online version of the book is hosted at [geocompr.robinlovelace.net](https:/
 [![Actions](https://github.com/Robinlovelace/geocompr/workflows/Render-Book-from-master/badge.svg)](https://github.com/Robinlovelace/geocompr/actions)
 -->
 
+<!--
 # An Introduction to Spatial Data Analysis and Statistics: A Course in `R` {-}
 
 ## Antonio Paez {-}
+-->
+# Antonio Paez {-}
 
----
+```{r cover, echo=FALSE, out.width="100%"}
+knitr::include_graphics(rep("images/cover.png"))
+```
 
 ## Preface {-}
 
