@@ -50,6 +50,7 @@ jobs:
       - name: Install packages
         run: |
           R -e 'install.packages("bookdown")'
+          R -e 'remotes::install_github("paezha/geog4ga3")'
           R -e 'install.packages("leaflet")'
           R -e 'install.packages("leaflet.extras")'
           R -e 'install.packages("maptools")'
@@ -58,7 +59,7 @@ jobs:
           R -e 'install.packages("sf")'
           R -e 'install.packages("spatstat")'
           R -e 'install.packages("tidyverse")'
-          R -e 'remotes::install_github("paezha/geog4ga3")'
+          R -e 'remotes::install.packages("vcdExtra")'
           R -e 'renv::restore()'
 
       - name: Build site
