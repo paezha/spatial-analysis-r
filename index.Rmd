@@ -1,5 +1,5 @@
 --- 
-title: ""
+title: "An Introduction to Spatial Data Analysis and Statistics: A Course in `R`"
 author: ""
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -12,11 +12,14 @@ github-repo: paezha/spatial-analysis-R
 description: "This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad, and Alexis Polidoro."
 ---
 
-```{asis index-cover, echo=is_html}
-<a href="https://www.spatial-analysis-r.org"><img src="images/cover.png" width="250" height="375" alt="The book cover" align="center" style="margin: 0 1em 0 1em" /></a>
-```
-                                                                                                                                     
+![]("images/cover.png")
+
 <!--
+NOTE: echo=is_html does not work
+
+{asis index-cover, echo=is_html}
+<a href="https://www.spatial-analysis-r.org"><img src="images/cover.png" width="250" height="375" alt="The book cover" align="center" style="margin: 0 1em 0 1em" /></a>
+
 Inspired by [**bookdown**](https://github.com/rstudio/bookdown) and the Free and Open Source Software for Geospatial ([FOSS4G](http://foss4g.org/)) movement, this book is open source.
 This ensures its contents are reproducible and publicly accessible for people worldwide.
 The online version of the book is hosted at [geocompr.robinlovelace.net](https://geocompr.robinlovelace.net) and kept up-to-date by [GitHub 
