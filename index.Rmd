@@ -12,7 +12,9 @@ github-repo: paezha/spatial-analysis-R
 description: "This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad, and Alexis Polidoro."
 ---
 
-![](images/cover.png)
+```{r cover, echo=FALSE, out.width="50%"}
+knitr::include_graphics(rep("images/cover.png"))
+```
 
 <!--
 NOTE: echo=is_html does not work
