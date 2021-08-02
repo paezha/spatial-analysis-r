@@ -1,6 +1,6 @@
 --- 
-title: "An Introduction to Spatial Statistics: A Course in `R`"
-author: "Antonio Paez"
+title: ""
+author: ""
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
@@ -12,7 +12,11 @@ github-repo: paezha/spatial-analysis-R
 description: "This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad, and Alexis Polidoro."
 ---
 
-# An Introduction to Spatial Statistics: A Course in `R`
+# An Introduction to Spatial Data Analysis and Statistics: A Course in `R` {-}
+
+## Antonio Paez
+
+---
 
 ## Preface {-}
 
