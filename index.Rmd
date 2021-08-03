@@ -33,7 +33,7 @@ The online version of the book is hosted at [geocompr.robinlovelace.net](https:/
 # Antonio Paez {-}
 
 ```{r cover, echo=FALSE, out.width="100%"}
-knitr::include_graphics(rep("images/cover.png"))
+knitr::include_graphics(rep("images/cover.jpg"))
 ```
 
 ## Preface {-}
