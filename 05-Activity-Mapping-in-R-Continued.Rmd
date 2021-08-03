@@ -1,8 +1,3 @@
----
-title: "Activity 2: Statistical Maps II"
-output: html_notebook
----
-
 # Activity 2: Statistical Maps II
 
 Remember, you can download the source file for this activity from [here](https://github.com/paezha/Spatial-Statistics-Course).
