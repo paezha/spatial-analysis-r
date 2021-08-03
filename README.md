@@ -14,7 +14,7 @@ Status](https://api.netlify.com/api/v1/badges/2867ef30-f33c-4043-9940-fac934c273
 
 This repository hosts the code underlying the book *An Introduction to
 Spatial Data Analysis and Statistics: A Course in R*, by [Antonio
-Paez](https://www.spatial-analysis-R.org/):
+Paez](https://www.science.mcmaster.ca/ees/component/comprofiler/userprofile/paezha.html):
 
 > Paez A (2021). An Introduction to Spatial Data Analysis and
 > Statistics: A Course in R. (Add bibliographical info). The online

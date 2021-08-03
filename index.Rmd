@@ -118,11 +118,11 @@ The notes were designed for a course in geography, but in fact, could be easily 
 
 ## Requisites {-}
 
-To fully benefit from this text, up-to-date copies of [R](https://cran.r-project.org/) and [RStudio](https://www.rstudio.com/) are highly recommended. Many examples in the text use datasets that have been packaged for convenience as an `R` package. To install the package (`geog4ga3`) use the following command(which requires [**devtools**](https://github.com/hadley/devtools)):
+To fully benefit from this text, up-to-date copies of [R](https://cran.r-project.org/) and [RStudio](https://www.rstudio.com/) are highly recommended. Many examples in the text use datasets that have been packaged for convenience as an `R` package. To install the package (`geog4ga3`) use the following command(which requires [**remotes**](https://CRAN.R-project.org/package=remotes)):
 
 ```{r, message=FALSE, eval=FALSE}
-library(devtools)
-devtools::install_github("paezha/geog4ga3")
+library(remotes)
+remotes::install_github("paezha/geog4ga3")
 ```
 
 The source files for the chapters and activities can be obtained from the following GitHub repository:
