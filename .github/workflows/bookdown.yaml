@@ -70,6 +70,7 @@ jobs:
           R -e 'install.packages("readr")'
           R -e 'install.packages("remotes")'
           R -e 'install.packages("renv")'
+          R -e 'install.packages("rgdal")'
           R -e 'install.packages("patchwork")'
           R -e 'install.packages("sf")'
           R -e 'install.packages("spatialreg")'
