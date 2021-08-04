@@ -37,7 +37,7 @@ rm(list = ls())
 Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
-```{r message=FALSE, warning=FALSE}
+```{r ch29-load-packages, message=FALSE, warning=FALSE}
 #library(knitr)
 library(geog4ga3)
 library(kableExtra)

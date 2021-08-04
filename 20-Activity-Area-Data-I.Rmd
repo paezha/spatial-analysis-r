@@ -41,7 +41,7 @@ Note that `ls()` lists all objects currently on the workspace.
 Load the libraries you will use in this activity. 
 
 In addition to `tidyverse`, you will need `sf`, a package that implements simple features in R (you can learn more about this package [here](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html)):
-```{r message=FALSE, warning=FALSE}
+```{r ch20-load-packages, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(sf)
 library(cartogram)

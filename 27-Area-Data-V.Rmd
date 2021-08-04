@@ -34,12 +34,12 @@ rm(list = ls())
 Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
-```{r message=FALSE, warning=FALSE}
+```{r ch27-load-packages, message=FALSE, warning=FALSE}
 library(ggmap)
 library(geog4ga3)
 library(geosphere)
-library(sf)
 library(plotly)
+library(sf)
 library(tidyverse)
 library(spdep)
 ```

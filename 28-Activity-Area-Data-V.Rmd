@@ -39,7 +39,7 @@ rm(list = ls())
 Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `sf` and `geog4ga3`:
-```{r message = FALSE, warning=FALSE}
+```{r ch28-load-packages, message = FALSE, warning=FALSE}
 library(geog4ga3)
 library(tidyverse)
 library(sf)

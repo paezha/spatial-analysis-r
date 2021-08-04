@@ -36,7 +36,7 @@ rm(list = ls())
 Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity (load other packages as appropriate). 
-```{r message = FALSE, warning=FALSE}
+```{r ch30-load-packages, message = FALSE, warning=FALSE}
 library(geog4ga3)
 library(sf)
 library(spatstat)

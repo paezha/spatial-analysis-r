@@ -41,7 +41,7 @@ Note that `ls()` lists all objects currently on the workspace.
 Load the libraries you will use in this activity. 
 
 In addition to `tidyverse`, you will need `sf`, a package that implements simple features in R (you can learn about `sf` [here](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html)) and `spdep`, a package that implements several spatial statistical methods (you can learn more about it [here](https://cran.r-project.org/web/packages/spdep/index.html)):
-```{r message=FALSE, warning=FALSE}
+```{r ch26-load-packages, message=FALSE, warning=FALSE}
 library(geog4ga3)
 library(sf)
 library(spdep)
@@ -116,12 +116,14 @@ Create spatial weights.
 
 1) By contiguity:
 ```{r}
-Hamilton_CT.w <- nb2listw(poly2nb(pl = Hamilton_CT.sp))
+Hamilton_CT.w <- nb2listw(poly2nb(pl = Hamilton_CT))
 ```
 
 2) Binary, by distance (3 km threshold) _including self_.
 ```{r}
-Hamilton_CT.3knb <- Hamilton_CT.sp %>% coordinates() %>% dnearneigh(d1 = 0, d2 = 3)
+Hamilton_CT.3knb <- Hamilton_CT %>% 
+  st_centroid() %>%
+  dnearneigh(d1 = 0, d2 = 3)
 Hamilton_CT.3kw <- nb2listw(include.self(Hamilton_CT.3knb), style = "B")
 ```
 
