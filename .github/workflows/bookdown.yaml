@@ -49,13 +49,13 @@ jobs:
 
       - name: Install packages
       # The order of running the packages matters. For instance, placing `remotes` after `install_github` will lead to an error
+      #   R -e 'install.packages("deldir")'
         run: |
 
           R -e 'install.packages("bookdown")'
           R -e 'install.packages("cartogram")'
           R -e 'install.packages("crosstalk")'
           R -e 'install.packages("curl")'
-          R -e 'install.packages("deldir")'
           R -e 'install.packages("geosphere")
           R -e 'install.packages("ggmap")
           R -e 'install.packages("gh")'
