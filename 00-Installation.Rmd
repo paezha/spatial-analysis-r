@@ -81,7 +81,7 @@ There are other ways of distributing packages. For instance, throughout this boo
 
 To download and install the package `geog4ga3`, you need first to download and install `devtools` as follows:
 ```{r eval=FALSE}
-install.packages("devtools")
+install.packages("remotes")
 ```
 
 Once that a package has been downloaded and installed, it needs to be loaded into a session to be available to use. I find it useful to think of packages that I download as "books" that I place in my personal "bookshelf". Some "books" I obtain from the central library (i.e., CRAN), while others are shared by friends, and some I have even written myself. Once that the "books" are in my "bookshelf" they are part of my own personal _library_. This means that they are available for use. Next time I want to use a "book" from my library, I need to retrieve it from the bookshelf. This is similar to taking the book and opening it on my desk: now all the magic contained in the package is available for use!
@@ -90,7 +90,7 @@ Similarly, once that the book is in my library, I do not need to retrieve it aga
 
 This analogy suggests that I can have many packages in my library, only some of which I may need at any specific time for a task. To retrieve a package (i.e., a book) from the library, so that we can use it, the function `library` is invoked as in this example:
 ```{r eval=FALSE}
-library(devtools)
+library(remotes)
 ```
 
 This allows you to use all the functions in the package `remotes`. In particular, at this point you want to use a function that allows you to retrieve other packages! With the functionality of `remotes::install_github` you can download and install the companion package for the book by running the following instruction:

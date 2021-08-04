@@ -1,6 +1,6 @@
 --- 
 title: "An Introduction to Spatial Data Analysis and Statistics: A Course in `R`"
-author: ""
+author: "Antonio Paez"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
@@ -30,11 +30,12 @@ The online version of the book is hosted at [geocompr.robinlovelace.net](https:/
 
 ## Antonio Paez {-}
 -->
-# Antonio Paez {-}
 
 ```{r cover, echo=FALSE, out.width="100%"}
 knitr::include_graphics(rep("images/cover.jpg"))
 ```
+
+ISBN: 978-1-7778515-0-7
 
 ## Preface {-}
 
