@@ -27,10 +27,6 @@ The online version of the book is hosted at [geocompr.robinlovelace.net](https:/
 [![Actions](https://github.com/Robinlovelace/geocompr/workflows/Render-Book-from-master/badge.svg)](https://github.com/Robinlovelace/geocompr/actions)
 -->
 
-```{asis, echo=!knitr::is_latex_output()}
-<p style="text-align: center;"><a href="https://www.spatial-analysis-r.org"><img src="images/cover.jpg" alt="Book cover" /></a></p>
-```
-
 <!--
 # An Introduction to Spatial Data Analysis and Statistics: A Course in `R` {-}
 
@@ -40,7 +36,7 @@ The online version of the book is hosted at [geocompr.robinlovelace.net](https:/
 # {-}
 
 ```{r cover, echo=FALSE, out.width="100%"}
-#knitr::include_graphics(rep("images/cover.jpg"))
+knitr::include_graphics(rep("images/cover.jpg"))
 ```
 
 ISBN: 978-1-7778515-0-7
