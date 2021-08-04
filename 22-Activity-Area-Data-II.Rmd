@@ -13,11 +13,11 @@ Answer the following questions:
 4. Write the spatial weights matrices for the sample systems in Figures \@ref{fig:simple-areal-system-i} and \@ref{fig:simple-areal-system-ii}. Explain the criteria used to do so.
 
 ```{r simple-areal-system-i, fig.cap= "\\label{fig:simple-areal-system-i}Sample areal system 1", echo=FALSE}
-knitr::include_graphics(rep("22-Figure-1.jpg"))
+knitr::include_graphics(rep("figures/22-Figure-1.jpg"))
 ```
 
 ```{r simple-areal-system-ii, fig.cap= "\\label{fig:simple-areal-system-ii}Sample areal system 2", echo=FALSE}
-knitr::include_graphics(rep("22-Figure-2.jpg"))
+knitr::include_graphics(rep("figures/22-Figure-2.jpg"))
 ```
 
 ## Learning objectives

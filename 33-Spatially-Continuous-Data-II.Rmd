@@ -401,7 +401,7 @@ Accuracy refers to how close the predicted values $\hat{z}_p$ are to the true va
 An example of these two properties is as shown in Figure \@ref{fig:accuracy-precision}.
 
 ```{r accuracy-and-precision, fig.cap= "\\label{fig:accuracy-precision}Accuracy and precision", echo=FALSE}
-knitr::include_graphics(rep("33-Figure-1.jpg"))
+knitr::include_graphics(rep("figures/33-Figure-1.jpg"))
 ```
 
 Panel a) in the figure represents a set of accurate points, since they are on average close to the mark. However, they are imprecise, given their variability. This is akin to a good point estimate that has wide confidence intervals.

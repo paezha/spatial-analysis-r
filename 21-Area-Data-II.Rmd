@@ -64,7 +64,7 @@ In the case of area data, spatial proximity can be represented in more ways, giv
 Consider the simple zonal system shown in Figure \@ref{fig:simple-zoning-system}. Which of zones $A_2$, $A_3$, and $A_4$ is closer (or more _proximate_) to $A_1$?
 
 ```{r simple-zoning-system, fig.cap= "\\label{fig:simple-zoning-system}Simple zoning system", echo=FALSE}
-knitr::include_graphics(rep("21-Figure-1.jpg"))
+knitr::include_graphics(rep("figures/21-Figure-1.jpg"))
 ```
 
 We can devise a way of establishing proximity between areas as follows: if points are selected in such a way that they are on the overlapping edges of two contiguous areas, the distance between these two areas clearly is zero, and they must be proximate.
