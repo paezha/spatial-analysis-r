@@ -232,7 +232,7 @@ Further, if we assume that the variance of $z$ is constant, and the correlation 
 
 Consider the (regular) arrangement of observations spaced at $h$ in Figure \@ref{fig:autocovariance}. Each observation generally has four neighbors, with the exception of those in the edges, which have fewer neighbors at spatial lag $h$. This means that most observations will contribute four points to the scatterplot ($z_i$ and $z_j$, $z_k$, $z_l$, and $z_m$), and others will contribute three or at least two (those in the corners).
 
-```{r autocovariance fig.cap= "\\label{fig:autocovariance}Finding spatial pairs for the calculation of the autocovariance", echo=FALSE}
+```{r autocovariance, fig.cap= "\\label{fig:autocovariance}Finding spatial pairs for the calculation of the autocovariance", echo=FALSE}
 knitr::include_graphics(rep("35-Figure-2.jpg"))
 ```
 
@@ -322,7 +322,7 @@ vgm() #this function generates a variogram mode. Here, we are able to view the l
 
 The anatomy of a semivariogram includes a range, a sill, and possibly a nugget. These elements are shown in Figure \@ref{fig:semivariogram}.
 
-```{r anatomy-semivariogram fig.cap= "\\label{fig:semivarigoram}Anatomy of a semivariogram", echo=FALSE}
+```{r anatomy-semivariogram, fig.cap= "\\label{fig:semivarigoram}Anatomy of a semivariogram", echo=FALSE}
 knitr::include_graphics(rep("35-Figure-2.jpg"))
 ```
 
