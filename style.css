@@ -12,3 +12,37 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+.infobox {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  background: lightgray 5px center/3em no-repeat;
+  border: 2px solid orange;
+  border-radius: 10px;
+}
+.caution {
+  background-image: url("../images/caution.png");
+}
+.important {
+  background-image: url("../images/important.png");
+}
+.note {
+  background-image: url("../images/note.png");
+}
+.tip {
+  background-image: url("../images/tip.png");
+}
+.warning {
+  background-image: url("../images/warning.png");
+}
+
+
+.level1 h1 {
+  border-bottom: 1px solid;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+h1.title {
+  font-weight: 700;
+}
