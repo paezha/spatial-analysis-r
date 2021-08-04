@@ -319,15 +319,15 @@ Check the `ggplot2` [Cheat Sheet](https://www.rstudio.com/wp-content/uploads/201
 A last note. Many other visualization alternatives (for instance, Excel) provide point-and-click functions for creating plots. In contrast, `ggplot2` in `R` requires that the plot be created by meticulously instructing the package what to do. While this is more laborious, it also means that you have complete control over the creation of plots, which in turn allows you to create more flexible and inventive visuals. Below are some of figures that I have created using `R` in recent years, including diagrams, thematic maps, and raster data.
 
 ```{r visualization-example-1, fig.cap= "\\label{fig:visualization-example-1} Example of visualization: diagram of catchment areas for accessibility analysis (from [Paez, Higgins, and Vivona (2018)](https://doi.org/10.1371/journal.pone.0218773))", echo=FALSE}
-knitr::include_graphics(rep("figures/01-Figure-1.png"))
+knitr::include_graphics(rep("figures/02-Figure-1.png"))
 ```
 
 ```{r visualization-example-2, fig.cap= "\\label{fig:visualization-example-2} Example of visualization: accessibility to family doctors in Hamilton (from [Paez, Higgins, and Vivona (2018)](https://doi.org/10.1371/journal.pone.0218773))", echo=FALSE}
-knitr::include_graphics(rep("figures/01-Figure-2.png"))
+knitr::include_graphics(rep("figures/02-Figure-2.png"))
 ```
 
 ```{r visualization-example-3, fig.cap= "\\label{fig:visualization-example-3} Example of visualization: water sources (triangles) and households (circles) in a region in central Kenya (from [Paez et al. (2020)](https://doi.org/10.1016/j.jtrangeo.2019.102564))", echo=FALSE}
-knitr::include_graphics(rep("figures/01-Figure-3.png"))
+knitr::include_graphics(rep("figures/02-Figure-3.png"))
 ```
 
 This concludes your basic overview of basic operations and data structures in R. You will have an opportunity to learn more about creating maps in R with your reading.

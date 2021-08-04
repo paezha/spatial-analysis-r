@@ -331,7 +331,7 @@ When this is the case, it is necessary to define a boundary that does not corres
 Consider the situation illustrated in Figure \@ref(fig:edge-effects).
 
 ```{r edge-effects, fig.cap= "\\label{fig:edge-effects}Edge effects", echo=FALSE}
-knitr::include_graphics(rep("figures/16-Figure-1.jpg"))
+knitr::include_graphics(rep("figures/17-Figure-1.jpg"))
 ```
 
 In the figure, the region is the rectangular window. Events are observed only inside the window, but events still exist beyond the edges of the window. It is straightforward to see how the empty space ($\hat{F}$-) function would be biased, since locations near the edge would appear the be more distant from an event than they actually are.
@@ -353,7 +353,7 @@ Whereas edge effects can introduce bias by censoring the observations outside of
 We have assumed so far that any point pattern under analysis consists of a _census_ of events, or in other words, that all relevant events have been recorded. A _sampled_ point pattern, on the other hand, is a pattern where not all events have been recorded (see Figure \@ref(fig:sampled-pattern)).
 
 ```{r sampled-pattern, fig.cap= "\\label{fig:sampled-pattern}Sampled point pattern", echo=FALSE}
-knitr::include_graphics(rep("figures/16-Figure-2.jpg"))
+knitr::include_graphics(rep("figures/17-Figure-2.jpg"))
 ```
 
 The bias introduced by sampled point patterns can be extremely serious, because the findings depend heavily of the observations that were recorded as well as those that were not recorded! Clustered events could easily give the impression of a dispersed pattern, depending on what was observed. Imagine for instance that the events are nests of birds. If the birds tend to nest in the thickest parts of the forest that observers cannot easily access, the "observed" pattern will depend crucially on the trails and other routes of access that the researcher can use.

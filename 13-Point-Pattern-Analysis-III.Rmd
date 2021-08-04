@@ -114,7 +114,7 @@ Let us begin by introducing the concept of a nearest neighbor.
 The nearest neighbor of a location is the event that is closest to said location given some metric. This metric is usually Euclidean distance on the plane, that is, distance as measured using a straight line between the location and the event. In principle, the metric can be selected according to the characteristics of a dataset: this could be Euclidean distance, great circle distance, or network distance, for events on networks.(see Figure \@ref(fig:distance-metrics)).
 
 ```{r distance-metrics, fig.cap= "\\label{fig:distance-metrics}Examples of distance metrics", echo=FALSE}
-knitr::include_graphics(rep("figures/12-Figure-1.png"))
+knitr::include_graphics(rep("figures/13-Figure-1.png"))
 ```
 
 In this way, the nearest neighbor of $i$ is the event $j$ with the shortest distance $d$ from location $i$:

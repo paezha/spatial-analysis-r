@@ -1,0 +1,516 @@
+# Area Data VI
+
+*NOTE*: You can download the source files for this book from [here](https://github.com/paezha/Spatial-Statistics-Course). The source files are in the format of R Notebooks. Notebooks are pretty neat, because the allow you execute code within the notebook, so that you can work interactively with the notes. 
+
+If you wish to work interactively with this chapter you will need the following:
+
+* An R markdown notebook version of this document (the source file).
+
+* A package called `geog4ga3`.
+
+## Learning Objectives
+
+In the previous chapter, you practiced how to estimate linear regression models in `R`, learned about the use of Moran's $I$ as a diagnostic tool for regression residuals, and learned how the use local spatial statistics to support model-building. In this practice, you will:
+
+1. Revisit the notion of autocorrelation as a model diagnostic.
+2. Remedial action when the residuals are autocorrelated.
+3. Flexible functional forms and models with spatially-varying coefficients.
+   3.1 Trend surface analysis.
+   3.2 The expansion method.
+   3.3 Geographically weighted regression (GWR).
+4. Spatial error model (SEM).
+
+## Suggested Readings
+
+- Bailey TC and Gatrell AC [-@Bailey1995] Interactive Spatial Data Analysis, Chapter 7. Longman: Essex.
+- Bivand RS, Pebesma E, and Gomez-Rubio V [-@Bivand2008] Applied Spatial Data Analysis with R, Chapter 9. Springer: New York.
+- Brunsdon C and Comber L [-@Brunsdon2015R] An Introduction to R for Spatial Analysis and Mapping, Chapter 7. Sage: Los Angeles.
+- O'Sullivan D and Unwin D [-@Osullivan2010] Geographic Information Analysis, 2nd Edition, Chapter 7. John Wiley & Sons: New Jersey.
+
+## Preliminaries
+
+As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+```{r}
+rm(list = ls())
+```
+
+Note that `ls()` lists all objects currently on the workspace.
+
+Load the libraries you will use in this activity:
+```{r message=FALSE, warning=FALSE}
+#library(knitr)
+library(geog4ga3)
+library(kableExtra)
+library(plotly)
+library(sf)
+library(spatialreg)
+library(spdep)
+library(spgwr)
+library(tidyverse)
+```
+
+Begin by loading the data needed for this chapter:
+```{r}
+data("HamiltonDAs")
+```
+
+This is a simple features `sf` object with the the Dissemination Areas in the Hamilton Census Metropolitan Area, in Canada, and it includes five simulated variables.
+
+## Residual spatial autocorrelation revisited
+
+A key assumption about the residuals of a regression model is that they are random, which means that they cannot have residual systematic pattern. Previously you learned about the use of Moran's $I$ coefficient as a diagnostic in regression analysis. The residuals of a model can be mapped and examined for pattern, and Moran's $I$ used to test the hypothesis that they are spatially random. When we reject the null hypothesis and conclude that the residuals are _not_ random, this is a symptom of a model that has not been properly specified. 
+
+Here, we will focus on two reasons for this that are of interest:
+
+1) The functional form is incorrect.
+2) The model failed to include relevant variables.
+
+We will explore these in turn.
+
+### Incorrect Functional Form
+
+As we say in the preceding chapter, linear regression means that the parameters of the model are linear. However, life is not always linear, and an incorrect functional form can lead to residual spatial autocorrelation [@McMillen2003spatial]. To illustrate this, we will consider a spatial process as follows:
+$$
+z = f(u,v) = exp(\beta_0)exp(\beta_1u)exp(\beta_2v)
+$$
+
+\noindent where $u$ and $v$ are spatial coordinates. This is a non-linear spatial process, since the relationship between the coefficients and the outcome is not linear. We can simulate this process if we use the spatial coordinates of the dissemination areas in our example. The simulation is as follows, with a residual term with a mean of zero and standard deviation of 1. Notice that **the residuals are random by design**:
+```{r}
+# The function `set.seed()` is used to fix the seed for the random number generator. This ensures that the simulation is replicable.
+set.seed(10)
+
+# Set the coefficients of the model for the simulations.
+b0 = 1
+b1 = 2
+b2 = 4
+
+# Retrieve the coordinates of the centroids of the dissemination areas.
+uv_coords <- st_coordinates(st_centroid(HamiltonDAs))
+
+# Add the coordinates of the centroids to the dataframe, but first transform them so that they have a false origin at the minimum values of u and v, and scaled by 100000. Simulate variable z using the coefficients defined above, the transformed coordinates, and add a random component with a mean of zero and standard deviation of one.
+HamiltonDAs <- HamiltonDAs %>%
+  mutate(u = (uv_coords[,1] - min(uv_coords[,1]))/100000,
+         v = (uv_coords[,2] - min(uv_coords[,2]))/100000,
+         z = exp(b0) * exp(b1 * u) * exp(b2 * v) +
+           rnorm(n = 297, mean = 0, sd = 1))
+```
+
+This is the summary of the simulated variables:
+```{r}
+HamiltonDAs %>% 
+  select(u, v, z) %>%
+  summary()
+```
+
+Suppose that we estimate the model as a linear regression that fails to correctly capture the non-linearity by specifying linear parameters. The model would be as follows:
+```{r}
+model1 <- lm(formula = z ~ u + v, data = HamiltonDAs) 
+summary(model1)
+```
+
+At first glance, the model gives the impression of a very good fit: all coefficients are significant, and the coefficient of multiple determination $R^2$ is high. However, at this point it is important to examine the residuals to verify that they are independent. We will add the residuals of this model to the dataframe for visualization:
+```{r}
+# Copy the residuals of the model to the dataframe for mapping
+HamiltonDAs$model1.e <- model1$residuals
+```
+
+A map of the residuals can help s to examine their spatial pattern (negative residuals are red, positive are blue):
+```{r message = FALSE, warning = FALSE}
+# Create a `plotly` object with the dataframe and plot the the simple features object with colors per the sign of the residuals (negative residuals = FALSE, positive residuals = TRUE)
+  plot_ly(HamiltonDAs) %>%
+    add_sf(color = ~ifelse(model1.e > 0, "Positive", "Negative"), colors = c("red", "dodgerblue4"))
+```
+
+Visual inspection of the spatial distribution of residuals is suggestive. Positive residuals mean that the model underestimates the values of the dependent variable, and negative that the model overestimates the values of the dependent variable. The model systematically underestimates the variable along a north-south band that crosses the center of the region, and overestimates systematically to the east and west. While it is quite clear that there is systematic residual pattern, it is important to support our visual inspection of the residuals by testing for spatial residual autocorrelations. 
+
+To do this, we need to create a set of spatial weights:
+```{r}
+HamiltonDAs.w <- HamiltonDAs %>%
+  as("Spatial") %>%
+  poly2nb() %>%
+  nb2listw()
+```
+
+Once that we have a set of spatial weights, we can proceed to calculate Moran's $I$:
+```{r}
+moran.test(HamiltonDAs$model1.e, HamiltonDAs.w)
+```
+
+Notice the very small $p$-value: this result means that we can comfortably reject the null hypothesis of spatial randomness; however, what we wish is the opposite, since we want the residuals to be spatially random! Thus, despite the apparent goodness of fit of the model, there is reason to believe something is amiss with the model (since we simulated it, we know that the problem is that the model should _not_ be linear).
+
+The results of testing for autocorrelation indicate an issue with the model, which in this case is an incorrect specification. This is fixed if we use a variable transformation to approximate the underlying non-linear process. We can take the logarithm on both sides of the equation. On the left hand side, we are left with $log(z)$. On the right hand, the products become a sum, and the logarithms and exponentials cancel each other, to give:
+$$
+log(z) = log\big(exp(\beta_0)exp(\beta_1u)exp(\beta_2v)\big) = log\big(exp(\beta_0)\big) + log\big(exp(\beta_1u)\big) + log\big(exp(\beta_2v)\big) =  \beta_0 + \beta_1u + \beta_2v
+$$
+
+\noindent which is now a linear model. This is called a log-transformation. The log-transformed model is estimated as follows:
+```{r}
+model2 <- lm(formula = log(z) ~ u + v, data = HamiltonDAs)
+summary(model2)
+```
+
+This model does not necessarily have a better goodness of fit. However, when we test for spatial autocorrelation:
+```{r}
+HamiltonDAs$model2.e <- model2$residuals
+moran.test(HamiltonDAs$model2.e, HamiltonDAs.w)
+```
+
+Once that the correct functional form has been specified, the model is better at capturing the underlying process (check how the coefficients closely approximate the true coefficients of the model). In addition, we can conclude that the residuals are random, and therefore are now also spatially random: meaning the there is nothing left of the process but white noise.
+
+### Omitted Variables
+
+Using the same example, suppose now that the functional form of the model is correctly specified, but a relevant variable is missing:
+```{r}
+model3 <- lm(formula = log(z) ~ u, data = HamiltonDAs)
+summary(model3)
+```
+
+As before, we will append the residuals to the dataframes:
+```{r}
+HamiltonDAs$model3.e <- model3$residuals
+```
+
+We can plot a map of the residuals to examine their spatial pattern (negative residuals are red, positive are blue):
+```{r message = FALSE, warning = FALSE}
+  plot_ly(HamiltonDAs) %>%
+    add_sf(color = ~ifelse(model3.e > 0, "Positive", "Negative"), colors = c("red", "dodgerblue4"))
+```
+
+In this case, the visual inspection makes it clear that there is an issue with residual spatial pattern, and using Moran's $I$ we can conclude that the residuals are spatially autocorrelated:
+```{r}
+moran.test(HamiltonDAs$model3.e, HamiltonDAs.w)
+```
+
+As seen above, the model with the full set of relevant variables resolves this problem.
+
+## Remedial Action
+
+When spatial autocorrelation is detected in the residuals, further work is warranted. The preceding examples illustrate two possible solutions to the issue of residual pattern: 
+
+1. Modifications of the model to approximate the true functional form of the process; and
+2. Inclusion of relevant variables.
+
+Ideally, we would try to ensure that the model is properly specified. In practice, however, it is not always evident what the functional form of the model should be. The search for an appropriate functional form can be guided by theoretical considerations, empirical findings, and experimentation. With respect to inclusion of relevant variables, it is not always possible to find all the information we desire. This could be because of limited resources, or because some aspects of the process are not known and therefore we do not even know what additional information should be collected.
+
+In these cases, it is a fact that residual spatial autocorrelation is problematic.
+
+Fortunately, a number of approaches have been proposed in the literature that can be used for remedial action.
+
+In the following sections we will review some of them.
+
+## Flexible Functional Forms and Models with Spatially-varying Coefficients
+
+Some models use variable transformations to create more flexible functions, while others use adaptive estimation strategies.
+
+### Trend Surface Analysis
+
+Trend surface analysis is a simple way to generate relatively flexible regression models with surfaces that are not necessarily linear. This approach consists of using the coordinates as covariates, and transforming them into polynomials of different orders. Seen this way, linear regression is the analog of a trend surface of first degree:
+$$
+z = f(x,y) = \beta_0 + \beta_1u + \beta_2v
+$$
+\noindent where again $u$ and $v$ are the coordinates.
+
+A figure illustrates how the function above creates a regression _plane_. To visualize this, we need to create a grid of coordinates for plotting:
+```{r}
+# The function `expand.grid()` takes two arguments and creates a dataframe from all the combinations of the values. The function `seq()` creates a vector with values starting at `from`, ending at `to`, with step increments given `by`. Here, we create a grid with values in `u` from -2 to 2 and values in `v` from -2 to 2.
+df <- expand.grid(u = seq(from = -2, to = 2, by = 0.2), v = seq(from = -2, to = 2, by = 0.2))
+```
+
+Next, select some values for the coefficients (feel free to experiment with these values):
+```{r}
+# Define some coefficients (you can change these values if you wish).
+b0 <- 0.5 #0.5
+b1 <- 1 #1
+b2 <- 2 #2
+
+# Create the regression plane. We did not add a random term here because this plane is the systematic component of the model!
+z1 <- b0 + b1 * df$u + b2 * df$v
+z1 <- matrix(z1, nrow = 21, ncol = 21)
+```
+
+The plot is as follows:
+```{r}
+# Create a `plotly` object and add a surface.
+plot_ly(z = ~z1) %>% 
+  add_surface() %>%
+  # The function `layout()` defines several aspects of the plot, in this case the labels for the ticks on the axes and the axes titles. 
+  layout(scene = list(xaxis = list(ticktext = c("-2", "0", "2"), 
+                                   tickvals = c(0, 10, 20)), 
+                      yaxis = list(ticktext = c("-2", "0", "2"), 
+                                   tickvals = c(0, 10, 20)),
+                      xaxis = list(title = "v"),
+                      yaxis = list(title = "u")
+                      )
+         )
+```
+
+The figure above is a _linear trend surface_, and we can see that the dependent variable `z` grows as `u` and `v` grow.
+
+Higher order trend surfaces can be defined as well. For example, a trend surface of second degree (or quadratic), would be as follows. Notice how it includes _all_ possible quadratic terms, including the product $xy$:
+$$
+z = f(x,y) = \beta_0 + \beta_1u^2 + \beta_2u + \beta_3uv + \beta_4v + \beta_5v^2
+$$
+
+Use the same grid as above to create now a regression _surface_. Select some coefficients:
+```{r}
+b0 <- 0.5 #0.5
+b1 <- 2 #2
+b2 <- 1 #1
+b3 <- 1 #1
+b4 <- 1.5 #1.5
+b5 <- 0.5 #2.5
+z2 <- b0 + b1 * df$u^2 + b2 * df$u + b3 * df$u * df$v + b4 * df$v + b5 * df$v^2
+z2 <- matrix(z2, nrow = 21, ncol = 21)
+```
+
+And the plot is as follows:
+```{r}
+plot_ly(z = ~z2) %>% add_surface() %>%
+  layout(scene = list(xaxis = list(ticktext = c("-2", "0", "2"), tickvals = c(0, 10, 20)), 
+                      yaxis = list(ticktext = c("-2", "0", "2"), tickvals = c(0, 10, 20)),
+                      xaxis = list(title = "v"), 
+                      yaxis = list(title = "u")
+                      )
+         )
+```
+
+Higher order polynomials (i.e., cubic, quartic, etc.) are possible in principle. Something to keep in mind is that the higher the order of the polynomial, the more flexible the surface, which may lead to the following issues:
+
+1. Multicollinearity.
+
+Powers of variables tend to be highly correlated with each other. See the following table of correlations for the `u` coordinate in the example:
+```{r echo = FALSE, results = "asis"}
+kable(cor(cbind(u = df$u, `u^2` = df$u^2, `u^3` = df$u^3, `u^4` = df$u^4)), 
+      digits = 2, format = "html") %>% kable_styling()
+```
+
+When two variables are highly collinear, the model has difficulties discriminating their relative contribution to the model. This is manifested by inflated standard errors that may depress the significance of the coefficients, and occasionally by sign reversals.
+
+2. Overfitting.
+
+Overfitting is another possible consequence of using a trend surface that is too flexible. This happens when a model fits too well the observations used for calibration, but because of this it may fail to fit well new information.
+
+To illustrate overfitting consider a simple example. Below we simulate a simple linear model with $y_i =  x_i + \epsilon_i$ (the random terms are drawn from the uniform distribution). We also simulate new data using the exact same process:
+```{r}
+# Dataset for estimation
+df.of1 <- data.frame(x = seq(from = 1, to = 10, by = 1))
+df.of1 <- mutate(df.of1, y = x + runif(10, -1, 1))
+# New data
+new_data <- data.frame(x = seq(from = 1, to = 10, by = 0.5))
+df.of2 <- mutate(new_data, y = x + runif(nrow(new_data), -1, 1))
+```
+
+This is the scatterplot of the observations in the estimation dataset:
+```{r}
+p <- ggplot(data = df.of1, aes(x = x, y = y)) 
+p + geom_point(size = 3)
+```
+
+A model with a first order trend (essentially linear regression), does not fit the observations perfectly, but when confronted with new data (plotted as red squares), it predicts them with reasonable accuracy:
+```{r}
+mod.of1 <- lm(formula = y ~ x, data = df.of1)
+pred1 <- predict(mod.of1, newdata = new_data) #mod.of1$fitted.values
+p + geom_abline(slope = mod.of1$coefficients[2], intercept = mod.of1$coefficients[1], 
+                color = "blue", size = 1) +
+  geom_point(data = df.of2, aes(x = x, y = y), shape = 0, color = "red") +
+  geom_segment(data = df.of2, aes(xend = x, yend = pred1)) + 
+  geom_point(size = 3) +
+  xlim(c(1, 10))
+```
+
+Compare to a polynomial of very high degree (nine in this case). The model is much more flexible, to the extent that it perfectly matches the observations in the estimation dataset. However, this flexibility has a major downside. When the model is confronted with new information, its performance is less satisfactory.
+```{r}
+mod.of2 <- lm(formula = y ~ poly(x, degree = 9, raw = TRUE), data = df.of1)
+poly.fun <- predict(mod.of2, data.frame(x = seq(1, 10, 0.1)))
+pred2 <- predict(mod.of2, newdata = new_data) #mod.of1$fitted.values
+
+p + geom_line(data = data.frame(x = seq(1, 10, 0.1), y = poly.fun), 
+              aes(x = x, y = y),
+              color = "blue", size = 1) + 
+  geom_point(data = df.of2, 
+             aes(x = x, y = y), 
+             shape = 0, 
+             color = "red") +
+  geom_segment(data = df.of2, 
+               aes(xend = x, yend = pred2)) + 
+  geom_point(size = 3) +
+  xlim(c(1, 10))
+```
+
+We can compute the _root mean square_ (RMS), for each of the two models. The RMS is a measure of error that is calculated as the square root of the mean of the squared differences between two values (in this case the prediction of the model and the new information). This statistic is a measure of the typical deviation between two sets of values. Given new information, the RMS would tell us the expected size of the error when making a prediction using a given model.
+
+The RMS for model 1 is:
+```{r}
+sqrt(mean((df.of2$y - pred1)^2))
+```
+
+And for model 2:
+```{r}
+sqrt(mean((df.of2$y - pred2)^2))
+```
+
+You will notice how model 2, despite fitting the estimation data better than model 1, typically produces larger errors when new information becomes available.
+
+3. Edge effects.
+
+Another consequence of overfitting, is that the resulting functions tend to display extreme behavior when taken outside of their estimation range, where the largest polynomial terms tend to dominate. 
+
+The plot below is the same high degree polynomial estimated above, just plotted in a slightly larger range of plus/minus one unit:
+```{r}
+poly.fun <- predict(mod.of2, data.frame(x = seq(0, 11, 0.1)))
+p + 
+  geom_line(data = data.frame(x = seq(0, 11, 0.1), y = poly.fun), aes(x = x, y = y),
+                color = "blue", size = 1) + 
+  geom_point(data = df.of2, aes(x = x, y = y), shape = 0, color = "red") +
+  geom_segment(data = df.of2, aes(xend = x, yend = pred2)) + 
+  geom_point(size = 3)
+```
+
+### Models with Spatially-varying Coefficients
+
+Another way to generate flexible functional forms is by means of models with spatially varying coefficients. Two approaches are reviewed here.
+
+#### Expansion Method
+
+The expansion method ([Casetti, 1972](http://onlinelibrary.wiley.com/doi/10.1111/j.1538-4632.1972.tb00458.x/full)) is an approach to generate models with contextual effects. It follows a philosophy of specifying first a substantive model with variables of interest, and then an expanded model with contextual variables. In geographical analysis, typically the contextual variables are trend surfaces estimated using the coordinates of the observations.
+
+To illustrate this, suppose that there is the following initial model of proportion of donors in a population, with two variables of substantive interest (say, income and education):
+$$
+d_i = \beta_i(u_i,v_i) + \beta_1(u_i,v_i)I_i + \beta_3(u_i,v_i)Ed_i + \epsilon_i
+$$
+
+Note how the coefficients are now a function of the coordinates at $i$. Unlike previous models that had _global_ coefficients, the coefficients in this model are allowed to adapt by location.
+
+Unfortunately, it is not possible to estimate one coefficient per location. In this case, there are $n\times k$ coefficients, which exceeds the size of the sample ($n$). It is not possible to retrieve more information from the sample than $n$ parameters (this is called the incidental parameter problem.)
+
+A possible solution is to specify a function for the coefficients, for instance, by specifying a trend surface for them:
+$$
+\begin{array}{l}
+\beta_0(u_i, v_i) = \beta_{01} +\beta_{02}u_i + \beta_{03}v_i\\
+\beta_1(u_i, v_i) = \beta_{11} +\beta_{12}u_i + \beta_{13}v_i\\
+\beta_2(u_i, v_i) = \beta_{21} +\beta_{22}u_i + \beta_{23}v_i
+\end{array}
+$$
+By specifying the coefficients as a function of the coordinates, we allow them to vary by location.
+
+Next, if we substitute these coefficients in the initial model, we arrive at a final expanded model:
+$$
+d_i = \beta_{01} +\beta_{02}u_i + \beta_{03}v_i + \beta_{11}I_i +\beta_{12}u_iI_i + \beta_{13}v_iI_i + \beta_{21}Ed_i +\beta_{22}u_iEd_i + \beta_{23}v_iEd_i + \epsilon_i
+$$
+
+This model has now nine coefficients, instead of $n\times 3$, and can be estimated as usual.
+
+It is important to note that since models generated based on the expansion method are based on the use of trend surfaces, similar caveats apply with respect to multicollinearity and overfitting.
+
+#### Geographically Weighted Regression (GWR)
+
+A different strategy to estimate models with spatially-varying coefficients is a semi-parametric approach, called geographically weighted regression (see [Brunsdon et al., 1996](http://onlinelibrary.wiley.com/doi/10.1111/j.1538-4632.1996.tb00936.x/abstract)).
+
+Instead of selecting a functional form for the coefficients as the expansion method does, the functions are left unspecified. The spatial variation of the coefficients results from an estimation strategy that takes subsamples of the data in a systematic way.
+
+If you recall kernel density analysis, a kernel was a way of weighting observations based on their distance from a focal point.
+
+Geographically weighted regression applies a similar concept, with a moving window that visits a focal point and estimates a weighted least squares model at that location. The results of the regression are conventionally applied to the focal point, in such a way that not only the coefficients are localized, but also every other regression diagnostic (e.g., the coefficient of determination, the standard deviation, etc.)
+
+A key aspect of implementing this model is the selection of the kernel bandwidth, that is, the size of the window. If the window is too large, the local models tend towards the global model (estimated using the whole sample). If the window is too small, the model tends to overfit, since in the limit each window will contain only one, or a very small number of observations.
+
+The kernel bandwidth can be selected if we define some loss function that we wish to minimize. A conventional approach (but not the only one), is to minimize a cross-validation score of the following form:
+$$
+CV (\delta) = \sum_{i=1}^n{\big(y_i - \hat{y}_{\neq i}(\delta)\big)^2}
+$$
+In this notation, $\delta$ is the bandwidth, and $\hat{y}_{\neq i}(\delta)$ is the value of $y$ predicted by a model with a bandwidth of $\delta$ _after excluding the observation at $i$_. This is called a _leave-one-out_ cross-validation procedure, used to prevent the estimation from shrinking the bandwidth to zero.
+
+GWR is implemented in `R` in the package `spgwr`. To estimate models using this approach, the function `sel.GWR`, which takes as inputs a formula specifying the dependent and independent variables, a `SpatialPolygonsDataFrame` (or a `SpatialPointsDataFrame`), and the kernel function (in the example below a Gaussian kernel). Since our data come in the form of simple features, we use `as(x, "Spatial")` to convert to a `Spatial*DataFrame` object:
+```{r}
+delta <- gwr.sel(formula = z ~ u + v, 
+                 data = as(HamiltonDAs, "Spatial"), 
+                 gweight = gwr.Gauss)
+```
+
+The function `gwr` estimates the suite of local models given a bandwidth:
+```{r}
+model.gwr <- gwr(formula = z ~ u + v, 
+                 bandwidth = delta, 
+                 data = as(HamiltonDAs, "Spatial"),
+                 gweight = gwr.Gauss)
+model.gwr
+```
+
+The results are given for each location where a local regression was estimated. We can join these results to our `sf` dataframe for plotting:
+```{r}
+HamiltonDAs$beta0 <- model.gwr$SDF@data$X.Intercept.
+HamiltonDAs$beta1 <- model.gwr$SDF@data$u
+HamiltonDAs$beta2 <- model.gwr$SDF@data$v
+HamiltonDAs$localR2 <- model.gwr$SDF@data$localR2
+HamiltonDAs$gwr.e <- model.gwr$SDF@data$gwr.e
+```
+
+The results can be mapped as shown below (try mapping `beta1`, `beta2`, `localR2`, or the residuals `gwr.e`):
+```{r}
+ggplot(data = HamiltonDAs, aes(fill = beta0)) + 
+  geom_sf(color = "white") +
+  scale_fill_distiller(palette = "YlOrRd", trans = "reverse")
+```
+
+You can verify that the residuals are not spatially autocorrelated:
+```{r}
+moran.test(HamiltonDAs$gwr.e, HamiltonDAs.w)
+```
+
+Some caveats with respect to GWR. 
+
+Since estimation requires the selection of a kernel bandwidth, and a kernel bandwidth requires the estimation of many times leave-one-out regressions, GWR can be computationally demanding, especially for large datasets.
+
+GWR has become a very popular method, however, there is conflicting evidence regarding its ability to retrieve a known spatial process [@Paez2011gwr]. For this reasons, interpretation of the spatially-varying coefficients must be conducted with a grain of salt, although this seems to be less of a concern with larger samples - but at the moment it is not known how large a sample is safe (and larger samples also become computationally more demanding). As well, the estimation method is known to be sensitive to unusual observations [@Farber2007gwr]. At the moment, I recommend that GWR be used for prediction only, and in this respect it seems to perform as well, or even better than alternatives approaches [@Paez2008gwr].
+
+## Spatial Error Model (SEM)
+
+A model that can be used to take direct remedial action with respect to residual spatial autocorrelation is the spatial error model.
+
+This model is specified as follows:
+$$
+y_i = \beta_0 + \sum_{j=1}^k{\beta_kx_{ij}} + \epsilon_i
+$$
+
+However, it is no longer assumed that the residuals $\epsilon$ are independent, but instead display map pattern, in the shape of a moving average:
+$$
+\epsilon_i = \lambda\sum_{i=1}^n{w_{ij}^{st}\epsilon_i} + \mu_i
+$$
+
+A second set of residuals $\mu$ are assumed to be independent.
+
+It is possible to show that this model is no longer linear in the coefficients (but this would require a little bit of matrix algebra). For this reason, ordinary least squares is no longer an appropriate estimation algorithm, and models of this kind are instead usually estimated based on a method called _maximum likelihood_ [which we will not cover in detail here; you can read about it in @Anselin1988].
+
+Spatial error models are implemented in the package `spatialreg`.
+
+As a remedial model, it can account for a model with a misspecified functional form. We know that the underlying process is not linear, but we specify a linear relationship between the covariates in the form of $z = \beta_0 + \beta_1u + \beta_2v$:
+```{r}
+model.sem1 <- errorsarlm(formula = z ~ u + v, 
+                        data = HamiltonDAs, 
+                        listw = HamiltonDAs.w)
+summary(model.sem1)
+```
+
+The coefficient $\lambda$ is positive (indicative of positive autocorrelation) and high, since about 50% of the moving average of the residuals $\epsilon$ in the neighborhood of $i$ contribute to the value of $\epsilon_i$. 
+
+You can verify that the residuals are spatially uncorrelated (note that the alternative is "less" because of the negative sign of Moran's $I$ coefficient):
+```{r}
+moran.test(model.sem1$residuals, HamiltonDAs.w, alternative = "less")
+```
+
+Now consider the case of a missing covariate:
+```{r}
+model.sem2 <- errorsarlm(formula = log(z) ~ u, 
+                        data = HamiltonDAs, 
+                        listw = HamiltonDAs.w)
+summary(model.sem2)
+```
+
+In this case, the residual pattern is particularly strong, with more than 90% of the moving average contributing to the residuals. Alas, in this case, the remedial action falls short of cleaning the residuals, and we can see that they still remain spatially correlated:
+```{r}
+moran.test(model.sem2$residuals, HamiltonDAs.w, alternative = "less")
+```
+
+This would suggest the need for alternative action (such as the search for additional covariates).
+
+Ideally, a model should be well-specified, and remedial action should be undertaken only when other alternatives have been exhausted.
