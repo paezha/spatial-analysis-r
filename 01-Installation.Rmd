@@ -1,3 +1,5 @@
+# (PART) Part I: Getting to Know the Technology {-} 
+
 # Preliminaries: Installing `R` and RStudio
 
 ## Introduction
