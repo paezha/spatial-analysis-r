@@ -79,12 +79,6 @@ jobs:
           R -e 'install.packages("vcdExtra")'
           R -e 'renv::restore()'
           R -e 'remotes::install_github("paezha/geog4ga3")'
-library(kableExtra)
-library(plotly)
-library(sf)
-library(spatialreg)
-library(spdep)
-library(spgwr)
 
       - name: Build site
         run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
