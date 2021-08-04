@@ -17,8 +17,8 @@ pre code {
   padding: 1em 1em 1em 4em;
   margin-bottom: 10px;
   background: lightgray 5px center/3em no-repeat;
-  border: 2px solid orange;
-  border-radius: 10px;
+  border: 2px solid lightgray;
+  border-radius: 0px;
 }
 .caution {
   background-image: url("../images/caution.png");
