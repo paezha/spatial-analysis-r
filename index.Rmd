@@ -41,6 +41,28 @@ knitr::include_graphics(rep("images/cover.jpg"))
 
 ISBN: 978-1-7778515-0-7
 
+This work is licensed under a Creative Commons [Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+```{r cover, echo=FALSE, out.width="10%"}
+knitr::include_graphics(rep("images/license.png"))
+```
+
+
+```{asis index-22, echo=is_html}
+## Supporting the project {-}
+If you find the book useful, please support it by:
+- Telling people about it in person
+- Communicating about the book in digital media e.g. via the [#geocompr hashtag](https://twitter.com/hashtag/geocompr) on Twitter (see our [Guestbook at geocompr.github.io](https://geocompr.github.io/guestbook/)) or by letting us know of [courses](https://github.com/geocompr/geocompr.github.io/edit/source/content/guestbook/index.md) using the book
+- [Citing](https://github.com/Robinlovelace/geocompr/raw/master/cite-geocompr.bib) or [linking-to](https://geocompr.robinlovelace.net/) it
+- '[Starring](https://help.github.com/articles/about-stars/)' the [geocompr GitHub repository](https://github.com/robinlovelace/geocompr)
+- Reviewing it, e.g. on Amazon or [Goodreads](https://www.goodreads.com/book/show/42780859-geocomputation-with-r)
+- Asking questions about or making suggestion on the content via [GitHub](https://github.com/Robinlovelace/geocompr/issues/372) or Twitter.
+- [Buying](https://www.amazon.com/Geocomputation-Chapman-Hall-Robin-Lovelace/dp/1138304514/) a copy
+Further details can be found at [github.com/Robinlovelace/geocompr](https://github.com/Robinlovelace/geocompr#geocomputation-with-r).
+<a href="https://www.netlify.com"><img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg"/></a>
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+```
+
 ## Preface {-}
 
 <!-- Example of a textbox -->
