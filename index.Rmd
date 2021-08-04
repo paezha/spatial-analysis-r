@@ -28,7 +28,7 @@ The online version of the book is hosted at [geocompr.robinlovelace.net](https:/
 -->
 
 ```{asis, echo=!knitr::is_latex_output()}
-<p style="text-align: center;"><a href="https://www.spatial-analysis-r.org"><img src="images/cover.png" alt="Book cover" /></a></p>
+<p style="text-align: center;"><a href="https://www.spatial-analysis-r.org"><img src="images/cover.jpg" alt="Book cover" /></a></p>
 ```
 
 <!--
