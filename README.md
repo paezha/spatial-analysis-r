@@ -13,7 +13,7 @@
 -->
 
 [![Launch Rstudio
-Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/paezha/spatial-analysis-R/main?urlpath=rstudio)
+Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/paezha/spatial-analysis-r/main?urlpath=rstudio)
 [![Netlify
 Status](https://api.netlify.com/api/v1/badges/2867ef30-f33c-4043-9940-fac934c27341/deploy-status)](https://app.netlify.com/sites/spatial-analysis-r/deploys)
 [![DOI](https://zenodo.org/badge/391072865.svg)](https://zenodo.org/badge/latestdoi/391072865)
