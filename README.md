@@ -25,8 +25,8 @@ This repository hosts the code underlying the book *An Introduction to
 Spatial Data Analysis and Statistics: A Course in R*, by [Antonio
 Paez](https://www.science.mcmaster.ca/ees/component/comprofiler/userprofile/paezha.html):
 
-> Paez, Antonio (2021). *An Introduction to Spatial Data Analysis and
-> Statistics: A Course in R*. McMaster Invisible Press. The online
+> Paez A (2021). An Introduction to Spatial Data Analysis and
+> Statistics: A Course in R. (Add bibliographical info). The online
 > version of this book is free to read at
 > <https://www.spatial-analysis-R.org/>.
 

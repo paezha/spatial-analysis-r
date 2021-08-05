@@ -1,47 +1,6 @@
-Type: Compendium
-Package: spatial-analysis-r
-Title: Compendium for book An Introduction to Spatial Data Analysis and Statistics
+Package: placeholder
+Type: Book
+Title: Does not matter.
 Version: 0.0.1
-Authors@R: 
-    person(given = "Paez",
-           family = "Antonio",
-           role = c("aut", "cre"),
-           email = "paezha@mcmaster.ca",
-           comment = c(ORCID = "0000-0001-6912-9919"))
-Description: Compendium for book An Introduction to Spatial Data Analysis
-    and Statistics
-License: MIT + file LICENSE
-Depends: 
-    bookdown,
-    cartogram,
-    crosstalk,
-    curl,
-    deldir,
-    geog4ga3,
-    geosphere,
-    ggmap,
-    ggplot2,
-    gh,
-    gridExtra,
-    gstat,
-    kableExtra,
-    knitr,
-    leaflet,
-    leaflet.extras,
-    magrittr,
-    maptools,
-    patchwork,
-    plotly,
-    readr,
-    rmarkdown,
-    sf,
-    spatialreg,
-    spatstat,
-    spdep,
-    spgwr,
-    tidyverse,
-    vcdExtra
-Remotes: 
-    geog4ga3/Spatial-Statistics-Course
-Encoding: UTF-8
-LazyData: true
+Imports: bookdown
+Remotes: rstudio/bookdown
