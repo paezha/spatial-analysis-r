@@ -11,7 +11,16 @@
      ../gh/paezha/spatial-analysis-R/master?urlpath=rstudio 
      This causes a mistake, as master branch is now named main. Revise to ../gh/paezha/spatial-analysis-R/main?urlpath=rstudio
 -->
+<!--  <a href="https://github.com/paezha/spatial-analysis-r/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=paezha/spatial-analysis-r" />
+</a>
+-->
+<!-- Activity badges generated using shields. See: https://shields.io/category/activity -->
 
+[![GitHub all
+contributors](https://img.shields.io/github/contributors/paezha/spatial-analysis-r?color=2b9348)](https://github.com/paezha/spatial-analysis-r/graphs/contributors)
+\[![GitHub commit
+activity](https://img.shields.io/github/commit-activity/y/paezha/spatial-analysis-r)
 [![Launch Rstudio
 Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/paezha/spatial-analysis-r/main?urlpath=rstudio)
 [![Netlify
@@ -64,14 +73,18 @@ There will be some examples of projects in this
 
 ## Contributing
 
-We encourage contributions on any part of the book, including:
+An advantage of an Open Educational Resource compared to traditional
+publishing (besides it being free!) is that it is a live, ongoing
+project, for as long as anyone cares for it. If you are using this
+resource, I would encourage you to contribute to improve it, by:
 
--   improvements to the text, e.g. clarifying unclear sentences, fixing
-    typos (see guidance from [Yihui
+-   suggesting improvements to the text, e.g. clarifying unclear
+    sentences, fixing typos (see guidance from [Yihui
     Xie](https://yihui.name/en/2013/06/fix-typo-in-documentation/));
--   changes to the code, e.g. to do things in a more efficient way; and
--   suggestions on content (see the project’s [issue
-    tracker](https://github.com/paezha/spatial-analysis-R/issues)).
+-   proposing changes to the code, e.g. to do things in a more efficient
+    way; and
+-   making requests to develop content (see the project’s [issue
+    tracker](https://github.com/paezha/spatial-analysis-r/issues)).
 
 <!-- Need to check what the style is
 See [our-style.md](https://github.com/Robinlovelace/geocompr/blob/master/our-style.md) for the book's style.
@@ -114,19 +127,22 @@ browseURL("_book/index.html") # to view it
 <!-- `source("code/chapters/07-transport.R")` runs run the code chunks in chapter 7, for example. -->
 <!-- These R scripts are generated with the follow command which wraps `knitr::purl()`: -->
 
-## Geocompr in binder
+## The book in binder
 
-TODO <!--
+TODO
+
+[![Launch Rstudio
+Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/paezha/spatial-analysis-r/main?urlpath=rstudio)
+
+<!--
 For many people the quickest way to get started with Geocomputation with R is in your web browser via Binder.
 To see an interactive RStudio Server instance click on the following button, which will open [mybinder.org](https://mybinder.org/v2/gh/robinlovelace/geocompr/master?urlpath=rstudio) with an R installation that has all the dependencies needed to reproduce the book:
 
-#[![Launch Rstudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/robinlovelace/geocompr/master?urlpath=rstudio)
-
-You can also have a play with the repo in RStudio Cloud by clicking on this link (requires log-in):
+#You can also have a play with the repo in RStudio Cloud by clicking on this link (requires log-in):
 
 -->
 
-## Spatial Data Analysis and Statistics in a Docker container
+## The book in a Docker container
 
 TODO <!--
 To ease reproducibility we have made Docker images available, at [geocompr/geocompr](https://hub.docker.com/r/geocompr/geocompr/) on DockerHub.
@@ -152,35 +168,40 @@ See the [geocompr/docker](https://github.com/geocompr/docker#geocomputation-with
 
 ## Reproducing this README
 
-To reduce the book’s dependencies, scripts to be run infrequently to
-generate input for the book are run on creation of this README.
+TODO
+
+<!--
+
+To reduce the book's dependencies, scripts to be run infrequently to generate input for the book are run on creation of this README.
 
 The additional packages required for this can be installed as follows:
 
-``` r
+
+```r
 source("code/extra-pkgs.R")
 ```
 
-With these additional dependencies installed, you should be able to run
-the following scripts, which create content for the book, that we’ve
-removed from the main book build to reduce package dependencies and the
-book’s build time:
+With these additional dependencies installed, you should be able to run the following scripts, which create content for the book, that we've removed from the main book build to reduce package dependencies and the book's build time:
 
-``` r
+
+```r
 source("code/cranlogs.R")
 source("code/sf-revdep.R")
 source("code/08-urban-animation.R")
 source("code/08-map-pkgs.R")
 ```
 
-Note: the `.Rproj` file is configured to build a website not a single
-page. To reproduce this
-[README](https://github.com/Robinlovelace/geocompr/blob/master/README.Rmd)
-use the following command:
+Note: the `.Rproj` file is configured to build a website not a single page.
+To reproduce this [README](https://github.com/Robinlovelace/geocompr/blob/master/README.Rmd) use the following command:
 
-``` r
+
+```r
 rmarkdown::render("README.Rmd", output_format = "github_document", output_file = "README.md")
 ```
+
+
+
+
 
 <!-- ## Book statistics -->
 <!-- An indication of the book's progress over time is illustrated below (to be updated roughly every week as the book progresses). -->

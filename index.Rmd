@@ -9,7 +9,7 @@ bibliography: [bibliography.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: paezha/spatial-analysis-R
-description: "This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad, and Alexis Polidoro."
+description: "This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad, and Alexis Polidoro. The book is published with support of an Open Educational Resources grant from MacPherson Institute, McMaster University."
 graphics: yes
 cover-image: "images/cover.jpg"
 ---
@@ -27,19 +27,11 @@ The online version of the book is hosted at [geocompr.robinlovelace.net](https:/
 [![Actions](https://github.com/Robinlovelace/geocompr/workflows/Render-Book-from-master/badge.svg)](https://github.com/Robinlovelace/geocompr/actions)
 -->
 
-<!--
-# An Introduction to Spatial Data Analysis and Statistics: A Course in `R` {-}
-
-## Antonio Paez {-}
--->
-
-# {-}
-
 ```{r cover, echo=FALSE, out.width="100%"}
 knitr::include_graphics(rep("images/cover.jpg"))
 ```
 
-## {-}
+# Front Matter {-}
 
 Antonio Paez  
 School of Earth, Environment and Society  
@@ -47,6 +39,11 @@ McMaster University
 Hamilton, Ontario  
 Canada  
 paezha@mcmaster.ca  
+
+<a href="https://orcid.org/0000-0001-6912-9919">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" />
+https://orcid.org/0000-0001-6912-9919
+</a>
 
 
 Paez, Antonio (2021) *An Introduction to Spatial Data Analysis and Statisitcs: A Course in R*. McMaster Invisible Press.  
@@ -60,4 +57,28 @@ This work is licensed under a Creative Commons [Attribution-NonCommercial-ShareA
 ```{r license, echo=FALSE, out.width="10%"}
 knitr::include_graphics(rep("images/license.png"))
 ```
+
+## What is this book and who is it for? {-}
+
+Words go here.
+
+## Allied resources {-}
+
+You can find additional resources for students and instructors [here](https://github.com/paezha/spatial-analysis-r#resources-for-students-and-instructors)
+
+## Contributing {-}
+
+An advantage of an Open Educational Resource compared to traditional publishing (besides it being free!) is that it is a live, ongoing project, for as long as anyone cares for it. If you are using this resource, I would encourage you to contribute to improve it, by:
+
+- suggesting improvements to the text, e.g. clarifying unclear sentences, fixing typos (see guidance from [Yihui Xie](https://yihui.name/en/2013/06/fix-typo-in-documentation/));
+- proposing changes to the code, e.g. to do things in a more efficient way.
+
+Doing this is as easy as editing a wiki page; use the `Edit` button in the toolbar to make a pull request (you need to have a GitHub account and be able to fork the repository):
+
+[![EDIT ME](images/editme.png)](https://github.com/paezha/spatial-analysis-r/edit/main/index.Rmd)
+
+In addition, please feel free to make requests for features or to develop content (see the project's [issue tracker](https://github.com/paezha/spatial-analysis-r/issues)).
+
+## How to support this project
+
 
