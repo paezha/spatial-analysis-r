@@ -17,6 +17,7 @@ is_online = curl::has_internet()
 # An Introduction to Spatial Data Analysis and Statistics: A Course in R
 
 <!-- badges: start -->
+  [![Launch Rstudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/paezha/spatial-analysis-R/master?urlpath=rstudio)
   [![Netlify Status](https://api.netlify.com/api/v1/badges/2867ef30-f33c-4043-9940-fac934c27341/deploy-status)](https://app.netlify.com/sites/spatial-analysis-r/deploys)
   [![DOI](https://zenodo.org/badge/391072865.svg)](https://zenodo.org/badge/latestdoi/391072865)
 <!-- badges: end -->
@@ -25,7 +26,7 @@ is_online = curl::has_internet()
 
 This repository hosts the code underlying the book *An Introduction to Spatial Data Analysis and Statistics: A Course in R*, by [Antonio Paez](https://www.science.mcmaster.ca/ees/component/comprofiler/userprofile/paezha.html):
 
-> Paez A (2021). An Introduction to Spatial Data Analysis and Statistics: A Course in R. (Add bibliographical info). 
+> Paez, Antonio (2021). *An Introduction to Spatial Data Analysis and Statistics: A Course in R*. McMaster Invisible Press. 
 The online version of this book is free to read at https://www.spatial-analysis-R.org/.
 
 This part was copied from Geocompr:
