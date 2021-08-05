@@ -7,6 +7,7 @@ bookdown::gitbook:
       after: |
         <li><a href="https://github.com/paezha/spatial-analysis-R" target="blank">Published with bookdown</a></li>
     edit:
+      # THE ORIGINAL LINK MADE REFERENCE TO BRANCH master WHICH DOES NOT EXIST. CORRECT TO BRANCH main
       link: https://github.com/paezha/spatial-analysis-R/edit/main/%s
       text: "Edit"
     download: ["pdf", "epub"]

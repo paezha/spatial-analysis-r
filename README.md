@@ -1,12 +1,19 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file  - rmarkdown::render('README.Rmd', output_format = 'github_document', output_file = 'README.md') -->
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- IMPORTANT: DO NOT KNIT WITH KNIT BUTTON. INSTEAD USE THIS:
+     rmarkdown::render('README.Rmd', output_format = 'github_document', output_file = 'README.md') 
+-->
 
 # An Introduction to Spatial Data Analysis and Statistics: A Course in R
 
 <!-- badges: start -->
+<!-- NOTE: the binder badge was created by holepunch and it makes reference to 
+     ../gh/paezha/spatial-analysis-R/master?urlpath=rstudio 
+     This causes a mistake, as master branch is now named main. Revise to ../gh/paezha/spatial-analysis-R/main?urlpath=rstudio
+-->
 
 [![Launch Rstudio
-Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/paezha/spatial-analysis-R/master?urlpath=rstudio)
+Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/paezha/spatial-analysis-R/main?urlpath=rstudio)
 [![Netlify
 Status](https://api.netlify.com/api/v1/badges/2867ef30-f33c-4043-9940-fac934c27341/deploy-status)](https://app.netlify.com/sites/spatial-analysis-r/deploys)
 [![DOI](https://zenodo.org/badge/391072865.svg)](https://zenodo.org/badge/latestdoi/391072865)
