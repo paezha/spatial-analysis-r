@@ -7,7 +7,7 @@
 #RUN R -q -e 'bookdown::render_book("index.Rmd", "bookdown::gitbook")' && mv _book /public
 
 ## Use a tag instead of "latest" for reproducibility
-FROM spatial-analysis-R/spatial-analysis-R
+FROM spatial-analysis-r/spatial-analysis-r
 
 ## Declares build arguments
 ARG NB_USER
@@ -25,6 +25,17 @@ RUN chown -R ${NB_USER} ${HOME}
 
 ## Become normal user again
 USER ${NB_USER}
+
+#FROM spatial-analysis-r/spatial-analysis-r
+#RUN su rstudio && \
+#  cd /home/rstudio && \
+#  wget https://github.com/paezha/spatial-analysis-r/archive/master.zip && \
+#  unzip master.zip && \
+#  mv geocompr-master /home/rstudio/geocompr && \
+#  cd geocompr && \
+#  Rscript -e 'bookdown::render_book("index.Rmd", output_format = "bookdown::gitbook", clean = FALSE)'
+#RUN chown -Rv rstudio /home/rstudio/geocompr
+
 
 ## Run an install.R script, if it exists.
 RUN if [ -f install.R ]; then R --quiet -f install.R; fi
