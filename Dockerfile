@@ -7,7 +7,7 @@
 #RUN R -q -e 'bookdown::render_book("index.Rmd", "bookdown::gitbook")' && mv _book /public
 
 ## Use a tag instead of "latest" for reproducibility
-FROM spatial-analysis-R/spatial-analysis-R:latest
+FROM spatial-analysis-R/spatial-analysis-R
 
 ## Declares build arguments
 ARG NB_USER
