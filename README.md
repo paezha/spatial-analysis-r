@@ -26,11 +26,41 @@ Spatial Data Analysis and Statistics: A Course in R*, by [Antonio
 Paez](https://www.science.mcmaster.ca/ees/component/comprofiler/userprofile/paezha.html):
 
 > Paez A (2021). An Introduction to Spatial Data Analysis and
-> Statistics: A Course in R. (Add bibliographical info). The online
-> version of this book is free to read at
+> Statistics: A Course in R. McMaster Invisible Press. ISBN: XYZ The
+> online version of this book is free to read at
 > <https://www.spatial-analysis-R.org/>.
 
+## Resources for Students and Instructors
+
+### Presentation slides
+
+I have created a set of presentation slides in mentimeter for each
+substantive chapter in the book. I use these as mini-lectures in a
+[flipped classroom](https://en.wikipedia.org/wiki/Flipped_classroom)
+format in my course, but they can be used as a template for creating
+longer presentations or lectures.
+
+| Chapter   | Mentimeter Slides                                                                                           | Static pdf file |
+|-----------|-------------------------------------------------------------------------------------------------------------|-----------------|
+| Chapter 3 | [Introduction to Mapping](https://www.mentimeter.com/s/de73cd678c3af6b487f2f06eee44cad7/966186ab94da/edit)  | pdf             |
+| Chapter 5 | [Mapping in `R` continued](https://www.mentimeter.com/s/0fbd2c03bf23a9da5fbac902278644fe/ee9058215205/edit) | pdf             |
+
 This part was copied from Geocompr:
+
+### Project template
+
+I created a [template
+repository](https://github.com/paezha/ES4GA3-Sample-Repository) to help
+students get started with the use of GitHub and R Markdown for
+collaborative work on term projects. In my own course adoption of this
+workflow is completely optional. Not every student/group has the
+inclination/time to adopt this approach, but those who do produce very
+professional-looking reports and learn valuable skills.
+
+### Examples of projects
+
+There will be some examples of projects in this
+[repository](https://github.com/paezha/student-projects).
 
 ## Contributing
 
