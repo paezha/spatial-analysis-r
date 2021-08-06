@@ -27,8 +27,10 @@ Paez](https://www.science.mcmaster.ca/ees/component/comprofiler/userprofile/paez
 
 > Paez A (2021). An Introduction to Spatial Data Analysis and
 > Statistics: A Course in R. McMaster Invisible Press. ISBN:
-> 978-1-7778515-0-7 The online version of this book is free to read at
-> <https://www.spatial-analysis-R.org/>.
+> 978-1-7778515-0-7
+
+The online version of this book is free to read at
+<https://www.spatial-analysis-R.org/>.
 
 ## Resources for Students and Instructors
 
