@@ -49,7 +49,7 @@ paezha@mcmaster.ca
 <!-- ORCID badge-->
 <a href="https://orcid.org/0000-0001-6912-9919">
 <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="30" height="30" />
-https://orcid.org/0000-0001-6912-9919
+https://orcid.org/0000-0001-6912-9919 
 </a>  
 <!-- Google Scholar and Publobs icons by https://jpswalsh.github.io/academicons/-->  
 <a href="https://scholar.google.com/citations?user=bLY377kAAAAJ&hl=en">

@@ -29,7 +29,7 @@ Paez](https://www.science.mcmaster.ca/ees/component/comprofiler/userprofile/paez
 > Statistics: A Course in R. McMaster Invisible Press. ISBN:
 > 978-1-7778515-0-7
 
-The online version of this book is free to read at
+The book is free to read online at
 <https://www.spatial-analysis-R.org/>.
 
 ## Resources for Students and Instructors
@@ -42,14 +42,28 @@ substantive chapter in the book. I use these as mini-lectures in a
 format in my course, but they can be used as a template for creating
 longer presentations or lectures.
 
-| Chapter   | Mentimeter Slides                                                                                           | Static pdf file |
-|-----------|-------------------------------------------------------------------------------------------------------------|-----------------|
-| Chapter 3 | [Introduction to Mapping](https://www.mentimeter.com/s/de73cd678c3af6b487f2f06eee44cad7/966186ab94da/edit)  | pdf             |
-| Chapter 5 | [Mapping in `R` continued](https://www.mentimeter.com/s/0fbd2c03bf23a9da5fbac902278644fe/ee9058215205/edit) | pdf             |
+| Chapter    | Mentimeter Slides                                                                                                | Static pdf file |
+|------------|------------------------------------------------------------------------------------------------------------------|-----------------|
+| Chapter 3  | [Introduction to Mapping](https://www.mentimeter.com/s/de73cd678c3af6b487f2f06eee44cad7/966186ab94da/edit)       | pdf             |
+| Chapter 5  | [Mapping in `R` Continued](https://www.mentimeter.com/s/0fbd2c03bf23a9da5fbac902278644fe/ee9058215205/edit)      | pdf             |
+| Chapter 7  | [Maps as Processes](https://www.mentimeter.com/s/59484637c743e96b6810c5e48b2cf405/d1152a9e811c/edit)             | pdf             |
+| Chapter 9  | [Point Pattern Analysis I](https://www.mentimeter.com/s/2db531a235490f7d66a0077f2c4f0930/df1cd6ccccbb/edit)      | pdf             |
+| Chapter 11 | [Point Pattern Analysis II](https://www.mentimeter.com/s/100f17f481ed1f28dd98112492533ba6/389b8ed12832/edit)     | pdf             |
+| Chapter 13 | [Point Pattern Analysis III](https://www.mentimeter.com/s/8495ddf8551f0083017726a9f68cfa5b/4e5c29e8c78e/edit)    | pdf             |
+| Chapter 15 | [Point Pattern Analysis IV](https://www.mentimeter.com/s/587258400bd04521b52585f27296a799/57f84401a6a6/edit)     | pdf             |
+| Chapter 17 | [Point Pattern Analysis V](https://www.mentimeter.com/s/fe385c8dbd256f2645507290f579b15c/2056e80d53e4/edit)      | pdf             |
+| Chapter 19 | [Area Data I](https://www.mentimeter.com/s/cab8fcae7e9b2cd1f447f79b5349dd23/d939ca4b33e9/edit)                   | pdf             |
+| Chapter 21 | [Area Data II](https://www.mentimeter.com/s/c8442809151f00d4ac7e4a300bdf707a/20932ed527b6/edit)                  | pdf             |
+| Chapter 23 | [Area Data III](https://www.mentimeter.com/s/175ee004df6fb9452837023e02b2960b/96666c58d803/edit)                 | pdf             |
+| Chapter 25 | [Area Data IV](https://www.mentimeter.com/s/516dae79f2558cd948da3de61b1c2b54/b7bb868b80d0/edit)                  | pdf             |
+| Chapter 27 | [Area Data V](https://www.mentimeter.com/s/32ee96ef3aaf83559b779f3fb88fc209/341e94b74b69/edit)                   | pdf             |
+| Chapter 29 | [Area Data VI](https://www.mentimeter.com/s/13eade97c82235b94c73d6dec6ef34a7/10a4634c3a9d/edit)                  | pdf             |
+| Chapter 31 | [Spatially Continuous Data I](https://www.mentimeter.com/s/57b95c57c9a4b75e91d91adb8b6e5faa/330c2ca0d567/edit)   | pdf             |
+| Chapter 33 | [Spatially Continuous Data II](https://www.mentimeter.com/s/b40aa86207d96711a40c73397bd36d08/f8248b9e8ecd/edit)  | pdf             |
+| Chapter 35 | [Spatially Continuous Data III](https://www.mentimeter.com/s/d651523809c79353767df82bc7ba4d2f/d8e42a7811ed/edit) | pdf             |
+| Chapter 37 | [Spatially Continuous Data IV](https://www.mentimeter.com/s/78b3ec0313be43abe9995fe4c3447dd2/07a125804a15/edit)  | pdf             |
 
-This part was copied from Geocompr:
-
-### Project template
+### Template repository for projects
 
 I created a [template
 repository](https://github.com/paezha/ES4GA3-Sample-Repository) to help
