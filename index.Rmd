@@ -17,9 +17,6 @@ cover-image: "images/cover.jpg"
 <!--
 NOTE: echo=is_html does not work
 
-{asis index-cover, echo=is_html}
-<a href="https://www.spatial-analysis-r.org"><img src="images/cover.png" width="250" height="375" alt="The book cover" align="center" style="margin: 0 1em 0 1em" /></a>
-
 Inspired by [**bookdown**](https://github.com/rstudio/bookdown) and the Free and Open Source Software for Geospatial ([FOSS4G](http://foss4g.org/)) movement, this book is open source.
 This ensures its contents are reproducible and publicly accessible for people worldwide.
 The online version of the book is hosted at [geocompr.robinlovelace.net](https://geocompr.robinlovelace.net) and kept up-to-date by [GitHub 
@@ -33,30 +30,25 @@ knitr::include_graphics(rep("images/cover.jpg"))
 
 # Front Matter {-}
 
+Paez, Antonio (2021)  
+*An Introduction to Spatial Data Analysis and Statisitcs: A Course in R*  
+McMaster Invisible Press  
+ISBN: 978-1-7778515-0-7  
+<!-- DOI badge -->
+[![DOI](https://zenodo.org/badge/391072865.svg)](https://zenodo.org/badge/latestdoi/391072865)  
+  
+  
 Antonio Paez  
 School of Earth, Environment and Society  
 McMaster University  
 Hamilton, Ontario  
 Canada  
 paezha@mcmaster.ca  
-
-<a href="https://orcid.org/0000-0001-6912-9919">
-<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" />
-https://orcid.org/0000-0001-6912-9919
-</a>
-
-
-Paez, Antonio (2021) *An Introduction to Spatial Data Analysis and Statisitcs: A Course in R*. McMaster Invisible Press.  
-ISBN: 978-1-7778515-0-7  
-<!-- badges: start -->
-[![DOI](https://zenodo.org/badge/391072865.svg)](https://zenodo.org/badge/latestdoi/391072865)  
-<!-- badges: end -->
-
-This work is licensed under a Creative Commons [Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-
-```{r license, echo=FALSE, out.width="10%"}
-knitr::include_graphics(rep("images/license.png"))
-```
+<!-- ORCID badge-->
+  [![ORCID](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0000-0001-6912-9919)
+<!-- Google Scholar and Publobs icons by https://jpswalsh.github.io/academicons/-->  
+  [![Google Scholar](images/google-scholar-square.svg)](https://scholar.google.com/citations?user=bLY377kAAAAJ&hl=en)
+  [![Publons](images/publons-square.svg)](https://publons.com/researcher/2897251/antonio-paez/)
 
 ## What is this book and who is it for? {-}
 
@@ -68,7 +60,7 @@ You can find additional resources for students and instructors [here](https://gi
 
 ## Contributing {-}
 
-An advantage of an Open Educational Resource compared to traditional publishing (besides it being free!) is that it is a live, ongoing project, for as long as anyone cares for it. If you are using this resource, I would encourage you to contribute to improve it, by:
+An advantage of an Open Educational Resource compared to traditional publishing (besides it being free!) is that it is a live, ongoing project, for as long as anyone cares to keep it alive. If you are using this resource, I would encourage you to contribute to help me improve it, by:
 
 - suggesting improvements to the text, e.g. clarifying unclear sentences, fixing typos (see guidance from [Yihui Xie](https://yihui.name/en/2013/06/fix-typo-in-documentation/));
 - proposing changes to the code, e.g. to do things in a more efficient way.
@@ -79,6 +71,27 @@ Doing this is as easy as editing a wiki page; use the `Edit` button in the toolb
 
 In addition, please feel free to make requests for features or to develop content (see the project's [issue tracker](https://github.com/paezha/spatial-analysis-r/issues)).
 
-## How to support this project
+Also, notice that this work is licensed under a Creative Commons [Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/). This means that you are free to:
+
+- Share it: you can copy and redistribute the material in any medium or format
+- Adapt it: you can remix, transform, and build upon the material
+
+Under the following terms:
+
+- Attribution: You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+
+- NonCommercial: You may not use the material for commercial purposes.
+
+- ShareAlike: If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
+
+- No additional restrictions: You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+
+These freedoms cannot be revoked by the licensor (that is me) as long as you follow the license terms.
+
+```{r license, echo=FALSE, out.width="10%"}
+knitr::include_graphics(rep("images/license.png"))
+```
+
+## How to support this project {-}
 
 

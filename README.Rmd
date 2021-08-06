@@ -20,16 +20,6 @@ is_online = curl::has_internet()
 # An Introduction to Spatial Data Analysis and Statistics: A Course in R
 
 <!-- badges: start -->
-<!-- NOTE: the binder badge was created by holepunch and it makes reference to 
-     ../gh/paezha/spatial-analysis-R/master?urlpath=rstudio 
-     This causes a mistake, as master branch is now named main. Revise to ../gh/paezha/spatial-analysis-R/main?urlpath=rstudio
--->
-<!--  <a href="https://github.com/paezha/spatial-analysis-r/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=paezha/spatial-analysis-r" />
-</a>
--->
-<!-- Activity badges generated using shields. See: https://shields.io/category/activity -->
-
   [![GitHub all contributors](https://img.shields.io/github/contributors/paezha/spatial-analysis-r?color=2b9348)](https://github.com/paezha/spatial-analysis-r/graphs/contributors)
   [![GitHub commit activity](https://img.shields.io/github/commit-activity/y/paezha/spatial-analysis-r)
   [![Launch Rstudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/paezha/spatial-analysis-r/main?urlpath=rstudio)
@@ -41,7 +31,7 @@ is_online = curl::has_internet()
 
 This repository hosts the code underlying the book *An Introduction to Spatial Data Analysis and Statistics: A Course in R*, by [Antonio Paez](https://www.science.mcmaster.ca/ees/component/comprofiler/userprofile/paezha.html):
 
-> Paez A (2021). An Introduction to Spatial Data Analysis and Statistics: A Course in R. McMaster Invisible Press. ISBN: XYZ 
+> Paez A (2021). An Introduction to Spatial Data Analysis and Statistics: A Course in R. McMaster Invisible Press. ISBN: 978-1-7778515-0-7 
 The online version of this book is free to read at https://www.spatial-analysis-R.org/.
 
 ## Resources for Students and Instructors
@@ -127,7 +117,7 @@ browseURL("_book/index.html") # to view it
 
 ## The book in binder
 
-TODO
+I think I got the binder to work.
 
 [![Launch Rstudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/paezha/spatial-analysis-r/main?urlpath=rstudio)
 
