@@ -34,10 +34,11 @@ knitr::include_graphics(rep("images/cover.jpg"))
 
 Paez, Antonio (2021)  
 *An Introduction to Spatial Data Analysis and Statisitcs: A Course in R*  
-McMaster Invisible Press  
+[Publisher]  
 ISBN: 978-1-7778515-0-7  
 <!-- DOI badge -->
 [![DOI](https://zenodo.org/badge/391072865.svg)](https://zenodo.org/badge/latestdoi/391072865)  
+In GitHub: https://github.com/paezha/spatial-analysis-r
   
   
 Antonio Paez  
@@ -51,12 +52,16 @@ paezha@mcmaster.ca
 <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="30" height="30" />
 https://orcid.org/0000-0001-6912-9919 
 </a>  
-<!-- Google Scholar and Publobs icons by https://jpswalsh.github.io/academicons/-->  
+<!-- Google Scholar and Publobs icons by https://jpswalsh.github.io/academicons/-->
 <a href="https://scholar.google.com/citations?user=bLY377kAAAAJ&hl=en">
-<img alt="ORCID logo" src="images/google-scholar-square.svg" width="30" height="30" />
+<img alt="Google Scholar logo" src="images/google-scholar-square.svg" width="30" height="30" />
 </a>  
 <a href="https://publons.com/researcher/2897251/antonio-paez/">
-<img alt="ORCID logo" src="images/publons-square.svg" width="30" height="30" />
+<img alt="Publons logo" src="images/publons-square.svg" width="30" height="30" />
+</a>
+<!-- GitHub icon retrived from https://github.com/logos-->  
+<a href="https://github.com/paezha">
+<img alt="GitHub logo" src="images/GitHub-Mark-64px.png" width="30" height="30" />
 </a>  
 
 ## What is this book and who is it for? {-}
