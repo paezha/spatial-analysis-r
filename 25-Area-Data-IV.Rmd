@@ -154,20 +154,32 @@ The value (output) of the function is a matrix with local Moran's $I$ coefficien
 summary(POP_DENSITY.lm)
 ```
 
+Rename the columns for convenience:
+```{r}
+colnames(POP_DENSITY.lm) <- c("Ii", "E.Ii", "Var.Ii", "Z.Ii", "p.val")
+```
+
 Similar to the global version of Moran's $I$, hypothesis testing can be conducted by comparing the empirical statistic to its distribution under the null hypothesis of spatial independence. The function `localmoran` reports p-values to this end.
 
 For further exploration, join the local statistics to the dataframe:
-```{r}
+```{r }
 Hamilton_CT <- Hamilton_CT %>% 
-  left_join(data.frame(TRACT = Hamilton_CT$TRACT, POP_DENSITY.lm), by = "TRACT") %>% # Join the results of `localmoran()` to the dataframe.
-  rename(p.val = Pr.z...0.) # Use `rename()` to change the name of variables in a dataframe
+  left_join(data.frame(TRACT = Hamilton_CT$TRACT, 
+                       POP_DENSITY.lm), 
+            by = "TRACT") # Join the results of `localmoran()` to the dataframe
 ```
 
 Now it is possible to map the local statistics. Since we added the $p$-value of the local statistics, we can distinguish between those with small (say, less than 0.05) and large $p$-values:
-```{r message = FALSE}
+```{r }
 # The function `add_sf()` draws a simple features object, similar to `geom_sf()` in `ggplot2`. We "split" observations based on their p-values: if the p-value is less than 0.05, the condition is "TRUE" and otherwise it is "FALSE". Finally, we color the zones based on their `Type`: that is, whether they are High & High according to the local statistic, or Low & Low, etc.
   plot_ly(Hamilton_CT) %>%
-    add_sf(split = ~(p.val < 0.05), color = ~Type, colors = c("red", "khaki1", "dodgerblue", "dodgerblue4")) 
+    add_sf(type = "scatter",
+           split = ~(p.val < 0.05), 
+           color = ~Type, 
+           colors = c("red", 
+                      "khaki1", 
+                      "dodgerblue", 
+                      "dodgerblue4")) 
 ```
 
 The map above shows whether population density in a zone is high, surrounded by other zones with high population densities (HH), or low, surrounded by zones that also have low population density (LL). Other zones have either low population densities and are surrounded by zones with high population density, or vice-versa (HL/LH). 
@@ -180,28 +192,40 @@ While mapping $I_i$ or their corresponding $p$-values is straightforward, I pers
 
 ```{r}
 # A function is a way of packaging a set of standard instructions. Here, we package all the steps we used above to create the map of the local Moran coefficients in a new function called `localmoran.map()`
-localmoran.map <- function(p = p, listw = listw, VAR = VAR, by = by){
+localmoran.map <- function(p, listw, VAR, by){
   # p is a simple features object
   require(tidyverse)
   require(spdep)
   require(plotly)
   
-  df_msc <- transmute(p,
-                      key = p[[by]],
-                      Z = (p[[VAR]] - mean(p[[VAR]])) / var(p[[VAR]]),
-                      SMA = lag.listw(listw, Z),
-                      Type = case_when(Z < 0 & SMA < 0 ~ "LL",
-                                       Z > 0 & SMA > 0 ~ "HH",
-                                       TRUE ~ "HL/LH"))
+  df_msc <- p %>% 
+    rename(VAR = as.name(VAR),
+              key = as.name(by)) %>%
+    transmute(key,
+              VAR,
+              Z = (VAR - mean(VAR)) / var(VAR),
+              SMA = lag.listw(listw, Z),
+              Type = case_when(Z < 0 & SMA < 0 ~ "LL",
+                               Z > 0 & SMA > 0 ~ "HH",
+                               TRUE ~ "HL/LH"))
   
-  local_I <- localmoran(p[[VAR]], listw)
+  local_I <- localmoran(df_msc$VAR, listw)
+  
+  colnames(local_I) <- c("Ii", "E.Ii", "Var.Ii", "Z.Ii", "p.val")
   
   df_msc <- left_join(df_msc, 
-                      data.frame(key = p[[by]], local_I))
-  df_msc <- rename(df_msc, p.val = Pr.z...0.)
+                      data.frame(key = df_msc$key, 
+                                 local_I),
+                      by = "key")
   
   plot_ly(df_msc) %>%
-    add_sf(split = ~(p.val < 0.05), color = ~Type, colors = c("red", "khaki1", "dodgerblue", "dodgerblue4")) 
+    add_sf(type = "scatter",
+           split = ~(p.val < 0.05), 
+           color = ~Type, 
+           colors = c("red", 
+                      "khaki1",
+                      "dodgerblue", 
+                      "dodgerblue4")) 
 }
 ```
 
@@ -209,7 +233,9 @@ Notice how this function simply replicates the steps that we followed earlier to
 
 To use this function you need as inputs an object of class `sf`, a `listw` object with spatial weights, and to define the variable of interest and a unique identifier for the areas (such as their tract identifiers). For example:
 ```{r message=FALSE, warning=FALSE}
-localmoran.map(Hamilton_CT, Hamilton_CT.w, "POP_DENSITY", by = "TRACT")
+localmoran.map(Hamilton_CT, Hamilton_CT.w, 
+               "POP_DENSITY", 
+               by = "TRACT")
 ```
 
 There, the function creates the map as desired.
@@ -240,9 +266,13 @@ sum(df1_simulated$z)
 The following is an interactive plot of variable `z` in the sample dataframe `df1`. This variable is spatially random:
 ```{r}
 # Define how variables in the table are represented in the plot: for instance, the variable `x` corresponds to the x axis. Next, define the properties of the markers, or geometric objects in the plot. For example, their color will be proportional to variable `z` 
-plot_ly(df1_simulated, x = ~x, y = ~y, z = ~z, 
+plot_ly(df1_simulated, 
+        x = ~x, 
+        y = ~y, 
+        z = ~z, 
         marker = list(color = ~z, 
-                      colorscale = c('#FFE1A1', '#683531'), 
+                      colorscale = c('#FFE1A1', 
+                                     '#683531'), 
                       showscale = TRUE)) %>%
   add_markers()
 ```
@@ -268,8 +298,14 @@ Now, for a fixed radius, change the focal point, and see how much the concentrat
 
 We will now repeat the thought experiment but now with the landscape shown in the following figure:
 ```{r}
-plot_ly(df2_simulated, x = ~x, y = ~y, z = ~z,
-        marker = list(color = ~z, colorscale = c('#FFE1A1', '#683531'), showscale = TRUE)) %>%
+plot_ly(df2_simulated, 
+        x = ~x, 
+        y = ~y, 
+        z = ~z,
+        marker = list(color = ~z,
+                      colorscale = c('#FFE1A1', 
+                                     '#683531'), 
+                      showscale = TRUE)) %>%
   add_markers()
 ```
 
@@ -369,7 +405,14 @@ df2 <- df2 %>%
 
 And then the plot, but now color the points depending on whether they are high or low concentrations, and whether their $p$-values are lower than 0.05:
 ```{r}
-plot_ly(df2, x = ~x, y = ~y, z = ~z, color = ~Type, colors = c("red", "blue", "gray"),
+plot_ly(df2, 
+        x = ~x,
+        y = ~y, 
+        z = ~z, 
+        color = ~Type, 
+        colors = c("red", 
+                   "blue", 
+                   "gray"),
         marker = list()) %>%
   add_markers()
 ```
@@ -404,9 +447,19 @@ sum(df1.lg$p.val <= alpha_B)
 If we examine the variable in `df2`:
 ```{r}
 df2 <- mutate(df2, 
-              Type = factor(ifelse(Gstar < 0 & p.val <= alpha_B, "Low Concentration",
-                                   ifelse(Gstar > 0 & p.val <= alpha_B, "High Concentration", "Not Signicant"))))
-plot_ly(df2, x = ~x, y = ~y, z = ~z, color = ~Type, colors = c("red", "blue", "gray"),
+              Type = case_when(Gstar < 0 & p.val <= alpha_B ~ "Low Concentration",
+                               Gstar > 0 & p.val <= alpha_B ~ "High Concentration",
+                               TRUE ~ "Not Signicant"),
+              factor = Type)
+
+plot_ly(df2, 
+        x = ~x, 
+        y = ~y, 
+        z = ~z, 
+        color = ~Type, 
+        colors = c("red", 
+                   "blue",
+                   "gray"),
         marker = list()) %>%
   add_markers()
 ```

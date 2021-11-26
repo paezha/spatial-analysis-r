@@ -173,7 +173,12 @@ HamiltonDAs$model3.e <- model3$residuals
 We can plot a map of the residuals to examine their spatial pattern (negative residuals are red, positive are blue):
 ```{r message = FALSE, warning = FALSE}
   plot_ly(HamiltonDAs) %>%
-    add_sf(color = ~ifelse(model3.e > 0, "Positive", "Negative"), colors = c("red", "dodgerblue4"))
+    add_sf(type = "scatter",
+           color = ~ifelse(model3.e > 0, 
+                           "Positive", 
+                           "Negative"), 
+           colors = c("red", 
+                      "dodgerblue4"))
 ```
 
 In this case, the visual inspection makes it clear that there is an issue with residual spatial pattern, and using Moran's $I$ we can conclude that the residuals are spatially autocorrelated:

@@ -308,7 +308,10 @@ The analysis that follows is somewhat more advanced, but serves to illustrate th
 
 We will begin by creating local Moran maps to identify potential "hot" and "cold" spots of population density. We can envision these as representing different spatial regimes: 
 ```{r message = FALSE, warning = FALSE}
-localmoran.map(Hamilton_CT, Hamilton_CT.w, "POP_DENSITY", by = "TRACT")
+localmoran.map(Hamilton_CT, 
+               Hamilton_CT.w, 
+               "POP_DENSITY", 
+               by = "TRACT")
 ```
 
 Examination of the map above, suggests that there are possibly three regimes: a CBD ("HH" and significant tracts), Suburbs ("LL" and significant tracts), and Other (not significant tracts). Based on this, we will create two indicator variables, one for census tracts in the CBD and another for census tracts in the Suburbs. An indicator variable takes values of 1 or zero, depending on whether a condition is true. For instance, all census tracts in the CBD will take the value of 1 in the CBD indicator variable, and all others will be zero.
