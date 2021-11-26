@@ -85,6 +85,27 @@ jobs:
 
       - name: Build site
         run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
+      - uses: actions/upload-artifact@v1
+        with:
+          name: _book
+          path: _book/
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Download artifact
+        uses: actions/download-artifact@v1.0.0
+        with:
+         # Artifact name
+         name: _book # optional
+         # Destination path
+         path: _book # optional
+      - name: Deploy to GitHub Pages
+        uses: Cecilapp/GitHub-Pages-deploy@master
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          email: paezha@gmail.com
+          jekill: no
+          build_dir: _site
 
       #- name: Install npm
       #  uses: actions/setup-node@v1
