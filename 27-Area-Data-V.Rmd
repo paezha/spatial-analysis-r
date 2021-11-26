@@ -185,7 +185,10 @@ Since we are interested in statistical maps, we will create a map of the residua
 # Recall that 'plot_ly()' is a function used to create interactive plots
   plot_ly(Hamilton_CT) %>% 
   # Recall that `add_sf()` is similar to `geom_sf()` and it draws a simple features object on a `plotly` plot. This example adds colors to represent positive (blue) and negative residuals (red).
-    add_sf(color = ~(model1.e > 0), colors = c("red", "dodgerblue4")) 
+    add_sf(type = "scatter",
+           color = ~(model1.e > 0), 
+           colors = c("red", 
+                      "dodgerblue4")) 
 ```
 
 In the legend of the plot, "TRUE" means that the residual is positive, and "FALSE" that it is negative. Does the spatial distribution of residuals look random?
@@ -290,7 +293,10 @@ Hamilton_CT$model3.e <- model3$residuals
 While this latest model provides a somewhat better fit, there is still systematic under- and over-prediction, as seen in the map below (red are negative residuals and blue are positive):
 ```{r message = FALSE}
 plot_ly(Hamilton_CT) %>%
-  add_sf(color = ~(model3.e > 0), colors = c("red", "dodgerblue4"))
+  add_sf(type = "scatter",
+         color = ~(model3.e > 0), 
+         colors = c("red", 
+                    "dodgerblue4"))
 ```
 
 Moran's $I$ as well strongly suggests that the residuals are still not random/independent:
@@ -318,7 +324,10 @@ Examination of the map above, suggests that there are possibly three regimes: a 
 
 Begin by computing the local statistics:
 ```{r}
-POP_DEN.lm <- localmoran(Hamilton_CT$POP_DENSITY, listw = Hamilton_CT.w)
+POP_DEN.lm <- localmoran(Hamilton_CT$POP_DENSITY, 
+                         listw = Hamilton_CT.w)
+
+colnames(POP_DEN.lm) <- c("Ii", "E.Ii", "Var.Ii", "Z.Ii", "p.val")
 ```
 
 Next, we will identify the type of tract based on the spatial relationships according to the local statistics (i.e., "HH", "LL", or "HL/LH"). 
@@ -336,8 +345,8 @@ After that, identify as CBD all tracts for which Type is "HH" and the p-value is
 ```{r}
 df_msc <- cbind(df_msc, POP_DEN.lm)
 
-CBD <- ifelse(df_msc$Type == "HH" & df_msc$`Pr.z...0` < 0.05, 1, 0)
-Suburb <- ifelse(df_msc$Type == "LL" & df_msc$`Pr.z...0` < 0.05, 1, 0)
+CBD <- ifelse(df_msc$Type == "HH" & df_msc$p.val < 0.05, 1, 0)
+Suburb <- ifelse(df_msc$Type == "LL" & df_msc$p.val < 0.05, 1, 0)
 ```
 
 We then add the indicator variables to the dataframe:
@@ -371,15 +380,19 @@ summary(model4)
 This model provides a much better fit than the preceding models (see the the coefficient of multiple determination).
 
 We can visually examine the spatial distribution of the residuals by means of the following map:
-```{r message = FALSE, warning = FALSE}
+```{r }
 Hamilton_CT$model4.e <- model4$residuals
 plot_ly(Hamilton_CT) %>%
-  add_sf(color = ~(model4.e > 0), colors = c("red", "dodgerblue4"))
+  add_sf(type = "scatter",
+         color = ~(model4.e > 0), 
+         colors = c("red", 
+                    "dodgerblue4"))
 ```
 
 It is not clear from the visual inspection that the residuals are independent, but this can be tested as usual by means of Moran's $I$ coefficient:
 ```{r}
-moran.test(Hamilton_CT$model4.e, Hamilton_CT.w)
+moran.test(Hamilton_CT$model4.e,
+           Hamilton_CT.w)
 ```
 
 Based on the results, we fail to reject the null hypothesis, and can be fairly confident that the residuals are random, at last.
