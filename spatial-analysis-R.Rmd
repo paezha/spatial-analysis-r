@@ -6813,3 +6813,1907 @@ pennlc.sf <- st_as_sf(pennlc)
 
 <!--chapter:end:30-Activity-Area-Data-VI.Rmd-->
 
+# (PART) Part V: Analysis and Prediction of Fields {-}
+
+# Spatially Continuous Data I {#spatially-continuous-data-i}
+
+*NOTE*: You can download the source files for this book from [here](https://github.com/paezha/Spatial-Statistics-Course). The source files are in the format of R Notebooks. Notebooks are pretty neat, because the allow you execute code within the notebook, so that you can work interactively with the notes.
+
+If you wish to work interactively with this chapter you will need the following:
+
+* An R markdown notebook version of this document (the source file).
+
+* A package called `geog4ga3`.
+
+You will also use a custom function that is included in the package `geog4ga3` as follows:
+
+`kpointmeans(source_xy, z, target_xy, k, latlong)`
+
+This is a function to calculate k-point means. It takes a set of source coordinates (`source_xy`), that is, the coordinates of observations to be used for interpolation; a variable `z` to interpolate; a set of target coordinates (`target_xy`), the points to interpolate `z`; the number of nearest neighbors `k`; and a logical value to indicate whether the coordinates are latitude-longitude (the default is `FALSE`).
+
+## Learning objectives
+
+Previously, you learned about the analysis of area data. Starting with this practice, you will be introduced to another type of spatial data: continuous data, also called fields. In this practice, you will learn:
+
+1. About spatially continuous data/fields.
+2. Exploratory visualization.
+3. The purpose of spatial interpolation.
+4. The use of tile-based approaches.
+5. Inverse distance weighting.
+6. K-point means.
+
+## Suggested readings
+
+- Bailey TC and Gatrell AC [-@Bailey1995] Interactive Spatial Data Analysis, Chapters 5 and 6. Longman: Essex.
+- Bivand RS, Pebesma E, and Gomez-Rubio V [-@Bivand2008] Applied Spatial Data Analysis with R, Chapter 8. Springer: New York.
+- Brunsdon C and Comber L [-@Brunsdon2015R] An Introduction to R for Spatial Analysis and Mapping, Chapter 6, Sections 6.7 and 6.8. Sage: Los Angeles.
+- Isaaks EH and Srivastava RM  [-@Isaaks1989applied] An Introduction to Applied Geostatistics, **CHAPTERS**. Oxford University Press: Oxford.
+- O'Sullivan D and Unwin D [-@Osullivan2010] Geographic Information Analysis, 2nd Edition, Chapters 9 and 10. John Wiley & Sons: New Jersey.
+
+## Preliminaries
+
+As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+```{r}
+rm(list = ls())
+```
+
+Note that `ls()` lists all objects currently on the workspace.
+
+Load the libraries you will use in this activity:
+```{r message=FALSE, warning=FALSE}
+library(deldir)
+library(geog4ga3)
+library(plotly)
+library(spatstat)
+library(spdep)
+library(tidyverse)
+```
+
+Begin by loading the data you will need for this Chapter:
+```{r}
+data("Walker_Lake")
+```
+
+You can verify the contents of the dataframe:
+```{r}
+summary(Walker_Lake)
+```
+
+This dataframe includes a sample of of geocoded observations with false coordinates `X` and `Y`, of two quantitative variables `V`, `U`, and a factor variable `T`. The variables are generic, but you can think of them as measurements of pollutants. The Walker Lake dataset originally was used for teaching geostatistics in Isaaks and Srivastava's [-@Isaaks1989applied] book [An Introduction to Geostatistics](https://books.google.ca/books?id=vC2dcXFLI3YC&dq=introduction+to+applied+geostatistics+isaaks+and+srivastava&hl=en&sa=X&ved=0ahUKEwiKg6_iyrXZAhUjp1kKHd_jAVcQ6AEIKTAA).
+
+## Spatially continuous (field) data
+
+Previously in the book we discussed two types of data that are of interest in spatial analysis: points and events, and areas.
+
+The last section of the course will deal with a third type of data that finds numerous applications in many disciplines.
+
+We will begin by recalling that there are different _units of support_ for spatial data. The unit of support is the type of spatial object that is used to represent a spatial phenomenon, and that is useful to understand the kind of process and the types of analysis that can be applied.
+
+In the case of point pattern analysis, the unit of support is the point. Depending on the scale of the analysis, the point could be anything from the centroid of cells, the location of trees, the addresses of businesses, or the centers of cities at a much larger scale. Obviously, none of these objects are actual points (the point is a theoretical object). However, points are a reasonable representation for events when their size is minuscule compared to the area of the region under analysis. The most basic attribute of an event is whether it is present (e.g., is there a tree at this location?). Other attributes are conditional on that one.
+
+In the case of areas, the unit of support is a zone. Data in this type of analysis may or not be generated by a discontinuous process, but once it has been cast in the form of statistics for areas, this will usually involve discontinuities at the edges of the areas.
+
+An important difference between point pattern analysis and analysis of data in areas is the source of the randomness.
+
+In the case of point pattern analysis, the coordinates of the event are assumed to be the outcome of a random process. In area data, the locations of the data are exogenously given, and the source of randomness instead is in the values of the attributes.
+
+This brings us to spatially continuous data.
+
+Superficially, spatially continuous data looks like points. This is because of how a field is measured at discrete locations. The underlying process, however, is not discrete, and a field can in principle be measured at any location in the space where the underlying phenomenon is in operation. Some obvious examples of this include temperature and elevation. Temperature is measured at discrete locations, but the phenomenon itself is extensive. Same thing with elevation. 
+
+The source of randomness in the case of fields is the inherent uncertainty of the outcome of the process at locations where it was not measured. Therefore, an essential task is to predict values at unmeasured locations. We call this task _spatial interpolation_. In addition, we often are interested in assessing the degree of uncertainty of predictions or interpolated values.
+
+The study of continuous data has been heavily influenced by the work of South African mining engineer [D.G. Krige](https://en.wikipedia.org/wiki/Danie_G._Krige), who sought to estimate the distribution of minerals based on samples of boreholes. Since then, the study of fields has found applications in remote sensing, real estate appraisal, environmental science, hydrogeology, and many other disciplines.
+
+We will define a field as a mixed spatial process that depends on the coordinates $u_i$ and $v_i$, in addition to a vector of covariates $\bf{x}_i$:
+$$
+z_i = f(u_i, v_i, \bf{x}_i) + \epsilon_i
+$$
+where $i$ is an arbitrary location in the region, and $\epsilon_i$ is the difference between the systematic description of the process (i.e., $f(u_i, v_i, \bf{x}_i)$) and the value of the field $z$.
+
+More simply, a field could be the outcome of a purely spatial process as follows:
+$$
+z_i = f(u_i, v_i) + \epsilon_i
+$$
+
+The value of a field is known at the locations $i$ where it is measured. In locations where the field was not measured (we will call any such location $p$), there will be some uncertainty about the value of the field variable, which stems from our limited knowledge of the underlying process. As a consequence, there will be a random term associated with any prediction of the value of the field:
+$$
+\hat{z}_p = \hat{f}(u_p, v_p) + \hat{\epsilon}_p
+$$
+We use the hat notation to indicate that these are estimates of the true values.
+
+A key task in the analysis of fields is to determine a suitable function for making predictions $\hat{z}_p$ and to estimate the uncertainty as well.
+
+In this and upcoming sessions you will learn about methods to achieve this task. 
+
+## Exploratory visualization
+
+We will begin our discussion of fields with techniques for exploratory visualization. The methods are very similar to those used for marked point patterns in point pattern analysis. Like we did there, we can use dot or proportional symbol maps. For example, we can create a proportional symbol map of the variable `V` in the Walker Lake dataset (with alpha = 0.5 for some transparency to mitigate the overplotting):
+```{r}
+ps1 <- ggplot(data = Walker_Lake, 
+              aes (x = X, y = Y, color = V, size = V)) +
+  geom_point(alpha = 0.5) + # `alpha` is used to control the transparency of the objects, with 1 being completely opaque and 0 completely transparent.
+  scale_color_distiller(palette = "OrRd", trans = "reverse") +
+  coord_equal() #'Coord_equal' ensures that units in the x and y axis are displayed using the same lengths.
+
+ps1
+```
+
+The proportional symbols indicate the location where a measurement was made. There is no randomness in these locations, as they were selected by design. In particular, notice how a regular grid seems to have been used for part of the sampling, and then possibly there was further infill sampling at those places where the field appeared to vary more.
+
+Imagine that the observations are of a contaminant. The task could be to calculate the total amount of the contaminant over the region. This would require you to obtain estimates of the contaminant in all the region, not just those places where measurements were made. If, as is typically the case, making more observations is expensive, other approaches must be adopted.
+
+Before proceeding, remember that the package `plotly` can be used to enhance exploratory analysis by allowing user interactivity. Below is the same plot as before, but now as an interactive 3D scatterplot:
+```{r}
+plot_ly(data = Walker_Lake, x = ~X, y = ~Y, z = ~V,
+         marker = list(color = ~V, colorscale = c("Orange", "Red"), 
+                       showscale = TRUE)) %>% 
+  add_markers() #adding traces to a plotly visualization
+
+```
+
+## Tile-based methods
+
+Another common approach to visualize fields is by means of tile-based methods. These methods take a set of points and convert them into a tessellation, thus giving them the aspect of "tiles". 
+
+A widely used algorithm to convert points into tiles is called Voronoi polygons, after [Georgy Voronoi](https://en.wikipedia.org/wiki/Georgy_Voronoy), the mathematician that discovered it. To illustrate how Voronoi polygons are created, we will use a simple example.
+
+1. Given a set of generating points $p_g$ with coordinates $(u_g, u_g)$ (for $g = 1,...,n$) and values of a variable $z_{p_g}$:
+```{r}
+# Create a set of coordinates for the example
+uv_coords <- matrix(c(0.7, 5.2, 3.3, 1.3, 5.4, 0.5, 1.8, 2.3, 4.8, 5.5), c(5, 2)) %>% 
+  st_multipoint("XY")
+
+# Create a window for the points, this is similar to the windows used in `spatstat` for spatial point pattern analysis
+box = st_polygon(list(rbind(c(0,0),c(6,0),c(6,6),c(0,6),c(0,0))))
+
+# Create a plot of the coordinates and the window
+p <- ggplot(data = uv_coords) + 
+  geom_sf(size = 2) +
+  geom_sf(data = box, fill = NA)
+p
+```
+
+
+2. Each point is connected by means of straight lines to its two nearest neighbors to create a triangulation:
+```{r}
+# Create a triangulation that connect each point to its two nearest neighbors. The function `st_triangulate()` from the `sf` package does this. The output can be polygons (triangles) or lines only. We set bOnlyEdges = TRUE to obtain only the lines.
+l2n <- st_triangulate(uv_coords, bOnlyEdges = TRUE)
+
+# Plot the triangulation, i.e., the lines between nearest neighbors
+ggplot(data = uv_coords) + 
+  geom_sf(size = 2) +
+  geom_sf(data = box, 
+          fill = NA) +
+  geom_sf(data = l2n, 
+          color = "gray", 
+          linetype = "dashed")
+```
+
+Notice that the plot above is already a tessellation, with the points at the vertices of the triangles. 
+
+3. The perpendicular bisectors of each triangle are found and extended, until they intersect. The resulting tessellation is a set of Voronoi polygons:
+```{r message=FALSE}
+# The function `st_voronoi()` from the `sf` package is used to create Voronoi polygons
+vor <- st_voronoi(uv_coords) #Calculates voronoi polygons based on a set of spatial points.
+
+ggplot(data = uv_coords) +
+  geom_sf(size = 2) + 
+  geom_sf(data = l2n, 
+          color = "gray", 
+          linetype = "dashed") + 
+  geom_sf(data = vor, fill = NA) + 
+  coord_sf(xlim = c(0, 6), y = c(0, 6))
+```
+
+The triangulation was used to generate a second tessellation, i.e., the Voronoi polygons. These polygons have the property that any point $p_i$ inside the polygon with generating point $p_g$ in it, is closer to $p_g$ than to any other generating point $p_k$ on the plane. For this reason, Voronoi polygons are used to obtain areas of influence, among other applications.
+
+There are other ways of obtaining Voronoi polygons, as Figure 1 below illustrates. Voronoi polygons in the figure are created by radial growth. The basic concept is the same, but implemented in a different way: find every point that is closest to $p_g$. When two circles touch, they become the boundary between all points that are closer to $p_g$ and $p_k$ respectively. Continue growing until the plane is fully covered.
+
+![Figure 1. Voronoi polygons by radial growth (source: The Internet)](Voronoi_growth_euclidean.gif)
+
+The Voronoi polygons for the sample data set can be obtained in `R` as follows.
+
+First, we will convert the `Walker_Lake` dataframe to a simple features object using as follows:
+```{r}
+# Function `st_as_sf()` takes a foreign object (foreign to the `sf` package) and converts it into a simple features object. If the foreign object is points, the coordinates can be named by means of the argument `coords`. 
+Walker_Lake.sf <- Walker_Lake %>% 
+  st_as_sf(coords = c("X", "Y"))
+```
+
+Once we have an `sf` object of the points, the geometry can be used to create the Voronoi polygons:
+```{r}
+# The function `do.call(what, arg)` applies a function `what` to the argument `arg`. In this case, we extract the geometry of the `sf` object (i.e., the coordinates of the points) and apply the function `c()` to concatenate the coordinates to obtain a MULTIPOINT object.   
+vpolygons <- do.call(c, st_geometry(Walker_Lake.sf)) %>% # The pipe operator passes the MuLTIPOINT object to function `st_voronoi()`
+  st_voronoi() %>% # The output of `st_voronoi()` is a collection of geometries, which we pass to the following function for extraction.
+  st_collection_extract()
+```
+
+After the step above we already have the Voronoi polygons:
+```{r}
+ggplot(vpolygons) + 
+  geom_sf(fill = NA)
+```
+
+However, these polygons are just the geometry and lack other attributes that we originally had for the points. See:
+```{r}
+head(vpolygons)
+```
+
+For this reason, we need to join the Voronoi polygons to the attributes of the points. To do this, we will first copy the `sf` object with the original points to a new dataframe, and then replace the geometry of the points with the geometry of the polygons:
+```{r}
+Walker_Lake.v <- Walker_Lake.sf
+Walker_Lake.v$geometry <- vpolygons[unlist(st_intersects(Walker_Lake.sf, vpolygons))] 
+```
+
+The new `Walker_Lake.v` object now includes the attributes of the original points as well as the geometry of the polygons:
+```{r}
+head(Walker_Lake.v)
+```
+
+We can now plot the attributes as the polygons. The value of $z$ for a tile is the same as the value of the variable for its corresponding generating point, or $z_{p_g}$. This is the plot for the current example:
+```{r}
+ggplot(Walker_Lake.v) + 
+  geom_sf(aes(fill = V)) +
+  scale_fill_distiller(palette = "OrRd", direction = 1)
+```
+
+We can see that the Voronoi polygons extend well beyond the extent of the original points, and in the plot add a large amount of unnecessary area. We can improve the plot in two ways, by limiting the extent for plotting, or by clipping the polygons. Here we will try the latter, with a bounding box that covers the region of interest:
+```{r}
+# Function `st_polygon()` creates an `sf` object with a polygon or polygons. In this case, we create a single polygon, a rectangle with corners given by the coordinates in the function. 
+W.bbox <- st_polygon(list(rbind(c(0,0),c(259,0),c(259, 299),c(0, 299),c(0,0))))
+```
+
+The intersection of the polygons with the box clips the polygons:
+```{r}
+Walker_Lake.v <- Walker_Lake.v %>%
+  st_intersection(W.bbox)
+```
+
+This is the plot after fixing this issue:
+```{r}
+ggplot(Walker_Lake.v) + 
+  geom_sf(aes(fill = V)) + 
+  geom_sf(data = Walker_Lake.sf, size = 0.1) +
+  scale_fill_distiller(palette = "OrRd", direction = 1)
+```
+
+As you can see, the points in the sample have been converted to a surface from which the value of $z$ can be estimated at any point as desired, from the value of $z$ of the closest point used to generate the tiles. This can be expressed as follows:
+$$
+\hat{z}_p = z_{p_g}\text{ for } p_g\text{ with } d_{pp_g}<d_{pp_k}\forall{k}
+$$
+
+## Inverse distance weighting (IDW)
+
+The tile-based approach above assumes that the field is flat within each polygon (see Figure 2). This is in most cases an unrealistic assumption. Other approaches to interpolate a spatial variable allow the estimated value of $z_p$ to vary with proximity to observations. Such is the case of IDW.
+
+![Figure 2. A field according to Voronoi polygons](Figure 2. Voronoi polygons field.jpg)
+
+Inverse distance weighting takes the following form:
+$$
+\hat{z}_p = \frac{\sum_{i=1}^n{w_{pi}z_i}}{\sum_{i=1}^n{w_{pi}}}
+$$
+
+This will probably look familiar to you, because it is formally identical to the spatial moving average. The difference is in how the "spatial weights" $w_{pi}$ are defined. For IDW, the spatial weights are given by a function of the inverse power of distance, as follows:
+$$
+w_{pi} = \frac{1}{d_{pi}^\gamma}
+$$
+In the expression above, parameter $\gamma$ controls the steepness of the decay function, with smaller values giving greater weight to more distant locations. Large values of $\gamma$ converge to a 1-point average (so that the interpolated value is identical to the nearest observation; you can verify this).
+
+We can see that inverse distance weighting is a weighted average of _all_ observations in the sample, but with greater weight given to more proximate observations. This approach is implemented in `R` in the package `spatstat` with the function `idw`. To use this function, the points must be converted into a `ppp` object. This necessitates that we define a window object, which we do based on the bounding box that we created for the Voronoi polygons:
+```{r}
+# Function `as.owin()` takes the polygon with the bounding box we created above and converts it into an `owin` object for use with the `spatstat` package. 
+W.owin <- as.owin(W.bbox)
+
+# We can create a `ppp` object with the coordinates of the points
+Walker_Lake.ppp <- as.ppp(X = Walker_Lake[,2:4], W = W.owin)
+```
+
+The call to the function requires a `ppp` object and the argument for the power to use in the inverse distance function. In this call, the power is set to 1:
+```{r}
+z_p.idw1 <- idw(Walker_Lake.ppp, power = 1)
+```
+
+The value (output) of this function is an `im` object. Objects of this type are used by the package `spatstat` to work with raster data. It can be simply plotted as follows:
+```{r}
+plot(z_p.idw1)
+```
+
+Or the information can be extracted for greater control of the aspect of the plot in `ggplot2`:
+```{r}
+ggplot(data = data.frame(expand.grid(X= z_p.idw1$xcol, Y = z_p.idw1$yrow),
+                         V = as.vector(t(z_p.idw1$v))), # transpose matrix
+       aes(x = X, y = Y, fill = V)) + 
+  geom_tile() +
+  scale_fill_distiller(palette = "OrRd", direction = 1) +
+  coord_equal()
+```
+
+Notice the dots where the observations are - the value of the field is known there. We can explore the effect of changing the parameter for the power, by using $\gamma = 0.5, 1, 2, \text{ and } 5$:
+```{r}
+z_p.idw05 <- idw(Walker_Lake.ppp, power = 0.5)
+z_p.idw2 <- idw(Walker_Lake.ppp, power = 2)
+z_p.idw5 <- idw(Walker_Lake.ppp, power = 5)
+
+#Inverse distance weighting for walker lake using three different gamma variables 
+```
+
+For ease of comparison, we will collect the information into a single dataframe:
+```{r}
+z_p.idw05.df <- data.frame(expand.grid(X= z_p.idw05$xcol, Y = z_p.idw05$yrow),
+                         V = as.vector(t(z_p.idw05$v)), Power = "P05")
+z_p.idw1.df <- data.frame(expand.grid(X= z_p.idw1$xcol, Y = z_p.idw1$yrow),
+                         V = as.vector(t(z_p.idw1$v)), Power = "P1")
+z_p.idw2.df <- data.frame(expand.grid(X= z_p.idw2$xcol, Y = z_p.idw2$yrow),
+                         V = as.vector(t(z_p.idw2$v)), Power = "P2")
+z_p.idw5.df <- data.frame(expand.grid(X= z_p.idw5$xcol, Y = z_p.idw5$yrow),
+                         V = as.vector(t(z_p.idw5$v)), Power = "P5")
+idw_df <- rbind(z_p.idw05.df, z_p.idw1.df, z_p.idw2.df, z_p.idw5.df)
+```
+
+We can now plot using the `facet_wrap` function to compare the results side by side:
+```{r}
+ggplot(data = idw_df, aes(x = X, y = Y, fill = V)) + 
+  geom_tile() +
+  scale_fill_distiller(palette = "OrRd", direction = 1) +
+  coord_equal() + 
+  facet_wrap(~ Power, ncol = 2)
+```
+
+Notice how smaller values of $\gamma$ "flatten" the predictions, in the extreme tending towards to global average, as all observations are weighted equally. Larger values, on the other hand, tend to be the average of a single point, the closest one. In fact, this replicates the Voronoi polygons, as seen in the following plot that combines the Voronoi polygons (without filling!) and the predictions from the IDW algorithm with $\gamma = 5$:
+```{r}
+ggplot() + 
+  geom_tile(data = subset(idw_df, Power = "P5"), aes(x = X, y = Y, fill = V)) +
+  geom_sf(data = Walker_Lake.v, 
+               color =  "white", fill = NA) +
+  scale_fill_distiller(palette = "OrRd", direction =  1)
+```
+
+Clearly, selection of a value for $\gamma$ is an important modeling decision when using IDW.
+
+## $k$-point means
+
+Another interpolation technique that is based on the idea of moving averages is $k$-point means. Again, this will look familiar to you, because it is also formally identical to the spatial moving average:
+$$
+\hat{z}_p = \frac{\sum_{i=1}^n{w_{pi}z_i}}{\sum_{i=1}^n{w_{pi}}}
+$$
+
+The spatial weights in this case, however, are defined in terms of $k$-nearest neighbors:
+$$
+w_{pi} = \bigg\{\begin{array}{ll}
+1 & \text{if } i \text{ is one of } k \text{th nearest neighbors of } p \text{ for a given }k \\
+0 & otherwise \\
+\end{array}
+$$
+
+Clearly, the above becomes:
+$$
+\hat{z}_p = \sum_{i=1}^n {w_{pi}^{st}z_i}
+$$
+
+If row-standardized spatial weights are used.
+
+We can calculate $k$-point means using the example. For this, we need to define a set of "target" coordinates, that is, the points where we wish to interpolate. In addition, we create a matrix with the coordinates of the "source" points, the observations used for interpolation:
+```{r}
+target_xy = expand.grid(x = seq(0.5, 259.5, 2.2), y = seq(0.5, 299.5, 2.2))
+source_xy = cbind(x = Walker_Lake$X, y = Walker_Lake$Y) #Combines columns or rows of matrix data
+```
+
+The value (output) of the function is a dataframe with the coordinates of the target points, as well as estimated values of $\hat{z_p}$ at those points. Using the three nearest neighbors:
+```{r cache=TRUE}
+kpoint.3 <- kpointmean(source_xy = source_xy, z = Walker_Lake$V, target_xy = target_xy, k =3) %>% 
+  rename(X=x, Y=y, V=z)
+```
+
+We can plot the interpolated field now:
+```{r}
+ggplot() +
+  geom_tile(data = kpoint.3, aes(x = X, y = Y, fill = V)) +
+  scale_fill_distiller(palette = "OrRd", direction = 1) +
+  coord_equal()
+```
+
+As with other spatially moving averages, the crucial aspect of implementing $k$-point means is the selection of $k$. A large value will tend towards the global average, whereas a value of 1 will tend to replicate the Voronoi polygons (see below):
+```{r cache=TRUE}
+# Calculate k-point means using only one point. Rename the variables to match 
+kpoint.1 <- kpointmean(source_xy = source_xy, z = Walker_Lake$V, target_xy = target_xy, k = 1) %>% 
+  rename(X=x, Y=y, V=z)
+```
+
+This is the plot with the Voronoi polygons:
+```{r}
+# Plot and overlay the Voronoi polygons
+ggplot() + 
+  geom_tile(data = kpoint.1, aes(x = X, y = Y, fill = V)) +
+  geom_sf(data = Walker_Lake.v, 
+               color =  "white", fill = NA) +
+  scale_fill_distiller(palette = "OrRd", direction =  1)
+```
+
+This shows that Voronoi polygons can be seen as a special case of IDW or $k$-point means depending on the way these two techniques are implemented.
+
+<!--chapter:end:31-Spatially-Continuous-Data-I.Rmd-->
+
+# Activity 15: Spatially Continuous Data I
+
+## Practice questions
+
+Answer the following questions:
+
+1. What is the difference between spatially continuous data and a spatial point pattern?
+2. What is the purpose of spatial interpolation?
+3. In your own words describe the method of Inverse Distance Weighting. 
+4. Consider the following spatial interpolation algorithms: Voronoi polygons and k-point means. How do they differ when the number of points used to calculate means is 1?
+
+
+## Learning objectives
+
+In this activity, you will:
+
+1. Explore a dataset with area data using visualization as appropriate.
+2. Discuss a process that might explain any pattern observed from the data.
+3. Conduct a modeling exercise using appropriate techniques. Justify your modeling decisions.
+
+## Suggested reading
+
+- Bailey TC and Gatrell AC [-@Bailey1995] Interactive Spatial Data Analysis, Chapters 5 and 6. Longman: Essex.
+- Bivand RS, Pebesma E, and Gomez-Rubio V [-@Bivand2008] Applied Spatial Data Analysis with R, Chapter 8. Springer: New York.
+- Brunsdon C and Comber L [-@Brunsdon2015R] An Introduction to R for Spatial Analysis and Mapping, Chapter 6, Sections 6.7 and 6.8. Sage: Los Angeles.
+- Isaaks EH and Srivastava RM  [-@Isaaks1989applied] An Introduction to Applied Geostatistics, **CHAPTERS**. Oxford University Press: Oxford.
+- O'Sullivan D and Unwin D [-@Osullivan2010] Geographic Information Analysis, 2nd Edition, Chapters 9 and 10. John Wiley & Sons: New Jersey.
+
+## Preliminaries
+
+For this activity you will need the following:
+
+* An R markdown notebook version of this document (the source file).
+
+* A package called `geog4ga3`.
+
+It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+```{r}
+rm(list = ls())
+```
+
+Note that `ls()` lists all objects currently on the workspace.
+
+Load the libraries you will use in this activity (load other packages as appropriate). 
+```{r message=FALSE, warning=FALSE}
+library(geog4ga3)
+library(tidyverse)
+library(spatstat)
+library(spdep)
+```
+
+Load the data that you will use in this activity:
+```{r}
+data("aquifer")
+```
+
+The data is a set of piezometric head (watertable pressure) observations of the Wolfcamp Aquifer in Texas (https://en.wikipedia.org/wiki/Hydraulic_head). Measures of pressure can be used to infer the flow of underground water, since water flows from high to low pressure areas.
+
+These data were collected to evaluate potential flow of contamination related to a high level toxic waste repository in Texas. The Deaf Smith county site in Texas was one of three potential sites proposed for this repository. Beneath the site is a deep brine aquifer known as the Wolfcamp aquifer that may serve as a conduit of contamination leaking from the repository.
+
+The data set consists of 85 georeferenced measurements of piezometric head. Possible applications of interpolation are to determine sites at risk and to quantify uncertainty of the interpolated surface, to evaluate the best locations for monitoring stations.
+
+Create an a unique identifier variable:
+```{r}
+aquifer$ID <- factor(c(1:nrow(aquifer)))
+```
+
+## Activity
+
+**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).
+
+1. (*)Map the Wolfcamp Aquifer data.
+
+2. (*)Create a surface using Voronoi polygons.
+
+3. (*)Create a surface using IDW.
+
+4. (*)Create a surface using k-point means. 
+
+5. What is the effect of changing the power of the inverse distance function?
+
+6. What is the effect of changing the number of points used in this algorithm?
+
+7. Discuss the limitations of these approaches. How can you calculate the uncertainty in the predictions?
+
+<!--chapter:end:32-Activity-Spatially-Continuous-Data-I.Rmd-->
+
+# Spatially Continuous Data II
+
+*NOTE*: You can download the source files for this book from [here](https://github.com/paezha/Spatial-Statistics-Course). The source files are in the format of R Notebooks. Notebooks are pretty neat, because the allow you execute code within the notebook, so that you can work interactively with the notes.
+
+Previously, you learned about the analysis of area data. Starting with this practice, you will be introduced to another type of spatial data: continuous data, also called fields. 
+
+If you wish to work interactively with this chapter you will need the following:
+
+* An R markdown notebook version of this document (the source file).
+
+* A package called `geog4ga3`. 
+
+
+## Learning objectives
+
+In the previous practice you were introduced to the concept of fields/spatially continuous data. Three different approaches were discussed that can be used to convert a set of observations of a field at discrete locations into a surface, namely tile-based approaches, inverse distance weighting (IDW), and $k$-point means. In this practice, you will learn:
+
+1. About intervals of confidence for predictions.
+2. Using trend surface analysis as an interpolation tool.
+3. The difference between accuracy and precision in interpolation.
+
+## Suggested readings
+
+- Bailey TC and Gatrell AC [-@Bailey1995] Interactive Spatial Data Analysis, Chapters 5 and 6. Longman: Essex.
+- Bivand RS, Pebesma E, and Gomez-Rubio V [-@Bivand2008] Applied Spatial Data Analysis with R, Chapter 8. Springer: New York.
+- Brunsdon C and Comber L [-@Brunsdon2015R] An Introduction to R for Spatial Analysis and Mapping, Chapter 6, Sections 6.7 and 6.8. Sage: Los Angeles.
+- Isaaks EH and Srivastava RM  [-@Isaaks1989applied] An Introduction to Applied Geostatistics, **CHAPTERS**. Oxford University Press: Oxford.
+- O'Sullivan D and Unwin D [-@Osullivan2010] Geographic Information Analysis, 2nd Edition, Chapters 9 and 10. John Wiley & Sons: New Jersey.
+
+## Preliminaries
+
+As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+```{r}
+rm(list = ls())
+```
+
+Note that `ls()` lists all objects currently on the workspace.
+
+Load the libraries you will use in this activity:
+```{r message = FALSE, warning=FALSE}
+library(geog4ga3)
+library(plotly)
+library(spatstat)
+library(spdep)
+library(tidyverse)
+```
+
+Begin by loading the data file that we will use in this chapter:
+```{r}
+data("Walker_Lake")
+```
+
+You can verify the contents of the dataframe:
+```{r}
+summary(Walker_Lake)
+```
+
+We have already met this data set before: it contains a set of coordinates `X` and `Y` (units are meters; the origin is false), as well as two quantitative variables `V` and `U` (notice that there are missing observations in `U`), and a factor `T`.
+
+## Uncertainty in the predictions
+
+A common task in the analysis of spatially continuous data is to estimate the value of a variable at a location where it was not measured - or in other words, to spatially interpolate the variable. In Chapter \@ref(spatially-continuous-data-i), we introduced three methods for spatial interpolation based on a sample of observations.
+
+The three algorithms that was saw before (i.e., Voronoi polygons, IDW, and $k$-point means) accomplish the task of providing spatial estimates. The values that we obtain with these methods are called _point estimates_. What is a point estimate? Recall the definition of a field that is the outcome of a purely spatial process:
+$$
+z_i = f(u_i, v_i) + \epsilon_i
+$$
+
+Accordingly, the prediction of the field at a new location is defined as a function of the estimated process and some random residual as follows:
+$$
+\hat{z}_p = \hat{f}(u_p, v_p) + \hat{\epsilon}_p
+$$
+The first part of the prediction ($\hat{f}(u_p, v_p)$) is the point estimate of the prediction, whereas the second part ($\hat{\epsilon}_p$) is the random part of the estimate.
+
+The methods we saw in Chapter \@ref(spatially-continuous-data-i) can be used to estimate point estimates of the process. Unfortunately, they do not provide an estimate for the random element, so it is not possible to assess the uncertainty of the estimated values directly, since this depends on the distribution of the random term.
+
+There are different ways in which at least some crude assessment of uncertainty can be attached to point estimates obtained from Voronoi polygons, IDW, or $k$-point means. For example, a very simple approach could be to use the sample variance to calculate intervals of confidence. This could be done as follows.
+
+We know that the sample variance describes the inherent variability in the distribution of values of a variable in a sample. Consider for instance the distribution of the variable in the Walker Lake dataset:
+```{r}
+ggplot(data = Walker_Lake, aes(V)) + 
+  geom_histogram(binwidth = 60)
+```
+
+Clearly, there are no values of the variable less than zero, and values in excess of 1,000 are rare.
+
+The standard deviation of the sample is:
+```{r}
+sd(Walker_Lake$V)
+```
+
+The standard deviation is the average deviation from the mean. We could use this value to say that typical deviations from our point estimates are a function of this standard deviation (to what extent, it depends on the underlying distribution).
+
+A problem with using this approach is that the distribution of the variable is not normal, and the distribution of $\hat{\epsilon}_p$ is unknown; the standard deviation is centered on the mean (meaning that it is a poor estimate for observations away from the mean); and in any case the standard deviation of the sample is too large for local point estimates if there is spatial pattern (since we know that the local mean will vary systematically).
+
+There are other approaches to deal with non-normal variables, for instance Wilcox's test, but some of the other limitations remain.
+```{r}
+wilcox.test(Walker_Lake$V, conf.int = TRUE, conf.level = 0.95)
+```
+
+As an alternative, the _local_ standard deviation could be used.
+
+Consider the case of $k$-point means. The point estimate is based on the values of the $k$-nearest neighbors:
+$$
+\hat{z}_p = \frac{\sum_{i=1}^n{w_{pi}z_i}}{\sum_{i=1}^n{w_{pi}}}
+$$
+
+With:
+$$
+w_{pi} = \bigg\{\begin{array}{ll}
+1 & \text{if } i \text{ is one of } kth \text{ nearest neighbors of } p \text{ for a given }k \\
+0 & otherwise \\
+\end{array}
+$$
+
+The standard deviation could be calculated also based in the values of the $k$-nearest neighbors, meaning that it would be based on the local mean. Here, we will interpolate the field using the Walker Lake data. First create a target grid for interpolation, and extract the coordinates of observations: 
+```{r}
+target_xy = expand.grid(x = seq(0.5, 259.5, 2.2), y = seq(0.5, 299.5, 2.2))
+source_xy = cbind(x = Walker_Lake$X, y = Walker_Lake$Y)
+```
+
+Interpolation using $k=5$ neighbors:
+```{r cache=TRUE}
+kpoint.5 <- kpointmean(source_xy = source_xy, z = Walker_Lake$V, target_xy = target_xy, k = 5)
+```
+
+We can plot the interpolated field now. These are the interpolated values:
+```{r}
+ggplot(data = kpoint.5, aes(x = x, y = y, fill = z)) +
+  geom_tile() +
+  scale_fill_distiller(palette = "OrRd", trans = "reverse") +
+  coord_equal()
+```
+
+In addition, we can plot the _local_ standard deviation:
+```{r}
+ggplot(data = kpoint.5, aes(x = x, y = y, fill = sd)) +
+  geom_tile() +
+  scale_fill_distiller(palette = "OrRd", trans = "reverse") +
+  coord_equal()
+```
+
+The local standard deviation indicates the typical deviation from the local mean. As expected, the local values of the standard deviation are usually lower than the standard deviation of the sample, and it tends to be larger for the tails, that is the locations where the values are rare - we have less information, hence greater uncertainty.
+
+The local standard deviation is a crude estimator of the uncertainty because we do not know the underlying distribution. Other approaches based on bootstrapping (randomly sampling from the observed values of the variable) could be implemented, but they are beyond the scope of the present discussion.
+
+The issue of assessing the level of uncertainty in the predictions with Voronoi polygons, IDW, and $k$-point means reflects the fact that these methods were not designed to deal explicitly with the random nature of predicting fields. Other methods deal with this issue more naturally. We will revisit two estimation methods that we covered before, and see how they can be applied to spatial interpolation.
+
+## Trend surface analysis
+
+Trend surface analysis is a form of multivariate regression that uses the coordinates of the observations to fit a surface to the data.
+
+We can illustrate this technique by means of a simulated example. We will begin by simulating a set of observations, beginning with the coordinates in the square unit region:
+```{r}
+# `n` is the number of observations to simulate
+n <- 180
+
+# Here we create a dataframe with these values: `u` and `v` will be the coordinates of our process
+df <- data.frame(u = runif(n = n, min = 0, max = 1), 
+                 v = runif(n = n, min = 0, max = 1))
+```
+
+Once we have simulated the coordinates for the example, we can plot their locations:
+```{r}
+ggplot(data = df, aes(x = u, y = v)) + 
+  geom_point() + 
+  coord_equal()
+```
+
+We can now proceed to simulate a spatial process as follows:
+```{r}
+# Use `mutate()` to create a new stochastic variable `z` that is a function of the coordinates and a random normal variable that we create with `rnorm()`; this random variable has a mean of zero and a standard deviation of 0.1.
+df <- mutate(df, z = 0.5 + 0.3 * u + 0.7 * v + rnorm(n = n, mean = 0, sd = 0.1))
+```
+
+A 3D scatterplot can be useful to explore the data:
+```{r}
+# Create a 3D scatterplot with the function `plot_ly()`. Notice that the way this function works is similar to `ggplot2`: the arguments are a dataframe, what should be plotted on the x-axis, the y-axis, the z-axis, and other aesthetics (aspects) of the plot. Here the color will be proportional to the values of `z`. The function `add_markers()` is similar to the family of `geom_` functions in `ggplot2`, but more general, since it will try to guess what you are trying to plot based on the inputs (in this case points). The function `layout()` is used to control other parts of the plot: here the `aspectratio` is selected so that the scale is identical for all three axes.
+plot_ly(data = df, x = ~u, y = ~v, z = ~z, color = ~z) %>% 
+  add_markers() %>% 
+  layout(scene = list(
+    aspectmode = "manual", aspectratio = list(x=1, y=1, z=1)))
+```
+
+We can fit a trend surface to the data as follows. This is a regression model that uses the coordinates of the observations as covariates. In this case, the trend is linear:
+```{r}
+trend.l <- lm(formula = z ~ u + v, data = df)
+summary(trend.l)
+```
+
+Given a trend surface model, we can estimate the value of the variable $z$ at locations where it was not measured. Typically this is done by interpolating on a fine grid that can be used for visualization or further analysis, as shown next.
+
+We will begin by creating a grid for interpolation. We will call the coordinates `x.p` and `y.p`. We generate these by creating a sequence of values in the domain of the data, for instance in the [0,1] interval:
+```{r}
+u.p <- seq(from = 0.0, to = 1.0, by = 0.05)
+v.p <- seq(from = 0.0, to = 1.0, by = 0.05)
+```
+
+For prediction, we want all combinations of `x.p` and `y.p`, so we expand these two vectors into a grid, by means of the function `expand.grid()`:
+```{r}
+# The function `expand.grid()` creates a grid with all the combination of values of the inputs.
+df.p <- expand.grid(u = u.p, v = v.p)
+```
+
+Notice that while `u.p` and `v.p` are vectors of size 21, the dataframe `df.p` contains `{r}21 * 21` observations, that is, all the combinations of `u.p` and `v.p`.
+
+Once we have the coordinates for interpolation, the `predict()` function can be used in conjunction with the results of the estimation. When invoking the function, we indicate that we wish to obtain as well the standard errors of the fitted values (`se.fit = TRUE`), as well as the interval of the predictions at a 95% level of confidence:
+```{r}
+preds <- predict(trend.l, newdata = df.p, se.fit = TRUE, interval = "prediction", level = 0.95)
+```
+
+The interval of confidence _of the predictions_ at the 95% level of confidence is given in the form of the lower (`lwr`) and upper (`upr`) bounds:
+```{r}
+summary(preds$fit)
+```
+
+These values indicate that the predictions of $z_p$ are, with 95% of confidence, in the following interval:
+$$
+CI_{z_p} = [z_{p_{lwr}}, z_{p_{upr}}].
+$$
+
+A convenient way to visualize the results of the analysis above, that is, to inspect the trend surface and the interval of confidence of the predictions, is by means of a 3D plot as follows.
+
+First create matrices with the point estimates of the trend surface (`z.p`), and the lower and upper bounds (`z.p_l`, `z.p_u`):
+```{r}
+z.p <- matrix(data = preds$fit[,1], nrow = 21, ncol = 21, byrow = TRUE)
+z.p_l <- matrix(data = preds$fit[,2], nrow = 21, ncol = 21, byrow = TRUE)
+z.p_u <- matrix(data = preds$fit[,3], nrow = 21, ncol = 21, byrow = TRUE)
+```
+
+The plot is created using the coordinates used for interpolation (`x.p` and `y.p`) and the matrices with the point estimates `z.p` and the upper and lower bounds. The type of plot in the package `plotly` is a _surface_:
+```{r}
+trend.plot <- plot_ly(x = ~u.p, y = ~v.p, z = ~z.p, 
+        type = "surface", colors = "YlOrRd") %>% 
+  add_surface(x = ~u.p, y = ~v.p, z = ~z.p_l, 
+              opacity = 0.5, showscale = FALSE) %>%
+  add_surface(x = ~u.p, y = ~v.p, z = ~z.p_u, 
+              opacity = 0.5, showscale = FALSE) %>% 
+  layout(scene = list(
+    aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
+trend.plot #%>% add_markers(data = df, x = ~x, y = ~y, z = ~z, color = ~residual)
+```
+
+In this way, we have not only an estimate of the underlying field, but also a measure of uncertainty for our predictions, since our estimated values are bound, with 95% confidence, between the lower and upper surfaces.
+
+It is important to note that, although the confidence interval provides a measure of uncertainty, it does not provide an estimate of the prediction error $\hat{\epsilon}_p$. This quantity cannot be calculated directly, because we _do not know the true value of the field at location $p$_. We will revisit this point later.
+
+For the time being, we will apply trend surface analysis to the Walker Lake dataset.
+
+We will first calculate the polynomial terms of the coordinates, for instance to the 3rd degree (this can be done to any arbitrary degree, however keeping in mind the caveats discussed previously with respect to trend surface analysis):
+```{r}
+Walker_Lake <- mutate(Walker_Lake,
+                        X3 = X^3, X2Y = X^2 * Y, X2 = X^2, 
+                        XY = X * Y,
+                        Y2 = Y^2, XY2 = X * Y^2, Y3 = Y^3)
+```
+
+We can proceed to estimate the following models.
+
+Linear trend surface model:
+```{r}
+WL.trend1 <- lm(formula = V ~ X + Y, data = Walker_Lake)
+summary(WL.trend1)
+```
+
+Quadratic trend surface model:
+```{r}
+WL.trend2 <- lm(formula = V ~ X2 + X + XY + Y + Y2, data = Walker_Lake)
+summary(WL.trend2)
+```
+
+Cubic trend surface model:
+```{r}
+WL.trend3 <- lm(formula = V ~ X3 + X2Y + X2 + X + XY + Y + Y2 + XY2 + Y3, 
+                data = Walker_Lake)
+summary(WL.trend3)
+```
+
+Inspection of the results of the three models above suggests that the cubic trend surface provides the best fit, with the highest adjusted coefficient of determination, even if the value is relatively low at approximately 0.16. Also, the cubic trend yields the smallest standard error, which implies that the intervals of confidence are tighter, and hence the degree of uncertainty is smaller.
+
+We will compare two of these models to see how well they fit the data.
+
+First, we create an interpolation grid. Summarize the information to ascertain the domain of the data:
+```{r}
+summary(Walker_Lake[,2:3])
+```
+
+We can see that the spatial domain is in the range of [8,251] in X, and [8,291] in Y. Based on this information, we will generate the following sequence that then is expanded into a grid for prediction:
+```{r}
+X.p <- seq(from = 0.0, to = 255.0, by = 2.5)
+Y.p <- seq(from = 0.0, to = 295.0, by = 2.5)
+df.p <- expand.grid(X = X.p, Y = Y.p)
+```
+
+To this dataframe we add the polynomial terms:
+```{r}
+df.p <- mutate(df.p, X3 = X^3, X2Y = X^2 * Y, X2 = X^2, 
+               XY = X * Y, 
+               Y2 = Y^2, XY2 = X * Y^2, Y3 = Y^3)
+```
+
+The interpolated quadratic surface is then obtained as:
+```{r}
+WL.preds2 <- predict(WL.trend2, newdata = df.p, se.fit = TRUE, interval = "prediction", level = 0.95)
+```
+
+Whereas the interpolated cubic surface is obtained as:
+```{r}
+WL.preds3 <- predict(WL.trend3, newdata = df.p, se.fit = TRUE, interval = "prediction", level = 0.95)
+```
+
+The predictions are transformed into matrices for plotting.
+
+Quadratic trend surface and lower and upper bounds of the predictions:
+```{r}
+z.p2 <- matrix(data = WL.preds2$fit[,1], nrow = 119, ncol = 103, byrow = TRUE)
+z.p2_l <- matrix(data = WL.preds2$fit[,2], nrow = 119, ncol = 103, byrow = TRUE)
+z.p2_u <- matrix(data = WL.preds2$fit[,3], nrow = 119, ncol = 103, byrow = TRUE)
+```
+
+Cubic trend surface and lower and upper bounds of the predictions:
+```{r}
+z.p3 <- matrix(data = WL.preds3$fit[,1], nrow = 119, ncol = 103, byrow = TRUE)
+z.p3_l <- matrix(data = WL.preds3$fit[,2], nrow = 119, ncol = 103, byrow = TRUE)
+z.p3_u <- matrix(data = WL.preds3$fit[,3], nrow = 119, ncol = 103, byrow = TRUE)
+```
+
+This is the quadratic trend surface with its confidence interval of predictions:
+```{r}
+WL.plot2 <- plot_ly(x = ~X.p, y = ~Y.p, z = ~z.p2, 
+        type = "surface", colors = "YlOrRd") %>% 
+  add_surface(x = ~X.p, y = ~Y.p, z = ~z.p2_l, 
+              opacity = 0.5, showscale = FALSE) %>%
+  add_surface(x = ~X.p, y = ~Y.p, z = ~z.p2_u, 
+              opacity = 0.5, showscale = FALSE) %>% 
+  layout(scene = list(
+    aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
+WL.plot2
+```
+
+And, this is the cubic trend surface with its confidence interval of predictions:
+```{r}
+WL.plot3 <- plot_ly(x = ~X.p, y = ~Y.p, z = ~z.p3, 
+        type = "surface", colors = "YlOrRd") %>% 
+  add_surface(x = ~X.p, y = ~Y.p, z = ~z.p3_l, 
+              opacity = 0.5, showscale = FALSE) %>%
+  add_surface(x = ~X.p, y = ~Y.p, z = ~z.p3_u, 
+              opacity = 0.5, showscale = FALSE) %>% 
+  layout(scene = list(
+    aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
+WL.plot3
+```
+
+Alas, these models are not very reliable estimates of the underlying field. As can be seen from the plots, the confidence intervals are extremely wide, and in both cases include negative numbers in the lower bound. The uncertainty associated with these predictions is quite substantial.
+
+Another question, however, is whether the point estimates are accurate. To get a sense of whether this is the case we can add the observations to the plot:
+```{r}
+WL.plot3 %>%
+  add_markers(data = Walker_Lake, x = ~X, y = ~Y, z = ~V, 
+              color = ~V, opacity = 0.7, showlegend = FALSE)
+```
+
+Alas, the trend surface does a mediocre job with the point estimates as well.
+
+A possible reason for this is that the model failed to capture all or even most of the systematic spatial variability of this field. To explore this, we will plot the residuals of the model, after labeling them as "positive" or "negative":
+```{r}
+Walker_Lake$residual3 <- ifelse(WL.trend3$residuals > 0, "Positive", "Negative")
+```
+
+Plot the residuals:
+```{r}
+ggplot(data = Walker_Lake, 
+       aes(x = X, y = Y, color = residual3)) +
+  geom_point() +
+  coord_equal()
+```
+
+Visual inspection of the distribution of the residuals strongly suggests that they are not random. We can check this by means of Moran's $I$ coefficient, if we create a list of spatial weights as follows:
+```{r}
+# Create a set of spatial weights with the 5 nearest neighbors.
+WL.listw <- Walker_Lake[,2:3] %>% 
+  as.matrix() %>%
+  knearneigh(k = 5) %>%
+  knn2nb() %>%
+  nb2listw()
+```
+
+The results of the autocorrelation analysis of the residuals are:
+```{r}
+moran.test(x = WL.trend3$residuals, listw = WL.listw)
+```
+
+Given the low $p$-value, we fail to reject the null hypothesis, and conclude, with a high level of confidence, that the residuals are not independent. This has important implications for spatial interpolation, as we will discuss in the following chapter.
+
+## Accuracy and precision
+
+Before concluding this chapter, it is worthwhile to make the following distinction between accuracy and precision of the estimates.
+
+Accuracy refers to how close the predicted values $\hat{z}_p$ are to the true values of the field. Precision refers to how much uncertainty is associated with such predictions. Narrow intervals of confidence imply greater precision, whereas the opposite is true when the intervals of confidence are wide.
+
+An example of these two properties is as shown in Figure \@ref{fig:accuracy-precision}.
+
+```{r accuracy-and-precision, fig.cap= "\\label{fig:accuracy-precision}Accuracy and precision", echo=FALSE}
+knitr::include_graphics(rep("figures/33-Figure-1.jpg"))
+```
+
+Panel a) in the figure represents a set of accurate points, since they are on average close to the mark. However, they are imprecise, given their variability. This is akin to a good point estimate that has wide confidence intervals.
+
+Panel b) is a set of inaccurate and imprecise points.
+
+Panel c) is a set of precise but inaccurate points.
+
+Finally, Panel d) is a set of accurate and precise points.
+
+Accuracy and precision are important criteria when assessing the quality of a predictive model.
+
+This concludes the chapter.
+
+<!--chapter:end:33-Spatially-Continuous-Data-II.Rmd-->
+
+# Activity 16: Spatially Continuous Data II
+
+## Practice questions
+
+Answer the following questions:
+
+1. What is a confidence interval?
+2. How does a confidence interval vary with the level of significance?
+3. Residuals of trend surface analysis are always spatially independent, true or false.
+4. Estimates of the prediction error $\hat{\epsilon}_p$ can be obtained from trend surface analysis, true or false. Explain.
+5. In your own words describe the concepts of accuracy and precision in spatial interpolation.
+
+## Learning objectives
+
+In this activity, you will:
+
+1. Use trend surface analysis to interpolate a field.
+2. Calculate the degree of uncertainty.
+3. Think about the role of residual autocorrelation in interpolation.
+
+## Suggested reading
+
+- Bailey TC and Gatrell AC [-@Bailey1995] Interactive Spatial Data Analysis, Chapters 5 and 6. Longman: Essex.
+- Bivand RS, Pebesma E, and Gomez-Rubio V [-@Bivand2008] Applied Spatial Data Analysis with R, Chapter 8. Springer: New York.
+- Brunsdon C and Comber L [-@Brunsdon2015R] An Introduction to R for Spatial Analysis and Mapping, Chapter 6, Sections 6.7 and 6.8. Sage: Los Angeles.
+- Isaaks EH and Srivastava RM  [-@Isaaks1989applied] An Introduction to Applied Geostatistics, **CHAPTERS**. Oxford University Press: Oxford.
+- O'Sullivan D and Unwin D [-@Osullivan2010] Geographic Information Analysis, 2nd Edition, Chapters 9 and 10. John Wiley & Sons: New Jersey.
+
+## Preliminaries
+
+For this activity you will need the following:
+
+* An R markdown notebook version of this document (the source file).
+
+* A package called `geog4ga3`.
+
+It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+```{r}
+rm(list = ls())
+```
+
+Note that `ls()` lists all objects currently on the workspace.
+
+Load the libraries you will use in this activity (load other packages as appropriate). 
+```{r message=FALSE, warning=FALSE}
+library(geog4ga3)
+library(tidyverse)
+library(spatstat)
+library(spdep)
+```
+
+Load the data that you will use in this activity:
+```{r}
+data("aquifer")
+```
+
+The data is a set of piezometric head (watertable pressure) observations of the Wolfcamp Aquifer in Texas (https://en.wikipedia.org/wiki/Hydraulic_head). Measures of pressure can be used to infer the flow of underground water, since water flows from high to low pressure areas.
+
+These data were collected to evaluate potential flow of contamination related to a high level toxic waste repository in Texas. The Deaf Smith county site in Texas was one of three potential sites proposed for this repository. Beneath the site is a deep brine aquifer known as the Wolfcamp aquifer that may serve as a conduit of contamination leaking from the repository.
+
+The data set consists of 85 georeferenced measurements of piezometric head. Possible applications of interpolation are to determine sites at risk and to quantify uncertainty of the interpolated surface, to evaluate the best locations for monitoring stations.
+
+## Activity
+
+**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).
+
+1. (*)Estimate a trend surface for the dataset experimenting with different polynomials.
+
+2. (*)Create an interpolation grid, and use the function `predict` to interpolate the field using your chosen model. Plot the interpolated field using a method of your choice (e.g., `ggplot2`, `plot_ly()` for 3D plotting, etc.)
+
+3. Which polynomial in your experiments provides the best fit (hint: consider the coefficient of multiple determination $R^2$ and the standard error, in addition to the significance of the parameters). Justify your choice of a polynomial.
+
+3. Inspect the confidence intervals of your chosen model (these are an output of `predict`).
+
+4. Inspect the residuals of the model. Are they spatially random? If not, what would be the implications for spatial interpolation?
+
+<!--chapter:end:34-Activity-Spatially-Continuous-Data-II.Rmd-->
+
+# Spatially Continuous Data III {#spatially-continuous-data-iii}
+
+*NOTE*: You can download the source files for this book from [here](https://github.com/paezha/Spatial-Statistics-Course). The source files are in the format of R Notebooks. Notebooks are pretty neat, because the allow you execute code within the notebook, so that you can work interactively with the notes.
+
+In the previous practice you were introduced to the concept of fields/spatially continuous data.
+
+If you wish to work interactively with this chapter you will need the following:
+
+* An R markdown notebook version of this document (the source file).
+
+* A package called `geog4ga3`.
+
+## Learning objectives
+
+Previously, in Chapter \@ref(spatially-continuous-data-ii), we discussed some limitations of tile-based approaches, inverse distance weighting, and $k$-points mean. Particularly, these methods do not provide estimates of the uncertainty of point estimates when doing spatial interpolation. Trend surface analysis was introduced as a method for spatial interpolation that also provides estimates of the standard error. However, we saw that it is possible for the residuals of a trend surface model to be autocorrelated: this is an indication that there is still systematic variation in the residuals that was not fully captured by the model. To more fully exploit that residual pattern we need some additional tools. In this practice, you will learn some of said tools, as follows:
+
+1. About the implications of residual spatial pattern for predictions.
+2. The measurement of spatial dependence in fields.
+3. Variographic analysis.
+
+## Suggested reading
+
+- Bailey TC and Gatrell AC [-@Bailey1995] Interactive Spatial Data Analysis, Chapters 5 and 6. Longman: Essex.
+- Bivand RS, Pebesma E, and Gomez-Rubio V [-@Bivand2008] Applied Spatial Data Analysis with R, Chapter 8. Springer: New York.
+- Brunsdon C and Comber L [-@Brunsdon2015R] An Introduction to R for Spatial Analysis and Mapping, Chapter 6, Sections 6.7 and 6.8. Sage: Los Angeles.
+- Isaaks EH and Srivastava RM  [-@Isaaks1989applied] An Introduction to Applied Geostatistics, **CHAPTERS**. Oxford University Press: Oxford.
+- O'Sullivan D and Unwin D [-@Osullivan2010] Geographic Information Analysis, 2nd Edition, Chapters 9 and 10. John Wiley & Sons: New Jersey.
+
+## Preliminaries
+
+As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+```{r}
+rm(list = ls())
+```
+
+Note that `ls()` lists all objects currently on the workspace.
+
+Load the libraries you will use in this activity:
+```{r message=FALSE, warning=FALSE}
+library(geog4ga3)
+library(gstat)
+library(plotly)
+library(spdep)
+library(tidyverse)
+```
+
+Begin by loading the data file:
+```{r}
+# We have been working with the Walker Lake dataset for the last few chapters.
+data("Walker_Lake")  
+```
+
+You can verify the contents of the dataframe:
+```{r}
+summary(Walker_Lake)
+```
+
+## Residual spatial pattern
+
+In Chapter \@ref{spatially-continuous-data-i} we used trend surface analysis for spatial interpolation. Trend surface analysis improves on methods such as Voronoi polygons, IDW, and $k$-point means by providing a built-in mechanism for estimating the uncertainty in the predictions. Let us quickly revisit this idea.
+
+The objective of interpolation is to provide the following estimates:
+$$
+\hat{z}_p + \hat{\epsilon}_p
+$$
+
+Trend surface analysis provides interpolated values by generating a trend surface as follows:
+$$
+\hat{z} = f(x, y)
+$$
+from which estimates of $\hat{z}_p$ can be obtained by using suitable prediction coordinates $(x_p, y_p)$.
+
+Next, although trend surface analysis does not provide an estimate of the prediction error $\hat{\epsilon}_p$ (since we do _not_ know the true value of the field at $p$), it provides confidence intervals for the prediction. In this way we can at the very least bound the prediction error as follows:
+$$
+CI_{z_p} = [z_{p_{lwr}}, z_{p_{upr}}].
+$$
+
+As previously seen, however, use of trend surface analysis does not guarantee that the residuals of the model will be independent.
+
+Let us revisit the model for Walker Lake.
+
+As before, we first calculate the polynomial terms of the coordinates:
+```{r}
+# Here we use `mutate()` to calculate the polynomial terms of the coordinates.
+Walker_Lake <- mutate(Walker_Lake,
+                        X3 = X^3, X2Y = X^2 * Y, X2 = X^2, 
+                        XY = X * Y,
+                        Y2 = Y^2, XY2 = X * Y^2, Y3 = Y^3)
+```
+
+And proceed to estimate the following cubic trend surface model, which provided the best fit to the data:
+```{r}
+WL.trend3 <- lm(formula = V ~ X3 + X2Y + X2 + X + XY + Y + Y2 + XY2 + Y3, 
+                data = Walker_Lake) #Recall use of the linear model for walker lake
+summary(WL.trend3)
+```
+
+To examine the residuals, first we label them as "positive" or "negative":
+```{r}
+# The function `ifelse()` is used to label the residuals as "Positive" if they are greater than zero, or "Negative" if they are zero or less.
+Walker_Lake <- Walker_Lake %>%
+  mutate(residual3 = ifelse(WL.trend3$residuals > 0, 
+                            "Positive", 
+                            "Negative"))
+```
+
+Once the residuals have been labeled we can be plotted as follows:
+```{r}
+ggplot(data = Walker_Lake, 
+       aes(x = X, y = Y, color = residual3)) + # Note color is only applied to results of positive or negative residuals
+  geom_point() +
+  coord_equal() # Ensures equal scales for both axes
+```
+
+As seen before, there is considerable spatial autocorrelation as confirmed by Moran's $I$ coefficient:
+```{r}
+WL.listw <- as.matrix(Walker_Lake[,2:3]) %>% # Take the coordinates of Walker Lake and convert to matrix.
+  knearneigh(k = 5) %>% # Find the 5 nearest neighbors of each observations.
+  knn2nb() %>% # Convert the nearest neighbors to `nb` object.
+  nb2listw() # Convert the `nb` object into spatial weights. 
+
+# Use Moran's test on the residuals of the trend surface model 
+moran.test(x = WL.trend3$residuals, listw = WL.listw)
+```
+
+The fact that the residuals are not independent has important implications for prediction. Consider the following thought experiment.
+
+Imagine that you were asked to guess whether the residual was positive or negative at the locations indicated with triangles in the figure. These are locations where an observation was not made, and we only have the interpolated value of the variable according to the trend surface model:
+```{r}
+ggplot(data = Walker_Lake, 
+       aes(x = X, y = Y)) +
+  geom_point(aes(color = residual3)) +
+  geom_point(data = data.frame(x = c(55, 25, 210, 227), y = c(200, 90, 90, 230)), #We are adding coordinates for the triangles in the figure
+             aes(x = x, y = y), shape = 17, size = 3) +
+  coord_equal()
+```
+
+What would your guess be, and why? Would you say that your guess has a better than 50% chance of being right?
+
+Now imagine that you were asked to guess whether the residual was positive or negative at the locations indicated with squares in the figure:
+```{r}
+ggplot(data = Walker_Lake, 
+       aes(x = X, y = Y)) +
+  geom_point(aes(color = residual3)) +
+  geom_point(data = data.frame(x = c(160, 240, 12, 120), y = c(38, 280, 240, 180)), #We are adding coordinates for the squares in the figure
+             aes(x = x, y = y), shape = 15, size = 3) +
+  coord_equal()
+```
+
+Again, what would your guess be, and why? Would you be able to guess this way if the residuals were random?
+
+The fact that you can guess and be fairly sure about the quality of your guess is a consequence of the strong residual pattern. If the residuals were random, there would be no information left to use: the odds of a residual being positive or negative would essentially be 50%. However, when there is residual pattern, this information can be used to enhance the quality of your guesses about the residuals, or in other words, of the $\hat{\epsilon}_p$ terms. At the very least you can guess whether they are positive or negative (therefore reducing their confidence intervals), but possibly you can learn even more from them, as will be seen later.
+
+Before learning how to do this, however, we need to think more about the way in which we measure spatial pattern in spatially continuous data.
+
+## Measuring spatial dependence in spatially continuous data
+
+In the preceding sections we used Moran's $I$ coefficient to measure spatial pattern. Moran's $I$ is, by design, a single-scale statistic, not unlike the case of nearest neighbor analysis in point patterns. The reason for this is that Moran's $I$ is limited to detecting pattern at the scale at which the spatial weights are defined: for instance, at the level of adjacency, contiguity, or $k$-nearest neighbors. 
+
+While this makes sense (mostly) in the case of area data, since the areas inherently introduce spatial discontinuities, it makes less sense in the case of fields, where the underlying process is typically smooth. In fact, more often we are interested in exploring the properties of the pattern over the field, not just the nearest neighbors.
+
+One way of extending Moran's $I$ analysis to multiple scales is by means of the _correlogram_. The correlogram is simply a sequence of Moran's $I$ coefficients computed at different scales.
+
+Consider for example the following sequence of coefficients, computed for $k$=10 neighbors to $k$=30 neighbors. Notice how the `for` loop calculates spatial weights using the designated number of neighbors, before calculating Moran's $I$.
+```{r}
+k <- c(10:30) # Initialize the values of k.
+moranI <- numeric(length = length(k)) # Initialize an empty vector to store the results of calculating Moran's I 
+correlogram <- data.frame(k, moranI) # Initialize an empty dataframe to store the values of k and moranI
+# A `for` loop is a way of repeating instructions a defined number of times, here from 1 to the length of vector `k`.
+for(i in 1:length(k)){
+  listwk <- Walker_Lake[,2:3] %>%
+    as.matrix() %>%
+    knearneigh(k = k[i]) %>% # Use the ith element of vector `k` to find the nearest neighbors
+    knn2nb() %>%
+    nb2listw()
+  m <- moran.test(x = WL.trend3$residuals, listw = listwk) #Moran test for residuals
+  correlogram$moranI[i] <- m$estimate[1] #calling moran's I values from correlogram dataframe
+}
+```
+
+Given the values of Moran's $I$ at different scales (i.e., values of $k$), the correlogram can be plotted as:
+```{r}
+ggplot(data = correlogram, aes(x = k, y = moranI)) + 
+  geom_point()
+```
+
+As can be seen in the plot, spatial autocorrelation tends to decline as the number of nearest neighbors used in the test grows - in other words, as the scale of the test increases. This is a common occurrence: when autocorrelation is present, observations tend to be more similar to their closest neighbors than to their more distant neighbors. 
+
+The use of $k$-nearest neighbors points to a problem, however. The scale of the process does not depend on distance, which would be a more natural metric for a continuous process. In this case, $k$-nearest neighbors were used to ensure that each sum in the coefficient had the same number of observations. However, this means that "neighborhoods" will be geographically smaller where the observations are more dense, and larger where they are sparse.
+
+While this issue is not insurmountable (for instance, instead of $k$-nearst neighbors we could have used the neighbors found at a certain distance), it points out to the fact that Moran's $I$ is not by design well suited for the analysis of spatially continuous data.
+
+A different approach, known as variographic analysis, is introduced next.
+
+## Variographic analyisis
+
+To introduce variographic analysis it is worthwhile to recall the definition of the covariance between two variables, say $X$ and $Y$:
+$$
+C(X,Y) = E[{(X_i^2 - \bar{X})(Y_i^2 - \bar{Y})}]
+$$
+Where $\bar{X}$ and $\bar{Y}$ are the means of $X$ and $Y$ respectively.
+
+The expectation operator $E[]$ turns out to be the mean:
+$$
+C(X,Y) = \frac{1}{n}\sum_{i=1}^{n}{(X_i^2 - \bar{X})(Y_j^2 - \bar{Y})}
+$$
+
+The observations $X_i$ and $Y_i$ in the covariance formula can be seen as a points in a scatterplot, with the axes shifted to the means of $X$ and $Y$, as shown in Figure \@ref{fig:covariance-as-scatterplot}.
+
+```{r covariance-as-a-scatterplot, fig.cap= "\\label{fig:covariance-as-scatterplot}Observations of the covariance as a scatterplot", echo=FALSE}
+knitr::include_graphics(rep("figures/35-Figure-1.jpg"))
+```
+
+The autocovariance of variable $z$ can be defined in a similar way, the difference being that instead of two variables, it is the covariance of a variable with _itself_ but at a different location (i.e., between locations $i$ and $j$):
+$$
+C(z_i,z_j) = E[{(z_i^2 - \bar{z})(z_j^2 - \bar{z})}]
+$$
+
+To implement the spatial autocovariance we need some criterion to explicitly define the spatial relationship between locations $i$ and $j$. A useful criterion in this case is as follows:
+
+$$
+w_{ij}(h)=\bigg\{\begin{array}{l l}
+1\text{ if } d_{ij} = h\\
+0\text{ otherwise}\\
+\end{array}
+$$
+In other words, $i$ and $j$ are considered to be spatially related for the purposes of calculating the autocovariance, if the distance between the two locations is equal to some predefined spatial lag $h$.
+
+The above criterion makes explicit the assumption that the autocovariance is a function of the separation $h$ between two observations, but not of other factors, such as the angle between observations. This assumption is called _isotropy_.
+
+Further, if we assume that the variance of $z$ is constant, and the correlation between observations does not depend on location (an assumption called _intrinsic stationarity_), we can _pool_ observations from across the map to create a scatterplot to form the basis of the autocovariance calculations.
+
+Consider the (regular) arrangement of observations spaced at $h$ in Figure \@ref{fig:autocovariance}. Each observation generally has four neighbors, with the exception of those in the edges, which have fewer neighbors at spatial lag $h$. This means that most observations will contribute four points to the scatterplot ($z_i$ and $z_j$, $z_k$, $z_l$, and $z_m$), and others will contribute three or at least two (those in the corners).
+
+```{r autocovariance, fig.cap= "\\label{fig:autocovariance}Finding spatial pairs for the calculation of the autocovariance", echo=FALSE}
+knitr::include_graphics(rep("figures/35-Figure-2.jpg"))
+```
+
+Given those pairs of observations, the autocovariance at lag $h$ can be calculated as:
+$$
+C_{z}(h) = \frac{\sum_{i=1}^{n}{w_{ij}(h)(z_i^2 - \bar{z})(z_j^2 - \bar{z})}}{\sum_{i=1}^n{w_{ij}(h)}}
+$$
+
+Changing the spatial lag $h$ allows us to calculate the autocovariance at different scales. The plot of the autocovariance at different scales is called a _covariogram_.
+
+A related quantity that is more commonly used (mainly for historical reasons) is the _semivariance_.
+
+The semivariance is defined as follows, calculated based on the difference between $z_i$ and $z_j$:
+$$
+\hat{\gamma}_{z}(h) = \frac{\sum_{i=1}^{n}{w_{ij}(h)(z_i - z_j)^2}}{2\sum_{i=1}^n{w_{ij}(h)}}
+$$
+The plot of the semivariance at different lags $h$ is called a _semivariogram_.
+
+The covariogram and semivariogram are related by the following formula:
+$$
+C_{z}(h) =\sigma^2 - \hat{\gamma}_{z}(h)
+$$
+where $\sigma^2$ is the sample variance.
+
+The condition that $d_{ij} = h$ is, with the exception of gridded data, too strict, and is often relaxed in the following way:
+
+$$
+w_{ij}(\tilde{h})=\bigg\{\begin{array}{l l}
+1\text{ if } d_{ij}\simeq h\\
+0\text{ otherwise}\\
+\end{array}
+$$
+
+In this way, the distance between observations $i$ and $j$ does not need to be _exactly_, but can be an approximation. The approximation can be defined explicitly as follows:
+
+$$
+w_{ij}(\tilde{h})=\bigg\{\begin{array}{l l}
+1\text{ if } h - \Delta h < d_{ij} < h + \Delta h\\
+0\text{ otherwise}\\
+\end{array}
+$$
+Instead of forming pairs with observations that are at exactly a distance $h$ (which would lead in many cases to too few pairs), pairs are formed with observations at approximately lag $h$ (or $\tilde{h}$), with a tolerance given by $\Delta h$.
+
+Analysis based on the semivariogram (called _variographic analysis_) is implemented in `R` in the `gstat` package.
+
+We will illustrate the use of the semivariogram by means of the Walker Lake data. The package `gstat` accepts simple features objects of the `sf` package, so we convert our dataframe into such an object:
+```{r}
+Walker_Lake.sf <- st_as_sf(Walker_Lake, coords = c("X", "Y"))
+class(Walker_Lake.sf)
+```
+
+The empirical semivariogram is calculated by means of the `gstat::variogram` function, as follows:
+```{r}
+variogram_z <- variogram(V ~ 1, data = Walker_Lake.sf) # `variogram()` calculates the sample semivariogram from data, or if a linear model is given, for the residuals; in this case, the formula `V ~ 1` means that we are not using a model
+
+ggplot(data = variogram_z, aes(x = dist, y = gamma)) + #Note we are plotting the data of 'variogram_z'
+  geom_point() + 
+  geom_text(aes(label = np), nudge_y = -1500) + # Add labels to indicate the number of pairs of observations used in the calculation of each point in the variogram
+  xlab("Distance") + ylab("Semivariance")
+```
+
+The numbers indicate the number of pairs of observations used to calculate the semivariance at the corresponding lag.
+
+Since the sample variance is: 
+```{r}
+s2 <- var(Walker_Lake$V) # We are calculating the variance of X
+s2
+```
+
+It follows that the covariogram in this case is:
+```{r}
+ggplot(data = variogram_z, aes(x = dist, y = s2 - gamma)) +
+  geom_point() + 
+  geom_text(aes(label = np), nudge_y = -1500) +
+  xlab("Distance") + 
+  ylab("Autocovariance")
+```
+
+As expected, the autocovariance (and hence, the autocorrelation) is stronger at short spatial lags, and declines at larger spatial lags.
+
+The above plots are the _empirical_ semivariogram and covariogram. These plots are used to model a theoretical semivariogram, a function that can be used to estimate spatial dependence at any lag within the domain of the  - and not just at the distances for which we have points in the empirical variogram.
+
+Since the semivariogram is the expectation of the square, the function selected for modeling the theoretical semivariogram must be non-negative. Several functions satisfy this condition, a list of which are available in `gstat` as shown below:
+```{r}
+vgm() #this function generates a variogram mode. Here, we are able to view the list of possible models for a semivariogram
+```
+
+The anatomy of a semivariogram includes a range, a sill, and possibly a nugget. These elements are shown in Figure \@ref{fig:semivariogram}.
+
+```{r anatomy-semivariogram, fig.cap= "\\label{fig:semivarigoram}Anatomy of a semivariogram", echo=FALSE}
+knitr::include_graphics(rep("figures/35-Figure-2.jpg"))
+```
+
+Since the semivariogram is calculated based on the square of the differences $z_i - z_j$, the smaller the semivariance is, the more similar observations tend to be. In principle, the semivariogram begins at zero, because at distance zero an observation is identical to itself (i.e., $z_i - z_i$). The range is the distance at which the sill is reached. The sill, on the other hand, is the point at which the semivariance becomes simply the variance, meaning that there is no more or less similarity between observations than would be implied by the variance of the sample.
+
+An additional element is the nugget. While the semivariogram in principle begins at zero, sometime discontinuities near the origin can be observed. The terminology is from mining, and reflects the fact that a nugget could be very different from the material around it, hence the jump in the semivariogram.
+
+Some theoretical functions are shown next.
+
+Exponential semivariogram:
+```{r}
+plot(variogramLine(vgm(1, "Exp", 1), 10), type = 'l') #We use "exp" to denote the use of an exponential semivariogram. Refer to the list on line 297 and explore the different outcomes of the listed variogram models! 
+```
+
+Spherical semivariogram:
+```{r}
+plot(variogramLine(vgm(1, "Sph", 1), 10), type = 'l')
+```
+
+Gaussian semivariogram:
+```{r}
+plot(variogramLine(vgm(1, "Gau", 1), 10), type = 'l')
+```
+
+These plots illustrate some differences in the behavior of the models. For identical parameters, the Gaussian model provides smoother changes near the origin. The spherical model reaches the sill more rapidly than the other models.
+
+To fit a theoretical semivariogram to the empirical one, the function `fit.variogram` is used:
+```{r}
+variogram_z.t <- fit.variogram(variogram_z, model = vgm("Exp")) #'fit_variogram' selects the type of model that will fit the empirical semivariogram best
+```
+
+The results of which can be plotted after passing the model the the function `variogramLine`:
+```{r}
+gamma.t <- variogramLine(variogram_z.t, maxdist = 130) #Notice how 'maxdist' is 130, and the model does not exceed that value. 
+ggplot(data = variogram_z, aes(x = dist, y = gamma)) +
+  geom_point(size = 3) + 
+  geom_line(data = gamma.t, aes(x = dist, y = gamma)) +
+  xlab("Distance") + ylab("Semivariance")
+```
+
+A set of models can be passed as an argument to `fit.variogram`, in which case the value (output) of the function is the model that provides the best fit to the empirical semivariogram:
+```{r}
+variogram_z.t <- fit.variogram(variogram_z, model = vgm("Exp", "Sph", "Gau")) #Choosing the best fit again
+variogram_z.t
+```
+
+In this case, it can be seen that the best fitting model is the exponential, as follows:
+```{r}
+gamma.t <- variogramLine(variogram_z.t, maxdist = 130)
+ggplot(data = variogram_z, aes(x = dist, y = gamma)) +
+  geom_point(size = 3) + 
+  geom_line(data = gamma.t, aes(x = dist, y = gamma)) +
+  xlab("Distance") + ylab("Semivariance")
+```
+
+For comparison, we will do the variographic analysis of a simulated random dataset.
+
+Generate coordinates for observations and expand on a grid:
+```{r}
+#We are generating a regular sequence of coordinates by means of 'seq' 
+x <- seq(from = 0, to = 250, by = 10)
+y <- seq(from = 0, to = 290, by = 10)
+df <- expand.grid(x = x, y = y) #df is our dataframe 
+```
+
+Then, create a random variable for this coordinates:
+```{r}
+set.seed(100) #'set.seed' is used for replicability: it uses the seed in the argument for generating random numbers
+df$z <- rnorm(n = 780, mean = 500, sd = 300)
+```
+
+Finally, convert to a simple features object:
+```{r}
+df <- st_as_sf(df, coords = c("x", "y")) 
+```
+
+The empirical variogram is:
+```{r}
+variogram_df <- variogram(z ~ 1, data = df) #establishing the foundation of the variogram
+ggplot(data = variogram_df, aes(x = dist, y = gamma)) +
+  geom_point() + 
+  geom_text(aes(label = np), nudge_y = -1500) + 
+  ylim(c(0, 98100)) +
+  xlab("Distance") + ylab("Semivariance")  #add labels to axes
+```
+
+The range of the semivariogram appears to be zero, or alternatively, there seems to be a pure nugget effect. This is as expected. Since the data are spatially random, they are not more similar at shorter distances than they would be at longer distances.
+
+<!--chapter:end:35-Spatially-Continuous-Data-III.Rmd-->
+
+# Activity 17: Spatially Continuous Data III
+
+## Practice questions
+
+Answer the following questions:
+
+1. What is a correlogram?
+2. What is the relationship between the autocovariance and the semivariance?
+3. Describe the elements of a semivariogram.
+4. Why is it important to consider the number of pairs used in the calculation of the semivariance?
+
+## Learning objectives
+
+In this activity, you will:
+
+1. Calculate and plot empirical semivariograms.
+2. Estimate and plot theoretical semivariograms.
+3. Discuss the results of variographic analysis.
+
+## Suggested reading
+
+- Bailey TC and Gatrell AC [-@Bailey1995] Interactive Spatial Data Analysis, Chapters 5 and 6. Longman: Essex.
+- Bivand RS, Pebesma E, and Gomez-Rubio V [-@Bivand2008] Applied Spatial Data Analysis with R, Chapter 8. Springer: New York.
+- Brunsdon C and Comber L [-@Brunsdon2015R] An Introduction to R for Spatial Analysis and Mapping, Chapter 6, Sections 6.7 and 6.8. Sage: Los Angeles.
+- Isaaks EH and Srivastava RM  [-@Isaaks1989applied] An Introduction to Applied Geostatistics, **CHAPTERS**. Oxford University Press: Oxford.
+- O'Sullivan D and Unwin D [-@Osullivan2010] Geographic Information Analysis, 2nd Edition, Chapters 9 and 10. John Wiley & Sons: New Jersey.
+
+## Preliminaries
+
+For this activity you will need the following:
+
+* An R markdown notebook version of this document (the source file).
+
+* A package called `geog4ga3`.
+
+It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+```{r}
+rm(list = ls())
+```
+
+Note that `ls()` lists all objects currently on the workspace.
+
+Load the libraries you will use in this activity (load other packages as appropriate). 
+```{r message=FALSE, warning=FALSE}
+library(geog4ga3)
+library(gstat)
+library(sf)
+library(spdep)
+library(tidyverse)
+```
+
+Load dataset:
+```{r}
+data("aquifer")
+```
+
+Convert to a simple features object:
+```{r}
+aquifer.sf <- st_as_sf(aquifer, coords = c("X", "Y"))
+```
+
+The data is a set of piezometric head (watertable pressure) observations of the Wolfcamp Aquifer in Texas (https://en.wikipedia.org/wiki/Hydraulic_head). Measures of pressure can be used to infer the flow of underground water, since water flows from high to low pressure areas.
+
+These data were collected to evaluate potential flow of contamination related to a high level toxic waste repository in Texas. The Deaf Smith county site in Texas was one of three potential sites proposed for this repository. Beneath the site is a deep brine aquifer known as the Wolfcamp aquifer that may serve as a conduit of contamination leaking from the repository.
+
+The data set consists of 85 georeferenced measurements of piezometric head. Possible applications of interpolation are to determine sites at risk and to quantify uncertainty of the interpolated surface, to evaluate the best locations for monitoring stations.
+
+## Activity
+
+**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).
+
+1. (*)Obtain and plot the empirical semivariogram for the head in the Walker Lake dataset.
+
+2. (*)Estimate a trend surface of your choice, and obtain and plot an empirical semivariogram using the residuals. How would you interpret this semivariogram?
+
+3. (*)Estimate and plot a theoretical semivariogram model for the residual variogram. 
+
+4. What is your interpretation of the semivariograms above?
+
+5. How would you use the information provided by the variographic analysis above to improve your predictions (spatially interpolated values) of the field?
+
+<!--chapter:end:36-Activity-Spatially-Continuous-Data-III.Rmd-->
+
+# Spatially Continuous Data IV
+
+*NOTE*: You can download the source files for this book from [here](https://github.com/paezha/Spatial-Statistics-Course). The source files are in the format of R Notebooks. Notebooks are pretty neat, because the allow you execute code within the notebook, so that you can work interactively with the notes. 
+
+If you wish to work interactively with this chapter you will need the following:
+
+* An R markdown notebook version of this document (the source file).
+
+* A package called `geog4ga3`.
+
+## Learning objectives
+
+In the previous practice you were introduced to the concept of variographic analysis for fields/spatially continuous data. In this practice, we will learn:
+
+1. How to use residual spatial pattern to estimate prediction errors.
+2. Kriging: a method for optimal predictions.
+
+## Suggested reading
+
+- Bailey TC and Gatrell AC [-@Bailey1995] Interactive Spatial Data Analysis, Chapters 5 and 6. Longman: Essex.
+- Bivand RS, Pebesma E, and Gomez-Rubio V [-@Bivand2008] Applied Spatial Data Analysis with R, Chapter 8. Springer: New York.
+- Brunsdon C and Comber L [-@Brunsdon2015R] An Introduction to R for Spatial Analysis and Mapping, Chapter 6, Sections 6.7 and 6.8. Sage: Los Angeles.
+- Isaaks EH and Srivastava RM  [-@Isaaks1989applied] An Introduction to Applied Geostatistics, **CHAPTERS**. Oxford University Press: Oxford.
+- O'Sullivan D and Unwin D [-@Osullivan2010] Geographic Information Analysis, 2nd Edition, Chapters 9 and 10. John Wiley & Sons: New Jersey.
+
+## Preliminaries
+
+As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+```{r}
+rm(list = ls())
+```
+
+Note that `ls()` lists all objects currently on the workspace.
+
+Load the libraries you will use in this activity:
+```{r message=FALSE, warning=FALSE}
+library(geog4ga3)
+library(gstat)
+library(plotly)
+library(spdep)
+library(tidyverse)
+```
+
+Begin by loading the data file:
+```{r}
+data("Walker_Lake")
+```
+
+You can verify the contents of the dataframe:
+```{r}
+summary(Walker_Lake)
+```
+
+## Using residual spatial pattern to estimate prediction errors
+
+Previously, in Chapter \@ref{spatially-continuous-data-ii} we discussed how to interpolate a field using trend surface analysis; we also saw how that method may lead to residuals that are not spatially independent. 
+
+The implication of non-random residuals is that there is systematic residual pattern that the model did not capture; This, in turn, means that there is at least _some_ information that can still be extracted from the residuals. Again, we will use the case of Walker Lake to explore one way to do this.
+
+As before, we first calculate the polynomial terms of the coordinates to fit a trend surface to the data:
+```{r}
+Walker_Lake <- mutate(Walker_Lake,
+                        X3 = X^3, X2Y = X^2 * Y, X2 = X^2, 
+                        XY = X * Y,
+                        Y2 = Y^2, XY2 = X * Y^2, Y3 = Y^3)
+```
+
+Given the polynomial expansion, we can proceed to estimate the following cubic trend surface model, which we already know provided the best fit to the data:
+```{r}
+WL.trend3 <- lm(formula = V ~ X3 + X2Y + X2 + X + XY + Y + Y2 + XY2 + Y3, 
+                data = Walker_Lake)
+summary(WL.trend3)
+```
+
+We can next visualize the residuals which, as you can see, do not appear to be random 
+```{r}
+plot_ly(x = ~Walker_Lake$X, y = ~Walker_Lake$Y, z = ~WL.trend3$residuals, color = ~WL.trend3$residuals < 0, colors = c("blue", "red"), type = "scatter3d")
+```
+
+Now we will create an interpolation grid:
+```{r}
+# The function `sequence()` create a sequence of values from - to using by as the step increment. In this case, we generate a grid with points that are 2.5 m apart.
+X.p <- seq(from = 0.1, to = 255.1, by = 2.5)
+Y.p <- seq(from = 0.1, to = 295.1, by = 2.5)
+df.p <- expand.grid(X = X.p, Y = Y.p)
+```
+
+WE can add the polynomial terms to this grid. Since our trend surface model was estimated using the cubic polynomial, we add those terms to the dataframe:
+```{r}
+df.p <- mutate(df.p, X3 = X^3, X2Y = X^2 * Y, X2 = X^2, 
+               XY = X * Y, 
+               Y2 = Y^2, XY2 = X * Y^2, Y3 = Y^3)
+```
+
+The interpolated cubic surface is obtained by using the model and the interpolation grid as `newdata`:
+```{r}
+# The function `predict()` is used to make predictions given a model and a possibly new dataset, different from the one used for estimation of the model.
+WL.preds3 <- predict(WL.trend3, newdata = df.p, se.fit = TRUE, interval = "prediction", level = 0.95)
+```
+
+The surface is converted into a matrix for 3D plotting:
+```{r}
+z.p3 <- matrix(data = WL.preds3$fit[,1], nrow = length(Y.p), ncol = length(X.p), byrow = TRUE)
+```
+
+And plot:
+```{r}
+WL.plot3 <- plot_ly(x = ~X.p, y = ~Y.p, z = ~z.p3, 
+        type = "surface", colors = "YlOrRd") %>% 
+  layout(scene = list(
+    aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
+WL.plot3
+```
+
+The trend surface provides a smooth estimate of the field. However, it is not sufficient to capture all systematic variation, and fails to produce random residuals.
+
+A possible way of enhancing this approach to interpolation is to _exploit_ the information that remains in the residuals, for instance by the use of $k$-point means.
+
+We  can illustrate this as follows. To interpolate the _residuals_, we first need the set of _target_ points (the points for the interpolation), as well as the _source_ (the observations):
+```{r}
+# We will use the prediction grid we used above to interpolate the residuals 
+target_xy = expand.grid(x = X.p, y = Y.p)
+source_xy = cbind(x = Walker_Lake$X, y = Walker_Lake$Y)
+```
+
+It is possible now to use the `kpointmean` function to interpolate the residuals, for instance using $k=5$ neighbors:
+```{r}
+kpoint.5 <- kpointmean(source_xy = source_xy, z = WL.trend3$residuals, target_xy = target_xy, k = 5)
+```
+
+Given the interpolated residuals, we can join them to the cubic trend surface, as follows:
+```{r}
+z.p3 <- matrix(data = WL.preds3$fit[,1] + kpoint.5$z,
+               nrow = length(Y.p), ncol = length(X.p), byrow = TRUE)
+```
+
+This is now the interpolated field that combines the trend surface and the estimated residuals:
+```{r}
+WL.plot3 <- plot_ly(x = ~X.p, y = ~Y.p, z = ~z.p3, 
+        type = "surface", colors = "YlOrRd") %>% 
+  layout(scene = list(
+    aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
+WL.plot3
+```
+
+Of all the approaches that we have seen so far, this is the first that provides a genuine estimate of the following:
+$$
+\hat{z}_p + \hat{\epsilon}_p
+$$
+
+With trend surface analysis providing a smooth estimator of the underlying field:
+$$
+\hat{z}_p = f(x_p, y_p)
+$$
+
+And $k$-point means providing an estimator of:
+$$
+\hat{\epsilon}_p
+$$
+
+A question is how to decide the number of neighbors to use in the calculation of the $k$-point means. As previously discussed, $k$=1 becomes identical to Voronoi polygons, and $k = n$ becomes the global mean.
+
+A second question concerns the way the average is calculated. As variographic analysis demonstrates, it is possible to estimate the way in which spatial dependence weakens with distance. Why should more distant points be weighted equally? The answer is, there is no reason why they should, and in fact, variographic analysis elegantly solves this, as well the question of how many points to use: all of them, with varying weights.
+
+Next, we will introduce kriging, a method for optimal prediction that is based on the use of variographic analysis.
+
+## Kriging: a method for optimal prediction.
+
+To introduce the method known as kriging, we will begin by positing a situation as follows:
+
+$$
+\hat{z}_p + \hat{\epsilon}_p = \hat{f}(x_p, y_p) + \hat{\epsilon}_p
+$$
+
+where $\hat{f}(x_p, y_p)$ is a smooth estimator of an underlying field.
+
+We aim to predict $\hat{\epsilon}_p$ based on the observed residuals. We use an expression similar to the one used for IDW and $k$-point means in Chapter \@ref{spatially-continuous-data-i} (we will use $\lambda$ for the weights to avoid confusing the the weights in variographic analysis):
+
+$$
+\hat{\epsilon}_p = \sum_{i=1}^n {\lambda_{pi}\epsilon_i}
+$$
+
+That is, $\hat{\epsilon}_p$ is a linear combination of the prediction residuals from the trend:
+$$
+\epsilon_i = z_i - \hat{f}(x_i, y_i)
+$$
+
+It is possible to define the following _expected mean squared error_, or _prediction variance_:
+$$
+\sigma_{\epsilon}^2 = E[(\hat{\epsilon}_p - \epsilon_i)^2]
+$$
+
+The prediction variance measures how close, on average, the prediction error is to the residuals.
+
+The prediction variance can be decomposed as follows:
+$$
+\sigma_{\epsilon}^2 = E[\hat{\epsilon}_p] + E[\epsilon_i] - 2E[\hat{\epsilon_i\epsilon}_p]
+$$
+
+It turns out (we will not show the detailed derivation, but it can be consulted [here](https://msu.edu/~ashton/classes/866/papers/gatrell_ordkrige.pdf)), that the expression for the prediction variance depends on the weights:
+$$
+\sigma_{\epsilon}^2 = \sum_{i=1}^n \sum_{j=1}^n{\lambda_{ip}\lambda_{jp}C_{ij}} + \sigma^2 + 2\sum_{i=1}^{n}{\lambda_{ip}C_{ip}}
+$$
+where $C_{ij}$ is the autocovariance between observations at $i$ and $j$, and $C_{ip}$ is the autocovariance between the observation at $i$ and prediction location $p$.
+
+Fortunately for us, the semivariogram and the autocovariance is straightforward:
+$$
+C_{z}(h) =\sigma^2 - \hat{\gamma}_{z}(h)
+$$
+
+This means that, given the distance $h$ between $i$ and $j$, and $i$ and $p$, we can use a semivariogram to obtain the autocovariances needed to calculate the prediction variance. We are still missing, however, the weights $\lambda$, which are not known a priori.
+
+These weights can be obtained if we use the following rules:
+
+> The expectation of the prediction errors is zero (unbiassedness)
+> Find the weights $lambda$ that minimize the prediction variance (optimal estimator).
+
+This makes sense, since we would like our predictions to be unbiased (i.e., accurate) and as precise as possible, that is, to have the smallest variance (recall the discussion about accuracy and precision in Chapter \@ref{spatially-continuous-data-iii}).
+
+Again, solving the minimization problem is beyond the scope of our presentation, but it suffices to say that the result is as follows:
+
+$$
+\mathbf{\lambda}_p = \mathbf{C}^{-1}\mathit{c}_{p}
+$$
+
+where $\mathbf{C}$ is the covariance matrix, and $\mathit{c}_{p}$ is the covariance vector for location $p$.
+
+In summary, kriging is a method to optimally estimate the value of a variable at $p$ as a weighted sum of the observations of the same variable at locations $i$. This method is known to have the properties of **B**est (in the sense that it minimizes the variance) **L**inear (because predictions are a linear combination of weights) **U**nbiased (since the estimators of the prediction errors are zero) **P**redictor, or **BLUP**.
+
+Kriging is implemented in the package `gstat` as follows.
+
+To put kriging to work we must first conduct variographic analysis of the residuals. The function `variogram` uses as an argument a simple features object that we can create as follows:
+```{r}
+Walker_Lake.sf <- Walker_Lake %>%
+  st_as_sf(coords = c("X", "Y"),
+           remove = FALSE) # Remove set to false to retain the X and Y coordinates in the dataframe after they are converted to simple features
+```
+
+The variogram of the residuals can be obtained by specifying a trend surface in the formula:
+```{r}
+variogram_v <- variogram(V ~ X3 + X2Y + X2 + X + XY + Y + Y2 + XY2 + Y3, 
+                         data = Walker_Lake.sf)
+ggplot(data = variogram_v, aes(x = dist, y = gamma)) +
+  geom_point() + 
+  geom_text(aes(label = np), nudge_y = -1500) + # Nudge the labels away from the points
+  xlab("Distance") + ylab("Semivariance")
+```
+
+You can verify that the semivariogram above corresponds to the residuals by repeating the analysis directly on the residuals. First join the residuals to the `SpatialPointsDataFrame`:
+```{r}
+Walker_Lake.sf$e <- WL.trend3$residuals
+```
+
+And then calculate the semivariogram and plot:
+```{r}
+variogram_e <- variogram(e ~ 1, 
+                         data = Walker_Lake.sf)
+ggplot(data = variogram_e, aes(x = dist, y = gamma)) +
+  geom_point() + 
+  geom_text(aes(label = np), nudge_y = -1500) +
+  xlab("Distance") + ylab("Semivariance")
+```
+
+The empirical semivariogram is used to estimate a semivariogram function:
+```{r}
+variogram_v.t <- fit.variogram(variogram_v, model = vgm("Exp", "Sph", "Gau"))
+variogram_v.t
+```
+
+The variogram function plots as follows:
+```{r}
+gamma.t <- variogramLine(variogram_v.t, maxdist = 130)
+ggplot(data = variogram_v, aes(x = dist, y = gamma)) +
+  geom_point(size = 3) + 
+  geom_line(data = gamma.t, aes(x = dist, y = gamma)) +
+  xlab("Distance") + ylab("Semivariance")
+```
+
+We will convert the prediction grid to a simple features object:
+```{r}
+df.sf <- df.p %>%
+  st_as_sf(coords = c("X", "Y"),
+           remove = FALSE)
+```
+
+Then, we can krige the field as follows (ensure that packages `sf` and `stars` are installed):
+```{r}
+V.kriged <- krige(V ~ X3 + X2Y + X2 + X + XY + Y + Y2 + XY2 + Y3,
+              Walker_Lake.sf, df.sf, variogram_v.t)
+```
+
+Extract the predictions and prediction variance from the object `V.kriged`:
+```{r}
+V.km <- matrix(data = V.kriged$var1.pred,
+               nrow = 119, ncol = 103, byrow = TRUE)
+V.sm <- matrix(data = V.kriged$var1.var,
+               nrow = 119, ncol = 103, byrow = TRUE)
+```
+
+We can now plot the interpolated field:
+```{r}
+V.km.plot <- plot_ly(x = ~X.p, y = ~Y.p, z = ~V.km, 
+        type = "surface", colors = "YlOrRd") %>% 
+  layout(scene = list(
+    aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
+V.km.plot
+```
+
+Also, we can plot the kriging standard errors (the square root of the prediction variance). This gives an estimate of the uncertainty in the predictions:
+```{r}
+V.sm.plot <- plot_ly(x = ~X.p, y = ~Y.p, z = ~sqrt(V.sm), 
+        type = "surface", colors = "YlOrRd") %>% 
+  layout(scene = list(
+    aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
+V.sm.plot
+```
+
+Where are predictions more/less precise?
+
+<!--chapter:end:37-Spatially-Continuous-Data-IV.Rmd-->
+
+# Activity 18: Spatially Continuous Data IV
+
+## Practice questions
+
+Answer the following questions:
+
+1. What does "Best" in BLUP mean?
+2. What is the advantage of kriging over other interpolation approaches?
+3. How is the the autocovariance used to produce optimal predictions?
+
+## Learning objectives
+
+In this activity, you will:
+
+1. Conduct variograpic analysis.
+
+2. Use kriging to interpolate a field. 
+
+## Suggested reading
+
+- Bailey TC and Gatrell AC [-@Bailey1995] Interactive Spatial Data Analysis, Chapters 5 and 6. Longman: Essex.
+- Bivand RS, Pebesma E, and Gomez-Rubio V [-@Bivand2008] Applied Spatial Data Analysis with R, Chapter 8. Springer: New York.
+- Brunsdon C and Comber L [-@Brunsdon2015R] An Introduction to R for Spatial Analysis and Mapping, Chapter 6, Sections 6.7 and 6.8. Sage: Los Angeles.
+- Isaaks EH and Srivastava RM  [-@Isaaks1989applied] An Introduction to Applied Geostatistics, **CHAPTERS**. Oxford University Press: Oxford.
+- O'Sullivan D and Unwin D [-@Osullivan2010] Geographic Information Analysis, 2nd Edition, Chapters 9 and 10. John Wiley & Sons: New Jersey.
+
+## Preliminaries
+
+For this activity you will need the following:
+
+* An R markdown notebook version of this document (the source file).
+
+* A package called `geog4ga3`.
+
+It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+```{r}
+rm(list = ls())
+```
+
+Note that `ls()` lists all objects currently on the workspace.
+
+Load the libraries you will use in this activity (load other packages as appropriate). 
+```{r message=FALSE, warning=FALSE}
+library(geog4ga3)
+library(gstat)
+library(sf)
+library(tidyverse)
+```
+
+Load dataset:
+```{r}
+data("aquifer")
+```
+
+The data is a set of piezometric head (watertable pressure) observations of the Wolfcamp Aquifer in Texas (https://en.wikipedia.org/wiki/Hydraulic_head). Measures of pressure can be used to infer the flow of underground water, since water flows from high to low pressure areas.
+
+These data were collected to evaluate potential flow of contamination related to a high level toxic waste repository in Texas. The Deaf Smith county site in Texas was one of three potential sites proposed for this repository. Beneath the site is a deep brine aquifer known as the Wolfcamp aquifer that may serve as a conduit of contamination leaking from the repository.
+
+The data set consists of 85 georeferenced measurements of piezometric head. Possible applications of interpolation are to determine sites at risk and to quantify uncertainty of the interpolated surface, to evaluate the best locations for monitoring stations.
+
+Convert to a `SpatialPointsDataFrame`:
+```{r}
+aquifer.sf <- aquifer %>%
+  st_as_sf(coords = c("X", "Y"),
+           remove = FALSE)
+```
+
+## Activity
+
+1. Partner with a fellow student to analyze the dataset provided.
+
+2. Use kriging to interpolate the underlying field. Justify your modeling choices.
+
+3. Discuss your results.
+
+4. Imagine that you had to compare different modeling approaches (e.g., kriging, IDW). Propose a protocol to decide which method is more accurate. 
+
+<!--chapter:end:38-Activity-Spatially-Continuous-Data-IV.Rmd-->
+

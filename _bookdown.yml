@@ -7,7 +7,9 @@ language:
     edit: "Edit"
     chapter_name: "Chapter "
 delete_merged_file: false
-output_dir: ["docs", "_book"]
+output_dir:
+#  - "_book"
+  - "docs"
 
 rmd_files:
     - "index.Rmd"
@@ -42,11 +44,11 @@ rmd_files:
     - "28-Activity-Area-Data-V.Rmd"
     - "29-Area-Data-VI.Rmd"
     - "30-Activity-Area-Data-VI.Rmd"
-#    - "31-Spatially-Continuous-Data-I.Rmd"
-#    - "32-Activity-Spatially-Continuous-Data-I.Rmd"
-#    - "33-Spatially-Continuous-Data-II.Rmd"
-#    - "34-Activity-Spatially-Continuous-Data-II.Rmd"
-#    - "35-Spatially-Continuous-Data-III.Rmd"
-#    - "36-Activity-Spatially-Continuous-Data-III.Rmd"
-#    - "37-Spatially-Continuous-Data-IV.Rmd"
-#    - "38-Activity-Spatially-Continuous-Data-IV.Rmd"
+    - "31-Spatially-Continuous-Data-I.Rmd"
+    - "32-Activity-Spatially-Continuous-Data-I.Rmd"
+    - "33-Spatially-Continuous-Data-II.Rmd"
+    - "34-Activity-Spatially-Continuous-Data-II.Rmd"
+    - "35-Spatially-Continuous-Data-III.Rmd"
+    - "36-Activity-Spatially-Continuous-Data-III.Rmd"
+    - "37-Spatially-Continuous-Data-IV.Rmd"
+    - "38-Activity-Spatially-Continuous-Data-IV.Rmd"
