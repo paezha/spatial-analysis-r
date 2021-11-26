@@ -7,6 +7,7 @@ language:
     edit: "Edit"
     chapter_name: "Chapter "
 delete_merged_file: false
+output_dir: ["docs", "_book"]
 
 rmd_files:
     - "index.Rmd"
