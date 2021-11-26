@@ -1,0 +1,167 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+In this notebook I create an animation that shows how Voronoi polygons can be created by expanding circles until they intersect. This image contains several key elements of spatial statistics: points, areas, and continuous processes, as well as the problem of change of support. To run this notebook, I use data from the data package that I use to teach spatial statistics:
+```{r}
+if(!require(geog4ga3)){
+  remotes::install_github("paezha/geog4ga3")
+  library(geog4ga3)
+}
+```
+
+Load packages
+```{r message=FALSE, warning=FALSE}
+library(deldir)
+library(geog4ga3)
+library(gganimate)
+library(ghibli)
+#library(plotly)
+#library(spatstat)
+library(spdep)
+library(tidyverse)
+```
+Convert Walker Lake data to simple features:
+```{r}
+# Function `st_as_sf()` takes a foreign object (foreign to the `sf` package) and converts it into a simple features object. If the foreign object is points, the coordinates can be named by means of the argument `coords`. 
+Walker_Lake.sf <- Walker_Lake %>% 
+  st_as_sf(coords = c("X", "Y"))
+```
+
+Define a bounding box to extract a subset of points:
+```{r}
+# Function `st_polygon()` creates an `sf` object with a polygon or polygons. In this case, we create a single polygon, a rectangle with corners given by the coordinates in the function. 
+W.bbox <- st_polygon(list(rbind(c(130, 140),c(190, 140),c(190, 220),c(130, 220),c(130, 140))))
+```
+
+Extract subset of points using the bounding box:
+```{r}
+Walker_Lake.sf <- Walker_Lake.sf[W.bbox,]
+```
+
+Once we have an `sf` object of the points, the geometry can be used to create the Voronoi polygons:
+```{r}
+# The function `do.call(what, arg)` applies a function `what` to the argument `arg`. In this case, we extract the geometry of the `sf` object (i.e., the coordinates of the points) and apply the function `c()` to concatenate the coordinates to obtain a MULTIPOINT object.   
+vpolygons <- do.call(c, st_geometry(Walker_Lake.sf)) %>% # The pipe operator passes the MuLTIPOINT object to function `st_voronoi()`
+  st_voronoi() %>% # The output of `st_voronoi()` is a collection of geometries, which we pass to the following function for extraction.
+  st_collection_extract()
+```
+
+Obtain the geometry of the polygons:
+```{r}
+Walker_Lake.v <- Walker_Lake.sf
+Walker_Lake.v$geometry <- vpolygons[unlist(st_intersects(Walker_Lake.sf, vpolygons))] 
+```
+
+The intersection of the polygons with the box clips the polygons:
+```{r warning=FALSE}
+Walker_Lake.v <- Walker_Lake.v %>%
+  st_intersection(W.bbox)
+```
+
+Plot the polygons:
+```{r}
+ggplot() + 
+  geom_sf(data = Walker_Lake.v, 
+          aes(fill = V), 
+          color = NA)
+```
+
+Use the original points and create buffers of different sizes. Save the results for each buffer size in a slice of table labelled by `t`. Each of these slices will become a frame in the subsequent animation:
+```{r warning=FALSE}
+
+Walker_Lake.c <- data.frame()
+
+buf <- c(1, 2, 4, 6, 8, 10, 12, 14, 25)#seq(1, 25, 4)
+
+for(t in 1:length(buf)){
+  Walker_Lake.b <- Walker_Lake.sf %>% 
+    st_buffer(dist = buf[t])
+  
+  Walker_Lake.j <- data_frame()
+  
+  for(i in 1:nrow(Walker_Lake.b)){
+    Walker_Lake.j <- rbind(Walker_Lake.j,  
+                           st_intersection(Walker_Lake.b[i,],
+                                           Walker_Lake.v$geometry[i]))
+  }
+  Walker_Lake.j$t <- as.character(t)
+  Walker_Lake.c <- rbind(Walker_Lake.c, Walker_Lake.j)
+}
+```
+
+Example of plot with polygons and buffers at t = 2:
+```{r}
+ggplot() + 
+  geom_sf(data = Walker_Lake.c %>% 
+            filter(t == "2"), 
+          aes(fill = V), 
+          color = NA) + 
+  geom_sf(data = Walker_Lake.v, fill = NA) +
+  theme_void() +
+  theme(legend.position = "none") 
+```
+Use {gganimate} to create the animation. In this animation I use the mononoke color palette from the {ghibli} package:
+```{r}
+anim <- ggplot() + 
+  geom_sf(data = Walker_Lake.c,
+          aes(fill = V),
+          color = NA) + 
+  geom_sf(data = Walker_Lake.v,
+          fill = NA,
+          color = "black") +
+  geom_sf(data = Walker_Lake.sf,
+          size = 3,
+          color = "black") +
+  scale_fill_ghibli_c("MononokeLight", direction = -1) +
+  theme_void() +
+  theme(legend.position = "none")  +
+  transition_states(t,
+                    transition_length = 100,
+                    state_length = 1.0,
+                    wrap = FALSE) +
+  ease_aes()
+
+animate(anim, 
+        nframes = 200,
+        start_pause = 20,
+        end_pause = 20)
+```
+
+Save the animation as a gif:
+```{r}
+anim_save("voronoi_mononoke.gif", animation = anim)
+```
+
+Recreate the animation but now using the ponyo color palette from the {ghibli} package:
+```{r}
+anim <- ggplot() + 
+  geom_sf(data = Walker_Lake.c,
+          aes(fill = V),
+          color = NA) + 
+  geom_sf(data = Walker_Lake.v,
+          fill = NA,
+          color = "black") +
+  geom_sf(data = Walker_Lake.sf,
+          size = 3,
+          color = "black") +
+  scale_fill_ghibli_c("PonyoLight", direction = 1) +
+  theme_void() +
+  theme(legend.position = "none")  +
+  transition_states(t,
+                    transition_length = 100,
+                    state_length = 1.0,
+                    wrap = FALSE) +
+  ease_aes()
+
+animate(anim, 
+        nframes = 200,
+        start_pause = 20,
+        end_pause = 20)
+```
+
+Save as gif:
+```{r}
+anim_save("voronoi_ponyo.gif", animation = anim)
+```
