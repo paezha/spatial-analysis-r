@@ -44,7 +44,7 @@ knitr::include_graphics(rep("images/voronoi_ponyo.gif"))
 # Front Matter {-}
 
 Paez, Antonio (2021)  
-*An Introduction to Spatial Data Analysis and Statisitcs: A Course in R*  
+*An Introduction to Spatial Data Analysis and Statistics: A Course in R*  
 [Publisher]  
 ISBN: 978-1-7778515-0-7  
 <!-- DOI badge -->
