@@ -8,8 +8,8 @@ language:
     chapter_name: "Chapter "
 delete_merged_file: false
 output_dir:
-  - "_book"
-#  - "docs"
+#  - "_book"
+  - "docs"
 
 rmd_files:
     - "index.Rmd"

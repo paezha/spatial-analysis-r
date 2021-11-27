@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 19 Area Data I | An Introduction to Spatial Data Analysis and Statistics: A Course in R</title>
+  <meta name="description" content="This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad, and Alexis Polidoro. The book is published with support of an Open Educational Resources grant from MacPherson Institute, McMaster University." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 19 Area Data I | An Introduction to Spatial Data Analysis and Statistics: A Course in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="/images/cover.jpg" />
+  <meta property="og:description" content="This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad, and Alexis Polidoro. The book is published with support of an Open Educational Resources grant from MacPherson Institute, McMaster University." />
+  <meta name="github-repo" content="paezha/spatial-analysis-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 19 Area Data I | An Introduction to Spatial Data Analysis and Statistics: A Course in R" />
+  
+  <meta name="twitter:description" content="This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad, and Alexis Polidoro. The book is published with support of an Open Educational Resources grant from MacPherson Institute, McMaster University." />
+  <meta name="twitter:image" content="/images/cover.jpg" />
+
+<meta name="author" content="Antonio Paez" />
+
+
+<meta name="date" content="2021-11-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="activity-8-point-pattern-analysis-v.html"/>
+<link rel="next" href="activity-9-area-data-i.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet" />
+<link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet" />
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.freezable.js"></script>
+<script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script>
+<script src="libs/lfx-heat-0.1.0/lfx-heat-prod.js"></script>
+<script src="libs/lfx-heat-0.1.0/lfx-heat-bindings.js"></script>
+<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="libs/colourpicker-1.1/colourpicker.min.css" rel="stylesheet" />
+<script src="libs/colourpicker-1.1/colourpicker.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.2/js/bootstrap.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Spatial Analysis in R</a></li>
+
+<li class="divider"></li>
+<li><a href="index.html#section"></a></li>
+<li class="chapter" data-level="" data-path="front-matter.html"><a href="front-matter.html"><i class="fa fa-check"></i>Front Matter</a>
+<ul>
+<li class="chapter" data-level="" data-path="front-matter.html"><a href="front-matter.html#what-is-this-book-and-who-is-it-for"><i class="fa fa-check"></i>What is this book and who is it for?</a></li>
+<li class="chapter" data-level="" data-path="front-matter.html"><a href="front-matter.html#allied-resources"><i class="fa fa-check"></i>Allied resources</a></li>
+<li class="chapter" data-level="" data-path="front-matter.html"><a href="front-matter.html#contributing"><i class="fa fa-check"></i>Contributing</a>
+<ul>
+<li class="chapter" data-level="0.0.1" data-path="front-matter.html"><a href="front-matter.html#license"><i class="fa fa-check"></i><b>0.0.1</b> License</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="front-matter.html"><a href="front-matter.html#how-to-support-this-project"><i class="fa fa-check"></i>How to support this project</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#spatial-analysis-and-spatial-statistics"><i class="fa fa-check"></i>Spatial Analysis and Spatial Statistics</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#why-this-text"><i class="fa fa-check"></i>Why this Text?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#plan"><i class="fa fa-check"></i>Plan</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#audience"><i class="fa fa-check"></i>Audience</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#requisites"><i class="fa fa-check"></i>Requisites</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#words-of-appreciation"><i class="fa fa-check"></i>Words of Appreciation</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#versioning"><i class="fa fa-check"></i>Versioning</a></li>
+</ul></li>
+<li class="part"><span><b>I Part I: Getting to Know the Technology</b></span></li>
+<li class="chapter" data-level="1" data-path="preliminaries-installing-r-and-rstudio.html"><a href="preliminaries-installing-r-and-rstudio.html"><i class="fa fa-check"></i><b>1</b> Preliminaries: Installing <code>R</code> and RStudio</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="preliminaries-installing-r-and-rstudio.html"><a href="preliminaries-installing-r-and-rstudio.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="preliminaries-installing-r-and-rstudio.html"><a href="preliminaries-installing-r-and-rstudio.html#learning-objectives"><i class="fa fa-check"></i><b>1.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="1.3" data-path="preliminaries-installing-r-and-rstudio.html"><a href="preliminaries-installing-r-and-rstudio.html#r-the-open-statistical-computing-project"><i class="fa fa-check"></i><b>1.3</b> <code>R</code>: The Open Statistical Computing Project</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="preliminaries-installing-r-and-rstudio.html"><a href="preliminaries-installing-r-and-rstudio.html#what-is-r"><i class="fa fa-check"></i><b>1.3.1</b> What is <code>R</code>?</a></li>
+<li class="chapter" data-level="1.3.2" data-path="preliminaries-installing-r-and-rstudio.html"><a href="preliminaries-installing-r-and-rstudio.html#the-rstudio-ide"><i class="fa fa-check"></i><b>1.3.2</b> The RStudio IDE</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="preliminaries-installing-r-and-rstudio.html"><a href="preliminaries-installing-r-and-rstudio.html#packages-in-r"><i class="fa fa-check"></i><b>1.4</b> Packages in R</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basic-operations-and-data-structures-in-r.html"><a href="basic-operations-and-data-structures-in-r.html"><i class="fa fa-check"></i><b>2</b> Basic Operations and Data Structures in <code>R</code></a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="basic-operations-and-data-structures-in-r.html"><a href="basic-operations-and-data-structures-in-r.html#learning-objectives-1"><i class="fa fa-check"></i><b>2.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="basic-operations-and-data-structures-in-r.html"><a href="basic-operations-and-data-structures-in-r.html#rstudio-ide"><i class="fa fa-check"></i><b>2.2</b> RStudio IDE</a></li>
+<li class="chapter" data-level="2.3" data-path="basic-operations-and-data-structures-in-r.html"><a href="basic-operations-and-data-structures-in-r.html#some-basic-operations"><i class="fa fa-check"></i><b>2.3</b> Some Basic Operations</a></li>
+<li class="chapter" data-level="2.4" data-path="basic-operations-and-data-structures-in-r.html"><a href="basic-operations-and-data-structures-in-r.html#data-classes-in-r"><i class="fa fa-check"></i><b>2.4</b> Data Classes in R</a></li>
+<li class="chapter" data-level="2.5" data-path="basic-operations-and-data-structures-in-r.html"><a href="basic-operations-and-data-structures-in-r.html#data-types-in-r"><i class="fa fa-check"></i><b>2.5</b> Data Types in R</a></li>
+<li class="chapter" data-level="2.6" data-path="basic-operations-and-data-structures-in-r.html"><a href="basic-operations-and-data-structures-in-r.html#indexing-and-data-transformations"><i class="fa fa-check"></i><b>2.6</b> Indexing and Data Transformations</a></li>
+<li class="chapter" data-level="2.7" data-path="basic-operations-and-data-structures-in-r.html"><a href="basic-operations-and-data-structures-in-r.html#visualization"><i class="fa fa-check"></i><b>2.7</b> Visualization</a></li>
+<li class="chapter" data-level="2.8" data-path="basic-operations-and-data-structures-in-r.html"><a href="basic-operations-and-data-structures-in-r.html#creating-a-simple-map"><i class="fa fa-check"></i><b>2.8</b> Creating a Simple Map</a></li>
+<li class="chapter" data-level="2.9" data-path="basic-operations-and-data-structures-in-r.html"><a href="basic-operations-and-data-structures-in-r.html#references"><i class="fa fa-check"></i><b>2.9</b> References</a></li>
+</ul></li>
+<li class="part"><span><b>II Part II: Statistics and Maps</b></span></li>
+<li class="chapter" data-level="3" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html"><i class="fa fa-check"></i><b>3</b> Introduction to Mapping in <code>R</code></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#learning-objectives-2"><i class="fa fa-check"></i><b>3.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="3.2" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#suggested-readings"><i class="fa fa-check"></i><b>3.2</b> Suggested Readings</a></li>
+<li class="chapter" data-level="3.3" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#preliminaries"><i class="fa fa-check"></i><b>3.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="3.4" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#packages"><i class="fa fa-check"></i><b>3.4</b> Packages</a></li>
+<li class="chapter" data-level="3.5" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#exploring-dataframes-and-a-simple-proportional-symbols-map"><i class="fa fa-check"></i><b>3.5</b> Exploring Dataframes and a Simple Proportional Symbols Map</a></li>
+<li class="chapter" data-level="3.6" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#improving-on-the-proportional-symbols-map"><i class="fa fa-check"></i><b>3.6</b> Improving on the Proportional Symbols Map</a></li>
+<li class="chapter" data-level="3.7" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#some-simple-spatial-analysis"><i class="fa fa-check"></i><b>3.7</b> Some Simple Spatial Analysis</a></li>
+<li class="chapter" data-level="3.8" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#other-resources"><i class="fa fa-check"></i><b>3.8</b> Other Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html"><i class="fa fa-check"></i><b>4</b> Activity 1: Statistical Maps I</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#housekeeping-questions"><i class="fa fa-check"></i><b>4.1</b> Housekeeping Questions</a></li>
+<li class="chapter" data-level="4.2" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="4.3" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#preliminaries-1"><i class="fa fa-check"></i><b>4.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="4.4" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#creating-a-simple-thematic-map"><i class="fa fa-check"></i><b>4.4</b> Creating a simple thematic map</a></li>
+<li class="chapter" data-level="4.5" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#activity"><i class="fa fa-check"></i><b>4.5</b> Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html"><i class="fa fa-check"></i><b>5</b> Mapping in R: Continued</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html#learning-objectives-4"><i class="fa fa-check"></i><b>5.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="5.2" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html#suggested-readings-1"><i class="fa fa-check"></i><b>5.2</b> Suggested Readings</a></li>
+<li class="chapter" data-level="5.3" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html#preliminaries-2"><i class="fa fa-check"></i><b>5.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="5.4" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html#summarizing-a-dataframe"><i class="fa fa-check"></i><b>5.4</b> Summarizing a Dataframe</a></li>
+<li class="chapter" data-level="5.5" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html#factors"><i class="fa fa-check"></i><b>5.5</b> Factors</a></li>
+<li class="chapter" data-level="5.6" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html#subsetting-data"><i class="fa fa-check"></i><b>5.6</b> Subsetting Data</a></li>
+<li class="chapter" data-level="5.7" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html#pipe-operator"><i class="fa fa-check"></i><b>5.7</b> Pipe Operator</a></li>
+<li class="chapter" data-level="5.8" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html#more-on-visualization"><i class="fa fa-check"></i><b>5.8</b> More on Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="activity-2-statistical-maps-ii.html"><a href="activity-2-statistical-maps-ii.html"><i class="fa fa-check"></i><b>6</b> Activity 2: Statistical Maps II</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="activity-2-statistical-maps-ii.html"><a href="activity-2-statistical-maps-ii.html#housekeeping-questions-1"><i class="fa fa-check"></i><b>6.1</b> Housekeeping Questions</a></li>
+<li class="chapter" data-level="6.2" data-path="activity-2-statistical-maps-ii.html"><a href="activity-2-statistical-maps-ii.html#learning-objectives-5"><i class="fa fa-check"></i><b>6.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="6.3" data-path="activity-2-statistical-maps-ii.html"><a href="activity-2-statistical-maps-ii.html#suggested-reading"><i class="fa fa-check"></i><b>6.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="6.4" data-path="activity-2-statistical-maps-ii.html"><a href="activity-2-statistical-maps-ii.html#preliminaries-3"><i class="fa fa-check"></i><b>6.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="6.5" data-path="activity-2-statistical-maps-ii.html"><a href="activity-2-statistical-maps-ii.html#activity-1"><i class="fa fa-check"></i><b>6.5</b> Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html"><a href="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html"><i class="fa fa-check"></i><b>7</b> Maps as Processes: Null Landscapes, Spatial Processes, and Statistical Maps</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html"><a href="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html#learning-objectives-6"><i class="fa fa-check"></i><b>7.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="7.2" data-path="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html"><a href="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html#suggested-readings-2"><i class="fa fa-check"></i><b>7.2</b> Suggested Readings</a></li>
+<li class="chapter" data-level="7.3" data-path="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html"><a href="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html#preliminaries-4"><i class="fa fa-check"></i><b>7.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="7.4" data-path="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html"><a href="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html#random-numbers"><i class="fa fa-check"></i><b>7.4</b> Random Numbers</a></li>
+<li class="chapter" data-level="7.5" data-path="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html"><a href="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html#null-landscapes"><i class="fa fa-check"></i><b>7.5</b> Null Landscapes</a></li>
+<li class="chapter" data-level="7.6" data-path="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html"><a href="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html#stochastic-processes"><i class="fa fa-check"></i><b>7.6</b> Stochastic Processes</a></li>
+<li class="chapter" data-level="7.7" data-path="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html"><a href="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html#simulating-spatial-processes"><i class="fa fa-check"></i><b>7.7</b> Simulating Spatial Processes</a></li>
+<li class="chapter" data-level="7.8" data-path="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html"><a href="maps-as-processes-null-landscapes-spatial-processes-and-statistical-maps.html#processes-and-patterns"><i class="fa fa-check"></i><b>7.8</b> Processes and Patterns</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="activity-3-maps-as-processes.html"><a href="activity-3-maps-as-processes.html"><i class="fa fa-check"></i><b>8</b> Activity 3: Maps as Processes</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="activity-3-maps-as-processes.html"><a href="activity-3-maps-as-processes.html#practice-questions"><i class="fa fa-check"></i><b>8.1</b> Practice Questions</a></li>
+<li class="chapter" data-level="8.2" data-path="activity-3-maps-as-processes.html"><a href="activity-3-maps-as-processes.html#learning-objectives-7"><i class="fa fa-check"></i><b>8.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="8.3" data-path="activity-3-maps-as-processes.html"><a href="activity-3-maps-as-processes.html#suggested-reading-1"><i class="fa fa-check"></i><b>8.3</b> Suggested Reading</a></li>
+<li class="chapter" data-level="8.4" data-path="activity-3-maps-as-processes.html"><a href="activity-3-maps-as-processes.html#preliminaries-5"><i class="fa fa-check"></i><b>8.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="8.5" data-path="activity-3-maps-as-processes.html"><a href="activity-3-maps-as-processes.html#activity-2"><i class="fa fa-check"></i><b>8.5</b> Activity</a></li>
+</ul></li>
+<li class="part"><span><b>III Part III: Analysis of Point Patterns</b></span></li>
+<li class="chapter" data-level="9" data-path="point-pattern-analysis-i.html"><a href="point-pattern-analysis-i.html"><i class="fa fa-check"></i><b>9</b> Point Pattern Analysis I</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="point-pattern-analysis-i.html"><a href="point-pattern-analysis-i.html#learning-objectives-8"><i class="fa fa-check"></i><b>9.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="9.2" data-path="point-pattern-analysis-i.html"><a href="point-pattern-analysis-i.html#suggested-readings-3"><i class="fa fa-check"></i><b>9.2</b> Suggested Readings</a></li>
+<li class="chapter" data-level="9.3" data-path="point-pattern-analysis-i.html"><a href="point-pattern-analysis-i.html#preliminaries-6"><i class="fa fa-check"></i><b>9.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="9.4" data-path="point-pattern-analysis-i.html"><a href="point-pattern-analysis-i.html#point-patterns"><i class="fa fa-check"></i><b>9.4</b> Point Patterns</a></li>
+<li class="chapter" data-level="9.5" data-path="point-pattern-analysis-i.html"><a href="point-pattern-analysis-i.html#processes-and-point-patterns"><i class="fa fa-check"></i><b>9.5</b> Processes and Point Patterns</a></li>
+<li class="chapter" data-level="9.6" data-path="point-pattern-analysis-i.html"><a href="point-pattern-analysis-i.html#intensity-and-density"><i class="fa fa-check"></i><b>9.6</b> Intensity and Density</a></li>
+<li class="chapter" data-level="9.7" data-path="point-pattern-analysis-i.html"><a href="point-pattern-analysis-i.html#quadrats-and-density-maps"><i class="fa fa-check"></i><b>9.7</b> Quadrats and Density Maps</a></li>
+<li class="chapter" data-level="9.8" data-path="point-pattern-analysis-i.html"><a href="point-pattern-analysis-i.html#defining-the-region-for-analysis"><i class="fa fa-check"></i><b>9.8</b> Defining the Region for Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="activity-4-point-pattern-analysis-i.html"><a href="activity-4-point-pattern-analysis-i.html"><i class="fa fa-check"></i><b>10</b> Activity 4: Point Pattern Analysis I</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="activity-4-point-pattern-analysis-i.html"><a href="activity-4-point-pattern-analysis-i.html#practice-questions-1"><i class="fa fa-check"></i><b>10.1</b> Practice questions</a></li>
+<li class="chapter" data-level="10.2" data-path="activity-4-point-pattern-analysis-i.html"><a href="activity-4-point-pattern-analysis-i.html#learning-objectives-9"><i class="fa fa-check"></i><b>10.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="10.3" data-path="activity-4-point-pattern-analysis-i.html"><a href="activity-4-point-pattern-analysis-i.html#suggested-reading-2"><i class="fa fa-check"></i><b>10.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="10.4" data-path="activity-4-point-pattern-analysis-i.html"><a href="activity-4-point-pattern-analysis-i.html#preliminaries-7"><i class="fa fa-check"></i><b>10.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="10.5" data-path="activity-4-point-pattern-analysis-i.html"><a href="activity-4-point-pattern-analysis-i.html#activity-3"><i class="fa fa-check"></i><b>10.5</b> Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="point-pattern-analysis-ii.html"><a href="point-pattern-analysis-ii.html"><i class="fa fa-check"></i><b>11</b> Point Pattern Analysis II</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="point-pattern-analysis-ii.html"><a href="point-pattern-analysis-ii.html#learning-objectives-10"><i class="fa fa-check"></i><b>11.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="11.2" data-path="point-pattern-analysis-ii.html"><a href="point-pattern-analysis-ii.html#suggested-readings-4"><i class="fa fa-check"></i><b>11.2</b> Suggested Readings</a></li>
+<li class="chapter" data-level="11.3" data-path="point-pattern-analysis-ii.html"><a href="point-pattern-analysis-ii.html#preliminaries-8"><i class="fa fa-check"></i><b>11.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="11.4" data-path="point-pattern-analysis-ii.html"><a href="point-pattern-analysis-ii.html#a-quadrat-based-test-for-spatial-independence"><i class="fa fa-check"></i><b>11.4</b> A Quadrat-based Test for Spatial Independence</a></li>
+<li class="chapter" data-level="11.5" data-path="point-pattern-analysis-ii.html"><a href="point-pattern-analysis-ii.html#limitations-of-quadrat-analysis-size-and-number-of-quadrats"><i class="fa fa-check"></i><b>11.5</b> Limitations of Quadrat Analysis: Size and Number of Quadrats</a></li>
+<li class="chapter" data-level="11.6" data-path="point-pattern-analysis-ii.html"><a href="point-pattern-analysis-ii.html#limitations-of-quadrat-analysis-relative-position-of-events"><i class="fa fa-check"></i><b>11.6</b> Limitations of Quadrat Analysis: Relative Position of Events</a></li>
+<li class="chapter" data-level="11.7" data-path="point-pattern-analysis-ii.html"><a href="point-pattern-analysis-ii.html#kernel-density"><i class="fa fa-check"></i><b>11.7</b> Kernel Density</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="activity-5-point-pattern-analysis-ii.html"><a href="activity-5-point-pattern-analysis-ii.html"><i class="fa fa-check"></i><b>12</b> Activity 5: Point Pattern Analysis II</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="activity-5-point-pattern-analysis-ii.html"><a href="activity-5-point-pattern-analysis-ii.html#practice-questions-2"><i class="fa fa-check"></i><b>12.1</b> Practice questions</a></li>
+<li class="chapter" data-level="12.2" data-path="activity-5-point-pattern-analysis-ii.html"><a href="activity-5-point-pattern-analysis-ii.html#learning-objectives-11"><i class="fa fa-check"></i><b>12.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="12.3" data-path="activity-5-point-pattern-analysis-ii.html"><a href="activity-5-point-pattern-analysis-ii.html#suggested-reading-3"><i class="fa fa-check"></i><b>12.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="12.4" data-path="activity-5-point-pattern-analysis-ii.html"><a href="activity-5-point-pattern-analysis-ii.html#preliminaries-9"><i class="fa fa-check"></i><b>12.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="12.5" data-path="activity-5-point-pattern-analysis-ii.html"><a href="activity-5-point-pattern-analysis-ii.html#activity-4"><i class="fa fa-check"></i><b>12.5</b> Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="point-pattern-analysis-iii.html"><a href="point-pattern-analysis-iii.html"><i class="fa fa-check"></i><b>13</b> Point Pattern Analysis III</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="point-pattern-analysis-iii.html"><a href="point-pattern-analysis-iii.html#learning-objectives-12"><i class="fa fa-check"></i><b>13.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="13.2" data-path="point-pattern-analysis-iii.html"><a href="point-pattern-analysis-iii.html#suggested-readings-5"><i class="fa fa-check"></i><b>13.2</b> Suggested Readings</a></li>
+<li class="chapter" data-level="13.3" data-path="point-pattern-analysis-iii.html"><a href="point-pattern-analysis-iii.html#preliminaries-10"><i class="fa fa-check"></i><b>13.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="13.4" data-path="point-pattern-analysis-iii.html"><a href="point-pattern-analysis-iii.html#motivation"><i class="fa fa-check"></i><b>13.4</b> Motivation</a></li>
+<li class="chapter" data-level="13.5" data-path="point-pattern-analysis-iii.html"><a href="point-pattern-analysis-iii.html#nearest-neighbors"><i class="fa fa-check"></i><b>13.5</b> Nearest Neighbors</a></li>
+<li class="chapter" data-level="13.6" data-path="point-pattern-analysis-iii.html"><a href="point-pattern-analysis-iii.html#g-function"><i class="fa fa-check"></i><b>13.6</b> <span class="math inline">\(G\)</span>-function</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="activity-6-point-pattern-analysis-iii.html"><a href="activity-6-point-pattern-analysis-iii.html"><i class="fa fa-check"></i><b>14</b> Activity 6: Point Pattern Analysis III</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="activity-6-point-pattern-analysis-iii.html"><a href="activity-6-point-pattern-analysis-iii.html#practice-questions-3"><i class="fa fa-check"></i><b>14.1</b> Practice questions</a></li>
+<li class="chapter" data-level="14.2" data-path="activity-6-point-pattern-analysis-iii.html"><a href="activity-6-point-pattern-analysis-iii.html#learning-objectives-13"><i class="fa fa-check"></i><b>14.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="14.3" data-path="activity-6-point-pattern-analysis-iii.html"><a href="activity-6-point-pattern-analysis-iii.html#suggested-reading-4"><i class="fa fa-check"></i><b>14.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="14.4" data-path="activity-6-point-pattern-analysis-iii.html"><a href="activity-6-point-pattern-analysis-iii.html#preliminaries-11"><i class="fa fa-check"></i><b>14.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="14.5" data-path="activity-6-point-pattern-analysis-iii.html"><a href="activity-6-point-pattern-analysis-iii.html#activity-5"><i class="fa fa-check"></i><b>14.5</b> Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="point-pattern-analysis-iv.html"><a href="point-pattern-analysis-iv.html"><i class="fa fa-check"></i><b>15</b> Point Pattern Analysis IV</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="point-pattern-analysis-iv.html"><a href="point-pattern-analysis-iv.html#learning-objectives-14"><i class="fa fa-check"></i><b>15.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="15.2" data-path="point-pattern-analysis-iv.html"><a href="point-pattern-analysis-iv.html#suggested-readings-6"><i class="fa fa-check"></i><b>15.2</b> Suggested Readings</a></li>
+<li class="chapter" data-level="15.3" data-path="point-pattern-analysis-iv.html"><a href="point-pattern-analysis-iv.html#preliminaries-12"><i class="fa fa-check"></i><b>15.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="15.4" data-path="point-pattern-analysis-iv.html"><a href="point-pattern-analysis-iv.html#motivation-1"><i class="fa fa-check"></i><b>15.4</b> Motivation</a></li>
+<li class="chapter" data-level="15.5" data-path="point-pattern-analysis-iv.html"><a href="point-pattern-analysis-iv.html#f-function"><i class="fa fa-check"></i><b>15.5</b> F-function</a></li>
+<li class="chapter" data-level="15.6" data-path="point-pattern-analysis-iv.html"><a href="point-pattern-analysis-iv.html#hatk-function"><i class="fa fa-check"></i><b>15.6</b> <span class="math inline">\(\hat{K}\)</span>-function</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="activity-7-point-pattern-analysis-iv.html"><a href="activity-7-point-pattern-analysis-iv.html"><i class="fa fa-check"></i><b>16</b> Activity 7: Point Pattern Analysis IV</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="activity-7-point-pattern-analysis-iv.html"><a href="activity-7-point-pattern-analysis-iv.html#practice-questions-4"><i class="fa fa-check"></i><b>16.1</b> Practice questions</a></li>
+<li class="chapter" data-level="16.2" data-path="activity-7-point-pattern-analysis-iv.html"><a href="activity-7-point-pattern-analysis-iv.html#learning-objectives-15"><i class="fa fa-check"></i><b>16.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="16.3" data-path="activity-7-point-pattern-analysis-iv.html"><a href="activity-7-point-pattern-analysis-iv.html#suggested-reading-5"><i class="fa fa-check"></i><b>16.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="16.4" data-path="activity-7-point-pattern-analysis-iv.html"><a href="activity-7-point-pattern-analysis-iv.html#preliminaries-13"><i class="fa fa-check"></i><b>16.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="16.5" data-path="activity-7-point-pattern-analysis-iv.html"><a href="activity-7-point-pattern-analysis-iv.html#activity-6"><i class="fa fa-check"></i><b>16.5</b> Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="point-pattern-analysis-v.html"><a href="point-pattern-analysis-v.html"><i class="fa fa-check"></i><b>17</b> Point Pattern Analysis V</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="point-pattern-analysis-v.html"><a href="point-pattern-analysis-v.html#learning-objectives-16"><i class="fa fa-check"></i><b>17.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="17.2" data-path="point-pattern-analysis-v.html"><a href="point-pattern-analysis-v.html#suggested-readings-7"><i class="fa fa-check"></i><b>17.2</b> Suggested Readings</a></li>
+<li class="chapter" data-level="17.3" data-path="point-pattern-analysis-v.html"><a href="point-pattern-analysis-v.html#preliminaries-14"><i class="fa fa-check"></i><b>17.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="17.4" data-path="point-pattern-analysis-v.html"><a href="point-pattern-analysis-v.html#motivation-hypothesis-testing"><i class="fa fa-check"></i><b>17.4</b> Motivation: Hypothesis Testing</a></li>
+<li class="chapter" data-level="17.5" data-path="point-pattern-analysis-v.html"><a href="point-pattern-analysis-v.html#null-landscapes-revisited"><i class="fa fa-check"></i><b>17.5</b> Null Landscapes Revisited</a></li>
+<li class="chapter" data-level="17.6" data-path="point-pattern-analysis-v.html"><a href="point-pattern-analysis-v.html#simulation-envelopes"><i class="fa fa-check"></i><b>17.6</b> Simulation Envelopes</a></li>
+<li class="chapter" data-level="17.7" data-path="point-pattern-analysis-v.html"><a href="point-pattern-analysis-v.html#things-to-keep-in-mind"><i class="fa fa-check"></i><b>17.7</b> Things to Keep in Mind!</a>
+<ul>
+<li class="chapter" data-level="17.7.1" data-path="point-pattern-analysis-v.html"><a href="point-pattern-analysis-v.html#definition-of-a-region"><i class="fa fa-check"></i><b>17.7.1</b> Definition of a Region</a></li>
+<li class="chapter" data-level="17.7.2" data-path="point-pattern-analysis-v.html"><a href="point-pattern-analysis-v.html#edge-effects"><i class="fa fa-check"></i><b>17.7.2</b> Edge Effects</a></li>
+<li class="chapter" data-level="17.7.3" data-path="point-pattern-analysis-v.html"><a href="point-pattern-analysis-v.html#sampled-point-patterns"><i class="fa fa-check"></i><b>17.7.3</b> Sampled Point Patterns</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="activity-8-point-pattern-analysis-v.html"><a href="activity-8-point-pattern-analysis-v.html"><i class="fa fa-check"></i><b>18</b> Activity 8: Point Pattern Analysis V</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="activity-8-point-pattern-analysis-v.html"><a href="activity-8-point-pattern-analysis-v.html#practice-questions-5"><i class="fa fa-check"></i><b>18.1</b> Practice questions</a></li>
+<li class="chapter" data-level="18.2" data-path="activity-8-point-pattern-analysis-v.html"><a href="activity-8-point-pattern-analysis-v.html#learning-objectives-17"><i class="fa fa-check"></i><b>18.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="18.3" data-path="activity-8-point-pattern-analysis-v.html"><a href="activity-8-point-pattern-analysis-v.html#suggested-reading-6"><i class="fa fa-check"></i><b>18.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="18.4" data-path="activity-8-point-pattern-analysis-v.html"><a href="activity-8-point-pattern-analysis-v.html#preliminaries-15"><i class="fa fa-check"></i><b>18.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="18.5" data-path="activity-8-point-pattern-analysis-v.html"><a href="activity-8-point-pattern-analysis-v.html#activity-7"><i class="fa fa-check"></i><b>18.5</b> Activity</a></li>
+</ul></li>
+<li class="part"><span><b>IV Part IV: Data in Areal Units</b></span></li>
+<li class="chapter" data-level="19" data-path="area-data-i.html"><a href="area-data-i.html"><i class="fa fa-check"></i><b>19</b> Area Data I</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="area-data-i.html"><a href="area-data-i.html#learning-objectives-18"><i class="fa fa-check"></i><b>19.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="19.2" data-path="area-data-i.html"><a href="area-data-i.html#suggested-readings-8"><i class="fa fa-check"></i><b>19.2</b> Suggested Readings</a></li>
+<li class="chapter" data-level="19.3" data-path="area-data-i.html"><a href="area-data-i.html#preliminaries-16"><i class="fa fa-check"></i><b>19.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="19.4" data-path="area-data-i.html"><a href="area-data-i.html#area-data"><i class="fa fa-check"></i><b>19.4</b> Area Data</a></li>
+<li class="chapter" data-level="19.5" data-path="area-data-i.html"><a href="area-data-i.html#processes-and-area-data"><i class="fa fa-check"></i><b>19.5</b> Processes and Area Data</a></li>
+<li class="chapter" data-level="19.6" data-path="area-data-i.html"><a href="area-data-i.html#visualizing-area-data-choropleth-maps"><i class="fa fa-check"></i><b>19.6</b> Visualizing Area Data: Choropleth Maps</a></li>
+<li class="chapter" data-level="19.7" data-path="area-data-i.html"><a href="area-data-i.html#visualizing-area-data-cartograms"><i class="fa fa-check"></i><b>19.7</b> Visualizing Area Data: Cartograms</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="activity-9-area-data-i.html"><a href="activity-9-area-data-i.html"><i class="fa fa-check"></i><b>20</b> Activity 9: Area Data I</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="activity-9-area-data-i.html"><a href="activity-9-area-data-i.html#practice-questions-6"><i class="fa fa-check"></i><b>20.1</b> Practice questions</a></li>
+<li class="chapter" data-level="20.2" data-path="activity-9-area-data-i.html"><a href="activity-9-area-data-i.html#learning-objectives-19"><i class="fa fa-check"></i><b>20.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="20.3" data-path="activity-9-area-data-i.html"><a href="activity-9-area-data-i.html#suggested-reading-7"><i class="fa fa-check"></i><b>20.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="20.4" data-path="activity-9-area-data-i.html"><a href="activity-9-area-data-i.html#preliminaries-17"><i class="fa fa-check"></i><b>20.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="20.5" data-path="activity-9-area-data-i.html"><a href="activity-9-area-data-i.html#activity-8"><i class="fa fa-check"></i><b>20.5</b> Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="area-data-ii.html"><a href="area-data-ii.html"><i class="fa fa-check"></i><b>21</b> Area Data II</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="area-data-ii.html"><a href="area-data-ii.html#learning-objectives-20"><i class="fa fa-check"></i><b>21.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="21.2" data-path="area-data-ii.html"><a href="area-data-ii.html#suggested-readings-9"><i class="fa fa-check"></i><b>21.2</b> Suggested Readings</a></li>
+<li class="chapter" data-level="21.3" data-path="area-data-ii.html"><a href="area-data-ii.html#preliminaries-18"><i class="fa fa-check"></i><b>21.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="21.4" data-path="area-data-ii.html"><a href="area-data-ii.html#proximity-in-area-data"><i class="fa fa-check"></i><b>21.4</b> Proximity in Area Data</a></li>
+<li class="chapter" data-level="21.5" data-path="area-data-ii.html"><a href="area-data-ii.html#spatial-weights-matrices"><i class="fa fa-check"></i><b>21.5</b> Spatial Weights Matrices</a></li>
+<li class="chapter" data-level="21.6" data-path="area-data-ii.html"><a href="area-data-ii.html#creating-spatial-weights-matrices-in-r"><i class="fa fa-check"></i><b>21.6</b> Creating Spatial Weights Matrices in <code>R</code></a></li>
+<li class="chapter" data-level="21.7" data-path="area-data-ii.html"><a href="area-data-ii.html#spatial-moving-averages"><i class="fa fa-check"></i><b>21.7</b> Spatial Moving Averages</a></li>
+<li class="chapter" data-level="21.8" data-path="area-data-ii.html"><a href="area-data-ii.html#other-criteria-for-coding-proximity"><i class="fa fa-check"></i><b>21.8</b> Other Criteria for Coding Proximity</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="activity-10-area-data-ii.html"><a href="activity-10-area-data-ii.html"><i class="fa fa-check"></i><b>22</b> Activity 10: Area Data II</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="activity-10-area-data-ii.html"><a href="activity-10-area-data-ii.html#practice-questions-7"><i class="fa fa-check"></i><b>22.1</b> Practice questions</a></li>
+<li class="chapter" data-level="22.2" data-path="activity-10-area-data-ii.html"><a href="activity-10-area-data-ii.html#learning-objectives-21"><i class="fa fa-check"></i><b>22.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="22.3" data-path="activity-10-area-data-ii.html"><a href="activity-10-area-data-ii.html#suggested-reading-8"><i class="fa fa-check"></i><b>22.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="22.4" data-path="activity-10-area-data-ii.html"><a href="activity-10-area-data-ii.html#preliminaries-19"><i class="fa fa-check"></i><b>22.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="22.5" data-path="activity-10-area-data-ii.html"><a href="activity-10-area-data-ii.html#activity-9"><i class="fa fa-check"></i><b>22.5</b> Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="area-data-iii.html"><a href="area-data-iii.html"><i class="fa fa-check"></i><b>23</b> Area Data III</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="area-data-iii.html"><a href="area-data-iii.html#learning-objectives-22"><i class="fa fa-check"></i><b>23.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="23.2" data-path="area-data-iii.html"><a href="area-data-iii.html#suggested-readings-10"><i class="fa fa-check"></i><b>23.2</b> Suggested Readings</a></li>
+<li class="chapter" data-level="23.3" data-path="area-data-iii.html"><a href="area-data-iii.html#preliminaries-20"><i class="fa fa-check"></i><b>23.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="23.4" data-path="area-data-iii.html"><a href="area-data-iii.html#spatial-moving-averages-and-simulation"><i class="fa fa-check"></i><b>23.4</b> Spatial Moving Averages and Simulation</a></li>
+<li class="chapter" data-level="23.5" data-path="area-data-iii.html"><a href="area-data-iii.html#the-spatial-moving-average-as-a-smoother"><i class="fa fa-check"></i><b>23.5</b> The Spatial Moving Average as a Smoother</a></li>
+<li class="chapter" data-level="23.6" data-path="area-data-iii.html"><a href="area-data-iii.html#spatial-moving-average-scatterplots"><i class="fa fa-check"></i><b>23.6</b> Spatial Moving Average Scatterplots</a></li>
+<li class="chapter" data-level="23.7" data-path="area-data-iii.html"><a href="area-data-iii.html#spatial-autocorrelation-and-morans-i-coefficient"><i class="fa fa-check"></i><b>23.7</b> Spatial Autocorrelation and Moran’s <span class="math inline">\(I\)</span> coefficient</a></li>
+<li class="chapter" data-level="23.8" data-path="area-data-iii.html"><a href="area-data-iii.html#morans-i-and-morans-scatterplot"><i class="fa fa-check"></i><b>23.8</b> Moran’s <span class="math inline">\(I\)</span> and Moran’s Scatterplot</a></li>
+<li class="chapter" data-level="23.9" data-path="area-data-iii.html"><a href="area-data-iii.html#hypothesis-testing-for-spatial-autocorrelation"><i class="fa fa-check"></i><b>23.9</b> Hypothesis Testing for Spatial Autocorrelation</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="activity-11-area-data-iii.html"><a href="activity-11-area-data-iii.html"><i class="fa fa-check"></i><b>24</b> Activity 11: Area Data III</a>
+<ul>
+<li class="chapter" data-level="24.1" data-path="activity-11-area-data-iii.html"><a href="activity-11-area-data-iii.html#practice-questions-8"><i class="fa fa-check"></i><b>24.1</b> Practice questions</a></li>
+<li class="chapter" data-level="24.2" data-path="activity-11-area-data-iii.html"><a href="activity-11-area-data-iii.html#learning-objectives-23"><i class="fa fa-check"></i><b>24.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="24.3" data-path="activity-11-area-data-iii.html"><a href="activity-11-area-data-iii.html#suggested-reading-9"><i class="fa fa-check"></i><b>24.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="24.4" data-path="activity-11-area-data-iii.html"><a href="activity-11-area-data-iii.html#preliminaries-21"><i class="fa fa-check"></i><b>24.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="24.5" data-path="activity-11-area-data-iii.html"><a href="activity-11-area-data-iii.html#activity-10"><i class="fa fa-check"></i><b>24.5</b> Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="area-data-iv.html"><a href="area-data-iv.html"><i class="fa fa-check"></i><b>25</b> Area Data IV</a>
+<ul>
+<li class="chapter" data-level="25.1" data-path="area-data-iv.html"><a href="area-data-iv.html#learning-objectives-24"><i class="fa fa-check"></i><b>25.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="25.2" data-path="area-data-iv.html"><a href="area-data-iv.html#suggested-readings-11"><i class="fa fa-check"></i><b>25.2</b> Suggested readings</a></li>
+<li class="chapter" data-level="25.3" data-path="area-data-iv.html"><a href="area-data-iv.html#preliminaries-22"><i class="fa fa-check"></i><b>25.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="25.4" data-path="area-data-iv.html"><a href="area-data-iv.html#decomposing-morans-i"><i class="fa fa-check"></i><b>25.4</b> Decomposing Moran’s <span class="math inline">\(I\)</span></a></li>
+<li class="chapter" data-level="25.5" data-path="area-data-iv.html"><a href="area-data-iv.html#local-morans-i-and-mapping"><i class="fa fa-check"></i><b>25.5</b> Local Moran’s <span class="math inline">\(I\)</span> and Mapping</a></li>
+<li class="chapter" data-level="25.6" data-path="area-data-iv.html"><a href="area-data-iv.html#a-quick-note-on-functions"><i class="fa fa-check"></i><b>25.6</b> A Quick Note on Functions</a></li>
+<li class="chapter" data-level="25.7" data-path="area-data-iv.html"><a href="area-data-iv.html#a-concentration-approach-for-local-analysis-of-spatial-association"><i class="fa fa-check"></i><b>25.7</b> A Concentration approach for Local Analysis of Spatial Association</a></li>
+<li class="chapter" data-level="25.8" data-path="area-data-iv.html"><a href="area-data-iv.html#a-short-note-on-hypothesis-testing"><i class="fa fa-check"></i><b>25.8</b> A Short Note on Hypothesis Testing</a></li>
+<li class="chapter" data-level="25.9" data-path="area-data-iv.html"><a href="area-data-iv.html#detection-of-hot-and-cold-spots"><i class="fa fa-check"></i><b>25.9</b> Detection of Hot and Cold Spots</a></li>
+<li class="chapter" data-level="25.10" data-path="area-data-iv.html"><a href="area-data-iv.html#other-resources-1"><i class="fa fa-check"></i><b>25.10</b> Other Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="26" data-path="activity-12-area-data-iv.html"><a href="activity-12-area-data-iv.html"><i class="fa fa-check"></i><b>26</b> Activity 12: Area Data IV</a>
+<ul>
+<li class="chapter" data-level="26.1" data-path="activity-12-area-data-iv.html"><a href="activity-12-area-data-iv.html#practice-questions-9"><i class="fa fa-check"></i><b>26.1</b> Practice questions</a></li>
+<li class="chapter" data-level="26.2" data-path="activity-12-area-data-iv.html"><a href="activity-12-area-data-iv.html#learning-objectives-25"><i class="fa fa-check"></i><b>26.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="26.3" data-path="activity-12-area-data-iv.html"><a href="activity-12-area-data-iv.html#suggested-reading-10"><i class="fa fa-check"></i><b>26.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="26.4" data-path="activity-12-area-data-iv.html"><a href="activity-12-area-data-iv.html#preliminaries-23"><i class="fa fa-check"></i><b>26.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="26.5" data-path="activity-12-area-data-iv.html"><a href="activity-12-area-data-iv.html#activity-11"><i class="fa fa-check"></i><b>26.5</b> Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="27" data-path="area-data-v.html"><a href="area-data-v.html"><i class="fa fa-check"></i><b>27</b> Area Data V</a>
+<ul>
+<li class="chapter" data-level="27.1" data-path="area-data-v.html"><a href="area-data-v.html#learning-objectives-26"><i class="fa fa-check"></i><b>27.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="27.2" data-path="area-data-v.html"><a href="area-data-v.html#suggested-readings-12"><i class="fa fa-check"></i><b>27.2</b> Suggested Readings</a></li>
+<li class="chapter" data-level="27.3" data-path="area-data-v.html"><a href="area-data-v.html#preliminaries-24"><i class="fa fa-check"></i><b>27.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="27.4" data-path="area-data-v.html"><a href="area-data-v.html#regression-analysis-in-r"><i class="fa fa-check"></i><b>27.4</b> Regression Analysis in <code>R</code></a></li>
+<li class="chapter" data-level="27.5" data-path="area-data-v.html"><a href="area-data-v.html#autocorrelation-as-a-model-diagnostic"><i class="fa fa-check"></i><b>27.5</b> Autocorrelation as a Model Diagnostic</a></li>
+<li class="chapter" data-level="27.6" data-path="area-data-v.html"><a href="area-data-v.html#variable-transformations"><i class="fa fa-check"></i><b>27.6</b> Variable Transformations</a></li>
+<li class="chapter" data-level="27.7" data-path="area-data-v.html"><a href="area-data-v.html#a-note-about-spatial-autocorrelation-in-regression-analysis"><i class="fa fa-check"></i><b>27.7</b> A Note about Spatial Autocorrelation in Regression Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="28" data-path="activity-13-area-data-v.html"><a href="activity-13-area-data-v.html"><i class="fa fa-check"></i><b>28</b> Activity 13: Area Data V</a>
+<ul>
+<li class="chapter" data-level="28.1" data-path="activity-13-area-data-v.html"><a href="activity-13-area-data-v.html#practice-questions-10"><i class="fa fa-check"></i><b>28.1</b> Practice questions</a></li>
+<li class="chapter" data-level="28.2" data-path="activity-13-area-data-v.html"><a href="activity-13-area-data-v.html#learning-objectives-27"><i class="fa fa-check"></i><b>28.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="28.3" data-path="activity-13-area-data-v.html"><a href="activity-13-area-data-v.html#suggested-reading-11"><i class="fa fa-check"></i><b>28.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="28.4" data-path="activity-13-area-data-v.html"><a href="activity-13-area-data-v.html#preliminaries-25"><i class="fa fa-check"></i><b>28.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="28.5" data-path="activity-13-area-data-v.html"><a href="activity-13-area-data-v.html#activity-12"><i class="fa fa-check"></i><b>28.5</b> Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="29" data-path="area-data-vi.html"><a href="area-data-vi.html"><i class="fa fa-check"></i><b>29</b> Area Data VI</a>
+<ul>
+<li class="chapter" data-level="29.1" data-path="area-data-vi.html"><a href="area-data-vi.html#learning-objectives-28"><i class="fa fa-check"></i><b>29.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="29.2" data-path="area-data-vi.html"><a href="area-data-vi.html#suggested-readings-13"><i class="fa fa-check"></i><b>29.2</b> Suggested Readings</a></li>
+<li class="chapter" data-level="29.3" data-path="area-data-vi.html"><a href="area-data-vi.html#preliminaries-26"><i class="fa fa-check"></i><b>29.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="29.4" data-path="area-data-vi.html"><a href="area-data-vi.html#residual-spatial-autocorrelation-revisited"><i class="fa fa-check"></i><b>29.4</b> Residual spatial autocorrelation revisited</a>
+<ul>
+<li class="chapter" data-level="29.4.1" data-path="area-data-vi.html"><a href="area-data-vi.html#incorrect-functional-form"><i class="fa fa-check"></i><b>29.4.1</b> Incorrect Functional Form</a></li>
+<li class="chapter" data-level="29.4.2" data-path="area-data-vi.html"><a href="area-data-vi.html#omitted-variables"><i class="fa fa-check"></i><b>29.4.2</b> Omitted Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="29.5" data-path="area-data-vi.html"><a href="area-data-vi.html#remedial-action"><i class="fa fa-check"></i><b>29.5</b> Remedial Action</a></li>
+<li class="chapter" data-level="29.6" data-path="area-data-vi.html"><a href="area-data-vi.html#flexible-functional-forms-and-models-with-spatially-varying-coefficients"><i class="fa fa-check"></i><b>29.6</b> Flexible Functional Forms and Models with Spatially-varying Coefficients</a>
+<ul>
+<li class="chapter" data-level="29.6.1" data-path="area-data-vi.html"><a href="area-data-vi.html#trend-surface-analysis"><i class="fa fa-check"></i><b>29.6.1</b> Trend Surface Analysis</a></li>
+<li class="chapter" data-level="29.6.2" data-path="area-data-vi.html"><a href="area-data-vi.html#models-with-spatially-varying-coefficients"><i class="fa fa-check"></i><b>29.6.2</b> Models with Spatially-varying Coefficients</a></li>
+</ul></li>
+<li class="chapter" data-level="29.7" data-path="area-data-vi.html"><a href="area-data-vi.html#spatial-error-model-sem"><i class="fa fa-check"></i><b>29.7</b> Spatial Error Model (SEM)</a></li>
+</ul></li>
+<li class="chapter" data-level="30" data-path="activity-14-area-data-vi.html"><a href="activity-14-area-data-vi.html"><i class="fa fa-check"></i><b>30</b> Activity 14: Area Data VI</a>
+<ul>
+<li class="chapter" data-level="30.1" data-path="activity-14-area-data-vi.html"><a href="activity-14-area-data-vi.html#practice-questions-11"><i class="fa fa-check"></i><b>30.1</b> Practice questions</a></li>
+<li class="chapter" data-level="30.2" data-path="activity-14-area-data-vi.html"><a href="activity-14-area-data-vi.html#learning-objectives-29"><i class="fa fa-check"></i><b>30.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="30.3" data-path="activity-14-area-data-vi.html"><a href="activity-14-area-data-vi.html#suggested-reading-12"><i class="fa fa-check"></i><b>30.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="30.4" data-path="activity-14-area-data-vi.html"><a href="activity-14-area-data-vi.html#preliminaries-27"><i class="fa fa-check"></i><b>30.4</b> Preliminaries</a>
+<ul>
+<li class="chapter" data-level="30.4.1" data-path="activity-14-area-data-vi.html"><a href="activity-14-area-data-vi.html#new-york-leukemia-data"><i class="fa fa-check"></i><b>30.4.1</b> New York leukemia data</a></li>
+<li class="chapter" data-level="30.4.2" data-path="activity-14-area-data-vi.html"><a href="activity-14-area-data-vi.html#pennsylvania-lung-cancer"><i class="fa fa-check"></i><b>30.4.2</b> Pennsylvania lung cancer</a></li>
+</ul></li>
+<li class="chapter" data-level="30.5" data-path="activity-14-area-data-vi.html"><a href="activity-14-area-data-vi.html#activity-13"><i class="fa fa-check"></i><b>30.5</b> Activity</a></li>
+</ul></li>
+<li class="part"><span><b>V Part V: Analysis and Prediction of Fields</b></span></li>
+<li class="chapter" data-level="31" data-path="spatially-continuous-data-i.html"><a href="spatially-continuous-data-i.html"><i class="fa fa-check"></i><b>31</b> Spatially Continuous Data I</a>
+<ul>
+<li class="chapter" data-level="31.1" data-path="spatially-continuous-data-i.html"><a href="spatially-continuous-data-i.html#learning-objectives-30"><i class="fa fa-check"></i><b>31.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="31.2" data-path="spatially-continuous-data-i.html"><a href="spatially-continuous-data-i.html#suggested-readings-14"><i class="fa fa-check"></i><b>31.2</b> Suggested readings</a></li>
+<li class="chapter" data-level="31.3" data-path="spatially-continuous-data-i.html"><a href="spatially-continuous-data-i.html#preliminaries-28"><i class="fa fa-check"></i><b>31.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="31.4" data-path="spatially-continuous-data-i.html"><a href="spatially-continuous-data-i.html#spatially-continuous-field-data"><i class="fa fa-check"></i><b>31.4</b> Spatially continuous (field) data</a></li>
+<li class="chapter" data-level="31.5" data-path="spatially-continuous-data-i.html"><a href="spatially-continuous-data-i.html#exploratory-visualization"><i class="fa fa-check"></i><b>31.5</b> Exploratory visualization</a></li>
+<li class="chapter" data-level="31.6" data-path="spatially-continuous-data-i.html"><a href="spatially-continuous-data-i.html#tile-based-methods"><i class="fa fa-check"></i><b>31.6</b> Tile-based methods</a></li>
+<li class="chapter" data-level="31.7" data-path="spatially-continuous-data-i.html"><a href="spatially-continuous-data-i.html#inverse-distance-weighting-idw"><i class="fa fa-check"></i><b>31.7</b> Inverse distance weighting (IDW)</a></li>
+<li class="chapter" data-level="31.8" data-path="spatially-continuous-data-i.html"><a href="spatially-continuous-data-i.html#k-point-means"><i class="fa fa-check"></i><b>31.8</b> <span class="math inline">\(k\)</span>-point means</a></li>
+</ul></li>
+<li class="chapter" data-level="32" data-path="activity-15-spatially-continuous-data-i.html"><a href="activity-15-spatially-continuous-data-i.html"><i class="fa fa-check"></i><b>32</b> Activity 15: Spatially Continuous Data I</a>
+<ul>
+<li class="chapter" data-level="32.1" data-path="activity-15-spatially-continuous-data-i.html"><a href="activity-15-spatially-continuous-data-i.html#practice-questions-12"><i class="fa fa-check"></i><b>32.1</b> Practice questions</a></li>
+<li class="chapter" data-level="32.2" data-path="activity-15-spatially-continuous-data-i.html"><a href="activity-15-spatially-continuous-data-i.html#learning-objectives-31"><i class="fa fa-check"></i><b>32.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="32.3" data-path="activity-15-spatially-continuous-data-i.html"><a href="activity-15-spatially-continuous-data-i.html#suggested-reading-13"><i class="fa fa-check"></i><b>32.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="32.4" data-path="activity-15-spatially-continuous-data-i.html"><a href="activity-15-spatially-continuous-data-i.html#preliminaries-29"><i class="fa fa-check"></i><b>32.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="32.5" data-path="activity-15-spatially-continuous-data-i.html"><a href="activity-15-spatially-continuous-data-i.html#activity-14"><i class="fa fa-check"></i><b>32.5</b> Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="33" data-path="spatially-continuous-data-ii.html"><a href="spatially-continuous-data-ii.html"><i class="fa fa-check"></i><b>33</b> Spatially Continuous Data II</a>
+<ul>
+<li class="chapter" data-level="33.1" data-path="spatially-continuous-data-ii.html"><a href="spatially-continuous-data-ii.html#learning-objectives-32"><i class="fa fa-check"></i><b>33.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="33.2" data-path="spatially-continuous-data-ii.html"><a href="spatially-continuous-data-ii.html#suggested-readings-15"><i class="fa fa-check"></i><b>33.2</b> Suggested readings</a></li>
+<li class="chapter" data-level="33.3" data-path="spatially-continuous-data-ii.html"><a href="spatially-continuous-data-ii.html#preliminaries-30"><i class="fa fa-check"></i><b>33.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="33.4" data-path="spatially-continuous-data-ii.html"><a href="spatially-continuous-data-ii.html#uncertainty-in-the-predictions"><i class="fa fa-check"></i><b>33.4</b> Uncertainty in the predictions</a></li>
+<li class="chapter" data-level="33.5" data-path="spatially-continuous-data-ii.html"><a href="spatially-continuous-data-ii.html#trend-surface-analysis-1"><i class="fa fa-check"></i><b>33.5</b> Trend surface analysis</a></li>
+<li class="chapter" data-level="33.6" data-path="spatially-continuous-data-ii.html"><a href="spatially-continuous-data-ii.html#accuracy-and-precision"><i class="fa fa-check"></i><b>33.6</b> Accuracy and precision</a></li>
+</ul></li>
+<li class="chapter" data-level="34" data-path="activity-16-spatially-continuous-data-ii.html"><a href="activity-16-spatially-continuous-data-ii.html"><i class="fa fa-check"></i><b>34</b> Activity 16: Spatially Continuous Data II</a>
+<ul>
+<li class="chapter" data-level="34.1" data-path="activity-16-spatially-continuous-data-ii.html"><a href="activity-16-spatially-continuous-data-ii.html#practice-questions-13"><i class="fa fa-check"></i><b>34.1</b> Practice questions</a></li>
+<li class="chapter" data-level="34.2" data-path="activity-16-spatially-continuous-data-ii.html"><a href="activity-16-spatially-continuous-data-ii.html#learning-objectives-33"><i class="fa fa-check"></i><b>34.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="34.3" data-path="activity-16-spatially-continuous-data-ii.html"><a href="activity-16-spatially-continuous-data-ii.html#suggested-reading-14"><i class="fa fa-check"></i><b>34.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="34.4" data-path="activity-16-spatially-continuous-data-ii.html"><a href="activity-16-spatially-continuous-data-ii.html#preliminaries-31"><i class="fa fa-check"></i><b>34.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="34.5" data-path="activity-16-spatially-continuous-data-ii.html"><a href="activity-16-spatially-continuous-data-ii.html#activity-15"><i class="fa fa-check"></i><b>34.5</b> Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="35" data-path="spatially-continuous-data-iii.html"><a href="spatially-continuous-data-iii.html"><i class="fa fa-check"></i><b>35</b> Spatially Continuous Data III</a>
+<ul>
+<li class="chapter" data-level="35.1" data-path="spatially-continuous-data-iii.html"><a href="spatially-continuous-data-iii.html#learning-objectives-34"><i class="fa fa-check"></i><b>35.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="35.2" data-path="spatially-continuous-data-iii.html"><a href="spatially-continuous-data-iii.html#suggested-reading-15"><i class="fa fa-check"></i><b>35.2</b> Suggested reading</a></li>
+<li class="chapter" data-level="35.3" data-path="spatially-continuous-data-iii.html"><a href="spatially-continuous-data-iii.html#preliminaries-32"><i class="fa fa-check"></i><b>35.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="35.4" data-path="spatially-continuous-data-iii.html"><a href="spatially-continuous-data-iii.html#residual-spatial-pattern"><i class="fa fa-check"></i><b>35.4</b> Residual spatial pattern</a></li>
+<li class="chapter" data-level="35.5" data-path="spatially-continuous-data-iii.html"><a href="spatially-continuous-data-iii.html#measuring-spatial-dependence-in-spatially-continuous-data"><i class="fa fa-check"></i><b>35.5</b> Measuring spatial dependence in spatially continuous data</a></li>
+<li class="chapter" data-level="35.6" data-path="spatially-continuous-data-iii.html"><a href="spatially-continuous-data-iii.html#variographic-analyisis"><i class="fa fa-check"></i><b>35.6</b> Variographic analyisis</a></li>
+</ul></li>
+<li class="chapter" data-level="36" data-path="activity-17-spatially-continuous-data-iii.html"><a href="activity-17-spatially-continuous-data-iii.html"><i class="fa fa-check"></i><b>36</b> Activity 17: Spatially Continuous Data III</a>
+<ul>
+<li class="chapter" data-level="36.1" data-path="activity-17-spatially-continuous-data-iii.html"><a href="activity-17-spatially-continuous-data-iii.html#practice-questions-14"><i class="fa fa-check"></i><b>36.1</b> Practice questions</a></li>
+<li class="chapter" data-level="36.2" data-path="activity-17-spatially-continuous-data-iii.html"><a href="activity-17-spatially-continuous-data-iii.html#learning-objectives-35"><i class="fa fa-check"></i><b>36.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="36.3" data-path="activity-17-spatially-continuous-data-iii.html"><a href="activity-17-spatially-continuous-data-iii.html#suggested-reading-16"><i class="fa fa-check"></i><b>36.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="36.4" data-path="activity-17-spatially-continuous-data-iii.html"><a href="activity-17-spatially-continuous-data-iii.html#preliminaries-33"><i class="fa fa-check"></i><b>36.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="36.5" data-path="activity-17-spatially-continuous-data-iii.html"><a href="activity-17-spatially-continuous-data-iii.html#activity-16"><i class="fa fa-check"></i><b>36.5</b> Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="37" data-path="spatially-continuous-data-iv.html"><a href="spatially-continuous-data-iv.html"><i class="fa fa-check"></i><b>37</b> Spatially Continuous Data IV</a>
+<ul>
+<li class="chapter" data-level="37.1" data-path="spatially-continuous-data-iv.html"><a href="spatially-continuous-data-iv.html#learning-objectives-36"><i class="fa fa-check"></i><b>37.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="37.2" data-path="spatially-continuous-data-iv.html"><a href="spatially-continuous-data-iv.html#suggested-reading-17"><i class="fa fa-check"></i><b>37.2</b> Suggested reading</a></li>
+<li class="chapter" data-level="37.3" data-path="spatially-continuous-data-iv.html"><a href="spatially-continuous-data-iv.html#preliminaries-34"><i class="fa fa-check"></i><b>37.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="37.4" data-path="spatially-continuous-data-iv.html"><a href="spatially-continuous-data-iv.html#using-residual-spatial-pattern-to-estimate-prediction-errors"><i class="fa fa-check"></i><b>37.4</b> Using residual spatial pattern to estimate prediction errors</a></li>
+<li class="chapter" data-level="37.5" data-path="spatially-continuous-data-iv.html"><a href="spatially-continuous-data-iv.html#kriging-a-method-for-optimal-prediction."><i class="fa fa-check"></i><b>37.5</b> Kriging: a method for optimal prediction.</a></li>
+</ul></li>
+<li class="chapter" data-level="38" data-path="activity-18-spatially-continuous-data-iv.html"><a href="activity-18-spatially-continuous-data-iv.html"><i class="fa fa-check"></i><b>38</b> Activity 18: Spatially Continuous Data IV</a>
+<ul>
+<li class="chapter" data-level="38.1" data-path="activity-18-spatially-continuous-data-iv.html"><a href="activity-18-spatially-continuous-data-iv.html#practice-questions-15"><i class="fa fa-check"></i><b>38.1</b> Practice questions</a></li>
+<li class="chapter" data-level="38.2" data-path="activity-18-spatially-continuous-data-iv.html"><a href="activity-18-spatially-continuous-data-iv.html#learning-objectives-37"><i class="fa fa-check"></i><b>38.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="38.3" data-path="activity-18-spatially-continuous-data-iv.html"><a href="activity-18-spatially-continuous-data-iv.html#suggested-reading-18"><i class="fa fa-check"></i><b>38.3</b> Suggested reading</a></li>
+<li class="chapter" data-level="38.4" data-path="activity-18-spatially-continuous-data-iv.html"><a href="activity-18-spatially-continuous-data-iv.html#preliminaries-35"><i class="fa fa-check"></i><b>38.4</b> Preliminaries</a></li>
+<li class="chapter" data-level="38.5" data-path="activity-18-spatially-continuous-data-iv.html"><a href="activity-18-spatially-continuous-data-iv.html#activity-17"><i class="fa fa-check"></i><b>38.5</b> Activity</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/paezha/spatial-analysis-R" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">An Introduction to Spatial Data Analysis and Statistics: A Course in <code>R</code></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="area-data-i" class="section level1" number="19">
+<h1><span class="header-section-number">Chapter 19</span> Area Data I</h1>
+<p><em>NOTE</em>: You can download the source files for this book from <a href="https://github.com/paezha/Spatial-Statistics-Course">here</a>. The source files are in the format of R Notebooks. Notebooks are pretty neat, because the allow you execute code within the notebook, so that you can work interactively with the notes.</p>
+<p>If you wish to work interactively with this chapter you will need the following:</p>
+<ul>
+<li><p>An <code>R</code> markdown notebook version of this document (the source file).</p></li>
+<li><p>A package called <code>geog4ga3</code>.</p></li>
+</ul>
+<div id="learning-objectives-18" class="section level2" number="19.1">
+<h2><span class="header-section-number">19.1</span> Learning Objectives</h2>
+<p>In last few practices/sessions, you learned about spatial point patterns. The next few sessions will concentrate on <em>area data</em>.</p>
+<p>In this practice, you will learn:</p>
+<ol style="list-style-type: decimal">
+<li>A formal definition of area data.</li>
+<li>Processes and area data.</li>
+<li>Visualizing area data: Choropleth maps.</li>
+<li>Visualizing area data: Cartograms.</li>
+</ol>
+</div>
+<div id="suggested-readings-8" class="section level2" number="19.2">
+<h2><span class="header-section-number">19.2</span> Suggested Readings</h2>
+<ul>
+<li>Bailey TC and Gatrell AC <span class="citation">(<a href="#ref-Bailey1995" role="doc-biblioref">1995</a>)</span> Interactive Spatial Data Analysis, Chapter 7. Longman: Essex.</li>
+<li>Bivand RS, Pebesma E, and Gomez-Rubio V <span class="citation">(<a href="#ref-Bivand2008" role="doc-biblioref">2008</a>)</span> Applied Spatial Data Analysis with R, Chapter 9. Springer: New York.</li>
+<li>Brunsdon C and Comber L <span class="citation">(<a href="#ref-Brunsdon2015R" role="doc-biblioref">2015</a>)</span> An Introduction to R for Spatial Analysis and Mapping, Chapter 7. Sage: Los Angeles.</li>
+<li>O’Sullivan D and Unwin D <span class="citation">(<a href="#ref-Osullivan2010" role="doc-biblioref">2010</a>)</span> Geographic Information Analysis, 2nd Edition, Chapter 7. John Wiley &amp; Sons: New Jersey.</li>
+</ul>
+</div>
+<div id="preliminaries-16" class="section level2" number="19.3">
+<h2><span class="header-section-number">19.3</span> Preliminaries</h2>
+<p>As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="area-data-i.html#cb378-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+<p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
+<p>Load the libraries you will use in this activity:</p>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="area-data-i.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cartogram)</span>
+<span id="cb379-2"><a href="area-data-i.html#cb379-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geog4ga3)</span>
+<span id="cb379-3"><a href="area-data-i.html#cb379-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb379-4"><a href="area-data-i.html#cb379-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb379-5"><a href="area-data-i.html#cb379-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb379-6"><a href="area-data-i.html#cb379-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<p>Read the data used in this chapter.</p>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="area-data-i.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;Hamilton_CT&quot;</span>)</span></code></pre></div>
+<p>The data are an object of class <code>sf</code> that includes the spatial information for the census tracts in the Hamilton Census Metropolitan Area in Canada and a series of demographic variables from the 2011 Census of Canada.</p>
+<p>You can quickly verify the contents of the dataframe by means of <code>summary</code>:</p>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="area-data-i.html#cb381-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Hamilton_CT)</span></code></pre></div>
+<pre><code>##        ID               AREA             TRACT             POPULATION     POP_DENSITY         AGE_LESS_20      AGE_20_TO_24  
+##  Min.   : 919807   Min.   :  0.3154   Length:188         Min.   :    5   Min.   :    2.591   Min.   :   0.0   Min.   :  0.0  
+##  1st Qu.: 927964   1st Qu.:  0.8552   Class :character   1st Qu.: 2639   1st Qu.: 1438.007   1st Qu.: 528.8   1st Qu.:168.8  
+##  Median : 948130   Median :  1.4157   Mode  :character   Median : 3595   Median : 2689.737   Median : 750.0   Median :225.0  
+##  Mean   : 948710   Mean   :  7.4578                      Mean   : 3835   Mean   : 2853.078   Mean   : 899.3   Mean   :253.9  
+##  3rd Qu.: 959722   3rd Qu.:  2.7775                      3rd Qu.: 4692   3rd Qu.: 3783.889   3rd Qu.:1110.0   3rd Qu.:311.2  
+##  Max.   :1115750   Max.   :138.4466                      Max.   :11675   Max.   :14234.286   Max.   :3285.0   Max.   :835.0  
+##   AGE_25_TO_29    AGE_30_TO_34     AGE_35_TO_39     AGE_40_TO_44     AGE_45_TO_49    AGE_50_TO_54    AGE_55_TO_59    AGE_60_TO_64
+##  Min.   :  0.0   Min.   :   0.0   Min.   :   0.0   Min.   :   0.0   Min.   :  0.0   Min.   :  0.0   Min.   :  0.0   Min.   :  0  
+##  1st Qu.:135.0   1st Qu.: 135.0   1st Qu.: 145.0   1st Qu.: 170.0   1st Qu.:203.8   1st Qu.:203.8   1st Qu.:175.0   1st Qu.:140  
+##  Median :215.0   Median : 195.0   Median : 200.0   Median : 230.0   Median :282.5   Median :280.0   Median :240.0   Median :220  
+##  Mean   :232.8   Mean   : 228.2   Mean   : 239.6   Mean   : 268.7   Mean   :310.6   Mean   :300.3   Mean   :257.7   Mean   :229  
+##  3rd Qu.:296.2   3rd Qu.: 281.2   3rd Qu.: 280.0   3rd Qu.: 325.0   3rd Qu.:385.0   3rd Qu.:375.0   3rd Qu.:325.0   3rd Qu.:295  
+##  Max.   :915.0   Max.   :1320.0   Max.   :1200.0   Max.   :1105.0   Max.   :880.0   Max.   :740.0   Max.   :625.0   Max.   :540  
+##   AGE_65_TO_69    AGE_70_TO_74    AGE_75_TO_79     AGE_80_TO_84     AGE_MORE_85              geometry  
+##  Min.   :  0.0   Min.   :  0.0   Min.   :  0.00   Min.   :  0.00   Min.   :  0.00   POLYGON      :188  
+##  1st Qu.:115.0   1st Qu.: 90.0   1st Qu.: 68.75   1st Qu.: 50.00   1st Qu.: 35.00   epsg:26917   :  0  
+##  Median :157.5   Median :130.0   Median :100.00   Median : 77.50   Median : 70.00   +proj=utm ...:  0  
+##  Mean   :174.2   Mean   :139.7   Mean   :118.32   Mean   : 95.05   Mean   : 87.71                      
+##  3rd Qu.:221.2   3rd Qu.:180.0   3rd Qu.:160.00   3rd Qu.:120.00   3rd Qu.:105.00                      
+##  Max.   :625.0   Max.   :540.0   Max.   :575.00   Max.   :420.00   Max.   :400.00</code></pre>
+</div>
+<div id="area-data" class="section level2" number="19.4">
+<h2><span class="header-section-number">19.4</span> Area Data</h2>
+<p>Every phenomena can be measured at a location (ask yourself, what exists outside of space?).</p>
+<p>In point pattern analysis, the <em>unit of support</em> is the point, and the source of randomness is the location itself. Many other forms of data are also collected at points. For instance, when the census collects information on population, at its most basic, the information can be georeferenced to an address, that is, a point.</p>
+<p>In numerous applications, however, data are not reported at their fundamental unit of support, but rather are aggregated to some other geometry, for instance an area. This is done for several reasons, including the privacy and confidentiality of the data. Instead of reporting individual-level information, the information is reported for zoning systems that often are devised without consideration to any underlying social, natural, or economic processes.</p>
+<p>Census data, for example, are reported at different levels of geography. In Canada, the smallest publicly available geography is called a <em>Dissemination Area</em> or <a href="http://www12.statcan.gc.ca/census-recensement/2011/ref/dict/geo021-eng.cfm">DA</a>. A DA in Canada contains a population between 400 and 700 persons. Thus, instead of reporting that one person (or more) are located at a point (i.e., an address), the census reports the population for the DA. Other data are aggregated in similar ways (income, residential status, etc.)</p>
+<p>At the highest level of aggregation, national level statistics are reported, such as Gross Domestic Product, or GDP. Economic production is not evenly distributed across space; however, the national GDP does not distinguish regional variations in this process.</p>
+<p>Ideally, a data analyst would work with data in its most fundamental support. This is not always possible, and therefore many techniques have been developed to work with data that have been aggregated to zones.</p>
+<p>When working with areas, it is less practical to identify the area with the coordinates (as we did with points). After all, areas will be composed of lines and reporting all the relevant coordinates is impractical. Sometimes the geometric centroids of the areas are used instead.</p>
+<p>More commonly, areas are assigned an index or unique identifier, so that a region will typically consist of a set of <span class="math inline">\(n\)</span> areas as follows:
+<span class="math display">\[
+R = A_1 \cup A_2 \cup A_3 \cup ...\cup A_n.
+\]</span></p>
+<p>The above is read as “the Region R is the union of Areas 1 to n.”</p>
+<p>Regions can have a set of <span class="math inline">\(k\)</span> attributes or variables associated with them, for instance:
+<span class="math display">\[
+\textbf{X}_i=[x_{i1}, x_{i2}, x_{i3},...,x_{ik}]
+\]</span></p>
+<p>These attributes will typically be counts (e.g., number of people in a DA), or some summary measure of the underlying data (e.g., mean commute time).</p>
+</div>
+<div id="processes-and-area-data" class="section level2" number="19.5">
+<h2><span class="header-section-number">19.5</span> Processes and Area Data</h2>
+<p>Imagine that data on income by household were collected as follows:</p>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="area-data-i.html#cb383-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here, we are creating a dataframe with three columns, coordinates x and y in space to indicate the locations of households, and their income.</span></span>
+<span id="cb383-2"><a href="area-data-i.html#cb383-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="fl">0.6</span>, <span class="fl">0.7</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>), <span class="at">Income =</span> <span class="fu">c</span>(<span class="dv">30000</span>, <span class="dv">30000</span>, <span class="dv">100000</span>, <span class="dv">100000</span>, <span class="dv">100000</span>))</span></code></pre></div>
+<p>Households are geocoded as points with coordinates <code>x</code> and <code>y</code>, whereas income is in dollars.</p>
+<p>Plot the income as points (hover over the points to see the attributes):</p>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="area-data-i.html#cb384-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The `ggplot()` function is used to create a plot. The function `geom_point()` adds points to the plot, using the values of coordinates x and y, and coloring by Income. Higher income households appear to be on the East regions of the area.</span></span>
+<span id="cb384-2"><a href="area-data-i.html#cb384-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb384-3"><a href="area-data-i.html#cb384-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> Income)) <span class="sc">+</span> </span>
+<span id="cb384-4"><a href="area-data-i.html#cb384-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb384-5"><a href="area-data-i.html#cb384-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span>
+<span id="cb384-6"><a href="area-data-i.html#cb384-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p)</span></code></pre></div>
+<div id="htmlwidget-0182a1be91ecc548b98a" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0182a1be91ecc548b98a">{"x":{"data":[{"x":[0.3,0.4,0.5,0.6,0.7],"y":[0.1,0.4,0.2,0.5,0.3],"text":["x: 0.3<br />y: 0.1<br />Income: 3e+04","x: 0.4<br />y: 0.4<br />Income: 3e+04","x: 0.5<br />y: 0.2<br />Income: 1e+05","x: 0.6<br />y: 0.5<br />Income: 1e+05","x: 0.7<br />y: 0.3<br />Income: 1e+05"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":["rgba(19,43,67,1)","rgba(19,43,67,1)","rgba(86,177,247,1)","rgba(86,177,247,1)","rgba(86,177,247,1)"],"opacity":1,"size":18.8976377952756,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":["rgba(19,43,67,1)","rgba(19,43,67,1)","rgba(86,177,247,1)","rgba(86,177,247,1)","rgba(86,177,247,1)"]}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.3],"y":[0.1],"name":"99_7c1937fbc4eff03763fee2228b881425","type":"scatter","mode":"markers","opacity":0,"hoverinfo":"skip","showlegend":false,"marker":{"color":[0,1],"colorscale":[[0,"#132B43"],[0.00334448160535119,"#132B44"],[0.00668896321070232,"#132C44"],[0.0100334448160535,"#142C45"],[0.0133779264214047,"#142D45"],[0.0167224080267559,"#142D46"],[0.020066889632107,"#142D46"],[0.0234113712374582,"#142E47"],[0.0267558528428094,"#152E47"],[0.0301003344481605,"#152F48"],[0.0334448160535117,"#152F48"],[0.0367892976588629,"#152F49"],[0.040133779264214,"#153049"],[0.0434782608695653,"#16304A"],[0.0468227424749164,"#16304A"],[0.0501672240802675,"#16314B"],[0.0535117056856188,"#16314B"],[0.0568561872909699,"#16324C"],[0.060200668896321,"#17324D"],[0.0635451505016723,"#17324D"],[0.0668896321070234,"#17334E"],[0.0702341137123745,"#17334E"],[0.0735785953177258,"#17344F"],[0.0769230769230769,"#18344F"],[0.0802675585284281,"#183450"],[0.0836120401337793,"#183550"],[0.0869565217391304,"#183551"],[0.0903010033444816,"#183651"],[0.0936454849498328,"#193652"],[0.0969899665551839,"#193652"],[0.100334448160535,"#193753"],[0.103678929765886,"#193754"],[0.107023411371238,"#193854"],[0.110367892976589,"#1A3855"],[0.11371237458194,"#1A3955"],[0.117056856187291,"#1A3956"],[0.120401337792642,"#1A3956"],[0.123745819397993,"#1A3A57"],[0.127090301003345,"#1B3A57"],[0.130434782608696,"#1B3B58"],[0.133779264214047,"#1B3B59"],[0.137123745819398,"#1B3B59"],[0.140468227424749,"#1C3C5A"],[0.1438127090301,"#1C3C5A"],[0.147157190635452,"#1C3D5B"],[0.150501672240803,"#1C3D5B"],[0.153846153846154,"#1C3D5C"],[0.157190635451505,"#1D3E5C"],[0.160535117056856,"#1D3E5D"],[0.163879598662207,"#1D3F5D"],[0.167224080267559,"#1D3F5E"],[0.17056856187291,"#1D3F5F"],[0.173913043478261,"#1E405F"],[0.177257525083612,"#1E4060"],[0.180602006688963,"#1E4160"],[0.183946488294314,"#1E4161"],[0.187290969899666,"#1E4261"],[0.190635451505017,"#1F4262"],[0.193979933110368,"#1F4263"],[0.197324414715719,"#1F4363"],[0.20066889632107,"#1F4364"],[0.204013377926421,"#1F4464"],[0.207357859531773,"#204465"],[0.210702341137124,"#204465"],[0.214046822742475,"#204566"],[0.217391304347826,"#204566"],[0.220735785953177,"#214667"],[0.224080267558528,"#214668"],[0.22742474916388,"#214768"],[0.230769230769231,"#214769"],[0.234113712374582,"#214769"],[0.237458193979933,"#22486A"],[0.240802675585284,"#22486A"],[0.244147157190635,"#22496B"],[0.247491638795987,"#22496C"],[0.250836120401338,"#224A6C"],[0.254180602006689,"#234A6D"],[0.25752508361204,"#234A6D"],[0.260869565217391,"#234B6E"],[0.264214046822743,"#234B6E"],[0.267558528428094,"#244C6F"],[0.270903010033445,"#244C70"],[0.274247491638796,"#244C70"],[0.277591973244147,"#244D71"],[0.280936454849498,"#244D71"],[0.28428093645485,"#254E72"],[0.287625418060201,"#254E72"],[0.290969899665552,"#254F73"],[0.294314381270903,"#254F74"],[0.297658862876254,"#254F74"],[0.301003344481605,"#265075"],[0.304347826086957,"#265075"],[0.307692307692308,"#265176"],[0.311036789297659,"#265176"],[0.31438127090301,"#275277"],[0.317725752508361,"#275278"],[0.321070234113712,"#275278"],[0.324414715719064,"#275379"],[0.327759197324415,"#275379"],[0.331103678929766,"#28547A"],[0.334448160535117,"#28547B"],[0.337792642140468,"#28557B"],[0.341137123745819,"#28557C"],[0.344481605351171,"#28567C"],[0.347826086956522,"#29567D"],[0.351170568561873,"#29567D"],[0.354515050167224,"#29577E"],[0.357859531772575,"#29577F"],[0.361204013377926,"#2A587F"],[0.364548494983278,"#2A5880"],[0.367892976588629,"#2A5980"],[0.37123745819398,"#2A5981"],[0.374581939799331,"#2A5982"],[0.377926421404682,"#2B5A82"],[0.381270903010033,"#2B5A83"],[0.384615384615385,"#2B5B83"],[0.387959866220736,"#2B5B84"],[0.391304347826087,"#2C5C85"],[0.394648829431438,"#2C5C85"],[0.397993311036789,"#2C5D86"],[0.40133779264214,"#2C5D86"],[0.404682274247492,"#2C5D87"],[0.408026755852843,"#2D5E87"],[0.411371237458194,"#2D5E88"],[0.414715719063545,"#2D5F89"],[0.418060200668896,"#2D5F89"],[0.421404682274248,"#2E608A"],[0.424749163879599,"#2E608A"],[0.42809364548495,"#2E618B"],[0.431438127090301,"#2E618C"],[0.434782608695652,"#2E618C"],[0.438127090301003,"#2F628D"],[0.441471571906355,"#2F628D"],[0.444816053511706,"#2F638E"],[0.448160535117057,"#2F638F"],[0.451505016722408,"#30648F"],[0.454849498327759,"#306490"],[0.45819397993311,"#306590"],[0.461538461538462,"#306591"],[0.464882943143813,"#306592"],[0.468227424749164,"#316692"],[0.471571906354515,"#316693"],[0.474916387959866,"#316793"],[0.478260869565217,"#316794"],[0.481605351170569,"#326895"],[0.48494983277592,"#326895"],[0.488294314381271,"#326996"],[0.491638795986622,"#326996"],[0.494983277591973,"#326997"],[0.498327759197324,"#336A98"],[0.501672240802676,"#336A98"],[0.505016722408027,"#336B99"],[0.508361204013378,"#336B99"],[0.511705685618729,"#346C9A"],[0.51505016722408,"#346C9B"],[0.518394648829431,"#346D9B"],[0.521739130434783,"#346D9C"],[0.525083612040134,"#346E9D"],[0.528428093645485,"#356E9D"],[0.531772575250836,"#356E9E"],[0.535117056856187,"#356F9E"],[0.538461538461538,"#356F9F"],[0.54180602006689,"#3670A0"],[0.545150501672241,"#3670A0"],[0.548494983277592,"#3671A1"],[0.551839464882943,"#3671A1"],[0.555183946488294,"#3772A2"],[0.558528428093645,"#3772A3"],[0.561872909698997,"#3773A3"],[0.565217391304348,"#3773A4"],[0.568561872909699,"#3773A4"],[0.57190635451505,"#3874A5"],[0.575250836120401,"#3874A6"],[0.578595317725752,"#3875A6"],[0.581939799331104,"#3875A7"],[0.585284280936455,"#3976A8"],[0.588628762541806,"#3976A8"],[0.591973244147157,"#3977A9"],[0.595317725752508,"#3977A9"],[0.598662207357859,"#3978AA"],[0.602006688963211,"#3A78AB"],[0.605351170568562,"#3A79AB"],[0.608695652173913,"#3A79AC"],[0.612040133779264,"#3A79AC"],[0.615384615384615,"#3B7AAD"],[0.618729096989966,"#3B7AAE"],[0.622073578595318,"#3B7BAE"],[0.625418060200669,"#3B7BAF"],[0.62876254180602,"#3C7CB0"],[0.632107023411371,"#3C7CB0"],[0.635451505016722,"#3C7DB1"],[0.638795986622074,"#3C7DB1"],[0.642140468227425,"#3C7EB2"],[0.645484949832776,"#3D7EB3"],[0.648829431438127,"#3D7FB3"],[0.652173913043478,"#3D7FB4"],[0.655518394648829,"#3D7FB5"],[0.658862876254181,"#3E80B5"],[0.662207357859532,"#3E80B6"],[0.665551839464883,"#3E81B6"],[0.668896321070234,"#3E81B7"],[0.672240802675585,"#3F82B8"],[0.675585284280937,"#3F82B8"],[0.678929765886288,"#3F83B9"],[0.682274247491639,"#3F83BA"],[0.68561872909699,"#4084BA"],[0.688963210702341,"#4084BB"],[0.692307692307692,"#4085BB"],[0.695652173913044,"#4085BC"],[0.698996655518395,"#4086BD"],[0.702341137123746,"#4186BD"],[0.705685618729097,"#4186BE"],[0.709030100334448,"#4187BF"],[0.712374581939799,"#4187BF"],[0.715719063545151,"#4288C0"],[0.719063545150502,"#4288C1"],[0.722408026755853,"#4289C1"],[0.725752508361204,"#4289C2"],[0.729096989966555,"#438AC2"],[0.732441471571906,"#438AC3"],[0.735785953177258,"#438BC4"],[0.739130434782609,"#438BC4"],[0.74247491638796,"#438CC5"],[0.745819397993311,"#448CC6"],[0.749163879598662,"#448DC6"],[0.752508361204013,"#448DC7"],[0.755852842809365,"#448EC8"],[0.759197324414716,"#458EC8"],[0.762541806020067,"#458FC9"],[0.765886287625418,"#458FC9"],[0.769230769230769,"#458FCA"],[0.77257525083612,"#4690CB"],[0.775919732441472,"#4690CB"],[0.779264214046823,"#4691CC"],[0.782608695652174,"#4691CD"],[0.785953177257525,"#4792CD"],[0.789297658862876,"#4792CE"],[0.792642140468227,"#4793CF"],[0.795986622073579,"#4793CF"],[0.79933110367893,"#4894D0"],[0.802675585284281,"#4894D0"],[0.806020066889632,"#4895D1"],[0.809364548494983,"#4895D2"],[0.812709030100334,"#4896D2"],[0.816053511705686,"#4996D3"],[0.819397993311037,"#4997D4"],[0.822742474916388,"#4997D4"],[0.826086956521739,"#4998D5"],[0.82943143812709,"#4A98D6"],[0.832775919732441,"#4A99D6"],[0.836120401337793,"#4A99D7"],[0.839464882943144,"#4A9AD8"],[0.842809364548495,"#4B9AD8"],[0.846153846153846,"#4B9BD9"],[0.849498327759197,"#4B9BDA"],[0.852842809364548,"#4B9BDA"],[0.8561872909699,"#4C9CDB"],[0.859531772575251,"#4C9CDB"],[0.862876254180602,"#4C9DDC"],[0.866220735785953,"#4C9DDD"],[0.869565217391304,"#4D9EDD"],[0.872909698996655,"#4D9EDE"],[0.876254180602007,"#4D9FDF"],[0.879598662207358,"#4D9FDF"],[0.882943143812709,"#4DA0E0"],[0.88628762541806,"#4EA0E1"],[0.889632107023411,"#4EA1E1"],[0.892976588628763,"#4EA1E2"],[0.896321070234114,"#4EA2E3"],[0.899665551839465,"#4FA2E3"],[0.903010033444816,"#4FA3E4"],[0.906354515050167,"#4FA3E5"],[0.909698996655518,"#4FA4E5"],[0.91304347826087,"#50A4E6"],[0.916387959866221,"#50A5E7"],[0.919732441471572,"#50A5E7"],[0.923076923076923,"#50A6E8"],[0.926421404682274,"#51A6E8"],[0.929765886287625,"#51A7E9"],[0.933110367892977,"#51A7EA"],[0.936454849498328,"#51A8EA"],[0.939799331103679,"#52A8EB"],[0.94314381270903,"#52A9EC"],[0.946488294314381,"#52A9EC"],[0.949832775919732,"#52AAED"],[0.953177257525084,"#53AAEE"],[0.956521739130435,"#53ABEE"],[0.959866220735786,"#53ABEF"],[0.963210702341137,"#53ACF0"],[0.966555183946488,"#54ACF0"],[0.969899665551839,"#54ADF1"],[0.973244147157191,"#54ADF2"],[0.976588628762542,"#54AEF2"],[0.979933110367893,"#55AEF3"],[0.983277591973244,"#55AFF4"],[0.986622073578595,"#55AFF4"],[0.989966555183946,"#55B0F5"],[0.993311036789298,"#56B0F6"],[0.996655518394649,"#56B1F6"],[1,"#56B1F7"]],"colorbar":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"thickness":23.04,"title":"Income","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"tickmode":"array","ticktext":["4e+04","6e+04","8e+04","1e+05"],"tickvals":[0.142857142857143,0.428571428571429,0.714285714285714,1],"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"ticklen":2,"len":0.5}},"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":40.1826484018265,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.28,0.72],"tickmode":"array","ticktext":["0.3","0.4","0.5","0.6","0.7"],"tickvals":[0.3,0.4,0.5,0.6,0.7],"categoryorder":"array","categoryarray":["0.3","0.4","0.5","0.6","0.7"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"x","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"scaleanchor":"y","scaleratio":1,"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.08,0.52],"tickmode":"array","ticktext":["0.1","0.2","0.3","0.4","0.5"],"tickvals":[0.1,0.2,0.3,0.4,0.5],"categoryorder":"array","categoryarray":["0.1","0.2","0.3","0.4","0.5"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"y","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"scaleanchor":"x","scaleratio":1,"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"12b8285b5e2c":{"x":{},"y":{},"colour":{},"type":"scatter"}},"cur_data":"12b8285b5e2c","visdat":{"12b8285b5e2c":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>The underlying process is one of income sorting, with lower incomes to the west, and higher incomes to the east. This could be due to a geographical feature of the landscape (for instance, an escarpment), or the distribution of the housing stock (with a neighborhood that has more expensive houses). These are examples of a variable that responds to a common environmental factor. As an alternative, people may display a preference towards being near others that are similar to them (this is called homophily). When this happens, the variable responds to itself in space.</p>
+<p>The quality of similarity or dissimilarity between neighboring observations of the same variable in space is called <em>spatial autocorrelation</em>. You will learn more about this later on.</p>
+<p>Another reason why variables reported for areas could display similarities in space is as an consequence of the zoning system.</p>
+<p>Suppose for a moment that the data above can only be reported at the zonal level, perhaps because of privacy and confidentiality concerns. Thanks to the great talent of the designers of the zoning system (or a felicitous coincidence!), the zoning system is such that it is consistent with the underlying process of sorting. The zones, therefore, are as follows:</p>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="area-data-i.html#cb385-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here, we create a new dataframe with the coordinates necessary to define two zones. The zones are rectangles, so we need to define four corners for each. &quot;Zone_ID&quot; only has 2 values because there are only two zones in the analysis. </span></span>
+<span id="cb385-2"><a href="area-data-i.html#cb385-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb385-3"><a href="area-data-i.html#cb385-3" aria-hidden="true" tabindex="-1"></a>zones1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1=</span><span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.45</span>), <span class="at">x2=</span><span class="fu">c</span>(<span class="fl">0.45</span>, <span class="fl">0.80</span>), <span class="at">y1=</span><span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.0</span>), <span class="at">y2=</span><span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.6</span>), <span class="at">Zone_ID =</span> <span class="fu">c</span>(<span class="st">&#39;1&#39;</span>,<span class="st">&#39;2&#39;</span>))</span></code></pre></div>
+<p>If you add these zones to the plot:</p>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="area-data-i.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Similar to the plot above, but adding the zones with `geom_rect()` for plotting rectangles.</span></span>
+<span id="cb386-2"><a href="area-data-i.html#cb386-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb386-3"><a href="area-data-i.html#cb386-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="at">data =</span> zones1, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xmin =</span> x1, <span class="at">xmax =</span> x2, <span class="at">ymin =</span> y1, <span class="at">ymax =</span> y2, <span class="at">fill =</span> Zone_ID), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> </span>
+<span id="cb386-4"><a href="area-data-i.html#cb386-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> Income), <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb386-5"><a href="area-data-i.html#cb386-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span>
+<span id="cb386-6"><a href="area-data-i.html#cb386-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p)</span></code></pre></div>
+<div id="htmlwidget-47c55435722f2be78ceb" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-47c55435722f2be78ceb">{"x":{"data":[{"x":[0.2,0.2,0.45,0.45,0.2],"y":[0,0.6,0.6,0,0],"text":"Zone_ID: 1","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"transparent","dash":"solid"},"fill":"toself","fillcolor":"rgba(248,118,109,0.3)","hoveron":"fills","name":"1","legendgroup":"1","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.45,0.45,0.8,0.8,0.45],"y":[0,0.6,0.6,0,0],"text":"Zone_ID: 2","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"transparent","dash":"solid"},"fill":"toself","fillcolor":"rgba(0,191,196,0.3)","hoveron":"fills","name":"2","legendgroup":"2","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.3,0.4,0.5,0.6,0.7],"y":[0.1,0.4,0.2,0.5,0.3],"text":["x: 0.3<br />y: 0.1<br />Income: 3e+04","x: 0.4<br />y: 0.4<br />Income: 3e+04","x: 0.5<br />y: 0.2<br />Income: 1e+05","x: 0.6<br />y: 0.5<br />Income: 1e+05","x: 0.7<br />y: 0.3<br />Income: 1e+05"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":["rgba(19,43,67,1)","rgba(19,43,67,1)","rgba(86,177,247,1)","rgba(86,177,247,1)","rgba(86,177,247,1)"],"opacity":1,"size":18.8976377952756,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":["rgba(19,43,67,1)","rgba(19,43,67,1)","rgba(86,177,247,1)","rgba(86,177,247,1)","rgba(86,177,247,1)"]}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.2],"y":[0],"name":"99_7c1937fbc4eff03763fee2228b881425","type":"scatter","mode":"markers","opacity":0,"hoverinfo":"skip","showlegend":false,"marker":{"color":[0,1],"colorscale":[[0,"#132B43"],[0.00334448160535119,"#132B44"],[0.00668896321070232,"#132C44"],[0.0100334448160535,"#142C45"],[0.0133779264214047,"#142D45"],[0.0167224080267559,"#142D46"],[0.020066889632107,"#142D46"],[0.0234113712374582,"#142E47"],[0.0267558528428094,"#152E47"],[0.0301003344481605,"#152F48"],[0.0334448160535117,"#152F48"],[0.0367892976588629,"#152F49"],[0.040133779264214,"#153049"],[0.0434782608695653,"#16304A"],[0.0468227424749164,"#16304A"],[0.0501672240802675,"#16314B"],[0.0535117056856188,"#16314B"],[0.0568561872909699,"#16324C"],[0.060200668896321,"#17324D"],[0.0635451505016723,"#17324D"],[0.0668896321070234,"#17334E"],[0.0702341137123745,"#17334E"],[0.0735785953177258,"#17344F"],[0.0769230769230769,"#18344F"],[0.0802675585284281,"#183450"],[0.0836120401337793,"#183550"],[0.0869565217391304,"#183551"],[0.0903010033444816,"#183651"],[0.0936454849498328,"#193652"],[0.0969899665551839,"#193652"],[0.100334448160535,"#193753"],[0.103678929765886,"#193754"],[0.107023411371238,"#193854"],[0.110367892976589,"#1A3855"],[0.11371237458194,"#1A3955"],[0.117056856187291,"#1A3956"],[0.120401337792642,"#1A3956"],[0.123745819397993,"#1A3A57"],[0.127090301003345,"#1B3A57"],[0.130434782608696,"#1B3B58"],[0.133779264214047,"#1B3B59"],[0.137123745819398,"#1B3B59"],[0.140468227424749,"#1C3C5A"],[0.1438127090301,"#1C3C5A"],[0.147157190635452,"#1C3D5B"],[0.150501672240803,"#1C3D5B"],[0.153846153846154,"#1C3D5C"],[0.157190635451505,"#1D3E5C"],[0.160535117056856,"#1D3E5D"],[0.163879598662207,"#1D3F5D"],[0.167224080267559,"#1D3F5E"],[0.17056856187291,"#1D3F5F"],[0.173913043478261,"#1E405F"],[0.177257525083612,"#1E4060"],[0.180602006688963,"#1E4160"],[0.183946488294314,"#1E4161"],[0.187290969899666,"#1E4261"],[0.190635451505017,"#1F4262"],[0.193979933110368,"#1F4263"],[0.197324414715719,"#1F4363"],[0.20066889632107,"#1F4364"],[0.204013377926421,"#1F4464"],[0.207357859531773,"#204465"],[0.210702341137124,"#204465"],[0.214046822742475,"#204566"],[0.217391304347826,"#204566"],[0.220735785953177,"#214667"],[0.224080267558528,"#214668"],[0.22742474916388,"#214768"],[0.230769230769231,"#214769"],[0.234113712374582,"#214769"],[0.237458193979933,"#22486A"],[0.240802675585284,"#22486A"],[0.244147157190635,"#22496B"],[0.247491638795987,"#22496C"],[0.250836120401338,"#224A6C"],[0.254180602006689,"#234A6D"],[0.25752508361204,"#234A6D"],[0.260869565217391,"#234B6E"],[0.264214046822743,"#234B6E"],[0.267558528428094,"#244C6F"],[0.270903010033445,"#244C70"],[0.274247491638796,"#244C70"],[0.277591973244147,"#244D71"],[0.280936454849498,"#244D71"],[0.28428093645485,"#254E72"],[0.287625418060201,"#254E72"],[0.290969899665552,"#254F73"],[0.294314381270903,"#254F74"],[0.297658862876254,"#254F74"],[0.301003344481605,"#265075"],[0.304347826086957,"#265075"],[0.307692307692308,"#265176"],[0.311036789297659,"#265176"],[0.31438127090301,"#275277"],[0.317725752508361,"#275278"],[0.321070234113712,"#275278"],[0.324414715719064,"#275379"],[0.327759197324415,"#275379"],[0.331103678929766,"#28547A"],[0.334448160535117,"#28547B"],[0.337792642140468,"#28557B"],[0.341137123745819,"#28557C"],[0.344481605351171,"#28567C"],[0.347826086956522,"#29567D"],[0.351170568561873,"#29567D"],[0.354515050167224,"#29577E"],[0.357859531772575,"#29577F"],[0.361204013377926,"#2A587F"],[0.364548494983278,"#2A5880"],[0.367892976588629,"#2A5980"],[0.37123745819398,"#2A5981"],[0.374581939799331,"#2A5982"],[0.377926421404682,"#2B5A82"],[0.381270903010033,"#2B5A83"],[0.384615384615385,"#2B5B83"],[0.387959866220736,"#2B5B84"],[0.391304347826087,"#2C5C85"],[0.394648829431438,"#2C5C85"],[0.397993311036789,"#2C5D86"],[0.40133779264214,"#2C5D86"],[0.404682274247492,"#2C5D87"],[0.408026755852843,"#2D5E87"],[0.411371237458194,"#2D5E88"],[0.414715719063545,"#2D5F89"],[0.418060200668896,"#2D5F89"],[0.421404682274248,"#2E608A"],[0.424749163879599,"#2E608A"],[0.42809364548495,"#2E618B"],[0.431438127090301,"#2E618C"],[0.434782608695652,"#2E618C"],[0.438127090301003,"#2F628D"],[0.441471571906355,"#2F628D"],[0.444816053511706,"#2F638E"],[0.448160535117057,"#2F638F"],[0.451505016722408,"#30648F"],[0.454849498327759,"#306490"],[0.45819397993311,"#306590"],[0.461538461538462,"#306591"],[0.464882943143813,"#306592"],[0.468227424749164,"#316692"],[0.471571906354515,"#316693"],[0.474916387959866,"#316793"],[0.478260869565217,"#316794"],[0.481605351170569,"#326895"],[0.48494983277592,"#326895"],[0.488294314381271,"#326996"],[0.491638795986622,"#326996"],[0.494983277591973,"#326997"],[0.498327759197324,"#336A98"],[0.501672240802676,"#336A98"],[0.505016722408027,"#336B99"],[0.508361204013378,"#336B99"],[0.511705685618729,"#346C9A"],[0.51505016722408,"#346C9B"],[0.518394648829431,"#346D9B"],[0.521739130434783,"#346D9C"],[0.525083612040134,"#346E9D"],[0.528428093645485,"#356E9D"],[0.531772575250836,"#356E9E"],[0.535117056856187,"#356F9E"],[0.538461538461538,"#356F9F"],[0.54180602006689,"#3670A0"],[0.545150501672241,"#3670A0"],[0.548494983277592,"#3671A1"],[0.551839464882943,"#3671A1"],[0.555183946488294,"#3772A2"],[0.558528428093645,"#3772A3"],[0.561872909698997,"#3773A3"],[0.565217391304348,"#3773A4"],[0.568561872909699,"#3773A4"],[0.57190635451505,"#3874A5"],[0.575250836120401,"#3874A6"],[0.578595317725752,"#3875A6"],[0.581939799331104,"#3875A7"],[0.585284280936455,"#3976A8"],[0.588628762541806,"#3976A8"],[0.591973244147157,"#3977A9"],[0.595317725752508,"#3977A9"],[0.598662207357859,"#3978AA"],[0.602006688963211,"#3A78AB"],[0.605351170568562,"#3A79AB"],[0.608695652173913,"#3A79AC"],[0.612040133779264,"#3A79AC"],[0.615384615384615,"#3B7AAD"],[0.618729096989966,"#3B7AAE"],[0.622073578595318,"#3B7BAE"],[0.625418060200669,"#3B7BAF"],[0.62876254180602,"#3C7CB0"],[0.632107023411371,"#3C7CB0"],[0.635451505016722,"#3C7DB1"],[0.638795986622074,"#3C7DB1"],[0.642140468227425,"#3C7EB2"],[0.645484949832776,"#3D7EB3"],[0.648829431438127,"#3D7FB3"],[0.652173913043478,"#3D7FB4"],[0.655518394648829,"#3D7FB5"],[0.658862876254181,"#3E80B5"],[0.662207357859532,"#3E80B6"],[0.665551839464883,"#3E81B6"],[0.668896321070234,"#3E81B7"],[0.672240802675585,"#3F82B8"],[0.675585284280937,"#3F82B8"],[0.678929765886288,"#3F83B9"],[0.682274247491639,"#3F83BA"],[0.68561872909699,"#4084BA"],[0.688963210702341,"#4084BB"],[0.692307692307692,"#4085BB"],[0.695652173913044,"#4085BC"],[0.698996655518395,"#4086BD"],[0.702341137123746,"#4186BD"],[0.705685618729097,"#4186BE"],[0.709030100334448,"#4187BF"],[0.712374581939799,"#4187BF"],[0.715719063545151,"#4288C0"],[0.719063545150502,"#4288C1"],[0.722408026755853,"#4289C1"],[0.725752508361204,"#4289C2"],[0.729096989966555,"#438AC2"],[0.732441471571906,"#438AC3"],[0.735785953177258,"#438BC4"],[0.739130434782609,"#438BC4"],[0.74247491638796,"#438CC5"],[0.745819397993311,"#448CC6"],[0.749163879598662,"#448DC6"],[0.752508361204013,"#448DC7"],[0.755852842809365,"#448EC8"],[0.759197324414716,"#458EC8"],[0.762541806020067,"#458FC9"],[0.765886287625418,"#458FC9"],[0.769230769230769,"#458FCA"],[0.77257525083612,"#4690CB"],[0.775919732441472,"#4690CB"],[0.779264214046823,"#4691CC"],[0.782608695652174,"#4691CD"],[0.785953177257525,"#4792CD"],[0.789297658862876,"#4792CE"],[0.792642140468227,"#4793CF"],[0.795986622073579,"#4793CF"],[0.79933110367893,"#4894D0"],[0.802675585284281,"#4894D0"],[0.806020066889632,"#4895D1"],[0.809364548494983,"#4895D2"],[0.812709030100334,"#4896D2"],[0.816053511705686,"#4996D3"],[0.819397993311037,"#4997D4"],[0.822742474916388,"#4997D4"],[0.826086956521739,"#4998D5"],[0.82943143812709,"#4A98D6"],[0.832775919732441,"#4A99D6"],[0.836120401337793,"#4A99D7"],[0.839464882943144,"#4A9AD8"],[0.842809364548495,"#4B9AD8"],[0.846153846153846,"#4B9BD9"],[0.849498327759197,"#4B9BDA"],[0.852842809364548,"#4B9BDA"],[0.8561872909699,"#4C9CDB"],[0.859531772575251,"#4C9CDB"],[0.862876254180602,"#4C9DDC"],[0.866220735785953,"#4C9DDD"],[0.869565217391304,"#4D9EDD"],[0.872909698996655,"#4D9EDE"],[0.876254180602007,"#4D9FDF"],[0.879598662207358,"#4D9FDF"],[0.882943143812709,"#4DA0E0"],[0.88628762541806,"#4EA0E1"],[0.889632107023411,"#4EA1E1"],[0.892976588628763,"#4EA1E2"],[0.896321070234114,"#4EA2E3"],[0.899665551839465,"#4FA2E3"],[0.903010033444816,"#4FA3E4"],[0.906354515050167,"#4FA3E5"],[0.909698996655518,"#4FA4E5"],[0.91304347826087,"#50A4E6"],[0.916387959866221,"#50A5E7"],[0.919732441471572,"#50A5E7"],[0.923076923076923,"#50A6E8"],[0.926421404682274,"#51A6E8"],[0.929765886287625,"#51A7E9"],[0.933110367892977,"#51A7EA"],[0.936454849498328,"#51A8EA"],[0.939799331103679,"#52A8EB"],[0.94314381270903,"#52A9EC"],[0.946488294314381,"#52A9EC"],[0.949832775919732,"#52AAED"],[0.953177257525084,"#53AAEE"],[0.956521739130435,"#53ABEE"],[0.959866220735786,"#53ABEF"],[0.963210702341137,"#53ACF0"],[0.966555183946488,"#54ACF0"],[0.969899665551839,"#54ADF1"],[0.973244147157191,"#54ADF2"],[0.976588628762542,"#54AEF2"],[0.979933110367893,"#55AEF3"],[0.983277591973244,"#55AFF4"],[0.986622073578595,"#55AFF4"],[0.989966555183946,"#55B0F5"],[0.993311036789298,"#56B0F6"],[0.996655518394649,"#56B1F6"],[1,"#56B1F7"]],"colorbar":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"thickness":23.04,"title":"Income","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"tickmode":"array","ticktext":["4e+04","6e+04","8e+04","1e+05"],"tickvals":[0.142857142857143,0.428571428571429,0.714285714285714,1],"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"ticklen":2,"len":0.5,"yanchor":"top","y":1}},"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":40.1826484018265,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.17,0.83],"tickmode":"array","ticktext":["0.2","0.4","0.6","0.8"],"tickvals":[0.2,0.4,0.6,0.8],"categoryorder":"array","categoryarray":["0.2","0.4","0.6","0.8"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"x","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"scaleanchor":"y","scaleratio":1,"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.03,0.63],"tickmode":"array","ticktext":["0.0","0.2","0.4","0.6"],"tickvals":[0,0.2,0.4,0.6],"categoryorder":"array","categoryarray":["0.0","0.2","0.4","0.6"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"y","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"scaleanchor":"x","scaleratio":1,"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.46751968503937,"yanchor":"top"},"annotations":[{"text":"Zone_ID","x":1.02,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"12b816f63431":{"xmin":{},"xmax":{},"ymin":{},"ymax":{},"fill":{},"type":"scatter"},"12b8ac14527":{"x":{},"y":{},"colour":{}}},"cur_data":"12b816f63431","visdat":{"12b816f63431":["function (y) ","x"],"12b8ac14527":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>What is the mean income in zone 1? What is the mean income in zone 2? Not only are the summary measures of income highly representative of the observations they describe, the two zones are also highly distinct.</p>
+<p>Imagine now that for whatever reason (lack of prior knowledge of the process, convenience for data collection, etc.) the zones instead are as follows:</p>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="area-data-i.html#cb387-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note how the values have changed for x1 and x2. This reveals that the zones have shifted and are no longer the same as the plot above. </span></span>
+<span id="cb387-2"><a href="area-data-i.html#cb387-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb387-3"><a href="area-data-i.html#cb387-3" aria-hidden="true" tabindex="-1"></a>zones2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1=</span><span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.55</span>), <span class="at">x2=</span><span class="fu">c</span>(<span class="fl">0.55</span>, <span class="fl">0.80</span>), <span class="at">y1=</span><span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.0</span>), <span class="at">y2=</span><span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.6</span>), <span class="at">Zone_ID =</span> <span class="fu">c</span>(<span class="st">&#39;1&#39;</span>,<span class="st">&#39;2&#39;</span>))</span></code></pre></div>
+<p>If you plot these zones:</p>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="area-data-i.html#cb388-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb388-2"><a href="area-data-i.html#cb388-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="at">data =</span> zones2, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xmin =</span> x1, <span class="at">xmax =</span> x2, <span class="at">ymin =</span> y1, <span class="at">ymax =</span> y2, <span class="at">fill =</span> Zone_ID), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> </span>
+<span id="cb388-3"><a href="area-data-i.html#cb388-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> Income), <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb388-4"><a href="area-data-i.html#cb388-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span>
+<span id="cb388-5"><a href="area-data-i.html#cb388-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p)</span></code></pre></div>
+<div id="htmlwidget-fdef9ee79b7ed78c9c15" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fdef9ee79b7ed78c9c15">{"x":{"data":[{"x":[0.2,0.2,0.55,0.55,0.2],"y":[0,0.6,0.6,0,0],"text":"Zone_ID: 1","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"transparent","dash":"solid"},"fill":"toself","fillcolor":"rgba(248,118,109,0.3)","hoveron":"fills","name":"1","legendgroup":"1","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.55,0.55,0.8,0.8,0.55],"y":[0,0.6,0.6,0,0],"text":"Zone_ID: 2","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"transparent","dash":"solid"},"fill":"toself","fillcolor":"rgba(0,191,196,0.3)","hoveron":"fills","name":"2","legendgroup":"2","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.3,0.4,0.5,0.6,0.7],"y":[0.1,0.4,0.2,0.5,0.3],"text":["x: 0.3<br />y: 0.1<br />Income: 3e+04","x: 0.4<br />y: 0.4<br />Income: 3e+04","x: 0.5<br />y: 0.2<br />Income: 1e+05","x: 0.6<br />y: 0.5<br />Income: 1e+05","x: 0.7<br />y: 0.3<br />Income: 1e+05"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":["rgba(19,43,67,1)","rgba(19,43,67,1)","rgba(86,177,247,1)","rgba(86,177,247,1)","rgba(86,177,247,1)"],"opacity":1,"size":18.8976377952756,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":["rgba(19,43,67,1)","rgba(19,43,67,1)","rgba(86,177,247,1)","rgba(86,177,247,1)","rgba(86,177,247,1)"]}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.2],"y":[0],"name":"99_7c1937fbc4eff03763fee2228b881425","type":"scatter","mode":"markers","opacity":0,"hoverinfo":"skip","showlegend":false,"marker":{"color":[0,1],"colorscale":[[0,"#132B43"],[0.00334448160535119,"#132B44"],[0.00668896321070232,"#132C44"],[0.0100334448160535,"#142C45"],[0.0133779264214047,"#142D45"],[0.0167224080267559,"#142D46"],[0.020066889632107,"#142D46"],[0.0234113712374582,"#142E47"],[0.0267558528428094,"#152E47"],[0.0301003344481605,"#152F48"],[0.0334448160535117,"#152F48"],[0.0367892976588629,"#152F49"],[0.040133779264214,"#153049"],[0.0434782608695653,"#16304A"],[0.0468227424749164,"#16304A"],[0.0501672240802675,"#16314B"],[0.0535117056856188,"#16314B"],[0.0568561872909699,"#16324C"],[0.060200668896321,"#17324D"],[0.0635451505016723,"#17324D"],[0.0668896321070234,"#17334E"],[0.0702341137123745,"#17334E"],[0.0735785953177258,"#17344F"],[0.0769230769230769,"#18344F"],[0.0802675585284281,"#183450"],[0.0836120401337793,"#183550"],[0.0869565217391304,"#183551"],[0.0903010033444816,"#183651"],[0.0936454849498328,"#193652"],[0.0969899665551839,"#193652"],[0.100334448160535,"#193753"],[0.103678929765886,"#193754"],[0.107023411371238,"#193854"],[0.110367892976589,"#1A3855"],[0.11371237458194,"#1A3955"],[0.117056856187291,"#1A3956"],[0.120401337792642,"#1A3956"],[0.123745819397993,"#1A3A57"],[0.127090301003345,"#1B3A57"],[0.130434782608696,"#1B3B58"],[0.133779264214047,"#1B3B59"],[0.137123745819398,"#1B3B59"],[0.140468227424749,"#1C3C5A"],[0.1438127090301,"#1C3C5A"],[0.147157190635452,"#1C3D5B"],[0.150501672240803,"#1C3D5B"],[0.153846153846154,"#1C3D5C"],[0.157190635451505,"#1D3E5C"],[0.160535117056856,"#1D3E5D"],[0.163879598662207,"#1D3F5D"],[0.167224080267559,"#1D3F5E"],[0.17056856187291,"#1D3F5F"],[0.173913043478261,"#1E405F"],[0.177257525083612,"#1E4060"],[0.180602006688963,"#1E4160"],[0.183946488294314,"#1E4161"],[0.187290969899666,"#1E4261"],[0.190635451505017,"#1F4262"],[0.193979933110368,"#1F4263"],[0.197324414715719,"#1F4363"],[0.20066889632107,"#1F4364"],[0.204013377926421,"#1F4464"],[0.207357859531773,"#204465"],[0.210702341137124,"#204465"],[0.214046822742475,"#204566"],[0.217391304347826,"#204566"],[0.220735785953177,"#214667"],[0.224080267558528,"#214668"],[0.22742474916388,"#214768"],[0.230769230769231,"#214769"],[0.234113712374582,"#214769"],[0.237458193979933,"#22486A"],[0.240802675585284,"#22486A"],[0.244147157190635,"#22496B"],[0.247491638795987,"#22496C"],[0.250836120401338,"#224A6C"],[0.254180602006689,"#234A6D"],[0.25752508361204,"#234A6D"],[0.260869565217391,"#234B6E"],[0.264214046822743,"#234B6E"],[0.267558528428094,"#244C6F"],[0.270903010033445,"#244C70"],[0.274247491638796,"#244C70"],[0.277591973244147,"#244D71"],[0.280936454849498,"#244D71"],[0.28428093645485,"#254E72"],[0.287625418060201,"#254E72"],[0.290969899665552,"#254F73"],[0.294314381270903,"#254F74"],[0.297658862876254,"#254F74"],[0.301003344481605,"#265075"],[0.304347826086957,"#265075"],[0.307692307692308,"#265176"],[0.311036789297659,"#265176"],[0.31438127090301,"#275277"],[0.317725752508361,"#275278"],[0.321070234113712,"#275278"],[0.324414715719064,"#275379"],[0.327759197324415,"#275379"],[0.331103678929766,"#28547A"],[0.334448160535117,"#28547B"],[0.337792642140468,"#28557B"],[0.341137123745819,"#28557C"],[0.344481605351171,"#28567C"],[0.347826086956522,"#29567D"],[0.351170568561873,"#29567D"],[0.354515050167224,"#29577E"],[0.357859531772575,"#29577F"],[0.361204013377926,"#2A587F"],[0.364548494983278,"#2A5880"],[0.367892976588629,"#2A5980"],[0.37123745819398,"#2A5981"],[0.374581939799331,"#2A5982"],[0.377926421404682,"#2B5A82"],[0.381270903010033,"#2B5A83"],[0.384615384615385,"#2B5B83"],[0.387959866220736,"#2B5B84"],[0.391304347826087,"#2C5C85"],[0.394648829431438,"#2C5C85"],[0.397993311036789,"#2C5D86"],[0.40133779264214,"#2C5D86"],[0.404682274247492,"#2C5D87"],[0.408026755852843,"#2D5E87"],[0.411371237458194,"#2D5E88"],[0.414715719063545,"#2D5F89"],[0.418060200668896,"#2D5F89"],[0.421404682274248,"#2E608A"],[0.424749163879599,"#2E608A"],[0.42809364548495,"#2E618B"],[0.431438127090301,"#2E618C"],[0.434782608695652,"#2E618C"],[0.438127090301003,"#2F628D"],[0.441471571906355,"#2F628D"],[0.444816053511706,"#2F638E"],[0.448160535117057,"#2F638F"],[0.451505016722408,"#30648F"],[0.454849498327759,"#306490"],[0.45819397993311,"#306590"],[0.461538461538462,"#306591"],[0.464882943143813,"#306592"],[0.468227424749164,"#316692"],[0.471571906354515,"#316693"],[0.474916387959866,"#316793"],[0.478260869565217,"#316794"],[0.481605351170569,"#326895"],[0.48494983277592,"#326895"],[0.488294314381271,"#326996"],[0.491638795986622,"#326996"],[0.494983277591973,"#326997"],[0.498327759197324,"#336A98"],[0.501672240802676,"#336A98"],[0.505016722408027,"#336B99"],[0.508361204013378,"#336B99"],[0.511705685618729,"#346C9A"],[0.51505016722408,"#346C9B"],[0.518394648829431,"#346D9B"],[0.521739130434783,"#346D9C"],[0.525083612040134,"#346E9D"],[0.528428093645485,"#356E9D"],[0.531772575250836,"#356E9E"],[0.535117056856187,"#356F9E"],[0.538461538461538,"#356F9F"],[0.54180602006689,"#3670A0"],[0.545150501672241,"#3670A0"],[0.548494983277592,"#3671A1"],[0.551839464882943,"#3671A1"],[0.555183946488294,"#3772A2"],[0.558528428093645,"#3772A3"],[0.561872909698997,"#3773A3"],[0.565217391304348,"#3773A4"],[0.568561872909699,"#3773A4"],[0.57190635451505,"#3874A5"],[0.575250836120401,"#3874A6"],[0.578595317725752,"#3875A6"],[0.581939799331104,"#3875A7"],[0.585284280936455,"#3976A8"],[0.588628762541806,"#3976A8"],[0.591973244147157,"#3977A9"],[0.595317725752508,"#3977A9"],[0.598662207357859,"#3978AA"],[0.602006688963211,"#3A78AB"],[0.605351170568562,"#3A79AB"],[0.608695652173913,"#3A79AC"],[0.612040133779264,"#3A79AC"],[0.615384615384615,"#3B7AAD"],[0.618729096989966,"#3B7AAE"],[0.622073578595318,"#3B7BAE"],[0.625418060200669,"#3B7BAF"],[0.62876254180602,"#3C7CB0"],[0.632107023411371,"#3C7CB0"],[0.635451505016722,"#3C7DB1"],[0.638795986622074,"#3C7DB1"],[0.642140468227425,"#3C7EB2"],[0.645484949832776,"#3D7EB3"],[0.648829431438127,"#3D7FB3"],[0.652173913043478,"#3D7FB4"],[0.655518394648829,"#3D7FB5"],[0.658862876254181,"#3E80B5"],[0.662207357859532,"#3E80B6"],[0.665551839464883,"#3E81B6"],[0.668896321070234,"#3E81B7"],[0.672240802675585,"#3F82B8"],[0.675585284280937,"#3F82B8"],[0.678929765886288,"#3F83B9"],[0.682274247491639,"#3F83BA"],[0.68561872909699,"#4084BA"],[0.688963210702341,"#4084BB"],[0.692307692307692,"#4085BB"],[0.695652173913044,"#4085BC"],[0.698996655518395,"#4086BD"],[0.702341137123746,"#4186BD"],[0.705685618729097,"#4186BE"],[0.709030100334448,"#4187BF"],[0.712374581939799,"#4187BF"],[0.715719063545151,"#4288C0"],[0.719063545150502,"#4288C1"],[0.722408026755853,"#4289C1"],[0.725752508361204,"#4289C2"],[0.729096989966555,"#438AC2"],[0.732441471571906,"#438AC3"],[0.735785953177258,"#438BC4"],[0.739130434782609,"#438BC4"],[0.74247491638796,"#438CC5"],[0.745819397993311,"#448CC6"],[0.749163879598662,"#448DC6"],[0.752508361204013,"#448DC7"],[0.755852842809365,"#448EC8"],[0.759197324414716,"#458EC8"],[0.762541806020067,"#458FC9"],[0.765886287625418,"#458FC9"],[0.769230769230769,"#458FCA"],[0.77257525083612,"#4690CB"],[0.775919732441472,"#4690CB"],[0.779264214046823,"#4691CC"],[0.782608695652174,"#4691CD"],[0.785953177257525,"#4792CD"],[0.789297658862876,"#4792CE"],[0.792642140468227,"#4793CF"],[0.795986622073579,"#4793CF"],[0.79933110367893,"#4894D0"],[0.802675585284281,"#4894D0"],[0.806020066889632,"#4895D1"],[0.809364548494983,"#4895D2"],[0.812709030100334,"#4896D2"],[0.816053511705686,"#4996D3"],[0.819397993311037,"#4997D4"],[0.822742474916388,"#4997D4"],[0.826086956521739,"#4998D5"],[0.82943143812709,"#4A98D6"],[0.832775919732441,"#4A99D6"],[0.836120401337793,"#4A99D7"],[0.839464882943144,"#4A9AD8"],[0.842809364548495,"#4B9AD8"],[0.846153846153846,"#4B9BD9"],[0.849498327759197,"#4B9BDA"],[0.852842809364548,"#4B9BDA"],[0.8561872909699,"#4C9CDB"],[0.859531772575251,"#4C9CDB"],[0.862876254180602,"#4C9DDC"],[0.866220735785953,"#4C9DDD"],[0.869565217391304,"#4D9EDD"],[0.872909698996655,"#4D9EDE"],[0.876254180602007,"#4D9FDF"],[0.879598662207358,"#4D9FDF"],[0.882943143812709,"#4DA0E0"],[0.88628762541806,"#4EA0E1"],[0.889632107023411,"#4EA1E1"],[0.892976588628763,"#4EA1E2"],[0.896321070234114,"#4EA2E3"],[0.899665551839465,"#4FA2E3"],[0.903010033444816,"#4FA3E4"],[0.906354515050167,"#4FA3E5"],[0.909698996655518,"#4FA4E5"],[0.91304347826087,"#50A4E6"],[0.916387959866221,"#50A5E7"],[0.919732441471572,"#50A5E7"],[0.923076923076923,"#50A6E8"],[0.926421404682274,"#51A6E8"],[0.929765886287625,"#51A7E9"],[0.933110367892977,"#51A7EA"],[0.936454849498328,"#51A8EA"],[0.939799331103679,"#52A8EB"],[0.94314381270903,"#52A9EC"],[0.946488294314381,"#52A9EC"],[0.949832775919732,"#52AAED"],[0.953177257525084,"#53AAEE"],[0.956521739130435,"#53ABEE"],[0.959866220735786,"#53ABEF"],[0.963210702341137,"#53ACF0"],[0.966555183946488,"#54ACF0"],[0.969899665551839,"#54ADF1"],[0.973244147157191,"#54ADF2"],[0.976588628762542,"#54AEF2"],[0.979933110367893,"#55AEF3"],[0.983277591973244,"#55AFF4"],[0.986622073578595,"#55AFF4"],[0.989966555183946,"#55B0F5"],[0.993311036789298,"#56B0F6"],[0.996655518394649,"#56B1F6"],[1,"#56B1F7"]],"colorbar":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"thickness":23.04,"title":"Income","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"tickmode":"array","ticktext":["4e+04","6e+04","8e+04","1e+05"],"tickvals":[0.142857142857143,0.428571428571429,0.714285714285714,1],"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"ticklen":2,"len":0.5,"yanchor":"top","y":1}},"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":40.1826484018265,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.17,0.83],"tickmode":"array","ticktext":["0.2","0.4","0.6","0.8"],"tickvals":[0.2,0.4,0.6,0.8],"categoryorder":"array","categoryarray":["0.2","0.4","0.6","0.8"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"x","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"scaleanchor":"y","scaleratio":1,"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.03,0.63],"tickmode":"array","ticktext":["0.0","0.2","0.4","0.6"],"tickvals":[0,0.2,0.4,0.6],"categoryorder":"array","categoryarray":["0.0","0.2","0.4","0.6"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"y","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"scaleanchor":"x","scaleratio":1,"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.46751968503937,"yanchor":"top"},"annotations":[{"text":"Zone_ID","x":1.02,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"12b82d1352c9":{"xmin":{},"xmax":{},"ymin":{},"ymax":{},"fill":{},"type":"scatter"},"12b85b693a86":{"x":{},"y":{},"colour":{}}},"cur_data":"12b82d1352c9","visdat":{"12b82d1352c9":["function (y) ","x"],"12b85b693a86":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>What is now the mean income of zone 1? What is the mean income of zone 2? The observations have not changed, and the generating spatial process remains the same. However, as you can see, the summary measures for the two zones are more similar in this case than they were when the zones more closely captured the underlying process.</p>
+</div>
+<div id="visualizing-area-data-choropleth-maps" class="section level2" number="19.6">
+<h2><span class="header-section-number">19.6</span> Visualizing Area Data: Choropleth Maps</h2>
+<p>The very first step when working with spatial area data, perhaps, is to visualize the data.</p>
+<p>Commonly, area data are visualized by means of choropleth maps. A choropleth map is a map of the polygons that form the areas in the region, each colored in a way to represent the value of an underlying variable.</p>
+<p>Lets use <code>ggplot2</code> to create a choropleth map of population in Hamilton. Notice that the fill color for the polygons is given by cutting the values of <code>POPULATION</code> in five equal segments. In other words, the colors represent zones in the bottom 20% of population, zones in the next 20%, and so on, so that the darkest zones are those with populations so large as to be in the top 20% of the population distribution:</p>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="area-data-i.html#cb389-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Geographical information can also be plotted using `ggplot2` when it is in the form of simple features or `sf`. Here, we create a plot with function `ggplot()`. We also have available the census tracts for Hamilton in an `sf` dataframe. To plot the distribution of the population in five equal segments (or quintiles), we apply the function `cut_number()` to the variable `POPULATION` from the `Hamilton_CT` census tract dataframe. The aesthetic value for `fill` will color the zones according to the population quintiles.  </span></span>
+<span id="cb389-2"><a href="area-data-i.html#cb389-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb389-3"><a href="area-data-i.html#cb389-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Hamilton_CT) <span class="sc">+</span> </span>
+<span id="cb389-4"><a href="area-data-i.html#cb389-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">cut_number</span>(POPULATION, <span class="dv">5</span>)), <span class="at">color =</span> <span class="cn">NA</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb389-5"><a href="area-data-i.html#cb389-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;YlOrRd&quot;</span>) <span class="sc">+</span></span>
+<span id="cb389-6"><a href="area-data-i.html#cb389-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>() <span class="sc">+</span></span>
+<span id="cb389-7"><a href="area-data-i.html#cb389-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Population&quot;</span>)</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-284-1.png" width="672" /></p>
+<p>Inspect the map above. Would you say that the distribution of population is random, or not random? If not random, what do you think might be an underlying process for the distribution of population?</p>
+<p>Often, creating a choropleth map using the absolute value of a variable can be somewhat misleading. As illustrated by the map of population by census tract in Hamilton, the zones with the largest population are also often large zones. Many process are confounded by the size of the zones: quite simply, in larger areas often there is more of, well, almost anything, compared with smaller areas. For this reason, it is often more informative when creating a choropleth map to use a variable that is a rate. Rates are quantities that are measured with respect to something. For instance population measured by area, or population density, is a rate:</p>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="area-data-i.html#cb390-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note how the `cut_number()` is applied to population density rather than population like the figure above. This gives a more different, and perhaps more informative, of the distribution of population, by measuring population against area.</span></span>
+<span id="cb390-2"><a href="area-data-i.html#cb390-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb390-3"><a href="area-data-i.html#cb390-3" aria-hidden="true" tabindex="-1"></a>pop_den.map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Hamilton_CT) <span class="sc">+</span> </span>
+<span id="cb390-4"><a href="area-data-i.html#cb390-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">cut_number</span>(POP_DENSITY, <span class="dv">5</span>)), <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb390-5"><a href="area-data-i.html#cb390-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;YlOrRd&quot;</span>) <span class="sc">+</span></span>
+<span id="cb390-6"><a href="area-data-i.html#cb390-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Pop Density&quot;</span>)</span>
+<span id="cb390-7"><a href="area-data-i.html#cb390-7" aria-hidden="true" tabindex="-1"></a>pop_den.map</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-285-1.png" width="672" /></p>
+<p>It can be seen now that the population density is higher in the more central parts of Hamilton, Burlington, Dundas, etc. Does the map look random? If not, what might be an underlying process that explains the variations in population density in a city like Hamilton?</p>
+<p>Other times, it is appropriate to standardize instead of by area, by what might be called the <em>population at risk</em>. For instance, imagine that we wanted to explore the distribution of the population of older adults (say, 65 and older). In this case, if instead of normalizing by area, we used the total population instead, would remove the “size” effect, giving a rate:</p>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="area-data-i.html#cb391-1" aria-hidden="true" tabindex="-1"></a><span class="co">#The &quot;HAMILTON_CT&quot; dataframe portions ages by category. For this choropleth map, we sum all age categories over 65, and then divide by total population. This measures the population of older adults against total population, to give a proportion (the rate out of a total). </span></span>
+<span id="cb391-2"><a href="area-data-i.html#cb391-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb391-3"><a href="area-data-i.html#cb391-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Hamilton_CT) <span class="sc">+</span> </span>
+<span id="cb391-4"><a href="area-data-i.html#cb391-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">cut_number</span>((AGE_65_TO_69 <span class="sc">+</span></span>
+<span id="cb391-5"><a href="area-data-i.html#cb391-5" aria-hidden="true" tabindex="-1"></a>                                 AGE_70_TO_74 <span class="sc">+</span></span>
+<span id="cb391-6"><a href="area-data-i.html#cb391-6" aria-hidden="true" tabindex="-1"></a>                                 AGE_75_TO_79 <span class="sc">+</span></span>
+<span id="cb391-7"><a href="area-data-i.html#cb391-7" aria-hidden="true" tabindex="-1"></a>                                 AGE_80_TO_84 <span class="sc">+</span></span>
+<span id="cb391-8"><a href="area-data-i.html#cb391-8" aria-hidden="true" tabindex="-1"></a>                                 AGE_MORE_85) <span class="sc">/</span> POPULATION, <span class="dv">5</span>)),</span>
+<span id="cb391-9"><a href="area-data-i.html#cb391-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="cn">NA</span>, </span>
+<span id="cb391-10"><a href="area-data-i.html#cb391-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb391-11"><a href="area-data-i.html#cb391-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;YlOrRd&quot;</span>) <span class="sc">+</span></span>
+<span id="cb391-12"><a href="area-data-i.html#cb391-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Prop Age 65+&quot;</span>)</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-286-1.png" width="672" /></p>
+<p>Do you notice a pattern in the distribution of seniors in the Hamilton, CMA?</p>
+<p>There are a few things to keep in mind when creating choropleth maps.</p>
+<p>First, what classification scheme to use, with how many classes, and what colors?</p>
+<p>The examples above were all created using a classification scheme based on the <em>quintiles</em> of the distribution. As noted above, these are obtained by dividing the sample into 5 equal parts to give bottom 20%, etc., of observations. The quintiles are a particular form of a statistical summary measure known as <em>quantiles</em>. Another example of a quantile is the <em>median</em>, which is the value obtained when the sample is divided in two equal sized parts. Other classification schemes may include the mean, standard deviations, and so on. Essentially, a classification scheme defines a way to divide the sample for representation in a choropleth map.</p>
+<p>In terms of how many classes to use, often there is little point in using more than six or seven classes, because the human eye cannot distinguish color differences at a much higher resolution.</p>
+<p>The colors are a matter of style and preference, but there are coloring schemes that are colorblind safe (see <a href="http://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3">here</a>). Also, for communication purposes, there are conventions that assign values or meanings to colors. Maps showing results of elections often use the colors of political parties: this is such a widespread convention that it would be thoroughly confusing if the colors were reversed, more so than if just the colors were exchanged for others. Red is often associated with heat, concentration, or sometimes bad, whereas green is associated with good. <a href="https://blog.datawrapper.de/colors/">Here is an interesting discussion of use of colors in visualization</a>.</p>
+<p>Secondly, when the zoning system is irregular (as opposed to, say, a raster, which is composed of pixels, regular tiles of consistent size), large zones can easily become dominant. In effect, much detail in the maps above is lost for small zones, whereas large zones, especially if similarly colored, may mislead the eye as to their relative frequency.</p>
+<p>Another mapping technique, the cartogram, is meant to reduce the issues with small-large zones.</p>
+</div>
+<div id="visualizing-area-data-cartograms" class="section level2" number="19.7">
+<h2><span class="header-section-number">19.7</span> Visualizing Area Data: Cartograms</h2>
+<p>A cartogram is a map where the size of the zones is adjusted so that instead of being the surface area, it is proportional to some other variable of interest.</p>
+<p>We will illustrate the idea behind the cartogram here.</p>
+<p>In the maps that we created above, the zones are faithful to their geographical properties (subject to distortions due to geographical projection). Unfortunately, this feature of the maps obscured the relevance of some of the smaller zones. A cartogram can be weighted by another variable, say for instance, the population. In this way, the size of the zones will depend on the total population.</p>
+<p>Cartograms are implemented in <code>R</code> in the package <code>cartogram</code>.</p>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="area-data-i.html#cb392-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The function `cartogram_cont()` constructs a continuous area cartogram. Here, a cartogram is created for census tracts of the city of Hamilton, but the size of the zones will be weighted by the variable `POPULATION`.</span></span>
+<span id="cb392-2"><a href="area-data-i.html#cb392-2" aria-hidden="true" tabindex="-1"></a>CT_pop_cartogram <span class="ot">&lt;-</span> <span class="fu">cartogram_cont</span>(Hamilton_CT, <span class="at">weight =</span> <span class="st">&quot;POPULATION&quot;</span>)</span></code></pre></div>
+<pre><code>## Mean size error for iteration 1: 5.93989832705674</code></pre>
+<pre><code>## Mean size error for iteration 2: 4.5514055520835</code></pre>
+<pre><code>## Mean size error for iteration 3: 7.74856106866916</code></pre>
+<pre><code>## Mean size error for iteration 4: 7.49510294164283</code></pre>
+<pre><code>## Mean size error for iteration 5: 5.12121781701006</code></pre>
+<pre><code>## Mean size error for iteration 6: 3.45188989405368</code></pre>
+<pre><code>## Mean size error for iteration 7: 2.66683855570118</code></pre>
+<pre><code>## Mean size error for iteration 8: 2.23950467189881</code></pre>
+<pre><code>## Mean size error for iteration 9: 1.93816581350794</code></pre>
+<pre><code>## Mean size error for iteration 10: 1.78377894897916</code></pre>
+<pre><code>## Mean size error for iteration 11: 1.62985317085302</code></pre>
+<pre><code>## Mean size error for iteration 12: 1.50983288572639</code></pre>
+<pre><code>## Mean size error for iteration 13: 1.60808238152904</code></pre>
+<pre><code>## Mean size error for iteration 14: 6.67220825006972</code></pre>
+<pre><code>## Mean size error for iteration 15: 8.78821301683394</code></pre>
+<p>Plotting the cartogram:</p>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="area-data-i.html#cb408-1" aria-hidden="true" tabindex="-1"></a><span class="co">#We are using &quot;ggplot&quot; to create a cartogram for populations by census tact in Hamilton. Census tracts with a larger value are distorted to visually represent their population size. The number &quot;5&quot; after calling the population variable states that there will be 5 categories dividing population quantities.</span></span>
+<span id="cb408-2"><a href="area-data-i.html#cb408-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(CT_pop_cartogram) <span class="sc">+</span> </span>
+<span id="cb408-3"><a href="area-data-i.html#cb408-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">cut_number</span>(POPULATION, <span class="dv">5</span>)), <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb408-4"><a href="area-data-i.html#cb408-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;YlOrRd&quot;</span>) <span class="sc">+</span></span>
+<span id="cb408-5"><a href="area-data-i.html#cb408-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Population&quot;</span>)</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-288-1.png" width="672" /></p>
+<p>Notice how the size of the zones has been adjusted.</p>
+<p>The cartogram can be combined with coloring schemes, as in choropleth maps:</p>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="area-data-i.html#cb409-1" aria-hidden="true" tabindex="-1"></a>CT_popden_cartogram <span class="ot">&lt;-</span> <span class="fu">cartogram_cont</span>(Hamilton_CT, <span class="at">weight =</span> <span class="st">&quot;POP_DENSITY&quot;</span>)</span></code></pre></div>
+<pre><code>## Mean size error for iteration 1: 29.0384287070147</code></pre>
+<pre><code>## Mean size error for iteration 2: 26.6652279985395</code></pre>
+<pre><code>## Mean size error for iteration 3: 24.8111000080233</code></pre>
+<pre><code>## Mean size error for iteration 4: 23.2716548947531</code></pre>
+<pre><code>## Mean size error for iteration 5: 21.928598879704</code></pre>
+<pre><code>## Mean size error for iteration 6: 20.7113138849207</code></pre>
+<pre><code>## Mean size error for iteration 7: 19.576698518681</code></pre>
+<pre><code>## Mean size error for iteration 8: 18.4983401508171</code></pre>
+<pre><code>## Mean size error for iteration 9: 17.460238779898</code></pre>
+<pre><code>## Mean size error for iteration 10: 16.453534698246</code></pre>
+<pre><code>## Mean size error for iteration 11: 15.4732800316789</code></pre>
+<pre><code>## Mean size error for iteration 12: 14.5184813061204</code></pre>
+<pre><code>## Mean size error for iteration 13: 13.5901475440423</code></pre>
+<pre><code>## Mean size error for iteration 14: 12.6911089325245</code></pre>
+<pre><code>## Mean size error for iteration 15: 11.8246511070686</code></pre>
+<p>Plot the cartogram:</p>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="area-data-i.html#cb425-1" aria-hidden="true" tabindex="-1"></a>pop_den.cartogram <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(CT_popden_cartogram) <span class="sc">+</span> </span>
+<span id="cb425-2"><a href="area-data-i.html#cb425-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">cut_number</span>(POP_DENSITY, <span class="dv">5</span>)),<span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb425-3"><a href="area-data-i.html#cb425-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;YlOrRd&quot;</span>) <span class="sc">+</span></span>
+<span id="cb425-4"><a href="area-data-i.html#cb425-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Pop Density&quot;</span>)</span>
+<span id="cb425-5"><a href="area-data-i.html#cb425-5" aria-hidden="true" tabindex="-1"></a>pop_den.cartogram</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-290-1.png" width="672" /></p>
+<p>By combining a cartogram with choropleth mapping, it becomes easier to appreciate the way high population density is concentrated in the central parts of Hamilton, Burlington, etc.</p>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="area-data-i.html#cb426-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(pop_den.map, pop_den.cartogram, <span class="at">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-291-1.png" width="672" /></p>
+<p>This concludes this chapter.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Bailey1995" class="csl-entry">
+Bailey, T. C., and A. C. Gatrell. 1995. <em>Interactive Spatial Data Analysis</em>. Book. Essex: Addison Wesley Longman.
+</div>
+<div id="ref-Bivand2008" class="csl-entry">
+Bivand, R. S., E. J. Pebesma, and V. Gómez-Rubio. 2008. <em>Applied Spatial Data Analysis with r</em>. Book. New York: Springer Science+Business Media.
+</div>
+<div id="ref-Brunsdon2015R" class="csl-entry">
+Brunsdon, Chris, and Lex Comber. 2015. <em>An Introduction to r for Spatial Analysis and Mapping</em>. Book. Sage.
+</div>
+<div id="ref-Osullivan2010" class="csl-entry">
+O’Sullivan, David, and David Unwin. 2010. <em>Geographic Information Analysis</em>. Book. 2nd. Edition. Hoboken, New Jersey: John Wiley &amp; Sons.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="activity-8-point-pattern-analysis-v.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="activity-9-area-data-i.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/paezha/spatial-analysis-R/edit/main/19-Area-Data-I.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["spatial-analysis-R.pdf", "spatial-analysis-R.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
