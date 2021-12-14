@@ -23,7 +23,6 @@ is_online = curl::has_internet()
   [![GitHub all contributors](https://img.shields.io/github/contributors/paezha/spatial-analysis-r?color=2b9348)](https://github.com/paezha/spatial-analysis-r/graphs/contributors)
   [![GitHub commit activity](https://img.shields.io/github/commit-activity/y/paezha/spatial-analysis-r)
   [![Launch Rstudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/paezha/spatial-analysis-r/main?urlpath=rstudio)
-  [![Netlify Status](https://api.netlify.com/api/v1/badges/2867ef30-f33c-4043-9940-fac934c27341/deploy-status)](https://app.netlify.com/sites/spatial-analysis-r/deploys)
   [![DOI](https://zenodo.org/badge/391072865.svg)](https://zenodo.org/badge/latestdoi/391072865)
 <!-- badges: end -->
 
@@ -33,7 +32,7 @@ This repository hosts the code underlying the book *An Introduction to Spatial D
 
 > Paez A (2021). An Introduction to Spatial Data Analysis and Statistics: A Course in R. McMaster Invisible Press. ISBN: 978-1-7778515-0-7 
 
-The book is free to read online at https://www.spatial-analysis-R.org/.
+The book is free to read online at https://paezha.github.io/spatial-analysis-r.
 
 ## Resources for Students and Instructors
 

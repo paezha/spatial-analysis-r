@@ -14,8 +14,6 @@ contributors](https://img.shields.io/github/contributors/paezha/spatial-analysis
 activity](https://img.shields.io/github/commit-activity/y/paezha/spatial-analysis-r)
 [![Launch Rstudio
 Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/paezha/spatial-analysis-r/main?urlpath=rstudio)
-[![Netlify
-Status](https://api.netlify.com/api/v1/badges/2867ef30-f33c-4043-9940-fac934c27341/deploy-status)](https://app.netlify.com/sites/spatial-analysis-r/deploys)
 [![DOI](https://zenodo.org/badge/391072865.svg)](https://zenodo.org/badge/latestdoi/391072865)
 <!-- badges: end -->
 
@@ -30,7 +28,7 @@ Paez](https://www.science.mcmaster.ca/ees/component/comprofiler/userprofile/paez
 > 978-1-7778515-0-7
 
 The book is free to read online at
-<https://www.spatial-analysis-R.org/>.
+<https://paezha.github.io/spatial-analysis-r>.
 
 ## Resources for Students and Instructors
 
