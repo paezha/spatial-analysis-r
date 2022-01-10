@@ -20,7 +20,7 @@ If you wish to work interactively with this chapter you will need the following:
 
 * An R markdown notebook version of this document (the source file).
 
-* A package called `geog4ga3`.
+* A package called `isdas`.
 
 In the previous reading/practice you created a simple proportional symbols map. In this reading/practice you will learn how to create more sophisticated maps in `R`.
 
@@ -50,10 +50,10 @@ rm(list = ls())
 
 According to Wickham [-@wickham2015rpackages] packages are the basic units of reproducible code in the `R` multiverse.
 
-Now that your workspace is clear, you can proceed to load a package. In this case, the package is the one used for this book/course, called `geog4ga3`:
+Now that your workspace is clear, you can proceed to load a package. In this case, the package is the one used for this book/course, called `isdas`:
 ```{r message=FALSE}
-#The function 'library' is used to load the data we want to work with. In this case, it is the geog4ga3 master package that we want to work with 
-library(geog4ga3)
+#The function 'library' is used to load the data we want to work with. In this case, it is the isdas master package that we want to work with 
+library(isdas)
 ```
 
 The package includes a few datasets that will be used throughout the book:
@@ -64,7 +64,7 @@ data("snow_deaths")
 
 ## Exploring Dataframes and a Simple Proportional Symbols Map
 
-If you correctly loaded the library, you can now access the dataframes in the package `geog4ga3`. For this section, you will need two dataframes, namely `snow_pumps` and `snow_deaths`:
+If you correctly loaded the library, you can now access the dataframes in the package `isdas`. For this section, you will need two dataframes, namely `snow_pumps` and `snow_deaths`:
 ```{r}
 #The function 'head' will display the first few rows of the dataframe, snow_deaths 
 head(snow_deaths)

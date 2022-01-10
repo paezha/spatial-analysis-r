@@ -39,21 +39,21 @@ knitr::include_graphics(rep("images/voronoi_ponyo.gif"))
 The following code generates the cover image. To change the background images, work with the style.css file in the root directory
 -->
 
-<!-- COVER 1 FUNCIONA -->
+<!-- COVER 1 -->
 <!--
 <div class="cover1">
 <img src="images/cover-2021/title-01.gif" alt=""/>
 </div>
 -->
 
-<!-- COVER 1 FUNCIONA -->
+<!-- COVER 1 -->
 <!--
 <div class="cover1">
 <img src="images/cover-2021/title-02b.png" alt=""/>
 </div>
 -->
 
-<!-- COVER 2 FUNCIONA -->
+<!-- COVER 2 -->
 <!--
 <div class="cover2">
 <div class="fade-in-text">
@@ -62,7 +62,7 @@ The following code generates the cover image. To change the background images, w
 </div>
 -->
 
-<!-- COVER 3 FUNCIONA -->
+<!-- COVER 3b -->
 <!--
 <div class="header3b">
 <img src="images/cover-2021/title-01.gif" alt=""/>
@@ -71,7 +71,7 @@ The following code generates the cover image. To change the background images, w
 <div class="bottom3"><p>A Course in R</p></div>
 -->
 
-<!-- COVER 3 FUNCIONA -->
+<!-- COVER 3 -->
 <!--
 <div class="header3">
 <div class="fade-in-text">
@@ -82,7 +82,7 @@ The following code generates the cover image. To change the background images, w
 <div class="bottom3"><p>A Course in R</p></div>
 -->
 
-<!-- COVER 4 FUNCIONA -->
+<!-- COVER 4 -->
 <!--
 <div class="cover4">
 <div class="fade-in-text">
@@ -93,7 +93,7 @@ The following code generates the cover image. To change the background images, w
 </div>
 -->
 
-<!-- COVER 4 FUNCIONA -->
+<!-- COVER 4b -->
 <!--
 <div class="cover4b">
 <div class="fade-in-text">
@@ -104,12 +104,12 @@ The following code generates the cover image. To change the background images, w
 </div>
 -->
 
-<!-- Image title-02b.png needs to be resized to avoid overflow-->
+<!-- COVER 5b -->
 <div class="cover5b">
 <img src="images/cover-2021/title-02b.png"/>
 </div>
 
-<!-- Image title-02b.png needs to be resized to avoid overflow-->
+<!-- COVER 5c -->
 <!--
 <div class="cover5c">
 <img src="images/cover-2021/title-02b.png"/>

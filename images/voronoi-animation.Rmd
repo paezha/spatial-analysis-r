@@ -17,6 +17,7 @@ library(deldir)
 library(geog4ga3)
 library(gganimate)
 library(ghibli)
+library(MexBrewer)
 #library(plotly)
 #library(spatstat)
 library(spdep)
@@ -102,6 +103,7 @@ ggplot() +
   theme_void() +
   theme(legend.position = "none") 
 ```
+
 Use {gganimate} to create the animation. In this animation I use the mononoke color palette from the {ghibli} package:
 ```{r}
 anim <- ggplot() + 
@@ -164,4 +166,36 @@ animate(anim,
 Save as gif:
 ```{r}
 anim_save("voronoi_ponyo.gif", animation = anim)
+```
+
+Use {gganimate} to create the animation. In this animation I use the Alacena color palette from the {MexBrewer} package:
+```{r}
+anim <- ggplot() + 
+  geom_sf(data = Walker_Lake.c,
+          aes(fill = V),
+          color = NA) + 
+  geom_sf(data = Walker_Lake.v,
+          fill = NA,
+          color = "black") +
+  geom_sf(data = Walker_Lake.sf,
+          size = 3,
+          color = "black") +
+  scale_fill_gradientn(colors = mex.brewer("Alacena")) +
+  theme_void() +
+  theme(legend.position = "none")  +
+  transition_states(t,
+                    transition_length = 100,
+                    state_length = 1.0,
+                    wrap = FALSE) +
+  ease_aes()
+
+animate(anim, 
+        nframes = 200,
+        start_pause = 20,
+        end_pause = 20)
+```
+
+Save the animation as a gif:
+```{r}
+anim_save("voronoi_alacena.gif", animation = anim)
 ```

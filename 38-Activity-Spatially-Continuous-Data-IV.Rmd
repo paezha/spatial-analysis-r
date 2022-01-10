@@ -30,7 +30,7 @@ For this activity you will need the following:
 
 * An R markdown notebook version of this document (the source file).
 
-* A package called `geog4ga3`.
+* A package called `isdas`.
 
 It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
@@ -41,7 +41,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity (load other packages as appropriate). 
 ```{r message=FALSE, warning=FALSE}
-library(geog4ga3)
+library(isdas)
 library(gstat)
 library(sf)
 library(tidyverse)

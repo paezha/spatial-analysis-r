@@ -79,9 +79,9 @@ install.packages("tidyverse")
 
 The function `install.packages` retrieves packages from the [Comprehensive R Archive Network](https://cran.r-project.org/), or CRAN for short. CRAN is a collection of sites (accessible via the internet) that carry identical materials for distribution for R.
 
-There are other ways of distributing packages. For instance, throughout this book you will make use of a package called `geog4ga3` that contains a collection of datasets and functions used in the readings or activities. This package is not on CRAN, but instead can be obtained from GitHub, a repository and versioning system. To retrieve packages from GitHub you need a function called `install_github`, which in turn is part of the package `devtools`.
+There are other ways of distributing packages. For instance, throughout this book you will make use of a package called `isdas` that contains a collection of datasets and functions used in the readings or activities. This package is not on CRAN, but instead can be obtained from GitHub, a repository and versioning system. To retrieve packages from GitHub you need a function called `install_github`, which in turn is part of the package `devtools`.
 
-To download and install the package `geog4ga3`, you need first to download and install `devtools` as follows:
+To download and install the package `isdas`, you need first to download and install `devtools` as follows:
 ```{r eval=FALSE}
 install.packages("remotes")
 ```
@@ -97,7 +97,7 @@ library(remotes)
 
 This allows you to use all the functions in the package `remotes`. In particular, at this point you want to use a function that allows you to retrieve other packages! With the functionality of `remotes::install_github` you can download and install the companion package for the book by running the following instruction:
 ```{r eval=FALSE}
-remotes::install_github("paezha/geog4ga3")
+remotes::install_github("paezha/isdas")
 ```
 
 This will install the package (i.e., put it in your library) so that you can also benefit from its functionality.

@@ -6,7 +6,7 @@ If you wish to work interactively with this chapter you will need the following:
 
 * An R markdown notebook version of this document (the source file).
 
-* A package called `geog4ga3`.
+* A package called `isdas`.
 
 ## Learning objectives
 
@@ -39,7 +39,7 @@ Note that `ls()` lists all objects currently on the workspace.
 Load the libraries you will use in this activity:
 ```{r ch25-load-packages, message=FALSE, warning=FALSE}
 library(crosstalk)
-library(geog4ga3)
+library(isdas)
 library(plotly)
 library(sf)
 library(spdep)
