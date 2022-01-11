@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2021-12-14" />
+<meta name="date" content="2022-01-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -635,13 +635,13 @@ div.csl-indent {
 <p>For this activity you will need the following:</p>
 <ul>
 <li><p>An R markdown notebook version of this document (the source file).</p></li>
-<li><p>A package called <code>geog4ga3</code>.</p></li>
+<li><p>A package called <code>isdas</code>.</p></li>
 </ul>
 <p>It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
 <div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="activity-4-point-pattern-analysis-i.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity. In addition to <code>tidyverse</code>, you will need <code>spatstat</code>, a package designed for the analysis of point patterns (you can learn about <code>spatstat</code> <a href="https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf">here</a> and <a href="http://spatstat.org/resources/spatstatJSSpaper.pdf">here</a>):</p>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="activity-4-point-pattern-analysis-i.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geog4ga3)</span>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="activity-4-point-pattern-analysis-i.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
 <span id="cb208-2"><a href="activity-4-point-pattern-analysis-i.html#cb208-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maptools) <span class="co"># Needed to convert a `Spatial Polygons` object into an `owin` object</span></span>
 <span id="cb208-3"><a href="activity-4-point-pattern-analysis-i.html#cb208-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb208-4"><a href="activity-4-point-pattern-analysis-i.html#cb208-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span>
@@ -668,7 +668,7 @@ Begin by loading the data that you will use in this activity:</p>
 <span id="cb213-2"><a href="activity-4-point-pattern-analysis-i.html#cb213-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Toronto, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">size =</span> .<span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb213-3"><a href="activity-4-point-pattern-analysis-i.html#cb213-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Paez_Mart) <span class="sc">+</span></span>
 <span id="cb213-4"><a href="activity-4-point-pattern-analysis-i.html#cb213-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-146-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
 <p>As discussed in the preceding chapter, the package <code>spatstat</code> offers a very rich collection of tools to do point pattern analysis. To convert the three sets of events (i.e., the fast food establishments, gas stands, and Paez Mart) into <code>ppp</code> objects we first must define a region or <em>window</em>. To do this we take the <code>sf</code> and convert to an <code>owin</code> (a window object) for use with the package <code>spatstat</code> (this is done via <code>SpatialPolygons</code>, hence <code>as(x, "Spatial")</code>:</p>
 <div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="activity-4-point-pattern-analysis-i.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `as.owin()` will take a &quot;foreign&quot; object (foreign to `spatstat`) and convert it into an `owin` object. Here, there are two steps involved: first, we take the `sf` object with the boundaries of Toronto and convert it into a &quot;Spatial&quot; object, and then the &quot;Spatial&quot; object is passed on to `as.owin()`</span></span>
 <span id="cb214-2"><a href="activity-4-point-pattern-analysis-i.html#cb214-2" aria-hidden="true" tabindex="-1"></a>Toronto.owin <span class="ot">&lt;-</span> <span class="fu">as</span>(Toronto, <span class="st">&quot;Spatial&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">as.owin</span>() <span class="co"># Requires `maptools` package</span></span></code></pre></div>
@@ -685,7 +685,7 @@ Begin by loading the data that you will use in this activity:</p>
 <p>As you see from the table, there is one quadrat with zero events, one quadrat with six events, one quadrat with forty-four events, and so on.</p>
 <p>You can also plot the results of the <code>quadratcount()</code> function!</p>
 <div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="activity-4-point-pattern-analysis-i.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(q_count)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-150-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
 <p>A useful function in the <code>spatstat</code> package is <code>quadrat.test</code>. This function implements a statistical test that compares the empirical distribution of events by quadrats to the distribution of events as expected under the hypothesis that the underlying process is <em>random</em>.</p>
 <p>This is implemented as follows:</p>
 <div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="activity-4-point-pattern-analysis-i.html#cb219-1" aria-hidden="true" tabindex="-1"></a>q_test <span class="ot">&lt;-</span> <span class="fu">quadrat.test</span>(Fast_Food.ppp, <span class="at">nx =</span> <span class="dv">3</span>, <span class="at">ny =</span> <span class="dv">3</span>)</span></code></pre></div>
@@ -702,7 +702,7 @@ Begin by loading the data that you will use in this activity:</p>
 <p>The quadrat test reports a <span class="math inline">\(p\)</span>-value which can be used to make a decision. The <span class="math inline">\(p\)</span>-value is the probability that you will be mistaken if you reject the null hypothesis. To make a decision, you need to know what is the null hypothesis, and your own tolerance for making a mistake. In the case above, the <span class="math inline">\(p\)</span>-value is very, very small (2.2e-16 = 0.00000000000000022). Since the null hypothesis is spatial randomness, you can reject this hypothesis and the probability that this decision is mistaken is vanishingly small.</p>
 <p>Try plotting the results of <code>quadrat.test</code>:</p>
 <div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="activity-4-point-pattern-analysis-i.html#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(q_test)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-152-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
 <p>Now that you have seen how to do some analysis using quadrats, you are ready for the next activity.</p>
 </div>
 <div id="activity-3" class="section level2" number="10.5">

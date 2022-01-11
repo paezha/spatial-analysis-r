@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2021-12-14" />
+<meta name="date" content="2022-01-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -616,7 +616,7 @@ div.csl-indent {
 <p>If you wish to work interactively with this chapter you will need the following:</p>
 <ul>
 <li><p>An R markdown notebook version of this document (the source file).</p></li>
-<li><p>A package called <code>geog4ga3</code>.</p></li>
+<li><p>A package called <code>isdas</code>.</p></li>
 </ul>
 <div id="learning-objectives-4" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Learning Objectives</h2>
@@ -653,7 +653,7 @@ div.csl-indent {
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity:</p>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="mapping-in-r-continued.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb117-2"><a href="mapping-in-r-continued.html#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geog4ga3)</span></code></pre></div>
+<span id="cb117-2"><a href="mapping-in-r-continued.html#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span></code></pre></div>
 <p>Now that your workspace is clear, you can proceed to invoke the sample dataset. You can do this by means of the function <code>data</code>.</p>
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="mapping-in-r-continued.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;missing_df&quot;</span>)</span></code></pre></div>
 <p>The dataframe <code>missing_df</code> includes <span class="math inline">\(n = 65\)</span> observations (Note: text between $ characters is mathematical notation in LaTeX). These observations are geocoded using a false origin and coordinates normalized to the unit-square (the extent of their values is between zero and one). The coordinates are <code>x</code> and <code>y</code>.</p>
@@ -788,39 +788,39 @@ div.csl-indent {
 <span id="cb135-2"><a href="mapping-in-r-continued.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
 <span id="cb135-3"><a href="mapping-in-r-continued.html#cb135-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
 <span id="cb135-4"><a href="mapping-in-r-continued.html#cb135-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 <p>The above simply plots the coordinates, so that we can see the spatial distribution of the observations. (Notice the use of <code>coord_fixed</code> to maintain the aspect ratio of the plot to 1, i.e. the relationship between width and height). You have control of the <code>shape</code> of the markers, as well as their <code>size</code>. You can consult the shapes available <a href="http://sape.inf.usi.ch/quick-reference/ggplot2/shape">here</a>. Experiment with different shapes and sizes if you wish.</p>
 <p>The dataframe <code>missing_df</code> includes more attributes that could be used in the plot. For instance, if you wished to create a thematic map showing <code>VAR1</code> you would do the following:</p>
 <div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="mapping-in-r-continued.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
 <span id="cb136-2"><a href="mapping-in-r-continued.html#cb136-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> VAR1), <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
 <span id="cb136-3"><a href="mapping-in-r-continued.html#cb136-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <p>The <code>shape</code> and <code>size</code> assignments happen outside of <code>aes</code>, and so are applied equally to all observations. In some cases, you might want to let other aesthetic attributes vary with the values of a variable in the dataframe. For instance, if we let the sizes change with the value of the variable:</p>
 <div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="mapping-in-r-continued.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
 <span id="cb137-2"><a href="mapping-in-r-continued.html#cb137-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> VAR1, <span class="at">size =</span> VAR1), <span class="at">shape =</span> <span class="dv">17</span>) <span class="sc">+</span> </span>
 <span id="cb137-3"><a href="mapping-in-r-continued.html#cb137-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
 <pre><code>## Warning: Removed 5 rows containing missing values (geom_point).</code></pre>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 <p>Note how there is a warning, saying that five observations were removed because data were missing! These are likely the five locations where <code>Observed == FALSE</code>!</p>
 <p>To make it more clear which observations are these, you could set the <code>shape</code> to vary according to the value of <code>Observed</code>, as follows:</p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="mapping-in-r-continued.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
 <span id="cb139-2"><a href="mapping-in-r-continued.html#cb139-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> VAR1, <span class="at">shape =</span> Observed), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb139-3"><a href="mapping-in-r-continued.html#cb139-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-82-1.png" width="672" />
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-43-1.png" width="672" />
 Now it is easy to see the locations of the five observations that were <code>Observed == FALSE</code>!, which are labeled with gray circles.</p>
 <p>You can change the coloring scheme by means of <code>scale_color_distiller</code> (you can can check the different color palettes available <a href="http://ggplot2.tidyverse.org/reference/scale_brewer.html">here</a>):</p>
 <div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="mapping-in-r-continued.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
 <span id="cb140-2"><a href="mapping-in-r-continued.html#cb140-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> VAR1, <span class="at">shape =</span> Observed), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb140-3"><a href="mapping-in-r-continued.html#cb140-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
 <span id="cb140-4"><a href="mapping-in-r-continued.html#cb140-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
 <p>You will notice maybe that with this coloring scheme some observations become very light and difficult to distinguish from the background. This can be solved in many different ways (for instance, by changing the color of the background!). A simple fix is to add a layer with hollow symbols, as follows:</p>
 <div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="mapping-in-r-continued.html#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
 <span id="cb141-2"><a href="mapping-in-r-continued.html#cb141-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> VAR1), <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb141-3"><a href="mapping-in-r-continued.html#cb141-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb141-4"><a href="mapping-in-r-continued.html#cb141-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
 <span id="cb141-5"><a href="mapping-in-r-continued.html#cb141-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 <p>Finally, you could try subsetting the data to have greater control of the appearance of your plot, for instance:</p>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="mapping-in-r-continued.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb142-2"><a href="mapping-in-r-continued.html#cb142-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">subset</span>(missing_df, Observed <span class="sc">==</span> <span class="cn">TRUE</span>),</span>
@@ -831,7 +831,7 @@ Now it is easy to see the locations of the five observations that were <code>Obs
 <span id="cb142-7"><a href="mapping-in-r-continued.html#cb142-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y=</span> y), <span class="at">shape =</span> <span class="dv">18</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
 <span id="cb142-8"><a href="mapping-in-r-continued.html#cb142-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
 <span id="cb142-9"><a href="mapping-in-r-continued.html#cb142-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 <p>These are examples of creating and improving the aspect of simple symbol maps, which are often used to represent observations in space.</p>
 
 </div>

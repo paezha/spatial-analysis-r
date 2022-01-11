@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2021-12-14" />
+<meta name="date" content="2022-01-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -605,12 +605,12 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 1</span> Preliminaries: Installing <code>R</code> and RStudio</h1>
 <div id="introduction" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> Introduction</h2>
-<p>Statistical analysis is the study of the properties of a dataset. There are different aspects of statistical analysis, and they often require that we work with data that are messy. According to Wickham and Grolemund <span class="citation">(<a href="#ref-Wickham2016r" role="doc-biblioref">2016</a>)</span>, computer-assisted data analysis includes the steps outlined in Figure <a href="preliminaries-installing-r-and-rstudio.html#fig:data-analysis-process">1.1</a>.</p>
+<p>Statistical analysis is the study of the properties of a dataset. There are different aspects of statistical analysis, and they often require that we work with data that are messy. According to Wickham and Grolemund <span class="citation">(<a href="#ref-Wickham2016r" role="doc-biblioref">2016</a>)</span>, computer-assisted data analysis includes the steps outlined in Figure <a href="#fig:data-analysis-process"><strong>??</strong></a>.</p>
 <p>First, the data are imported to a suitable software application. This can include data from primary sources (suppose that you collected coordinates using a GPS) or from secondary sources (the Census of Canada). Data will likely be text tables, or an Excel file, among other possible formats. Before data can be analyzed, they need to be tidied. This means that the data need to be arranged in such a way that they match the process that you are interested in. For instance, a travel survey can be organized so that each row is a traveler, or as an alternative so that each row is a trip.</p>
 <p>Once that data are tidy, Exploratory Data Analysis (EDA) and/or its geographical extension Exploratory Spatial Data Analysis (ESDA) can be conducted. This involves transforming the raw data into information. Examples of transformations include calculating the mean and the standard deviation. Visualization is also part of this exploratory exercise. In EDA this could be creating a histogram or a scatterplot. Mapping is a key visualization technique in spatial statistics.</p>
 <p>Modeling is a process that further extracts information from the data, typically by looking at relationships between multiple variables.</p>
 <p>All of the tasks mentioned above, and many more, can be handled easily in a variety of software applications. For this course, you will use the statistical computing language <code>R</code>.</p>
-<div class="figure"><span style="display:block;" id="fig:data-analysis-process"></span>
+<div class="figure"><span style="display:block;" id="fig:ch01-data-analysis-process"></span>
 <img src="figures/01-Figure-1.png" alt="\label{fig:data-analysis-process} The process of doing data analysis (from Wickham and Grolemund, 2016)" width="293" />
 <p class="caption">
 FIGURE 1.1:  The process of doing data analysis (from Wickham and Grolemund, 2016)
@@ -641,8 +641,8 @@ FIGURE 1.1:  The process of doing data analysis (from Wickham and Grolemund, 201
 </div>
 <div id="the-rstudio-ide" class="section level3" number="1.3.2">
 <h3><span class="header-section-number">1.3.2</span> The RStudio IDE</h3>
-<p>The RStudio IDE provides a very complete interface to interact with the language <code>R</code>, and do much more in addition. It consists of a window with several panes. Some panes include, in addition, several tabs. There are the usual drop-down menus for common operations, such as creating new files, saving, common commands for editing, etc. See Figure <a href="preliminaries-installing-r-and-rstudio.html#fig:RStudio-IDE">1.2</a> below.</p>
-<div class="figure"><span style="display:block;" id="fig:RStudio-IDE"></span>
+<p>The RStudio IDE provides a very complete interface to interact with the language <code>R</code>, and do much more in addition. It consists of a window with several panes. Some panes include, in addition, several tabs. There are the usual drop-down menus for common operations, such as creating new files, saving, common commands for editing, etc. See Figure <a href="#fig:RStudio-IDE"><strong>??</strong></a> below.</p>
+<div class="figure"><span style="display:block;" id="fig:ch01-RStudio-IDE"></span>
 <img src="figures/01-Figure-2.png" alt="\label{fig:RStudio-IDE}The RStudio IDE" width="1920" />
 <p class="caption">
 FIGURE 1.2: The RStudio IDE
@@ -661,15 +661,15 @@ FIGURE 1.2: The RStudio IDE
 <p>Packages can be obtained from different sources (including making them!). One of the reasons why <code>R</code> has become so successful is the relative facility with which packages can be distributed. A package that I use frequently is called <code>tidyverse</code> <span class="citation">(<a href="#ref-Wickham2017tidyverse" role="doc-biblioref">Wickham 2017</a>)</span>. The <code>tidyverse</code> is a collection of functions for data manipulation, analysis, and visualization. This package can be downloaded and installed in your personal library of <code>R</code> packages by using the function <code>install.packages</code>, as follows:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="preliminaries-installing-r-and-rstudio.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
 <p>The function <code>install.packages</code> retrieves packages from the <a href="https://cran.r-project.org/">Comprehensive R Archive Network</a>, or CRAN for short. CRAN is a collection of sites (accessible via the internet) that carry identical materials for distribution for R.</p>
-<p>There are other ways of distributing packages. For instance, throughout this book you will make use of a package called <code>geog4ga3</code> that contains a collection of datasets and functions used in the readings or activities. This package is not on CRAN, but instead can be obtained from GitHub, a repository and versioning system. To retrieve packages from GitHub you need a function called <code>install_github</code>, which in turn is part of the package <code>devtools</code>.</p>
-<p>To download and install the package <code>geog4ga3</code>, you need first to download and install <code>devtools</code> as follows:</p>
+<p>There are other ways of distributing packages. For instance, throughout this book you will make use of a package called <code>isdas</code> that contains a collection of datasets and functions used in the readings or activities. This package is not on CRAN, but instead can be obtained from GitHub, a repository and versioning system. To retrieve packages from GitHub you need a function called <code>install_github</code>, which in turn is part of the package <code>devtools</code>.</p>
+<p>To download and install the package <code>isdas</code>, you need first to download and install <code>devtools</code> as follows:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="preliminaries-installing-r-and-rstudio.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;remotes&quot;</span>)</span></code></pre></div>
 <p>Once that a package has been downloaded and installed, it needs to be loaded into a session to be available to use. I find it useful to think of packages that I download as “books” that I place in my personal “bookshelf”. Some “books” I obtain from the central library (i.e., CRAN), while others are shared by friends, and some I have even written myself. Once that the “books” are in my “bookshelf” they are part of my own personal <em>library</em>. This means that they are available for use. Next time I want to use a “book” from my library, I need to retrieve it from the bookshelf. This is similar to taking the book and opening it on my desk: now all the magic contained in the package is available for use!</p>
 <p>Similarly, once that the book is in my library, I do not need to retrieve it again from the bookstore - a package, once installed, does not need to be installed again (it might need updates, but that is a different matter).</p>
 <p>This analogy suggests that I can have many packages in my library, only some of which I may need at any specific time for a task. To retrieve a package (i.e., a book) from the library, so that we can use it, the function <code>library</code> is invoked as in this example:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="preliminaries-installing-r-and-rstudio.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(remotes)</span></code></pre></div>
 <p>This allows you to use all the functions in the package <code>remotes</code>. In particular, at this point you want to use a function that allows you to retrieve other packages! With the functionality of <code>remotes::install_github</code> you can download and install the companion package for the book by running the following instruction:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="preliminaries-installing-r-and-rstudio.html#cb8-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;paezha/geog4ga3&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="preliminaries-installing-r-and-rstudio.html#cb8-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;paezha/isdas&quot;</span>)</span></code></pre></div>
 <p>This will install the package (i.e., put it in your library) so that you can also benefit from its functionality.</p>
 
 </div>

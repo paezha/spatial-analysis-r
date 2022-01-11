@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2021-12-14" />
+<meta name="date" content="2022-01-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -633,13 +633,13 @@ div.csl-indent {
 <p>For this activity you will need the following:</p>
 <ul>
 <li><p>An R markdown notebook version of this document (the source file).</p></li>
-<li><p>A package called <code>geog4ga3</code>.</p></li>
+<li><p>A package called <code>isdas</code>.</p></li>
 </ul>
 <p>It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in <code>R</code> to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
 <div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="activity-7-point-pattern-analysis-iv.html#cb329-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity. In addition to <code>tidyverse</code>, you will need <code>spatstat</code>, a package designed for the analysis of point patterns (you can learn about <code>spatstat</code> <a href="https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf">here</a> and <a href="http://spatstat.org/resources/spatstatJSSpaper.pdf">here</a>):</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="activity-7-point-pattern-analysis-iv.html#cb330-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geog4ga3)</span>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="activity-7-point-pattern-analysis-iv.html#cb330-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
 <span id="cb330-2"><a href="activity-7-point-pattern-analysis-iv.html#cb330-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maptools) <span class="co"># Needed to convert `SpatialPolygons` into `owin`-class object</span></span>
 <span id="cb330-3"><a href="activity-7-point-pattern-analysis-iv.html#cb330-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb330-4"><a href="activity-7-point-pattern-analysis-iv.html#cb330-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span>

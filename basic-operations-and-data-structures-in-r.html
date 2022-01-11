@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2021-12-14" />
+<meta name="date" content="2022-01-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -788,12 +788,14 @@ div.csl-indent {
 <p>The package <code>ggplot2</code> works by layering a series of objects, beginning with a blank plot, to which we can add things. The command to create a plot is <code>ggplot()</code>. This command accepts different arguments. For instance, we can pass data to it in the form of a data frame. We can also indicate different <em>aesthetic</em> values, that is, the things that we wish to plot. None of this is plotted, though, until we indicate which kind of <em>geom</em> or geometric object we wish to plot.</p>
 <p>For a bar chart, we would use the following instructions:</p>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="basic-operations-and-data-structures-in-r.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The function `ggplot()` creates an object for plotting, using a data frame as indicated by the input argument `data =`. Furthermore, we can specify how to map elements in the data frame to things in the plot. In this example, we wish to map the names of cities to the x-axis of the plot, and the population to the y-axis of the plot. Accordingly, we define as aesthetic values `aes()` `x = Name` and `y = Population`. The geometric object that we wish to plot is bars, so we use `geom_bar()` with the argument `stat = &quot;identity&quot;` so the data are not transformed before plotting:</span></span>
-<span id="cb74-2"><a href="basic-operations-and-data-structures-in-r.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, <span class="fu">aes</span>(<span class="at">x =</span> Name, <span class="at">y =</span> Population)) <span class="sc">+</span> </span>
-<span id="cb74-3"><a href="basic-operations-and-data-structures-in-r.html#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<span id="cb74-2"><a href="basic-operations-and-data-structures-in-r.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, </span>
+<span id="cb74-3"><a href="basic-operations-and-data-structures-in-r.html#cb74-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Name, <span class="at">y =</span> Population)) <span class="sc">+</span> </span>
+<span id="cb74-4"><a href="basic-operations-and-data-structures-in-r.html#cb74-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/ch02-bar-chart-1.png" width="672" /></p>
 <p>Since this is the first time that we use <code>ggplot()</code>, it is informative to break down these instructions. We are asking <code>ggplot2</code> to create a plot that will use the data frame <code>Cities</code>. Furthermore, we tell it to use the values of <code>Names</code> in the x-axis, and the values of <code>Population</code> in the y-axis. Run the following chunk:</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="basic-operations-and-data-structures-in-r.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, <span class="fu">aes</span>(<span class="at">x =</span> Name, <span class="at">y =</span> Population))</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="basic-operations-and-data-structures-in-r.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, </span>
+<span id="cb75-2"><a href="basic-operations-and-data-structures-in-r.html#cb75-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Name, <span class="at">y =</span> Population))</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/ch02-bar-chart-step-1-1.png" width="672" /></p>
 <p>Notice how <code>ggplot2</code> creates a blank plot, and it has yet to actually render any of the population information in there. We layer elements on a plot by using the <code>+</code> sign. It is only when we tell the package to add some geometric element that it renders something on the plot. In the previous case, we told <code>ggplot2</code> to draw bars (by using the <code>geom_bar()</code> function). The argument of <code>geom_bar</code> was <code>stat = 'identity'</code>, to indicate that the data for the y-axis was to be used ‘as-is’ without further statistical transformations.</p>
 <p>There are many different geoms that can be used in <code>ggplot2</code>. You can always consult the help/tutorial files by typing <code>??ggplot2</code> in the console. See:</p>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="basic-operations-and-data-structures-in-r.html#cb76-1" aria-hidden="true" tabindex="-1"></a>??ggplot2</span></code></pre></div>
@@ -802,34 +804,40 @@ div.csl-indent {
 <h2><span class="header-section-number">2.8</span> Creating a Simple Map</h2>
 <p>We will see how maps are used in spatial statistical analysis. The simplest one that can be created is a so-called <em>dot map</em>. A dot map simply displays the locations of events of interest, as points. A dot map is, in fact, simply a <em>scatterplot</em> of the coordinates of events. We can use <code>ggplot2</code> to create a simple dot map of the cities in our sample dataset. For this, we create a <code>ggplot2</code> object, and for the <code>x</code> and <code>y</code> aesthetics we use the coordinates. The geometric element that we want to render is a point:</p>
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="basic-operations-and-data-structures-in-r.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The longitude is mapped to the x-axis of the plot and the latitude is map to the y-axis of the plot. The function `geom_points()` is used to draw points:</span></span>
-<span id="cb77-2"><a href="basic-operations-and-data-structures-in-r.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
-<span id="cb77-3"><a href="basic-operations-and-data-structures-in-r.html#cb77-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<span id="cb77-2"><a href="basic-operations-and-data-structures-in-r.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities,</span>
+<span id="cb77-3"><a href="basic-operations-and-data-structures-in-r.html#cb77-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
+<span id="cb77-4"><a href="basic-operations-and-data-structures-in-r.html#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/ch02-simple-symbol-map-1.png" width="672" /></p>
 <p>This is a simple dot map that simply shows the locations of the cities. We can add labels by means of the geometric element text:</p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="basic-operations-and-data-structures-in-r.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `geom_text()` is used to write text on the plot, still using the longitude and latitude information:</span></span>
-<span id="cb78-2"><a href="basic-operations-and-data-structures-in-r.html#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
-<span id="cb78-3"><a href="basic-operations-and-data-structures-in-r.html#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb78-4"><a href="basic-operations-and-data-structures-in-r.html#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Name))</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<span id="cb78-2"><a href="basic-operations-and-data-structures-in-r.html#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, </span>
+<span id="cb78-3"><a href="basic-operations-and-data-structures-in-r.html#cb78-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
+<span id="cb78-4"><a href="basic-operations-and-data-structures-in-r.html#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb78-5"><a href="basic-operations-and-data-structures-in-r.html#cb78-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Name))</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/ch02-symbol-map-with-labels-1.png" width="672" /></p>
 <p>The dot map above tells us the location of the cities in our dataframe and their name. We can include more information in the plot in different ways. For example, a <em>proportional symbol map</em> changes the size of the symbols (the points) to add information to the plot. To create a proportional symbol map, we add to the aesthetics the instruction to use some variable for the size of the symbols:</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="basic-operations-and-data-structures-in-r.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The `size` of the points will be proportional to the `Population` values in the data frame</span></span>
-<span id="cb79-2"><a href="basic-operations-and-data-structures-in-r.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
-<span id="cb79-3"><a href="basic-operations-and-data-structures-in-r.html#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> Population)) <span class="sc">+</span> </span>
-<span id="cb79-4"><a href="basic-operations-and-data-structures-in-r.html#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Name))</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<span id="cb79-2"><a href="basic-operations-and-data-structures-in-r.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, </span>
+<span id="cb79-3"><a href="basic-operations-and-data-structures-in-r.html#cb79-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
+<span id="cb79-4"><a href="basic-operations-and-data-structures-in-r.html#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> Population)) <span class="sc">+</span> </span>
+<span id="cb79-5"><a href="basic-operations-and-data-structures-in-r.html#cb79-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Name))</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/symbol-map-with-sized-symbols-1.png" width="672" /></p>
 <p>Furthermore, we can fix the position of the labels by adding a vertical justification to the text (<code>vjust</code>), and to avoid the text from being cut we can also expand the limits of the plot (<code>expand_limits()</code>):</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="basic-operations-and-data-structures-in-r.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
-<span id="cb80-2"><a href="basic-operations-and-data-structures-in-r.html#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> Population)) <span class="sc">+</span> </span>
-<span id="cb80-3"><a href="basic-operations-and-data-structures-in-r.html#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Name), <span class="at">vjust =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb80-4"><a href="basic-operations-and-data-structures-in-r.html#cb80-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">80.7</span>, <span class="sc">-</span><span class="fl">79.2</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">43.2</span>, <span class="fl">43.7</span>))</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="basic-operations-and-data-structures-in-r.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, </span>
+<span id="cb80-2"><a href="basic-operations-and-data-structures-in-r.html#cb80-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
+<span id="cb80-3"><a href="basic-operations-and-data-structures-in-r.html#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> Population)) <span class="sc">+</span> </span>
+<span id="cb80-4"><a href="basic-operations-and-data-structures-in-r.html#cb80-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Name), </span>
+<span id="cb80-5"><a href="basic-operations-and-data-structures-in-r.html#cb80-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb80-6"><a href="basic-operations-and-data-structures-in-r.html#cb80-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">80.7</span>, <span class="sc">-</span><span class="fl">79.2</span>), </span>
+<span id="cb80-7"><a href="basic-operations-and-data-structures-in-r.html#cb80-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">43.2</span>, <span class="fl">43.7</span>))</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/ch02-prettifying-the-symbol-map-1.png" width="672" /></p>
 <p>The example above has guided you in the creation of a relatively simple proportional symbols map! You can see that creating a plot is simply a matter of instructing <code>R</code> (through <code>ggplot2</code>) to complete a series of instructions:</p>
 <ul>
 <li><p>Create a <code>ggplot2</code> object using a dataset, which will render stuff at locations given by variable1 and variable 2: <code>ggplot(data = dataset, aes(x = variable1, y = variable2))</code></p></li>
 <li><p>Add stuff to the plot. For instance, to add points use <code>geom_point</code>, to add lines use <code>geom_line</code>, and so on.</p></li>
 </ul>
 <p>Check the <code>ggplot2</code> <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">Cheat Sheet</a> for more information on how to use this package.</p>
-<p>A last note. Many other visualization alternatives (for instance, Excel) provide point-and-click functions for creating plots. In contrast, <code>ggplot2</code> in <code>R</code> requires that the plot be created by meticulously instructing the package what to do. While this is more laborious, it also means that you have complete control over the creation of plots, which in turn allows you to create more flexible and inventive visuals. Below are some of figures that I have created using <code>R</code> in recent years, including diagrams, thematic maps, and raster data.</p>
+<p>A last note. Many other visualization alternatives (for instance, Excel) provide point-and-click functions for creating plots. In contrast, working in <code>R</code> requires plots to be created by meticulously instructing the package what to do. While this is more laborious, it also means that you have complete control over the creation of plots, which in turn allows you to create more flexible and inventive visuals. Below are some of figures that I have created using <code>R</code> in recent years, including diagrams, thematic maps, and raster data.</p>
 <div class="figure"><span style="display:block;" id="fig:visualization-example-1"></span>
 <img src="figures/02-Figure-1.png" alt="\label{fig:visualization-example-1} Example of visualization: diagram of catchment areas for accessibility analysis (from [Paez, Higgins, and Vivona (2018)](https://doi.org/10.1371/journal.pone.0218773))" width="1054" />
 <p class="caption">
@@ -848,7 +856,32 @@ FIGURE 2.2:  Example of visualization: accessibility to family doctors in Hamilt
 FIGURE 2.3:  Example of visualization: water sources (triangles) and households (circles) in a region in central Kenya (from <a href="https://doi.org/10.1016/j.jtrangeo.2019.102564">Paez et al. (2020)</a>)
 </p>
 </div>
-<p>This concludes your basic overview of basic operations and data structures in R. You will have an opportunity to learn more about creating maps in R with your reading.</p>
+<p>And, these are some figures created using <code>R</code> by talented people around the world.</p>
+<div class="figure"><span style="display:block;" id="fig:visualization-example-4"></span>
+<img src="spatial-analysis-R_files/figure-html/visualization-example-4-1.png" alt="\label{fig:visualization-example-4} Example of visualization: Historical map with shading" width="672" />
+<p class="caption">
+FIGURE 2.4:  Example of visualization: Historical map with shading
+</p>
+</div>
+<div class="figure"><span style="display:block;" id="fig:visualization-example-5"></span>
+<img src="spatial-analysis-R_files/figure-html/visualization-example-5-1.png" alt="\label{fig:visualization-example-5} Example of visualization: Population density of Madagascar" width="672" />
+<p class="caption">
+FIGURE 2.5:  Example of visualization: Population density of Madagascar
+</p>
+</div>
+<div class="figure"><span style="display:block;" id="fig:visualization-example-6"></span>
+<img src="spatial-analysis-R_files/figure-html/visualization-example-6-1.png" alt="\label{fig:visualization-example-6} Example of visualization: Street map of Kyoto" width="672" />
+<p class="caption">
+FIGURE 2.6:  Example of visualization: Street map of Kyoto
+</p>
+</div>
+<div class="figure"><span style="display:block;" id="fig:visualization-example-7"></span>
+<img src="spatial-analysis-R_files/figure-html/visualization-example-7-1.png" alt="\label{fig:visualization-example-7} Example of visualization: Median household income in California" width="672" />
+<p class="caption">
+FIGURE 2.7:  Example of visualization: Median household income in California
+</p>
+</div>
+<p>This concludes your basic overview of basic operations and data structures in <code>R</code>. You will have an opportunity to learn more about creating maps in R with your reading.</p>
 </div>
 <div id="references" class="section level2" number="2.9">
 <h2><span class="header-section-number">2.9</span> References</h2>

@@ -1,8 +1,12 @@
-fig:data-analysis-process
-fig:RStudio-IDE
+fig:ch01-data-analysis-process
+fig:ch01-RStudio-IDE
 fig:visualization-example-1
 fig:visualization-example-2
 fig:visualization-example-3
+fig:visualization-example-4
+fig:visualization-example-5
+fig:visualization-example-6
+fig:visualization-example-7
 fig:distance-metrics
 fig:edge-effects
 fig:sampled-pattern

@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2021-12-14" />
+<meta name="date" content="2022-01-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -615,7 +615,7 @@ div.csl-indent {
 <p>If you wish to work interactively with this chapter you will need the following:</p>
 <ul>
 <li><p>An R markdown notebook version of this document (the source file).</p></li>
-<li><p>A package called <code>geog4ga3</code>.</p></li>
+<li><p>A package called <code>isdas</code>.</p></li>
 </ul>
 <div id="learning-objectives-8" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> Learning Objectives</h2>
@@ -644,7 +644,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="point-pattern-analysis-i.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity:</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="point-pattern-analysis-i.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geog4ga3)</span>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="point-pattern-analysis-i.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
 <span id="cb182-2"><a href="point-pattern-analysis-i.html#cb182-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb182-3"><a href="point-pattern-analysis-i.html#cb182-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span></code></pre></div>
 <p>Load the data that you will use for this practice:</p>
@@ -688,7 +688,7 @@ Sometimes other attributes of the events have been measured as well. For example
 <span id="cb186-5"><a href="point-pattern-analysis-i.html#cb186-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> PointPatterns, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> </span>
 <span id="cb186-6"><a href="point-pattern-analysis-i.html#cb186-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Pattern) <span class="sc">+</span></span>
 <span id="cb186-7"><a href="point-pattern-analysis-i.html#cb186-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-123-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
 <p>As you can see, faceting is a convenient way to simultaneously plot different parts of a dataframe (in the present case, the different <code>Pattern</code>s).</p>
 <p>In the preceding activity, you were asked to generate ideas regarding possible ways of deciding whether a map of events (i.e., a point pattern) is random. In this chapter we will formalize a specific way to do so, by considering the <em>intensity</em> of the process.</p>
 </div>
@@ -724,7 +724,7 @@ Notice the use of the “hat” symbol on top of the Greek lambda. This symbol i
 <span id="cb189-4"><a href="point-pattern-analysis-i.html#cb189-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y),</span>
 <span id="cb189-5"><a href="point-pattern-analysis-i.html#cb189-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">binwidth =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb189-6"><a href="point-pattern-analysis-i.html#cb189-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-125-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
 <p>Let’s see step-by-step how this plot is made.</p>
 <ol style="list-style-type: decimal">
 <li><code>ggplot()</code> creates a plot object.</li>
@@ -744,7 +744,7 @@ Notice the use of the “hat” symbol on top of the Greek lambda. This symbol i
 <span id="cb190-5"><a href="point-pattern-analysis-i.html#cb190-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">filter</span>(PointPatterns, Pattern <span class="sc">==</span> <span class="st">&quot;Pattern 1&quot;</span>), </span>
 <span id="cb190-6"><a href="point-pattern-analysis-i.html#cb190-6" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
 <span id="cb190-7"><a href="point-pattern-analysis-i.html#cb190-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
 <p>Notice how we used to create the vertical lines (<code>geom_vline</code>) and horizontal lines (<code>geom_hline</code>), from 0 to 1 every 0.25 units of distance respectively. This creates a tessellation that divides the original region into 16 smaller squares, or subregions. Each of the smaller squares used to subdivide the region is called a <em>quadrat</em>.</p>
 <p>To make things more interesting, instead of calculating the overall density, we can calculate the density for each quadrat. Now the size of the quadrats will be <span class="math inline">\(0.25\times 0.25\)</span>. Here we visualize the density of the quadrats:</p>
 <div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="point-pattern-analysis-i.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
@@ -755,7 +755,7 @@ Notice the use of the “hat” symbol on top of the Greek lambda. This symbol i
 <span id="cb191-6"><a href="point-pattern-analysis-i.html#cb191-6" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
 <span id="cb191-7"><a href="point-pattern-analysis-i.html#cb191-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
 <span id="cb191-8"><a href="point-pattern-analysis-i.html#cb191-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
 <p>You can, of course, change the size of the quadrats. Let’s take a look at the four point patterns (by means of faceting), after creating a variable to easily control the size of the quadrat. Let’s call this variable <code>q_size</code>:</p>
 <div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="point-pattern-analysis-i.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `q_size` controls the size of the quadrats; experiment changing this parameter</span></span>
 <span id="cb192-2"><a href="point-pattern-analysis-i.html#cb192-2" aria-hidden="true" tabindex="-1"></a>q_size <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
@@ -768,7 +768,7 @@ Notice the use of the “hat” symbol on top of the Greek lambda. This symbol i
 <span id="cb192-9"><a href="point-pattern-analysis-i.html#cb192-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Pattern) <span class="sc">+</span></span>
 <span id="cb192-10"><a href="point-pattern-analysis-i.html#cb192-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
 <span id="cb192-11"><a href="point-pattern-analysis-i.html#cb192-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-128-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-89-1.png" width="672" /></p>
 <p>Notice the differences in the density maps? Try changing the size of the quadrat to 1. What happens, and why? Next, try a smaller quadrat size, say 0.25. What happens, and why? Try even smaller quadrat sizes, but greater than zero. What happens now?</p>
 <p>The package <code>spatstat</code> <span class="citation">(<a href="#ref-Baddeley2015" role="doc-biblioref">Baddeley, Rubak, and Turner 2016</a>)</span> includes numerous functions for the analysis of point patterns. A relevant function for us at this stage, is <code>quadratcount()</code>, which returns the number of events per quadrat.</p>
 <p>To use this function, we need to convert the point patterns to a type of object used by <code>spatstat</code> denominated <code>ppp</code> (for <em>p</em>lannar <em>p</em>oint <em>p</em>attern). This is simple, thanks to a utility function in <code>spatstat</code> called <code>as.ppp</code>. This function takes as arguments (inputs) a set of coordinates, and data to define a window. To benefit from the functionality of <code>spatstat</code> we will convert our data frame with spatial patterns into <code>ppp</code> objects.</p>
@@ -797,10 +797,10 @@ Notice the use of the “hat” symbol on top of the Greek lambda. This symbol i
 <p>As you can see, the <code>ppp</code> object includes the four patterns, calculates the frequency of each (the number of events), and their respective overall intensities.</p>
 <p>Objects of the class <code>ppp</code> can be plotted using base <code>R</code> plotting functions:</p>
 <div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="point-pattern-analysis-i.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ppp1)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-132-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
 <p>To plot each pattern separately we can split the different patterns using the function <code>split.ppp()</code>. Notice how <code>$</code> works for indexing the patterns here, just as it does for indexing columns in a data frame:</p>
 <div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="point-pattern-analysis-i.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">split.ppp</span>(ppp1)<span class="sc">$</span><span class="st">`</span><span class="at">Pattern 1</span><span class="st">`</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-133-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-94-1.png" width="672" /></p>
 <p>Once the patterns are in <code>ppp</code> form, <code>quadratcount</code> can be used to compute the counts of events. To calculate the count separately for each pattern, you need to use again <code>split.ppp()</code> (if you don’t index a pattern, it will apply the function to all of them). The other two arguments are the number of quadrats in the horizontal (nx) and the vertical (ny) directions:</p>
 <div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="point-pattern-analysis-i.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadratcount</span>(<span class="fu">split</span>(ppp1), <span class="at">nx =</span> <span class="dv">4</span>, <span class="at">ny =</span> <span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## List of spatial objects
@@ -849,14 +849,14 @@ Notice the use of the “hat” symbol on top of the Greek lambda. This symbol i
 <span id="cb202-2"><a href="point-pattern-analysis-i.html#cb202-2" aria-hidden="true" tabindex="-1"></a>ppp2 <span class="ot">&lt;-</span> <span class="fu">as.ppp</span>(PointPatterns, Wnd2)</span></code></pre></div>
 <p>Repeat the plot but using the new <code>ppp</code> object:</p>
 <div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="point-pattern-analysis-i.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">split.ppp</span>(ppp2)<span class="sc">$</span><span class="st">`</span><span class="at">Pattern 1</span><span class="st">`</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-137-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-98-1.png" width="672" /></p>
 <p>Repeat but now using an even bigger region. Create a third window:</p>
 <div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="point-pattern-analysis-i.html#cb204-1" aria-hidden="true" tabindex="-1"></a>Wnd3 <span class="ot">&lt;-</span> <span class="fu">owin</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">3</span>), <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">3</span>)) </span></code></pre></div>
 <p>And also a third <code>ppp</code> object using the third window:</p>
 <div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="point-pattern-analysis-i.html#cb205-1" aria-hidden="true" tabindex="-1"></a>ppp3 <span class="ot">&lt;-</span> <span class="fu">as.ppp</span>(PointPatterns, Wnd3)</span></code></pre></div>
 <p>Now the plot looks like this:</p>
 <div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="point-pattern-analysis-i.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">split.ppp</span>(ppp3)<span class="sc">$</span><span class="st">`</span><span class="at">Pattern 1</span><span class="st">`</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-140-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
 <p>Which of the three regions that you saw above is more appropriate? What do you think is the effect of selecting an inappropriate region for the analysis?</p>
 <p>This concludes this chapter. The next activity will illustrate how quadrats are a useful tool to explore the question whether a map is random.</p>
 

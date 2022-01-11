@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2021-12-14" />
+<meta name="date" content="2022-01-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -627,19 +627,19 @@ div.csl-indent {
 <p>For this activity you will need the following:</p>
 <ul>
 <li><p>An R markdown notebook version of this document (the source file).</p></li>
-<li><p>A package called <code>geog4ga3</code>.</p></li>
+<li><p>A package called <code>isdas</code>.</p></li>
 </ul>
 <p>It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="activity-1-statistical-maps-i.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity:</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="activity-1-statistical-maps-i.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geog4ga3)</span>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="activity-1-statistical-maps-i.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
 <span id="cb105-2"><a href="activity-1-statistical-maps-i.html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb105-3"><a href="activity-1-statistical-maps-i.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 </div>
 <div id="creating-a-simple-thematic-map" class="section level2" number="4.4">
 <h2><span class="header-section-number">4.4</span> Creating a simple thematic map</h2>
-<p>If you successfully loaded package <code>geog4ga3</code> a dataset called <code>HamiltonDAs</code> should be available for analysis:</p>
+<p>If you successfully loaded package <code>isdas</code> a dataset called <code>HamiltonDAs</code> should be available for analysis:</p>
 <div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="activity-1-statistical-maps-i.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(HamiltonDAs)</span></code></pre></div>
 <p>Check the class of this object:</p>
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="activity-1-statistical-maps-i.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(HamiltonDAs)</span></code></pre></div>
@@ -690,7 +690,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="activity-1-statistical-maps-i.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co">#head(HamiltonDAs)</span></span>
 <span id="cb113-2"><a href="activity-1-statistical-maps-i.html#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(HamiltonDAs) <span class="sc">+</span> </span>
 <span id="cb113-3"><a href="activity-1-statistical-maps-i.html#cb113-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">alpha =</span> .<span class="dv">3</span>, <span class="at">size =</span> .<span class="dv">3</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p>We selected color “black” for the polygons, with a transparency alpha = 0.3 (alpha = 0 is completely transparent, alpha = 1 is completely opaque, try it!), and line size 0.3.</p>
 <p>This map only shows the DAs, which is nice. However, as you saw in the summary of the dataframe above, in addition to the geometric information, a set of (generic) variables is also included, called VAR1, VAR2,…, VAR5.</p>
 <p>Thematic maps can be created using these variables. The next chunk of code plots the DAs and adds info. The <code>fill</code> argument is used to select a variable to color the polygons. The function <code>cut_number</code> is used to classify the values of the variable in <span class="math inline">\(k\)</span> groups of equal size, in this case 5 (notice that the lines of the polygons are still black). The <code>scale_fill_brewer</code> function can be used to select different <em>palettes</em> or coloring schemes):</p>
@@ -700,7 +700,7 @@ div.csl-indent {
 <span id="cb114-4"><a href="activity-1-statistical-maps-i.html#cb114-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>() <span class="sc">+</span></span>
 <span id="cb114-5"><a href="activity-1-statistical-maps-i.html#cb114-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Variable&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: Use of `HamiltonDAs$VAR1` is discouraged. Use `VAR1` instead.</code></pre>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <p>Now you have seen how to create a thematic map with polygons (areal data), you are ready for the following activity.</p>
 </div>
 <div id="activity" class="section level2" number="4.5">
