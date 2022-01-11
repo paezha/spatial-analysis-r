@@ -58,15 +58,16 @@ library(isdas)
 
 The package includes a few datasets that will be used throughout the book:
 ```{r}
-#The function 'data' is used to check if a dataset is present within any loaded packages. In this case, we are looking for 'snow_deaths'
+#The function `data` is used to check if a dataset is present within any loaded packages. In this case, we are looking for `snow_deaths` and `snow_pumps`
 data("snow_deaths")
+data("snow_pumps")
 ```
 
 ## Exploring Dataframes and a Simple Proportional Symbols Map
 
 If you correctly loaded the library, you can now access the dataframes in the package `isdas`. For this section, you will need two dataframes, namely `snow_pumps` and `snow_deaths`:
 ```{r}
-#The function 'head' will display the first few rows of the dataframe, snow_deaths 
+#The function `head` will display the first few rows of the dataframe, snow_deaths 
 head(snow_deaths)
 ```
 
