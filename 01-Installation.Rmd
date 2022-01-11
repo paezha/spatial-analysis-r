@@ -14,7 +14,7 @@ Modeling is a process that further extracts information from the data, typically
 
 All of the tasks mentioned above, and many more, can be handled easily in a variety of software applications. For this course, you will use the statistical computing language `R`. 
 
-```{r data-analysis-process, fig.cap= "\\label{fig:data-analysis-process} The process of doing data analysis (from Wickham and Grolemund, 2016)", echo=FALSE}
+```{r ch01-data-analysis-process, fig.cap= "\\label{fig:data-analysis-process} The process of doing data analysis (from Wickham and Grolemund, 2016)", echo=FALSE}
 knitr::include_graphics(rep("figures/01-Figure-1.png"))
 ```
 
@@ -54,7 +54,7 @@ Before introducing some basic functionality in `R`, lets quickly take a tour of 
 
 The RStudio IDE provides a very complete interface to interact with the language `R`, and do much more in addition. It consists of a window with several panes. Some panes include, in addition, several tabs. There are the usual drop-down menus for common operations, such as creating new files, saving, common commands for editing, etc. See Figure \@ref(fig:RStudio-IDE) below.
 
-```{r RStudio-IDE, fig.cap= "\\label{fig:RStudio-IDE}The RStudio IDE", echo=FALSE}
+```{r ch01-RStudio-IDE, fig.cap= "\\label{fig:RStudio-IDE}The RStudio IDE", echo=FALSE}
 knitr::include_graphics(rep("figures/01-Figure-2.png"))
 ```
 
@@ -73,7 +73,7 @@ This brief introduction should have allowed you to install both `R` and RStudio.
 According to Wickham [-@wickham2015rpackages] packages are the basic units of reproducible code in the `R` multiverse. Packages allow a developer to create a self-contained unit of code that often is meant to achieve some task. For instance, there are packages in `R` that specialize in statistical techniques, such as [cluster analysis](https://cran.r-project.org/web/packages/cluster/index.html), [visualization](https://cran.r-project.org/web/packages/ggplot2/index.html), or [data manipulation](https://cran.r-project.org/web/packages/dplyr/). Some packages can be miscellaneous tools, or contain mostly datasets. Packages are a very convenient way of maintaining code, data, and documentation, and also of sharing all these resources.
 
 Packages can be obtained from different sources (including making them!). One of the reasons why `R` has become so successful is the relative facility with which packages can be distributed. A package that I use frequently is called `tidyverse` [@Wickham2017tidyverse]. The `tidyverse` is a collection of functions for data manipulation, analysis, and visualization. This package can be downloaded and installed in your personal library of `R` packages by using the function `install.packages`, as follows:
-```{r eval=FALSE}
+```r
 install.packages("tidyverse")
 ```
 
@@ -82,7 +82,7 @@ The function `install.packages` retrieves packages from the [Comprehensive R Arc
 There are other ways of distributing packages. For instance, throughout this book you will make use of a package called `isdas` that contains a collection of datasets and functions used in the readings or activities. This package is not on CRAN, but instead can be obtained from GitHub, a repository and versioning system. To retrieve packages from GitHub you need a function called `install_github`, which in turn is part of the package `devtools`.
 
 To download and install the package `isdas`, you need first to download and install `devtools` as follows:
-```{r eval=FALSE}
+```r
 install.packages("remotes")
 ```
 
@@ -91,12 +91,12 @@ Once that a package has been downloaded and installed, it needs to be loaded int
 Similarly, once that the book is in my library, I do not need to retrieve it again from the bookstore - a package, once installed, does not need to be installed again (it might need updates, but that is a different matter).
 
 This analogy suggests that I can have many packages in my library, only some of which I may need at any specific time for a task. To retrieve a package (i.e., a book) from the library, so that we can use it, the function `library` is invoked as in this example:
-```{r eval=FALSE}
+```r 
 library(remotes)
 ```
 
 This allows you to use all the functions in the package `remotes`. In particular, at this point you want to use a function that allows you to retrieve other packages! With the functionality of `remotes::install_github` you can download and install the companion package for the book by running the following instruction:
-```{r eval=FALSE}
+```r
 remotes::install_github("paezha/isdas")
 ```
 
