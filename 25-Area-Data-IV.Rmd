@@ -63,11 +63,6 @@ The third dataset is an object of class `sf` (simple feature) with the census tr
 data(Hamilton_CT)
 ```
 
-The `sf` object can be converted into a `SpatialPolygonsDataFrame` object for use with the `spdedp` package:
-```{r}
-#Hamilton_CT.sp <- as(Hamilton_CT, "Spatial")
-```
-
 ## Decomposing Moran's $I$
 
 Here we will revisit Moran's $I$ coefficient to see how its utility for the exploration of spatial patterns can be extended. Recall from the preceding reading and activity that this coefficient of spatial autocorrelation was derived based on the idea of aggregating the products of a (mean-centered) variable by its spatial moving average, and then dividing by the variance:
@@ -114,12 +109,12 @@ bscols(
   plot_ly(df_msc.sd) %>% # Create a `plotly` object using the dataframe as an input. The pipe operator passes this object to the function `add_markers()`; this function is similar to the `geom_point()` function in `ggplot2` and it draws objects on the blank plot created by `plot_ly()`
     add_markers(x = ~Z, y = ~SMA, color = ~POP_DENSITY, size = ~(Z * SMA), colors = "YlOrRd") %>%
     hide_colorbar() %>%     # Remove the colorbar from the plot.
-    highlight("plotly_selected", persistent = TRUE), # Highlight observations when selected.
+    highlight("plotly_selected"), # Highlight observations when selected.
   # The second plot is a choropleth map
   plot_ly(df_msc.sd) %>% # Create a `plotly` object using the dataframe as an input. The pipe operator passes this object to the function `add_sf()`; this function is similar to the `geom_sf()` functions in `ggplot2` and it draws a simple features object on the blank plot created by `plot_ly()`
     add_sf(split = ~TRACT, color = ~POP_DENSITY, colors = "YlOrRd", showlegend = FALSE) %>%
     hide_colorbar() %>% # Remove colorbar from the plot.
-    highlight(dynamic = TRUE, persistent = TRUE) # Highlight observations when selected.
+    highlight(dynamic = TRUE) # Highlight observations when selected.
 )
 ```
 

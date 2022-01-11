@@ -105,7 +105,7 @@ The last three assumptions ensure that the residuals are _random_. Violation of 
 When all these assumptions are met, the coefficients are said to be _BLUE_: Best Linear Unbiased Estimates - a desirable property because we wish to be able to quantify the relationships between covariates without bias.
 
 This section provides a refresher on linear regression, before reviewing the estimation of regression models in `R`. The basic command for multivariate linear regression in R is `lm()`, for "linear model". This is the help file of this function:
-```{r}
+```r
 # Remember that we can search the definition of a function by using a question mark in front of the function itself. 
 ?lm 
 ```
