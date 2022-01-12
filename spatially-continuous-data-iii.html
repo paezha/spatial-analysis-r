@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2022-01-11" />
+<meta name="date" content="2022-01-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -243,13 +243,13 @@ div.csl-indent {
 <li class="chapter" data-level="3.7" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#some-simple-spatial-analysis"><i class="fa fa-check"></i><b>3.7</b> Some Simple Spatial Analysis</a></li>
 <li class="chapter" data-level="3.8" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#other-resources"><i class="fa fa-check"></i><b>3.8</b> Other Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html"><i class="fa fa-check"></i><b>4</b> Activity 1: Statistical Maps I</a>
+<li class="chapter" data-level="4" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html"><i class="fa fa-check"></i><b>4</b> Activity: Statistical Maps I</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#housekeeping-questions"><i class="fa fa-check"></i><b>4.1</b> Housekeeping Questions</a></li>
-<li class="chapter" data-level="4.2" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
-<li class="chapter" data-level="4.3" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#preliminaries-1"><i class="fa fa-check"></i><b>4.3</b> Preliminaries</a></li>
-<li class="chapter" data-level="4.4" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#creating-a-simple-thematic-map"><i class="fa fa-check"></i><b>4.4</b> Creating a simple thematic map</a></li>
-<li class="chapter" data-level="4.5" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#activity"><i class="fa fa-check"></i><b>4.5</b> Activity</a></li>
+<li class="chapter" data-level="4.1" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#housekeeping-questions"><i class="fa fa-check"></i><b>4.1</b> Housekeeping Questions</a></li>
+<li class="chapter" data-level="4.2" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="4.3" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#preliminaries-1"><i class="fa fa-check"></i><b>4.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="4.4" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#creating-a-simple-thematic-map"><i class="fa fa-check"></i><b>4.4</b> Creating a simple thematic map</a></li>
+<li class="chapter" data-level="4.5" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#activity"><i class="fa fa-check"></i><b>4.5</b> Activity</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html"><i class="fa fa-check"></i><b>5</b> Mapping in R: Continued</a>
 <ul>
@@ -728,7 +728,7 @@ CI_{z_p} = [z_{p_{lwr}}, z_{p_{upr}}].
 <span id="cb771-2"><a href="spatially-continuous-data-iii.html#cb771-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y, <span class="at">color =</span> residual3)) <span class="sc">+</span> <span class="co"># Note color is only applied to results of positive or negative residuals</span></span>
 <span id="cb771-3"><a href="spatially-continuous-data-iii.html#cb771-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb771-4"><a href="spatially-continuous-data-iii.html#cb771-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="co"># Ensures equal scales for both axes</span></span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-511-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-426-1.png" width="672" /></p>
 <p>As seen before, there is considerable spatial autocorrelation as confirmed by Moran’s <span class="math inline">\(I\)</span> coefficient:</p>
 <div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb772-1"><a href="spatially-continuous-data-iii.html#cb772-1" aria-hidden="true" tabindex="-1"></a>WL.listw <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(Walker_Lake[,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]) <span class="sc">%&gt;%</span> <span class="co"># Take the coordinates of Walker Lake and convert to matrix.</span></span>
 <span id="cb772-2"><a href="spatially-continuous-data-iii.html#cb772-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">knearneigh</span>(<span class="at">k =</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="co"># Find the 5 nearest neighbors of each observations.</span></span>
@@ -756,7 +756,7 @@ CI_{z_p} = [z_{p_{lwr}}, z_{p_{upr}}].
 <span id="cb774-4"><a href="spatially-continuous-data-iii.html#cb774-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">25</span>, <span class="dv">210</span>, <span class="dv">227</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">90</span>, <span class="dv">90</span>, <span class="dv">230</span>)), <span class="co">#We are adding coordinates for the triangles in the figure</span></span>
 <span id="cb774-5"><a href="spatially-continuous-data-iii.html#cb774-5" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb774-6"><a href="spatially-continuous-data-iii.html#cb774-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-513-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-428-1.png" width="672" /></p>
 <p>What would your guess be, and why? Would you say that your guess has a better than 50% chance of being right?</p>
 <p>Now imagine that you were asked to guess whether the residual was positive or negative at the locations indicated with squares in the figure:</p>
 <div class="sourceCode" id="cb775"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb775-1"><a href="spatially-continuous-data-iii.html#cb775-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Walker_Lake, </span>
@@ -765,7 +765,7 @@ CI_{z_p} = [z_{p_{lwr}}, z_{p_{upr}}].
 <span id="cb775-4"><a href="spatially-continuous-data-iii.html#cb775-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">160</span>, <span class="dv">240</span>, <span class="dv">12</span>, <span class="dv">120</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">38</span>, <span class="dv">280</span>, <span class="dv">240</span>, <span class="dv">180</span>)), <span class="co">#We are adding coordinates for the squares in the figure</span></span>
 <span id="cb775-5"><a href="spatially-continuous-data-iii.html#cb775-5" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">shape =</span> <span class="dv">15</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb775-6"><a href="spatially-continuous-data-iii.html#cb775-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-514-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-429-1.png" width="672" /></p>
 <p>Again, what would your guess be, and why? Would you be able to guess this way if the residuals were random?</p>
 <p>The fact that you can guess and be fairly sure about the quality of your guess is a consequence of the strong residual pattern. If the residuals were random, there would be no information left to use: the odds of a residual being positive or negative would essentially be 50%. However, when there is residual pattern, this information can be used to enhance the quality of your guesses about the residuals, or in other words, of the <span class="math inline">\(\hat{\epsilon}_p\)</span> terms. At the very least you can guess whether they are positive or negative (therefore reducing their confidence intervals), but possibly you can learn even more from them, as will be seen later.</p>
 <p>Before learning how to do this, however, we need to think more about the way in which we measure spatial pattern in spatially continuous data.</p>
@@ -792,7 +792,7 @@ CI_{z_p} = [z_{p_{lwr}}, z_{p_{upr}}].
 <p>Given the values of Moran’s <span class="math inline">\(I\)</span> at different scales (i.e., values of <span class="math inline">\(k\)</span>), the correlogram can be plotted as:</p>
 <div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb777-1"><a href="spatially-continuous-data-iii.html#cb777-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> correlogram, <span class="fu">aes</span>(<span class="at">x =</span> k, <span class="at">y =</span> moranI)) <span class="sc">+</span> </span>
 <span id="cb777-2"><a href="spatially-continuous-data-iii.html#cb777-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-516-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-431-1.png" width="672" /></p>
 <p>As can be seen in the plot, spatial autocorrelation tends to decline as the number of nearest neighbors used in the test grows - in other words, as the scale of the test increases. This is a common occurrence: when autocorrelation is present, observations tend to be more similar to their closest neighbors than to their more distant neighbors.</p>
 <p>The use of <span class="math inline">\(k\)</span>-nearest neighbors points to a problem, however. The scale of the process does not depend on distance, which would be a more natural metric for a continuous process. In this case, <span class="math inline">\(k\)</span>-nearest neighbors were used to ensure that each sum in the coefficient had the same number of observations. However, this means that “neighborhoods” will be geographically smaller where the observations are more dense, and larger where they are sparse.</p>
 <p>While this issue is not insurmountable (for instance, instead of <span class="math inline">\(k\)</span>-nearst neighbors we could have used the neighbors found at a certain distance), it points out to the fact that Moran’s <span class="math inline">\(I\)</span> is not by design well suited for the analysis of spatially continuous data.</p>
@@ -880,7 +880,7 @@ Instead of forming pairs with observations that are at exactly a distance <span 
 <span id="cb780-4"><a href="spatially-continuous-data-iii.html#cb780-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb780-5"><a href="spatially-continuous-data-iii.html#cb780-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> np), <span class="at">nudge_y =</span> <span class="sc">-</span><span class="dv">1500</span>) <span class="sc">+</span> <span class="co"># Add labels to indicate the number of pairs of observations used in the calculation of each point in the variogram</span></span>
 <span id="cb780-6"><a href="spatially-continuous-data-iii.html#cb780-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Semivariance&quot;</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-518-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-433-1.png" width="672" /></p>
 <p>The numbers indicate the number of pairs of observations used to calculate the semivariance at the corresponding lag.</p>
 <p>Since the sample variance is:</p>
 <div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="spatially-continuous-data-iii.html#cb781-1" aria-hidden="true" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> <span class="fu">var</span>(Walker_Lake<span class="sc">$</span>V) <span class="co"># We are calculating the variance of X</span></span>
@@ -892,7 +892,7 @@ Instead of forming pairs with observations that are at exactly a distance <span 
 <span id="cb783-3"><a href="spatially-continuous-data-iii.html#cb783-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> np), <span class="at">nudge_y =</span> <span class="sc">-</span><span class="dv">1500</span>) <span class="sc">+</span></span>
 <span id="cb783-4"><a href="spatially-continuous-data-iii.html#cb783-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span> </span>
 <span id="cb783-5"><a href="spatially-continuous-data-iii.html#cb783-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Autocovariance&quot;</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-520-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-435-1.png" width="672" /></p>
 <p>As expected, the autocovariance (and hence, the autocorrelation) is stronger at short spatial lags, and declines at larger spatial lags.</p>
 <p>The above plots are the <em>empirical</em> semivariogram and covariogram. These plots are used to model a theoretical semivariogram, a function that can be used to estimate spatial dependence at any lag within the domain of the - and not just at the distances for which we have points in the empirical variogram.</p>
 <p>Since the semivariogram is the expectation of the square, the function selected for modeling the theoretical semivariogram must be non-negative. Several functions satisfy this condition, a list of which are available in <code>gstat</code> as shown below:</p>
@@ -930,13 +930,13 @@ FIGURE 35.3: Anatomy of a semivariogram
 <p>Some theoretical functions are shown next.</p>
 <p>Exponential semivariogram:</p>
 <div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb786-1"><a href="spatially-continuous-data-iii.html#cb786-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">variogramLine</span>(<span class="fu">vgm</span>(<span class="dv">1</span>, <span class="st">&quot;Exp&quot;</span>, <span class="dv">1</span>), <span class="dv">10</span>), <span class="at">type =</span> <span class="st">&#39;l&#39;</span>) <span class="co">#We use &quot;exp&quot; to denote the use of an exponential semivariogram. Refer to the list on line 297 and explore the different outcomes of the listed variogram models! </span></span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-522-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-437-1.png" width="672" /></p>
 <p>Spherical semivariogram:</p>
 <div class="sourceCode" id="cb787"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb787-1"><a href="spatially-continuous-data-iii.html#cb787-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">variogramLine</span>(<span class="fu">vgm</span>(<span class="dv">1</span>, <span class="st">&quot;Sph&quot;</span>, <span class="dv">1</span>), <span class="dv">10</span>), <span class="at">type =</span> <span class="st">&#39;l&#39;</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-523-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-438-1.png" width="672" /></p>
 <p>Gaussian semivariogram:</p>
 <div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb788-1"><a href="spatially-continuous-data-iii.html#cb788-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">variogramLine</span>(<span class="fu">vgm</span>(<span class="dv">1</span>, <span class="st">&quot;Gau&quot;</span>, <span class="dv">1</span>), <span class="dv">10</span>), <span class="at">type =</span> <span class="st">&#39;l&#39;</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-524-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-439-1.png" width="672" /></p>
 <p>These plots illustrate some differences in the behavior of the models. For identical parameters, the Gaussian model provides smoother changes near the origin. The spherical model reaches the sill more rapidly than the other models.</p>
 <p>To fit a theoretical semivariogram to the empirical one, the function <code>fit.variogram</code> is used:</p>
 <div class="sourceCode" id="cb789"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb789-1"><a href="spatially-continuous-data-iii.html#cb789-1" aria-hidden="true" tabindex="-1"></a>variogram_z.t <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(variogram_z, <span class="at">model =</span> <span class="fu">vgm</span>(<span class="st">&quot;Exp&quot;</span>)) <span class="co">#&#39;fit_variogram&#39; selects the type of model that will fit the empirical semivariogram best</span></span></code></pre></div>
@@ -946,7 +946,7 @@ FIGURE 35.3: Anatomy of a semivariogram
 <span id="cb790-3"><a href="spatially-continuous-data-iii.html#cb790-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
 <span id="cb790-4"><a href="spatially-continuous-data-iii.html#cb790-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> gamma.t, <span class="fu">aes</span>(<span class="at">x =</span> dist, <span class="at">y =</span> gamma)) <span class="sc">+</span></span>
 <span id="cb790-5"><a href="spatially-continuous-data-iii.html#cb790-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Semivariance&quot;</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-526-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-441-1.png" width="672" /></p>
 <p>A set of models can be passed as an argument to <code>fit.variogram</code>, in which case the value (output) of the function is the model that provides the best fit to the empirical semivariogram:</p>
 <div class="sourceCode" id="cb791"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb791-1"><a href="spatially-continuous-data-iii.html#cb791-1" aria-hidden="true" tabindex="-1"></a>variogram_z.t <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(variogram_z, <span class="at">model =</span> <span class="fu">vgm</span>(<span class="st">&quot;Exp&quot;</span>, <span class="st">&quot;Sph&quot;</span>, <span class="st">&quot;Gau&quot;</span>)) <span class="co">#Choosing the best fit again</span></span>
 <span id="cb791-2"><a href="spatially-continuous-data-iii.html#cb791-2" aria-hidden="true" tabindex="-1"></a>variogram_z.t</span></code></pre></div>
@@ -959,7 +959,7 @@ FIGURE 35.3: Anatomy of a semivariogram
 <span id="cb793-3"><a href="spatially-continuous-data-iii.html#cb793-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
 <span id="cb793-4"><a href="spatially-continuous-data-iii.html#cb793-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> gamma.t, <span class="fu">aes</span>(<span class="at">x =</span> dist, <span class="at">y =</span> gamma)) <span class="sc">+</span></span>
 <span id="cb793-5"><a href="spatially-continuous-data-iii.html#cb793-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Semivariance&quot;</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-528-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-443-1.png" width="672" /></p>
 <p>For comparison, we will do the variographic analysis of a simulated random dataset.</p>
 <p>Generate coordinates for observations and expand on a grid:</p>
 <div class="sourceCode" id="cb794"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb794-1"><a href="spatially-continuous-data-iii.html#cb794-1" aria-hidden="true" tabindex="-1"></a><span class="co">#We are generating a regular sequence of coordinates by means of &#39;seq&#39; </span></span>
@@ -978,7 +978,7 @@ FIGURE 35.3: Anatomy of a semivariogram
 <span id="cb797-4"><a href="spatially-continuous-data-iii.html#cb797-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> np), <span class="at">nudge_y =</span> <span class="sc">-</span><span class="dv">1500</span>) <span class="sc">+</span> </span>
 <span id="cb797-5"><a href="spatially-continuous-data-iii.html#cb797-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">98100</span>)) <span class="sc">+</span></span>
 <span id="cb797-6"><a href="spatially-continuous-data-iii.html#cb797-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Semivariance&quot;</span>)  <span class="co">#add labels to axes</span></span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-532-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-447-1.png" width="672" /></p>
 <p>The range of the semivariogram appears to be zero, or alternatively, there seems to be a pure nugget effect. This is as expected. Since the data are spatially random, they are not more similar at shorter distances than they would be at longer distances.</p>
 
 </div>

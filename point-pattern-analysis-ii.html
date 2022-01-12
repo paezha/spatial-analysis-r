@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2022-01-11" />
+<meta name="date" content="2022-01-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -243,13 +243,13 @@ div.csl-indent {
 <li class="chapter" data-level="3.7" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#some-simple-spatial-analysis"><i class="fa fa-check"></i><b>3.7</b> Some Simple Spatial Analysis</a></li>
 <li class="chapter" data-level="3.8" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#other-resources"><i class="fa fa-check"></i><b>3.8</b> Other Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html"><i class="fa fa-check"></i><b>4</b> Activity 1: Statistical Maps I</a>
+<li class="chapter" data-level="4" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html"><i class="fa fa-check"></i><b>4</b> Activity: Statistical Maps I</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#housekeeping-questions"><i class="fa fa-check"></i><b>4.1</b> Housekeeping Questions</a></li>
-<li class="chapter" data-level="4.2" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
-<li class="chapter" data-level="4.3" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#preliminaries-1"><i class="fa fa-check"></i><b>4.3</b> Preliminaries</a></li>
-<li class="chapter" data-level="4.4" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#creating-a-simple-thematic-map"><i class="fa fa-check"></i><b>4.4</b> Creating a simple thematic map</a></li>
-<li class="chapter" data-level="4.5" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#activity"><i class="fa fa-check"></i><b>4.5</b> Activity</a></li>
+<li class="chapter" data-level="4.1" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#housekeeping-questions"><i class="fa fa-check"></i><b>4.1</b> Housekeeping Questions</a></li>
+<li class="chapter" data-level="4.2" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="4.3" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#preliminaries-1"><i class="fa fa-check"></i><b>4.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="4.4" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#creating-a-simple-thematic-map"><i class="fa fa-check"></i><b>4.4</b> Creating a simple thematic map</a></li>
+<li class="chapter" data-level="4.5" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#activity"><i class="fa fa-check"></i><b>4.5</b> Activity</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html"><i class="fa fa-check"></i><b>5</b> Mapping in R: Continued</a>
 <ul>
@@ -695,12 +695,12 @@ div.csl-indent {
 <span id="cb239-2"><a href="point-pattern-analysis-ii.html#cb239-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a quicker option to get relative results</span></span>
 <span id="cb239-3"><a href="point-pattern-analysis-ii.html#cb239-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb239-4"><a href="point-pattern-analysis-ii.html#cb239-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">split</span>(PointPatterns.ppp))</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-123-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <p>Recall that you can also plot individual patterns by using <code>$</code> followed by the factor that identifies the desired pattern (this is a way of indexing different patterns in <code>ppp</code>-class objects):</p>
 <div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="point-pattern-analysis-ii.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using &quot;$&quot; acts as a call sign to retrieve information from a data frame. </span></span>
 <span id="cb240-2"><a href="point-pattern-analysis-ii.html#cb240-2" aria-hidden="true" tabindex="-1"></a><span class="co"># In this case, you are calling &quot;Pattern 4&quot; from &quot;PointPatterns.ppp&quot;</span></span>
 <span id="cb240-3"><a href="point-pattern-analysis-ii.html#cb240-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">split</span>(PointPatterns.ppp)<span class="sc">$</span><span class="st">&quot;Pattern 4&quot;</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-124-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
 <p>Now calculate the quadrat-based test of independence:</p>
 <div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="point-pattern-analysis-ii.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `quadrat.test()` generates a quadrat-based test of independence, in this case, </span></span>
 <span id="cb241-2"><a href="point-pattern-analysis-ii.html#cb241-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for &quot;Pattern 2&quot; called from &quot;PointPatterns.ppp&quot;, using 3 quadrats in the direction </span></span>
@@ -717,7 +717,7 @@ div.csl-indent {
 ## Quadrats: 3 by 3 grid of tiles</code></pre>
 <p>Plot the results of the quadrat test:</p>
 <div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="point-pattern-analysis-ii.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(q_test)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <p>As seen in the preceding chapter, the expected distribution of events on quadrats under the null landscape tends to be quite even. This is because each quadrat has equal probability of having the same number of events (depending on size, when the quadrats are not all the same size the number will be proportional to the size of the quadrat).</p>
 <p>If you check the plot of the quadrat test above, you will notice that the first number (top left corner) is the number of events in the quadrat. The second number (top right corner) is the <em>expected number of events</em> for a null landscape. The third number is a <em>residual</em>, based on the difference between the observed and expected number of events. More specifically, the residual is a <em>Pearson residual</em>, defined as follows:
 <span class="math display">\[
@@ -731,7 +731,7 @@ X^2=\sum_{i=1}^{Q}r_i^2,
 where <span class="math inline">\(Q\)</span> is the number of quadrats. In other words, the test is based on the squared sum of the Pearson residuals. The smaller this number is, the more likely that the observed pattern of events is not different from a null landscape (i.e., a random process), and the larger it is, the more likely that it is different from a null landscape. This is reflected by the <span class="math inline">\(p\)</span>-value of the test (technically, the <span class="math inline">\(p\)</span>-value is obtained by comparing the test to the <span class="math inline">\(\chi^2\)</span> distribution, pronounced “kay-square”).</p>
 <p>Consider for instance the first pattern in the examples:</p>
 <div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="point-pattern-analysis-ii.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">quadrat.test</span>(<span class="fu">split</span>(PointPatterns.ppp)<span class="sc">$</span><span class="st">&quot;Pattern 1&quot;</span>, <span class="at">nx =</span> <span class="dv">3</span>, <span class="at">ny =</span> <span class="dv">3</span>))</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 <p>You can see that the Pearson residual of the top left quadrat is indeed -0.6567673, the next to its right is -0.2704336, and so on. The value of the test statistic should be then:</p>
 <div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="point-pattern-analysis-ii.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The &quot;Paste&quot; function joins together several arguments as characters. </span></span>
 <span id="cb245-2"><a href="point-pattern-analysis-ii.html#cb245-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Here, this is a string of values for &quot;X2&quot;, where X2&quot; is the squared </span></span>
@@ -812,10 +812,10 @@ Caution should be exercised when interpreting the results of the analysis based 
 <p>Another issue with quadrat analysis is that it is not sensitive to the relative position of the events within the quadrats.</p>
 <p>Consider for instance the following two patterns in <code>pp0</code>:</p>
 <div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="point-pattern-analysis-ii.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">split</span>(pp0.ppp))</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-134-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
 <p>These two patterns look quite different. And yet, when we count the events by quadrats:</p>
 <div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="point-pattern-analysis-ii.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">quadratcount</span>(<span class="fu">split</span>(pp0.ppp), <span class="at">nx =</span> <span class="dv">3</span>, <span class="at">ny =</span> <span class="dv">3</span>))</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-135-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
 <p>This example highlights how quadrats are relatively coarse measures of density, and fail to distinguish between fairly different event distributions, in particular because quadrat analysis does not take into account the relative position of the events with respect to each other.</p>
 </div>
 <div id="kernel-density" class="section level2" number="11.7">
@@ -832,7 +832,7 @@ Caution should be exercised when interpreting the results of the analysis based 
 <span id="cb260-6"><a href="point-pattern-analysis-ii.html#cb260-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">dist =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)), <span class="fu">aes</span>(dist)) <span class="sc">+</span></span>
 <span id="cb260-7"><a href="point-pattern-analysis-ii.html#cb260-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">n =</span> <span class="dv">101</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb260-8"><a href="point-pattern-analysis-ii.html#cb260-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.45</span>))</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-136-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
 <p>As you can see, the value of the function declines with increasing distance from the center of the window (when dist == 0; note that the value never becomes zero!). Since we used the normal distribution, this is a <em>Gaussian kernel</em>. The shape of the Gaussian kernel depends on the standard deviation, which controls how “big” the window is, or alternatively, how quickly the function decays. We will call the standard deviation the <em>kernel bandwidth</em> of the function.</p>
 <p>Since the bandwidth controls how rapidly the weight assigned to distant events decays, if the argument changes, so will the shape of the kernel function. As an experiment, change the value of the argument <code>sd</code> in the chunk above. You will see that as it becomes smaller, the slope of the kernel becomes steeper (and distant observations are downweighted more rapidly). On the contrary, as it becomes larger, the slope becomes less steep (and distant events are weighted almost as highly as close events).</p>
 <p>Kernel density estimates are usually obtained by creating a fine grid that is superimposed on the region. The kernel function then visits each point on the grid and obtains an estimate of the density by summing the weights of all events as per the kernel function.</p>
@@ -844,10 +844,10 @@ Caution should be exercised when interpreting the results of the analysis based 
 <span id="cb261-4"><a href="point-pattern-analysis-ii.html#cb261-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb261-5"><a href="point-pattern-analysis-ii.html#cb261-5" aria-hidden="true" tabindex="-1"></a>kernel_density <span class="ot">&lt;-</span> <span class="fu">density</span>(<span class="fu">split</span>(pp0.ppp), <span class="at">sigma =</span> <span class="fl">0.1</span>)</span>
 <span id="cb261-6"><a href="point-pattern-analysis-ii.html#cb261-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kernel_density)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-137-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
 <p>Compare to the distribution of events:</p>
 <div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="point-pattern-analysis-ii.html#cb262-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">split</span>(pp0.ppp))</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-138-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
 <p>It is important to note that the gradation of colors is different in the two kernel density plots. Whereas the smallest value in the plot on the left is less than 20 and the largest is greater than 100, on the other plot the range is only between 45 to approximately 50. Thus, the intensity of the process is much higher at places in Pattern 1 that in Pattern 2.</p>
 <p>The plots above illustrate how the map of the kernel density is better able to capture the variations in density across the region. In fact, kernel density is a smooth estimate of the underlying intensity of the process, and the degree of smoothing is controlled by the bandwidth.</p>
 

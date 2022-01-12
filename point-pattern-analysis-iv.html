@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2022-01-11" />
+<meta name="date" content="2022-01-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -243,13 +243,13 @@ div.csl-indent {
 <li class="chapter" data-level="3.7" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#some-simple-spatial-analysis"><i class="fa fa-check"></i><b>3.7</b> Some Simple Spatial Analysis</a></li>
 <li class="chapter" data-level="3.8" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#other-resources"><i class="fa fa-check"></i><b>3.8</b> Other Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html"><i class="fa fa-check"></i><b>4</b> Activity 1: Statistical Maps I</a>
+<li class="chapter" data-level="4" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html"><i class="fa fa-check"></i><b>4</b> Activity: Statistical Maps I</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#housekeeping-questions"><i class="fa fa-check"></i><b>4.1</b> Housekeeping Questions</a></li>
-<li class="chapter" data-level="4.2" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
-<li class="chapter" data-level="4.3" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#preliminaries-1"><i class="fa fa-check"></i><b>4.3</b> Preliminaries</a></li>
-<li class="chapter" data-level="4.4" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#creating-a-simple-thematic-map"><i class="fa fa-check"></i><b>4.4</b> Creating a simple thematic map</a></li>
-<li class="chapter" data-level="4.5" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#activity"><i class="fa fa-check"></i><b>4.5</b> Activity</a></li>
+<li class="chapter" data-level="4.1" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#housekeeping-questions"><i class="fa fa-check"></i><b>4.1</b> Housekeeping Questions</a></li>
+<li class="chapter" data-level="4.2" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="4.3" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#preliminaries-1"><i class="fa fa-check"></i><b>4.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="4.4" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#creating-a-simple-thematic-map"><i class="fa fa-check"></i><b>4.4</b> Creating a simple thematic map</a></li>
+<li class="chapter" data-level="4.5" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#activity"><i class="fa fa-check"></i><b>4.5</b> Activity</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html"><i class="fa fa-check"></i><b>5</b> Mapping in R: Continued</a>
 <ul>
@@ -688,42 +688,42 @@ F_{pois}(x) = 1 - exp(-\lambda \pi x^2).
 <pre><code>## [1] &quot;ppp&quot;</code></pre>
 <p>Begin by plotting the pattern:</p>
 <div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="point-pattern-analysis-iv.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pp1.ppp)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-182-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-97-1.png" width="672" /></p>
 <p>An empty space map is obtained by means of the <code>distmap()</code> function:</p>
 <div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="point-pattern-analysis-iv.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The &quot;distmap()&quot; function computes the distance map of point pattern X and returns the distance map as a pixel image</span></span>
 <span id="cb312-2"><a href="point-pattern-analysis-iv.html#cb312-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb312-3"><a href="point-pattern-analysis-iv.html#cb312-3" aria-hidden="true" tabindex="-1"></a>empty_space_map1 <span class="ot">&lt;-</span> <span class="fu">distmap</span>(pp1.ppp) </span></code></pre></div>
 <p>The plot of this is:</p>
 <div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="point-pattern-analysis-iv.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(empty_space_map1)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-99-1.png" width="672" /></p>
 <p>Similar to the Stienen diagrams that you used previously, this map shows the distance from any location on the map to the nearest event: the smaller the value, the closer the point is to an event. It is evident in this pixel image that the values are mostly smaller, illustrating that points are closer to events.</p>
 <p>Compare the map above to <code>pp2.ppp</code>:</p>
 <div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="point-pattern-analysis-iv.html#cb314-1" aria-hidden="true" tabindex="-1"></a>empty_space_map2 <span class="ot">&lt;-</span> <span class="fu">distmap</span>(pp2.ppp)</span>
 <span id="cb314-2"><a href="point-pattern-analysis-iv.html#cb314-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(empty_space_map2)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-100-1.png" width="672" /></p>
 <p>In the second point pattern, there is more open space in the region. This is also apparent from the symbols map:</p>
 <div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="point-pattern-analysis-iv.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pp2.ppp)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
 <p>The <span class="math inline">\(\hat{F}\)</span>-function is implemented in <code>spatstat</code> as <code>Fest()</code> (for F-estimated), and it requires a <code>ppp</code> object as an input. Another possible input is whether a correction is to be used. This refers to boundary corrections. Since we have not yet discussed them, select “none”:</p>
 <div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="point-pattern-analysis-iv.html#cb316-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The &quot;Fest()&quot; function computes an estimate of the empty space function, and it also called the &quot;point to nearest event&quot; distribution. This function estimates the nearest neighbors of a point (in this example, for pp1)</span></span>
 <span id="cb316-2"><a href="point-pattern-analysis-iv.html#cb316-2" aria-hidden="true" tabindex="-1"></a>f_pattern1 <span class="ot">&lt;-</span> <span class="fu">Fest</span>(pp1.ppp, <span class="at">correction =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <p>This function can be plotted as follows:</p>
 <div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="point-pattern-analysis-iv.html#cb317-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(f_pattern1)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-188-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
 <p>The black line is the empirical function, and we see that it is in general very similar to the theoretical function that corresponds to a null landscape. Compare to the second pattern:</p>
 <div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="point-pattern-analysis-iv.html#cb318-1" aria-hidden="true" tabindex="-1"></a>f_pattern2 <span class="ot">&lt;-</span> <span class="fu">Fest</span>(pp2.ppp, <span class="at">correction =</span> <span class="st">&quot;none&quot;</span>)</span>
 <span id="cb318-2"><a href="point-pattern-analysis-iv.html#cb318-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(f_pattern2)</span>
 <span id="cb318-3"><a href="point-pattern-analysis-iv.html#cb318-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.097</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.4</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="st">&quot;dotted&quot;</span>)</span>
 <span id="cb318-4"><a href="point-pattern-analysis-iv.html#cb318-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="fl">0.045</span>, <span class="fl">0.045</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.4</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="st">&quot;dotted&quot;</span>)</span>
 <span id="cb318-5"><a href="point-pattern-analysis-iv.html#cb318-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="fl">0.097</span>, <span class="fl">0.097</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.4</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="st">&quot;dotted&quot;</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-189-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
 <p>In the empirical (black) pattern, points on a grid tend to be more distant from events than what you would expect from the null landscape. For example, whereas under the theoretical function 40% of points have a nearest event that is at a distance of approximately 0.045 or less, under the empirical function, the events are generally more distant from the points, and for the same value of F (0.4 or 40%) the distance is closer to 0.1. See:</p>
 <div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="point-pattern-analysis-iv.html#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeat the plot of the F-function of `pp2.ppp` and use the function `lines()` to add lines to compare the distances for a given value of F, say 0.4 (or 40%)</span></span>
 <span id="cb319-2"><a href="point-pattern-analysis-iv.html#cb319-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(f_pattern2)</span>
 <span id="cb319-3"><a href="point-pattern-analysis-iv.html#cb319-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.097</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.4</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="st">&quot;dotted&quot;</span>)</span>
 <span id="cb319-4"><a href="point-pattern-analysis-iv.html#cb319-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="fl">0.045</span>, <span class="fl">0.045</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.4</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="st">&quot;dotted&quot;</span>)</span>
 <span id="cb319-5"><a href="point-pattern-analysis-iv.html#cb319-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="fl">0.097</span>, <span class="fl">0.097</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.4</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="st">&quot;dotted&quot;</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
 <p>This suggests that the points are clustered. Try plotting the <span class="math inline">\(\hat{G}\)</span>-functions for the patterns in this example, and compare.</p>
 </div>
 <div id="hatk-function" class="section level2" number="15.6">
@@ -731,20 +731,20 @@ F_{pois}(x) = 1 - exp(-\lambda \pi x^2).
 <p>A limitation of the two techniques that we have seen so far is that they deal with a single scale: the distance to the first nearest neighbor (or, more generally, to the <span class="math inline">\(k\)</span>-th nearest neighbor; these functions can be used for the 2nd, 3rd, and so on nearest neighbor!). Their single scale nature means that these functions can easily miss patterns when they are only evident at different scales.</p>
 <p>Consider for instance the following point pattern:</p>
 <div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="point-pattern-analysis-iv.html#cb320-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pp3.ppp)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-191-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
 <p>The events above initially appear to be clustered. However, at a different scale, a second pattern becomes evident. In fact, what we observe is a <em>regular</em> distribution of <em>clusters</em>. At a smaller scale, a single cluster may actually be a random distribution of events. In contrast, the following pattern appears to be a random distribution of regularly spaced events:</p>
 <div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="point-pattern-analysis-iv.html#cb321-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pp4.ppp)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-192-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
 <p>Whereas the last point pattern is of clusters of dispersed events that are themselves regularly spaced:</p>
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="point-pattern-analysis-iv.html#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pp5.ppp)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-193-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
 <p>Both <span class="math inline">\(\hat{G}(x)\)</span> or <span class="math inline">\(\hat{F}(x)\)</span> when applied to any of these patterns will strongly hint at clustering at the scale of the first nearest neighbor. Regrettably, they fail to detect patterns that might exist at other scales. For instance:</p>
 <div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="point-pattern-analysis-iv.html#cb323-1" aria-hidden="true" tabindex="-1"></a>f_pattern3 <span class="ot">&lt;-</span> <span class="fu">Fest</span>(pp3.ppp, <span class="at">correction =</span> <span class="st">&quot;none&quot;</span>)</span>
 <span id="cb323-2"><a href="point-pattern-analysis-iv.html#cb323-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(f_pattern3)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-194-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
 <div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="point-pattern-analysis-iv.html#cb324-1" aria-hidden="true" tabindex="-1"></a>g_pattern3 <span class="ot">&lt;-</span> <span class="fu">Gest</span>(pp3.ppp, <span class="at">correction =</span> <span class="st">&quot;none&quot;</span>)</span>
 <span id="cb324-2"><a href="point-pattern-analysis-iv.html#cb324-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g_pattern3)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
 <p>A different technique, called the <span class="math inline">\(\hat{K}\)</span>-function, is designed to detect patterns at multiple scales <span class="citation">(see <a href="#ref-Ripley1976" role="doc-biblioref">Ripley 1976</a>; and <a href="#ref-Haase1995spatial" role="doc-biblioref">Haase 1995</a>)</span>. The intuition behind the function is as follows.</p>
 <p>Imagine that you visit every on of the events in the point patter in sequence. Each time you visit an event you do the following: first, you create a circle with radius “x” centered on the event, and then you count the number of events that are within the circle. Then you increase “x” by some distance, and repeat the process. Once that you have created the last circle (which will be suitably large to capture patterns at that scale), you move and visit the next event in the pattern and repeat the exact same process. These counts of events at distances “x” are aggregated and normalized by the estimated intensity of the point pattern.</p>
 <p>More formally, this is (with <span class="math inline">\(A\)</span> as the area of the region):
@@ -760,20 +760,20 @@ When the empirical function is greater than the theoretical function, this would
 <p>The <span class="math inline">\(\hat{K}\)</span>-function is implemented in the package <code>spatstat</code> as <code>Kest()</code>.</p>
 <p>To see how this function works, plot <code>pp3.ppp</code> once more:</p>
 <div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="point-pattern-analysis-iv.html#cb325-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pp3.ppp)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
 <p>Next, use <code>Kest()</code> to calculate and plot the <span class="math inline">\(\hat{K}\)</span>-function:</p>
 <div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="point-pattern-analysis-iv.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `Kest()` function estimates nearest neighbors of a point on multiple scales, identifying more than just the distance to the first nearest neighbor. Here, we are applying the K-function to `pp3.ppp`. As before, ignore the correction; we will discuss this later </span></span>
 <span id="cb326-2"><a href="point-pattern-analysis-iv.html#cb326-2" aria-hidden="true" tabindex="-1"></a>k_pattern3 <span class="ot">&lt;-</span> <span class="fu">Kest</span>(pp3.ppp, <span class="at">correction =</span> <span class="st">&quot;none&quot;</span>)</span>
 <span id="cb326-3"><a href="point-pattern-analysis-iv.html#cb326-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(k_pattern3)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-197-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
 <p>As seen from the plot, the function is suggestive of clustering at smaller scales, but regularity at a larger scale.</p>
 <p>Try this now with the last pattern:</p>
 <div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="point-pattern-analysis-iv.html#cb327-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pp5.ppp)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-198-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
 <p>If you calculate and plot the <span class="math inline">\(\hat{K}\)</span>-function:</p>
 <div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="point-pattern-analysis-iv.html#cb328-1" aria-hidden="true" tabindex="-1"></a>k_pattern5 <span class="ot">&lt;-</span> <span class="fu">Kest</span>(pp5.ppp, <span class="at">correction =</span> <span class="st">&quot;none&quot;</span>)</span>
 <span id="cb328-2"><a href="point-pattern-analysis-iv.html#cb328-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(k_pattern5)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-199-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-114-1.png" width="672" /></p>
 <p>You will see that the plot correctly suggests dispersion at the very small scale, followed by clustering at an intermediate scale. There are indeed clusters of nine events surrounded by empty space, before other clusters of regular events are detected at the largest scale, following a regular pattern.</p>
 <p>Of the distance-based techniques that you have seen so far, <span class="math inline">\(\hat{G}(x)\)</span> and <span class="math inline">\(\hat{F}(x)\)</span> are often used as complements. The <span class="math inline">\(\hat{K}(x)\)</span> is useful when exploring multi-scale patterns.</p>
 <p>This concludes the chapter, and our coverage of distance-based techniques.</p>

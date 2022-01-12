@@ -24,14 +24,14 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2022-01-11" />
+<meta name="date" content="2022-01-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="activity-1-statistical-maps-i.html"/>
+<link rel="prev" href="activity-statistical-maps-i.html"/>
 <link rel="next" href="activity-2-statistical-maps-ii.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -243,13 +243,13 @@ div.csl-indent {
 <li class="chapter" data-level="3.7" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#some-simple-spatial-analysis"><i class="fa fa-check"></i><b>3.7</b> Some Simple Spatial Analysis</a></li>
 <li class="chapter" data-level="3.8" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#other-resources"><i class="fa fa-check"></i><b>3.8</b> Other Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html"><i class="fa fa-check"></i><b>4</b> Activity 1: Statistical Maps I</a>
+<li class="chapter" data-level="4" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html"><i class="fa fa-check"></i><b>4</b> Activity: Statistical Maps I</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#housekeeping-questions"><i class="fa fa-check"></i><b>4.1</b> Housekeeping Questions</a></li>
-<li class="chapter" data-level="4.2" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
-<li class="chapter" data-level="4.3" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#preliminaries-1"><i class="fa fa-check"></i><b>4.3</b> Preliminaries</a></li>
-<li class="chapter" data-level="4.4" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#creating-a-simple-thematic-map"><i class="fa fa-check"></i><b>4.4</b> Creating a simple thematic map</a></li>
-<li class="chapter" data-level="4.5" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#activity"><i class="fa fa-check"></i><b>4.5</b> Activity</a></li>
+<li class="chapter" data-level="4.1" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#housekeeping-questions"><i class="fa fa-check"></i><b>4.1</b> Housekeeping Questions</a></li>
+<li class="chapter" data-level="4.2" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="4.3" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#preliminaries-1"><i class="fa fa-check"></i><b>4.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="4.4" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#creating-a-simple-thematic-map"><i class="fa fa-check"></i><b>4.4</b> Creating a simple thematic map</a></li>
+<li class="chapter" data-level="4.5" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#activity"><i class="fa fa-check"></i><b>4.5</b> Activity</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html"><i class="fa fa-check"></i><b>5</b> Mapping in R: Continued</a>
 <ul>
@@ -603,7 +603,6 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="mapping-in-r-continued" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Mapping in R: Continued</h1>
-<p><em>NOTE</em>: You can download the source files for this book from <a href="https://github.com/paezha/Spatial-Statistics-Course">here</a>. The source files are in the format of R Notebooks. Notebooks are pretty neat, because the allow you execute code within the notebook, so that you can work interactively with the notes.</p>
 <p>In the preceding chapters, you were introduced to the following concepts:</p>
 <ol style="list-style-type: decimal">
 <li>Basic operations in <code>R</code>. These include arithmetic and logical operations, among others.</li>
@@ -613,11 +612,6 @@ div.csl-indent {
 <li>Creating simple maps in <code>R</code>.</li>
 </ol>
 <p>Please review the previous practices if you need a refresher on these concepts.</p>
-<p>If you wish to work interactively with this chapter you will need the following:</p>
-<ul>
-<li><p>An R markdown notebook version of this document (the source file).</p></li>
-<li><p>A package called <code>isdas</code>.</p></li>
-</ul>
 <div id="learning-objectives-4" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Learning Objectives</h2>
 <p>In this reading, you will learn:</p>
@@ -761,8 +755,9 @@ div.csl-indent {
 <h2><span class="header-section-number">5.7</span> Pipe Operator</h2>
 <p>A pipe operator is written this way: <code>%&gt;%</code>. Its objective is to pass forward the output of a function to a second function, so that they can be chained to create more complex instructions that are still relatively easy to read.</p>
 <p>For instance, instead of nesting the subsetting instructions in the <code>summary</code> function, you could do the subsetting first, and pass the results of that to the summary for further processing. This would look like this:</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="mapping-in-r-continued.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remember, the pipe operator `%&gt;%` passes the value of the left-hand side to the function on the right-hand side</span></span>
-<span id="cb133-2"><a href="mapping-in-r-continued.html#cb133-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(missing_df, Observed <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="mapping-in-r-continued.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remember, the pipe operator `%&gt;%` passes the value of the left-hand side </span></span>
+<span id="cb133-2"><a href="mapping-in-r-continued.html#cb133-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to the function on the right-hand side</span></span>
+<span id="cb133-3"><a href="mapping-in-r-continued.html#cb133-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(missing_df, Observed <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
 <pre><code>##        x               y              VAR1          VAR2          VAR3    
 ##  Min.   :0.130   Min.   :0.100   Min.   : NA   Min.   : NA   Min.   : NA  
 ##  1st Qu.:0.290   1st Qu.:0.320   1st Qu.: NA   1st Qu.: NA   1st Qu.: NA  
@@ -783,55 +778,105 @@ div.csl-indent {
 </div>
 <div id="more-on-visualization" class="section level2" number="5.8">
 <h2><span class="header-section-number">5.8</span> More on Visualization</h2>
-<p>Observations in the sample dataset are georeferenced, and so they can be plotted. Since they are based on false origins and are normalized, we cannot map them to the surface of the Earth. However, we can still visualize their spatial distribution. This can be done by using <code>ggplot2</code>. For instance, for <code>missing_df</code>:</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="mapping-in-r-continued.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `coord_fixed()` forces the plot to use a ratio of 1:1 for the units in the x- and y-axis; in this case, since the values we are mapping to those axes are coordinates, we wish to represent them using the same scale, i.e., one unit in x looks identical to one unit in y (as an experiment, repeat the plot without fixing the coordinates) </span></span>
-<span id="cb135-2"><a href="mapping-in-r-continued.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb135-3"><a href="mapping-in-r-continued.html#cb135-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
-<span id="cb135-4"><a href="mapping-in-r-continued.html#cb135-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p>Observations in the sample dataset are geo-referenced, and so they can be plotted. Since they are based on false origins and are normalized, we cannot map them to the surface of the Earth. However, we can still visualize their spatial distribution. This can be done by using <code>ggplot2</code>. For instance, for <code>missing_df</code>:</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="mapping-in-r-continued.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `coord_fixed()` forces the plot to use a ratio of 1:1 for the units </span></span>
+<span id="cb135-2"><a href="mapping-in-r-continued.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in the x- and y-axis; in this case, since the values we are mapping </span></span>
+<span id="cb135-3"><a href="mapping-in-r-continued.html#cb135-3" aria-hidden="true" tabindex="-1"></a><span class="co"># to those axes are coordinates, we wish to represent them using the </span></span>
+<span id="cb135-4"><a href="mapping-in-r-continued.html#cb135-4" aria-hidden="true" tabindex="-1"></a><span class="co"># same scale, i.e., one unit in x looks identical to one unit in y </span></span>
+<span id="cb135-5"><a href="mapping-in-r-continued.html#cb135-5" aria-hidden="true" tabindex="-1"></a><span class="co"># (as an experiment, repeat the plot without fixing the coordinates) </span></span>
+<span id="cb135-6"><a href="mapping-in-r-continued.html#cb135-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb135-7"><a href="mapping-in-r-continued.html#cb135-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, </span>
+<span id="cb135-8"><a href="mapping-in-r-continued.html#cb135-8" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb135-9"><a href="mapping-in-r-continued.html#cb135-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y), </span>
+<span id="cb135-10"><a href="mapping-in-r-continued.html#cb135-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">17</span>, </span>
+<span id="cb135-11"><a href="mapping-in-r-continued.html#cb135-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb135-12"><a href="mapping-in-r-continued.html#cb135-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/ch05-plot-data-1.png" width="672" /></p>
 <p>The above simply plots the coordinates, so that we can see the spatial distribution of the observations. (Notice the use of <code>coord_fixed</code> to maintain the aspect ratio of the plot to 1, i.e. the relationship between width and height). You have control of the <code>shape</code> of the markers, as well as their <code>size</code>. You can consult the shapes available <a href="http://sape.inf.usi.ch/quick-reference/ggplot2/shape">here</a>. Experiment with different shapes and sizes if you wish.</p>
 <p>The dataframe <code>missing_df</code> includes more attributes that could be used in the plot. For instance, if you wished to create a thematic map showing <code>VAR1</code> you would do the following:</p>
 <div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="mapping-in-r-continued.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb136-2"><a href="mapping-in-r-continued.html#cb136-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> VAR1), <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
-<span id="cb136-3"><a href="mapping-in-r-continued.html#cb136-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<span id="cb136-2"><a href="mapping-in-r-continued.html#cb136-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df,</span>
+<span id="cb136-3"><a href="mapping-in-r-continued.html#cb136-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb136-4"><a href="mapping-in-r-continued.html#cb136-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y,</span>
+<span id="cb136-5"><a href="mapping-in-r-continued.html#cb136-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> VAR1), </span>
+<span id="cb136-6"><a href="mapping-in-r-continued.html#cb136-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">17</span>, </span>
+<span id="cb136-7"><a href="mapping-in-r-continued.html#cb136-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb136-8"><a href="mapping-in-r-continued.html#cb136-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/ch05-plot-data-color-1.png" width="672" /></p>
 <p>The <code>shape</code> and <code>size</code> assignments happen outside of <code>aes</code>, and so are applied equally to all observations. In some cases, you might want to let other aesthetic attributes vary with the values of a variable in the dataframe. For instance, if we let the sizes change with the value of the variable:</p>
 <div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="mapping-in-r-continued.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb137-2"><a href="mapping-in-r-continued.html#cb137-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> VAR1, <span class="at">size =</span> VAR1), <span class="at">shape =</span> <span class="dv">17</span>) <span class="sc">+</span> </span>
-<span id="cb137-3"><a href="mapping-in-r-continued.html#cb137-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
+<span id="cb137-2"><a href="mapping-in-r-continued.html#cb137-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, </span>
+<span id="cb137-3"><a href="mapping-in-r-continued.html#cb137-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb137-4"><a href="mapping-in-r-continued.html#cb137-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y, </span>
+<span id="cb137-5"><a href="mapping-in-r-continued.html#cb137-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> VAR1, </span>
+<span id="cb137-6"><a href="mapping-in-r-continued.html#cb137-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">size =</span> VAR1), </span>
+<span id="cb137-7"><a href="mapping-in-r-continued.html#cb137-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">17</span>) <span class="sc">+</span> </span>
+<span id="cb137-8"><a href="mapping-in-r-continued.html#cb137-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
 <pre><code>## Warning: Removed 5 rows containing missing values (geom_point).</code></pre>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/ch05-plot-data-color-size-1.png" width="672" /></p>
 <p>Note how there is a warning, saying that five observations were removed because data were missing! These are likely the five locations where <code>Observed == FALSE</code>!</p>
 <p>To make it more clear which observations are these, you could set the <code>shape</code> to vary according to the value of <code>Observed</code>, as follows:</p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="mapping-in-r-continued.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb139-2"><a href="mapping-in-r-continued.html#cb139-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> VAR1, <span class="at">shape =</span> Observed), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb139-3"><a href="mapping-in-r-continued.html#cb139-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-43-1.png" width="672" />
+<span id="cb139-2"><a href="mapping-in-r-continued.html#cb139-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df,</span>
+<span id="cb139-3"><a href="mapping-in-r-continued.html#cb139-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb139-4"><a href="mapping-in-r-continued.html#cb139-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y, </span>
+<span id="cb139-5"><a href="mapping-in-r-continued.html#cb139-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> VAR1, </span>
+<span id="cb139-6"><a href="mapping-in-r-continued.html#cb139-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">shape =</span> Observed), </span>
+<span id="cb139-7"><a href="mapping-in-r-continued.html#cb139-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb139-8"><a href="mapping-in-r-continued.html#cb139-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/ch05-plot-data-color-shape-1.png" width="672" />
 Now it is easy to see the locations of the five observations that were <code>Observed == FALSE</code>!, which are labeled with gray circles.</p>
 <p>You can change the coloring scheme by means of <code>scale_color_distiller</code> (you can can check the different color palettes available <a href="http://ggplot2.tidyverse.org/reference/scale_brewer.html">here</a>):</p>
 <div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="mapping-in-r-continued.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb140-2"><a href="mapping-in-r-continued.html#cb140-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> VAR1, <span class="at">shape =</span> Observed), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb140-3"><a href="mapping-in-r-continued.html#cb140-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
-<span id="cb140-4"><a href="mapping-in-r-continued.html#cb140-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<span id="cb140-2"><a href="mapping-in-r-continued.html#cb140-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, </span>
+<span id="cb140-3"><a href="mapping-in-r-continued.html#cb140-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb140-4"><a href="mapping-in-r-continued.html#cb140-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y, </span>
+<span id="cb140-5"><a href="mapping-in-r-continued.html#cb140-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> VAR1,</span>
+<span id="cb140-6"><a href="mapping-in-r-continued.html#cb140-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">shape =</span> Observed),</span>
+<span id="cb140-7"><a href="mapping-in-r-continued.html#cb140-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb140-8"><a href="mapping-in-r-continued.html#cb140-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
+<span id="cb140-9"><a href="mapping-in-r-continued.html#cb140-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/ch05-plot-data-color-palette-1.png" width="672" /></p>
 <p>You will notice maybe that with this coloring scheme some observations become very light and difficult to distinguish from the background. This can be solved in many different ways (for instance, by changing the color of the background!). A simple fix is to add a layer with hollow symbols, as follows:</p>
 <div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="mapping-in-r-continued.html#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb141-2"><a href="mapping-in-r-continued.html#cb141-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> VAR1), <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb141-3"><a href="mapping-in-r-continued.html#cb141-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb141-4"><a href="mapping-in-r-continued.html#cb141-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
-<span id="cb141-5"><a href="mapping-in-r-continued.html#cb141-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<span id="cb141-2"><a href="mapping-in-r-continued.html#cb141-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, </span>
+<span id="cb141-3"><a href="mapping-in-r-continued.html#cb141-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb141-4"><a href="mapping-in-r-continued.html#cb141-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y, </span>
+<span id="cb141-5"><a href="mapping-in-r-continued.html#cb141-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> VAR1), </span>
+<span id="cb141-6"><a href="mapping-in-r-continued.html#cb141-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">17</span>, </span>
+<span id="cb141-7"><a href="mapping-in-r-continued.html#cb141-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb141-8"><a href="mapping-in-r-continued.html#cb141-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> missing_df, </span>
+<span id="cb141-9"><a href="mapping-in-r-continued.html#cb141-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb141-10"><a href="mapping-in-r-continued.html#cb141-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y), </span>
+<span id="cb141-11"><a href="mapping-in-r-continued.html#cb141-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">2</span>, </span>
+<span id="cb141-12"><a href="mapping-in-r-continued.html#cb141-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb141-13"><a href="mapping-in-r-continued.html#cb141-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
+<span id="cb141-14"><a href="mapping-in-r-continued.html#cb141-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/ch05-plot-data-improved-1.png" width="672" /></p>
 <p>Finally, you could try subsetting the data to have greater control of the appearance of your plot, for instance:</p>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="mapping-in-r-continued.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb142-2"><a href="mapping-in-r-continued.html#cb142-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">subset</span>(missing_df, Observed <span class="sc">==</span> <span class="cn">TRUE</span>),</span>
-<span id="cb142-3"><a href="mapping-in-r-continued.html#cb142-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y=</span> y, <span class="at">color =</span> VAR1), <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb142-4"><a href="mapping-in-r-continued.html#cb142-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">subset</span>(missing_df, Observed <span class="sc">==</span> <span class="cn">TRUE</span>),</span>
-<span id="cb142-5"><a href="mapping-in-r-continued.html#cb142-5" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y=</span> y), <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb142-6"><a href="mapping-in-r-continued.html#cb142-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">subset</span>(missing_df, Observed <span class="sc">==</span> <span class="cn">FALSE</span>),</span>
-<span id="cb142-7"><a href="mapping-in-r-continued.html#cb142-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y=</span> y), <span class="at">shape =</span> <span class="dv">18</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb142-8"><a href="mapping-in-r-continued.html#cb142-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
-<span id="cb142-9"><a href="mapping-in-r-continued.html#cb142-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<span id="cb142-2"><a href="mapping-in-r-continued.html#cb142-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">subset</span>(missing_df, </span>
+<span id="cb142-3"><a href="mapping-in-r-continued.html#cb142-3" aria-hidden="true" tabindex="-1"></a>                           Observed <span class="sc">==</span> <span class="cn">TRUE</span>),</span>
+<span id="cb142-4"><a href="mapping-in-r-continued.html#cb142-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb142-5"><a href="mapping-in-r-continued.html#cb142-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y=</span> y, </span>
+<span id="cb142-6"><a href="mapping-in-r-continued.html#cb142-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> VAR1), </span>
+<span id="cb142-7"><a href="mapping-in-r-continued.html#cb142-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">17</span>, </span>
+<span id="cb142-8"><a href="mapping-in-r-continued.html#cb142-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb142-9"><a href="mapping-in-r-continued.html#cb142-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">subset</span>(missing_df, </span>
+<span id="cb142-10"><a href="mapping-in-r-continued.html#cb142-10" aria-hidden="true" tabindex="-1"></a>                           Observed <span class="sc">==</span> <span class="cn">TRUE</span>),</span>
+<span id="cb142-11"><a href="mapping-in-r-continued.html#cb142-11" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb142-12"><a href="mapping-in-r-continued.html#cb142-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y=</span> y), </span>
+<span id="cb142-13"><a href="mapping-in-r-continued.html#cb142-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">2</span>, </span>
+<span id="cb142-14"><a href="mapping-in-r-continued.html#cb142-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb142-15"><a href="mapping-in-r-continued.html#cb142-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">subset</span>(missing_df, </span>
+<span id="cb142-16"><a href="mapping-in-r-continued.html#cb142-16" aria-hidden="true" tabindex="-1"></a>                           Observed <span class="sc">==</span> <span class="cn">FALSE</span>),</span>
+<span id="cb142-17"><a href="mapping-in-r-continued.html#cb142-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb142-18"><a href="mapping-in-r-continued.html#cb142-18" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y=</span> y), </span>
+<span id="cb142-19"><a href="mapping-in-r-continued.html#cb142-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">18</span>, </span>
+<span id="cb142-20"><a href="mapping-in-r-continued.html#cb142-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb142-21"><a href="mapping-in-r-continued.html#cb142-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
+<span id="cb142-22"><a href="mapping-in-r-continued.html#cb142-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/ch05-plot-data-subsetting-1.png" width="672" /></p>
 <p>These are examples of creating and improving the aspect of simple symbol maps, which are often used to represent observations in space.</p>
 
 </div>
@@ -853,7 +898,7 @@ O’Sullivan, David, and David Unwin. 2010. <em>Geographic Information Analysis<
           </div>
         </div>
       </div>
-<a href="activity-1-statistical-maps-i.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="activity-statistical-maps-i.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="activity-2-statistical-maps-ii.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

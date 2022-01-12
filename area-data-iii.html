@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2022-01-11" />
+<meta name="date" content="2022-01-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -243,13 +243,13 @@ div.csl-indent {
 <li class="chapter" data-level="3.7" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#some-simple-spatial-analysis"><i class="fa fa-check"></i><b>3.7</b> Some Simple Spatial Analysis</a></li>
 <li class="chapter" data-level="3.8" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#other-resources"><i class="fa fa-check"></i><b>3.8</b> Other Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html"><i class="fa fa-check"></i><b>4</b> Activity 1: Statistical Maps I</a>
+<li class="chapter" data-level="4" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html"><i class="fa fa-check"></i><b>4</b> Activity: Statistical Maps I</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#housekeeping-questions"><i class="fa fa-check"></i><b>4.1</b> Housekeeping Questions</a></li>
-<li class="chapter" data-level="4.2" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
-<li class="chapter" data-level="4.3" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#preliminaries-1"><i class="fa fa-check"></i><b>4.3</b> Preliminaries</a></li>
-<li class="chapter" data-level="4.4" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#creating-a-simple-thematic-map"><i class="fa fa-check"></i><b>4.4</b> Creating a simple thematic map</a></li>
-<li class="chapter" data-level="4.5" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#activity"><i class="fa fa-check"></i><b>4.5</b> Activity</a></li>
+<li class="chapter" data-level="4.1" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#housekeeping-questions"><i class="fa fa-check"></i><b>4.1</b> Housekeeping Questions</a></li>
+<li class="chapter" data-level="4.2" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="4.3" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#preliminaries-1"><i class="fa fa-check"></i><b>4.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="4.4" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#creating-a-simple-thematic-map"><i class="fa fa-check"></i><b>4.4</b> Creating a simple thematic map</a></li>
+<li class="chapter" data-level="4.5" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#activity"><i class="fa fa-check"></i><b>4.5</b> Activity</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html"><i class="fa fa-check"></i><b>5</b> Mapping in R: Continued</a>
 <ul>
@@ -787,7 +787,7 @@ div.csl-indent {
 <span id="cb478-6"><a href="area-data-iii.html#cb478-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Pop Den SMA&quot;</span>) <span class="sc">+</span> <span class="co"># Change the label of the legend</span></span>
 <span id="cb478-7"><a href="area-data-iii.html#cb478-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(), </span>
 <span id="cb478-8"><a href="area-data-iii.html#cb478-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>()) <span class="co"># Remove the axis labels to avoid cluttering the plots</span></span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-292-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-207-1.png" width="672" /></p>
 <p>The empirical variable is the map in the upper left corner (labeled <code>POP_DENSITY.sma</code>). The remaining 8 maps are simulated variables. Would you say the map of the empirical variable is fairly different from the map of the simulated variables? What are the key differences?</p>
 <p>An additional advantage of the spatial moving average is its use in the development of scatterplots. The information below provides further examples of exploring spatial moving averages with scatterplots.</p>
 </div>
@@ -816,7 +816,7 @@ div.csl-indent {
 <span id="cb480-4"><a href="area-data-iii.html#cb480-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
 <span id="cb480-5"><a href="area-data-iii.html#cb480-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
 <span id="cb480-6"><a href="area-data-iii.html#cb480-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> VAR, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-294-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-209-1.png" width="672" /></p>
 <p>What difference do you see between the empirical and simulated variables in these scatterplots?</p>
 <p>It is possible to fit a line to the scatterplots (i.e., adding a regression line). This makes it easier to appreciate the difference between the empirical and simulated variables. This line would take the following form, with <span class="math inline">\(\beta\)</span> as the slope of the line, and <span class="math inline">\(\alpha\)</span> the intercept:
 <span class="math display">\[
@@ -831,7 +831,7 @@ div.csl-indent {
 <span id="cb481-6"><a href="area-data-iii.html#cb481-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
 <span id="cb481-7"><a href="area-data-iii.html#cb481-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> VAR, <span class="at">ncol =</span> <span class="dv">3</span>) </span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-295-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-210-1.png" width="672" /></p>
 <p>You will notice that the slope of the line tends to be flat in the simulated variables; this is to be expected, since these variables are spatially random: <em>the values of the variable at <span class="math inline">\(i\)</span> are independent of the values of their local means!</em>. In other words, the probability that the map is random is pretty high (in fact, since these 8 of these maps are null landscapes, we know for a fact that they are random).</p>
 <p>The empirical variable, on the other hand, has a slope that is much closer to the 45 degree line. This indicates that the values of the variable at <span class="math inline">\(i\)</span> are not independent of their local means: in other words, <span class="math inline">\(x_i\)</span> is correlated with <span class="math inline">\(\overline{x_i}\)</span>, and the probability of a non-random pattern is high. This phenomenon is called <em>spatial autocorrelation</em>, and it is a fundamental way to describe spatial data. We will discuss this more extensively next.</p>
 </div>
@@ -869,7 +869,7 @@ z_i = x_i - \bar{x}
 <span id="cb484-19"><a href="area-data-iii.html#cb484-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Use patchwork to place the two plots in a single figure </span></span>
 <span id="cb484-20"><a href="area-data-iii.html#cb484-20" aria-hidden="true" tabindex="-1"></a>sc1 <span class="sc">+</span> sc2</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-297-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-212-1.png" width="672" /></p>
 <p>How is it useful to displace the origin of the axes to the mean values of <span class="math inline">\(x\)</span> and its spatial moving average? To explain this, notice that the values on the top scatterplot are all positive. The values on the bottom scatterplot are positive or negative, depending if they are <em>above</em> or <em>below</em> the mean. This sign is interesting. Notice what happens when the variable <span class="math inline">\(z_i\)</span> multiplies its spatial moving average:
 <span class="math display">\[
 z_i\bar{z}_i = z_i\sum_{j=1}^n{w_{ij}^{st}z_j}
@@ -904,7 +904,7 @@ z_i\bar{z}_i = z_i\sum_{j=1}^n{w_{ij}^{st}z_j}
 <span id="cb486-9"><a href="area-data-iii.html#cb486-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">label =</span> <span class="st">&quot;Q2: Negative&quot;</span>, <span class="at">x=</span> <span class="sc">-</span><span class="dv">2000</span>, <span class="at">y =</span> <span class="dv">2500</span>) <span class="sc">+</span></span>
 <span id="cb486-10"><a href="area-data-iii.html#cb486-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">label =</span> <span class="st">&quot;Q3: Positive&quot;</span>, <span class="at">x=</span> <span class="sc">-</span><span class="dv">2000</span>, <span class="at">y =</span> <span class="sc">-</span><span class="dv">2500</span>) <span class="sc">+</span></span>
 <span id="cb486-11"><a href="area-data-iii.html#cb486-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-298-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-213-1.png" width="672" /></p>
 <p>We can take the products of <span class="math inline">\(z_i\)</span> by <span class="math inline">\(\bar{z}_i\)</span> for all <span class="math inline">\(i\)</span> and add them:
 <span class="math display">\[
 \sum_{i=1}^n{z_i\overline{z_i}} = \sum_{i=1}^n{z_i\sum_{j=1}^n{w_{ij}^{st}z_j}}
@@ -937,7 +937,7 @@ I = \frac{\sum_{i=1}^n{z_i\sum_{j=1}^n{w_{ij}^{st}z_j}}}{\sum_{i=1}^{n}{z_i^2}}
 <p>You can verify that this matches the value calculated above. The kind of scatterplots that we used previously are called <em>Moran’s scatterplots</em>, and they can also be created easily by means of the <code>moran.plot()</code> function of the <code>spdep</code> package:</p>
 <div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="area-data-iii.html#cb491-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirming the results from the Moran coefficient above. We use &quot;moran.plot&quot; to illustrate the SMA of population density by census tract in Hamilton. </span></span>
 <span id="cb491-2"><a href="area-data-iii.html#cb491-2" aria-hidden="true" tabindex="-1"></a>mp <span class="ot">&lt;-</span> <span class="fu">moran.plot</span>(Hamilton_CT<span class="sc">$</span>POP_DENSITY, Hamilton_CT.w)</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-301-1.png" width="672" /></p>
+<p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-216-1.png" width="672" /></p>
 </div>
 <div id="hypothesis-testing-for-spatial-autocorrelation" class="section level2" number="23.9">
 <h2><span class="header-section-number">23.9</span> Hypothesis Testing for Spatial Autocorrelation</h2>

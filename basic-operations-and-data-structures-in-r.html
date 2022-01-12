@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2022-01-11" />
+<meta name="date" content="2022-01-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -243,13 +243,13 @@ div.csl-indent {
 <li class="chapter" data-level="3.7" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#some-simple-spatial-analysis"><i class="fa fa-check"></i><b>3.7</b> Some Simple Spatial Analysis</a></li>
 <li class="chapter" data-level="3.8" data-path="introduction-to-mapping-in-r.html"><a href="introduction-to-mapping-in-r.html#other-resources"><i class="fa fa-check"></i><b>3.8</b> Other Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html"><i class="fa fa-check"></i><b>4</b> Activity 1: Statistical Maps I</a>
+<li class="chapter" data-level="4" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html"><i class="fa fa-check"></i><b>4</b> Activity: Statistical Maps I</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#housekeeping-questions"><i class="fa fa-check"></i><b>4.1</b> Housekeeping Questions</a></li>
-<li class="chapter" data-level="4.2" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
-<li class="chapter" data-level="4.3" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#preliminaries-1"><i class="fa fa-check"></i><b>4.3</b> Preliminaries</a></li>
-<li class="chapter" data-level="4.4" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#creating-a-simple-thematic-map"><i class="fa fa-check"></i><b>4.4</b> Creating a simple thematic map</a></li>
-<li class="chapter" data-level="4.5" data-path="activity-1-statistical-maps-i.html"><a href="activity-1-statistical-maps-i.html#activity"><i class="fa fa-check"></i><b>4.5</b> Activity</a></li>
+<li class="chapter" data-level="4.1" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#housekeeping-questions"><i class="fa fa-check"></i><b>4.1</b> Housekeeping Questions</a></li>
+<li class="chapter" data-level="4.2" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#learning-objectives-3"><i class="fa fa-check"></i><b>4.2</b> Learning Objectives</a></li>
+<li class="chapter" data-level="4.3" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#preliminaries-1"><i class="fa fa-check"></i><b>4.3</b> Preliminaries</a></li>
+<li class="chapter" data-level="4.4" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#creating-a-simple-thematic-map"><i class="fa fa-check"></i><b>4.4</b> Creating a simple thematic map</a></li>
+<li class="chapter" data-level="4.5" data-path="activity-statistical-maps-i.html"><a href="activity-statistical-maps-i.html#activity"><i class="fa fa-check"></i><b>4.5</b> Activity</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="mapping-in-r-continued.html"><a href="mapping-in-r-continued.html"><i class="fa fa-check"></i><b>5</b> Mapping in R: Continued</a>
 <ul>
@@ -603,13 +603,11 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="basic-operations-and-data-structures-in-r" class="section level1" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Basic Operations and Data Structures in <code>R</code></h1>
-<p><em>NOTE</em>: You can download the source files for this book from <a href="https://github.com/paezha/Spatial-Statistics-Course">here</a>. The source files are in the format of R Notebooks. Notebooks are pretty neat, because the allow you execute code within the notebook, so that you can work interactively with the notes.</p>
 <p>The preceding chapter showed you how to install <code>R</code> and RStudio, and explained some key concepts, such as packages as fundamental units of reproducible code, and the concept of your library (where the packages that you install are stored).</p>
 <p>Now that you have installed <code>R</code> and RStudio we can begin with an overview of basic operations and data structures in this computing language. Please note that this document you are reading, called an <em><code>R</code> Notebook</em>, is an example of what is called <a href="https://en.wikipedia.org/wiki/Literate_programming"><em>literate programming</em></a>, a style of document that uses code to illustrate a discussion, as opposed to the traditional programming style that uses natural language to discuss/document the code. By focusing on natural language as opposed to computer-speak, literate programming flips around the usual manner of technical writing to make documents more intuitive and accessible.</p>
-<p>Whenever you see a chunk of code in an <code>R</code> Notebook, you can run it (by clicking the ‘play’ icon on the top right corner) to see the results. Try it!</p>
+<p>Whenever you see a chunk of code in an <code>R</code> Notebook, you can run it (by clicking the ‘play’ icon on the top right corner) to see the results. Try it! You can also copy and paste to your console if you are reading the web version of the book.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="basic-operations-and-data-structures-in-r.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Hello, Geography 4GA3&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Hello, Geography 4GA3&quot;</code></pre>
-<p>If, instead of the <code>R</code> Notebook, you are reading this chapter as a WebBook or in print, you can type or copy and paste the instructions on your console. Try it!</p>
 <p>The chunk of code above instructed <code>R</code> (and through <code>R</code> the computer) to <code>print</code> (or display on the screen) some text.</p>
 <div id="learning-objectives-1" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Learning Objectives</h2>
@@ -731,8 +729,10 @@ div.csl-indent {
 <h2><span class="header-section-number">2.6</span> Indexing and Data Transformations</h2>
 <p>Data frames store information that is related in a compact way.</p>
 <p>To perform operations effectively, it is useful to understand the way <code>R</code> locates information in a data frame. As noted before, each grid cell has an address, or in other words an index, that can be referenced in several convenient ways. For instance, assume that you wish to reference the first value of the data frame, that is, row 1 of column <code>Name</code>. To do this, you would use the following instruction:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="basic-operations-and-data-structures-in-r.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To index elements in a data frame we use square brackets `[]` the first number in the square bracket is the row, and the second number (separated by a comma) is the column </span></span>
-<span id="cb52-2"><a href="basic-operations-and-data-structures-in-r.html#cb52-2" aria-hidden="true" tabindex="-1"></a>Cities[<span class="dv">1</span>,<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="basic-operations-and-data-structures-in-r.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To index elements in a data frame we use square brackets `[]` </span></span>
+<span id="cb52-2"><a href="basic-operations-and-data-structures-in-r.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The first number in the square bracket is the row, and the second number </span></span>
+<span id="cb52-3"><a href="basic-operations-and-data-structures-in-r.html#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># (separated by a comma) is the column </span></span>
+<span id="cb52-4"><a href="basic-operations-and-data-structures-in-r.html#cb52-4" aria-hidden="true" tabindex="-1"></a>Cities[<span class="dv">1</span>,<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] &quot;Hamilton&quot;</code></pre>
 <p>This will recall the element in the first row and first column of <code>Cities</code>. It also tells you what are the levels of this variable.</p>
 <p>As an alternative, you could type:</p>
@@ -741,24 +741,31 @@ div.csl-indent {
 <p>As you see, this has the same effect. The string sign <code>$</code> is used to reference columns in a data frame. Therefore, <code>R</code> will call the first element of <code>Name</code> in data frame <code>Cities</code>.</p>
 <p><code>Cities[1,2]</code> is identical to <code>Cities$Name[2]</code>. Try changing the code in the chunk and executing. If you type <code>Cities$Name</code>, <code>R</code> will recall the full column.</p>
 <p>Indexing is useful to conduct operations. Suppose for instance, that you wished to calculate the total population of two cities, say Hamilton and Waterloo. You can execute the following instructions:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="basic-operations-and-data-structures-in-r.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The string sign `$` is used to make reference to a column in the data frame. The square brackets index the row in the column.</span></span>
-<span id="cb56-2"><a href="basic-operations-and-data-structures-in-r.html#cb56-2" aria-hidden="true" tabindex="-1"></a>Cities<span class="sc">$</span>Population[<span class="dv">1</span>] <span class="sc">+</span> Cities<span class="sc">$</span>Population[<span class="dv">2</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="basic-operations-and-data-structures-in-r.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The string sign `$` is used to make reference to a column in the data frame. </span></span>
+<span id="cb56-2"><a href="basic-operations-and-data-structures-in-r.html#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The square brackets index the row in the column.</span></span>
+<span id="cb56-3"><a href="basic-operations-and-data-structures-in-r.html#cb56-3" aria-hidden="true" tabindex="-1"></a>Cities<span class="sc">$</span>Population[<span class="dv">1</span>] <span class="sc">+</span> Cities<span class="sc">$</span>Population[<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## [1] 770904</code></pre>
 <p>(More involved indexing is also possible, for example, if we use logical operators. Do not worry too much about the details at this point, just verify that the results are identical)</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="basic-operations-and-data-structures-in-r.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The indexing now is a logical statement. The double equal sign `==` is used to make logical comparisons. `R` will find the rows for which `Cities$Name==&#39;Hamilton&#39;` in the first element of the sum, and the rows for which `Cities$Name==&#39;Waterloo&#39;` is true in the second element of the sum.</span></span>
-<span id="cb58-2"><a href="basic-operations-and-data-structures-in-r.html#cb58-2" aria-hidden="true" tabindex="-1"></a>Cities<span class="sc">$</span>Population[Cities<span class="sc">$</span>Name<span class="sc">==</span><span class="st">&#39;Hamilton&#39;</span>] <span class="sc">+</span> Cities<span class="sc">$</span>Population[Cities<span class="sc">$</span>Name<span class="sc">==</span><span class="st">&#39;Waterloo&#39;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="basic-operations-and-data-structures-in-r.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The indexing now is a logical statement. The double equal sign `==` is used </span></span>
+<span id="cb58-2"><a href="basic-operations-and-data-structures-in-r.html#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to make logical comparisons. `R` will find the rows for which `Cities$Name==&#39;Hamilton&#39;` </span></span>
+<span id="cb58-3"><a href="basic-operations-and-data-structures-in-r.html#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="co"># in the first element of the sum, and the rows for which `Cities$Name==&#39;Waterloo&#39;` </span></span>
+<span id="cb58-4"><a href="basic-operations-and-data-structures-in-r.html#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="co"># is true in the second element of the sum.</span></span>
+<span id="cb58-5"><a href="basic-operations-and-data-structures-in-r.html#cb58-5" aria-hidden="true" tabindex="-1"></a>Cities<span class="sc">$</span>Population[Cities<span class="sc">$</span>Name<span class="sc">==</span><span class="st">&#39;Hamilton&#39;</span>] <span class="sc">+</span> Cities<span class="sc">$</span>Population[Cities<span class="sc">$</span>Name<span class="sc">==</span><span class="st">&#39;Waterloo&#39;</span>]</span></code></pre></div>
 <pre><code>## [1] 770904</code></pre>
 <p>Suppose that you wanted to calculate the total population of the cities in your data frame. To do this, you would use the function <code>sum()</code>:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="basic-operations-and-data-structures-in-r.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `sum()` is a function to add all elements in a numerical vector - which could be a column in a data frame</span></span>
-<span id="cb60-2"><a href="basic-operations-and-data-structures-in-r.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(Cities<span class="sc">$</span>Population)</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="basic-operations-and-data-structures-in-r.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `sum()` is a function to add all elements in a numerical vector.</span></span>
+<span id="cb60-2"><a href="basic-operations-and-data-structures-in-r.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This could be a column in a data frame</span></span>
+<span id="cb60-3"><a href="basic-operations-and-data-structures-in-r.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(Cities<span class="sc">$</span>Population)</span></code></pre></div>
 <pre><code>## [1] 3502475</code></pre>
 <p>You have already seen how it allows you to store in memory the results of some instruction, by means of an assignment <code>&lt;-</code>. You can also perform many other useful operations. For instance, calculate the maximum value for a set of values:</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="basic-operations-and-data-structures-in-r.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `max()` finds the maximum value in a numerical vector</span></span>
 <span id="cb62-2"><a href="basic-operations-and-data-structures-in-r.html#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(Cities<span class="sc">$</span>Population)</span></code></pre></div>
 <pre><code>## [1] 2731571</code></pre>
 <p>And, if you wanted to find which city is the one with the largest population, you would use a logical statement as an index:</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="basic-operations-and-data-structures-in-r.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `R` will find all rows for which the statement `Cities$Population==max(Cities$Population)`, that is, all the rows with a population identical to the maximum population!  </span></span>
-<span id="cb64-2"><a href="basic-operations-and-data-structures-in-r.html#cb64-2" aria-hidden="true" tabindex="-1"></a>Cities<span class="sc">$</span>Name[Cities<span class="sc">$</span>Population<span class="sc">==</span><span class="fu">max</span>(Cities<span class="sc">$</span>Population)]</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="basic-operations-and-data-structures-in-r.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `R` will find all rows for which the statement </span></span>
+<span id="cb64-2"><a href="basic-operations-and-data-structures-in-r.html#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="co"># `Cities$Population==max(Cities$Population)`, that is, </span></span>
+<span id="cb64-3"><a href="basic-operations-and-data-structures-in-r.html#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co"># all the rows with a population identical to the maximum population!  </span></span>
+<span id="cb64-4"><a href="basic-operations-and-data-structures-in-r.html#cb64-4" aria-hidden="true" tabindex="-1"></a>Cities<span class="sc">$</span>Name[Cities<span class="sc">$</span>Population<span class="sc">==</span><span class="fu">max</span>(Cities<span class="sc">$</span>Population)]</span></code></pre></div>
 <pre><code>## [1] &quot;Toronto&quot;</code></pre>
 <p>As you see, Toronto is the largest city (by population) in this dataset. Using indexing in imaginative ways provides a way to do fairly sophisticated data analysis.</p>
 <p>Likewise, the function for finding the minimum value for a set of values is <code>min()</code>:</p>
@@ -771,15 +778,20 @@ div.csl-indent {
 <div id="visualization" class="section level2" number="2.7">
 <h2><span class="header-section-number">2.7</span> Visualization</h2>
 <p>The data frame, in essence a table, informative as it is, is no usually the best way to learn from the data. Transformations (or <em>descriptive statistics</em> as discussed above) are helpful to understand important properties of a dataset. In addition, visualization is often a valuable complement to data analysis. Say, we might be interested in finding which city has the largest population and which city has the smallest population in a dataset. We could achieve this by using similar instructions as before, for example:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="basic-operations-and-data-structures-in-r.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `paste()` is similar to `print()`, except that it converts everything to characters before printing. We use this function because the contents of `Name` in the data frame `Cities` are not characters, but levels of a factor`</span></span>
-<span id="cb68-2"><a href="basic-operations-and-data-structures-in-r.html#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&#39;The city with the largest population is&#39;</span>,Cities<span class="sc">$</span>Name[Cities<span class="sc">$</span>Population<span class="sc">==</span><span class="fu">max</span>(Cities<span class="sc">$</span>Population)])</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="basic-operations-and-data-structures-in-r.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `paste()` is similar to `print()`, except that it converts everything #</span></span>
+<span id="cb68-2"><a href="basic-operations-and-data-structures-in-r.html#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to characters before printing. We use this function because the contents </span></span>
+<span id="cb68-3"><a href="basic-operations-and-data-structures-in-r.html#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="co"># of `Name` in the data frame `Cities` are not characters, but levels of a factor`</span></span>
+<span id="cb68-4"><a href="basic-operations-and-data-structures-in-r.html#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&#39;The city with the largest population is&#39;</span>,</span>
+<span id="cb68-5"><a href="basic-operations-and-data-structures-in-r.html#cb68-5" aria-hidden="true" tabindex="-1"></a>      Cities<span class="sc">$</span>Name[Cities<span class="sc">$</span>Population<span class="sc">==</span><span class="fu">max</span>(Cities<span class="sc">$</span>Population)])</span></code></pre></div>
 <pre><code>## [1] &quot;The city with the largest population is Toronto&quot;</code></pre>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="basic-operations-and-data-structures-in-r.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&#39;The city with the smallest population is&#39;</span>, Cities<span class="sc">$</span>Name[Cities<span class="sc">$</span>Population<span class="sc">==</span><span class="fu">min</span>(Cities<span class="sc">$</span>Population)])</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="basic-operations-and-data-structures-in-r.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&#39;The city with the smallest population is&#39;</span>, </span>
+<span id="cb70-2"><a href="basic-operations-and-data-structures-in-r.html#cb70-2" aria-hidden="true" tabindex="-1"></a>      Cities<span class="sc">$</span>Name[Cities<span class="sc">$</span>Population<span class="sc">==</span><span class="fu">min</span>(Cities<span class="sc">$</span>Population)])</span></code></pre></div>
 <pre><code>## [1] &quot;The city with the smallest population is Waterloo&quot;</code></pre>
 <p>Another way, perhaps more convenient of understanding these data is by visualizing them, using for instance a bar chart.</p>
 <p>We will proceed to create a bar chart, using a package called <code>ggplot2</code>. This package implements a grammar of graphics, and is a very flexible way of creating plots in R. Since <code>ggplot2</code> is a package, we first must ensure that it is installed. You can install it using the command <code>install</code> as follows:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="basic-operations-and-data-structures-in-r.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Once you have installed a package, it does not need to be installed again! It already is in your library and you only need to load it with `library()`</span></span>
-<span id="cb72-2"><a href="basic-operations-and-data-structures-in-r.html#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="basic-operations-and-data-structures-in-r.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Once you have installed a package, it does not need to be installed again! </span></span>
+<span id="cb72-2"><a href="basic-operations-and-data-structures-in-r.html#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="co"># It already is in your library and you only need to load it with `library()`</span></span>
+<span id="cb72-3"><a href="basic-operations-and-data-structures-in-r.html#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span></code></pre></div>
 <p>As an alternative to the <code>install.packages()</code> function, you can use the Packages tab in RStudio. Simply navigate to the tab, click install, and select <code>ggplot2</code> from there. Note that you need to install the package only once! Essentially <code>install</code> adds it to your library of packages, where it will remain available.</p>
 <p>Once the package is installed, it becomes available, but to use it you must load it in memory (similar to opening a “book” on your desktop as you work). For this, we use the command <code>library()</code>, which is used to load a package, that is, to activate it for use.</p>
 <p>Assuming that you already have installed <code>ggplot2</code>, we proceed to load it:</p>
@@ -787,10 +799,18 @@ div.csl-indent {
 <p>Now all commands from the <code>ggplot2</code> package are available to you.</p>
 <p>The package <code>ggplot2</code> works by layering a series of objects, beginning with a blank plot, to which we can add things. The command to create a plot is <code>ggplot()</code>. This command accepts different arguments. For instance, we can pass data to it in the form of a data frame. We can also indicate different <em>aesthetic</em> values, that is, the things that we wish to plot. None of this is plotted, though, until we indicate which kind of <em>geom</em> or geometric object we wish to plot.</p>
 <p>For a bar chart, we would use the following instructions:</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="basic-operations-and-data-structures-in-r.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The function `ggplot()` creates an object for plotting, using a data frame as indicated by the input argument `data =`. Furthermore, we can specify how to map elements in the data frame to things in the plot. In this example, we wish to map the names of cities to the x-axis of the plot, and the population to the y-axis of the plot. Accordingly, we define as aesthetic values `aes()` `x = Name` and `y = Population`. The geometric object that we wish to plot is bars, so we use `geom_bar()` with the argument `stat = &quot;identity&quot;` so the data are not transformed before plotting:</span></span>
-<span id="cb74-2"><a href="basic-operations-and-data-structures-in-r.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, </span>
-<span id="cb74-3"><a href="basic-operations-and-data-structures-in-r.html#cb74-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Name, <span class="at">y =</span> Population)) <span class="sc">+</span> </span>
-<span id="cb74-4"><a href="basic-operations-and-data-structures-in-r.html#cb74-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="basic-operations-and-data-structures-in-r.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The function `ggplot()` creates an object for plotting, </span></span>
+<span id="cb74-2"><a href="basic-operations-and-data-structures-in-r.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="co"># using a data frame as indicated by the input argument `data =`. </span></span>
+<span id="cb74-3"><a href="basic-operations-and-data-structures-in-r.html#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Furthermore, we can specify how to map elements in the data frame </span></span>
+<span id="cb74-4"><a href="basic-operations-and-data-structures-in-r.html#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="co"># to things in the plot. In this example, we wish to map the names </span></span>
+<span id="cb74-5"><a href="basic-operations-and-data-structures-in-r.html#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="co"># of cities to the x-axis of the plot, and the population to the y-axis </span></span>
+<span id="cb74-6"><a href="basic-operations-and-data-structures-in-r.html#cb74-6" aria-hidden="true" tabindex="-1"></a><span class="co"># of the plot. Accordingly, we define as aesthetic values `aes()` `x = Name` </span></span>
+<span id="cb74-7"><a href="basic-operations-and-data-structures-in-r.html#cb74-7" aria-hidden="true" tabindex="-1"></a><span class="co"># and `y = Population`. The geometric object that we wish to plot is bars, </span></span>
+<span id="cb74-8"><a href="basic-operations-and-data-structures-in-r.html#cb74-8" aria-hidden="true" tabindex="-1"></a><span class="co"># so we use `geom_bar()` with the argument `stat = &quot;identity&quot;` so the data </span></span>
+<span id="cb74-9"><a href="basic-operations-and-data-structures-in-r.html#cb74-9" aria-hidden="true" tabindex="-1"></a><span class="co"># are not transformed before plotting:</span></span>
+<span id="cb74-10"><a href="basic-operations-and-data-structures-in-r.html#cb74-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, </span>
+<span id="cb74-11"><a href="basic-operations-and-data-structures-in-r.html#cb74-11" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Name, <span class="at">y =</span> Population)) <span class="sc">+</span> </span>
+<span id="cb74-12"><a href="basic-operations-and-data-structures-in-r.html#cb74-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
 <p><img src="spatial-analysis-R_files/figure-html/ch02-bar-chart-1.png" width="672" /></p>
 <p>Since this is the first time that we use <code>ggplot()</code>, it is informative to break down these instructions. We are asking <code>ggplot2</code> to create a plot that will use the data frame <code>Cities</code>. Furthermore, we tell it to use the values of <code>Names</code> in the x-axis, and the values of <code>Population</code> in the y-axis. Run the following chunk:</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="basic-operations-and-data-structures-in-r.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, </span>
@@ -803,25 +823,28 @@ div.csl-indent {
 <div id="creating-a-simple-map" class="section level2" number="2.8">
 <h2><span class="header-section-number">2.8</span> Creating a Simple Map</h2>
 <p>We will see how maps are used in spatial statistical analysis. The simplest one that can be created is a so-called <em>dot map</em>. A dot map simply displays the locations of events of interest, as points. A dot map is, in fact, simply a <em>scatterplot</em> of the coordinates of events. We can use <code>ggplot2</code> to create a simple dot map of the cities in our sample dataset. For this, we create a <code>ggplot2</code> object, and for the <code>x</code> and <code>y</code> aesthetics we use the coordinates. The geometric element that we want to render is a point:</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="basic-operations-and-data-structures-in-r.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The longitude is mapped to the x-axis of the plot and the latitude is map to the y-axis of the plot. The function `geom_points()` is used to draw points:</span></span>
-<span id="cb77-2"><a href="basic-operations-and-data-structures-in-r.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities,</span>
-<span id="cb77-3"><a href="basic-operations-and-data-structures-in-r.html#cb77-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
-<span id="cb77-4"><a href="basic-operations-and-data-structures-in-r.html#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="basic-operations-and-data-structures-in-r.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The longitude is mapped to the x-axis of the plot and the latitude is mapped</span></span>
+<span id="cb77-2"><a href="basic-operations-and-data-structures-in-r.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to the y-axis of the plot. The function `geom_points()` is used to draw points:</span></span>
+<span id="cb77-3"><a href="basic-operations-and-data-structures-in-r.html#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities,</span>
+<span id="cb77-4"><a href="basic-operations-and-data-structures-in-r.html#cb77-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
+<span id="cb77-5"><a href="basic-operations-and-data-structures-in-r.html#cb77-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="spatial-analysis-R_files/figure-html/ch02-simple-symbol-map-1.png" width="672" /></p>
 <p>This is a simple dot map that simply shows the locations of the cities. We can add labels by means of the geometric element text:</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="basic-operations-and-data-structures-in-r.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `geom_text()` is used to write text on the plot, still using the longitude and latitude information:</span></span>
-<span id="cb78-2"><a href="basic-operations-and-data-structures-in-r.html#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, </span>
-<span id="cb78-3"><a href="basic-operations-and-data-structures-in-r.html#cb78-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
-<span id="cb78-4"><a href="basic-operations-and-data-structures-in-r.html#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb78-5"><a href="basic-operations-and-data-structures-in-r.html#cb78-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Name))</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="basic-operations-and-data-structures-in-r.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `geom_text()` is used to write text on the plot, </span></span>
+<span id="cb78-2"><a href="basic-operations-and-data-structures-in-r.html#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="co"># still using the longitude and latitude information:</span></span>
+<span id="cb78-3"><a href="basic-operations-and-data-structures-in-r.html#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, </span>
+<span id="cb78-4"><a href="basic-operations-and-data-structures-in-r.html#cb78-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
+<span id="cb78-5"><a href="basic-operations-and-data-structures-in-r.html#cb78-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb78-6"><a href="basic-operations-and-data-structures-in-r.html#cb78-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Name))</span></code></pre></div>
 <p><img src="spatial-analysis-R_files/figure-html/ch02-symbol-map-with-labels-1.png" width="672" /></p>
 <p>The dot map above tells us the location of the cities in our dataframe and their name. We can include more information in the plot in different ways. For example, a <em>proportional symbol map</em> changes the size of the symbols (the points) to add information to the plot. To create a proportional symbol map, we add to the aesthetics the instruction to use some variable for the size of the symbols:</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="basic-operations-and-data-structures-in-r.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The `size` of the points will be proportional to the `Population` values in the data frame</span></span>
-<span id="cb79-2"><a href="basic-operations-and-data-structures-in-r.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, </span>
-<span id="cb79-3"><a href="basic-operations-and-data-structures-in-r.html#cb79-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
-<span id="cb79-4"><a href="basic-operations-and-data-structures-in-r.html#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> Population)) <span class="sc">+</span> </span>
-<span id="cb79-5"><a href="basic-operations-and-data-structures-in-r.html#cb79-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Name))</span></code></pre></div>
-<p><img src="spatial-analysis-R_files/figure-html/symbol-map-with-sized-symbols-1.png" width="672" /></p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="basic-operations-and-data-structures-in-r.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The `size` of the points will be proportional to the</span></span>
+<span id="cb79-2"><a href="basic-operations-and-data-structures-in-r.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Population` values in the data frame</span></span>
+<span id="cb79-3"><a href="basic-operations-and-data-structures-in-r.html#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, </span>
+<span id="cb79-4"><a href="basic-operations-and-data-structures-in-r.html#cb79-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
+<span id="cb79-5"><a href="basic-operations-and-data-structures-in-r.html#cb79-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> Population)) <span class="sc">+</span> </span>
+<span id="cb79-6"><a href="basic-operations-and-data-structures-in-r.html#cb79-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Name))</span></code></pre></div>
+<p><img src="spatial-analysis-R_files/figure-html/ch02-symbol-map-with-sized-symbols-1.png" width="672" /></p>
 <p>Furthermore, we can fix the position of the labels by adding a vertical justification to the text (<code>vjust</code>), and to avoid the text from being cut we can also expand the limits of the plot (<code>expand_limits()</code>):</p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="basic-operations-and-data-structures-in-r.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Cities, </span>
 <span id="cb80-2"><a href="basic-operations-and-data-structures-in-r.html#cb80-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude)) <span class="sc">+</span> </span>
@@ -838,45 +861,45 @@ div.csl-indent {
 </ul>
 <p>Check the <code>ggplot2</code> <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">Cheat Sheet</a> for more information on how to use this package.</p>
 <p>A last note. Many other visualization alternatives (for instance, Excel) provide point-and-click functions for creating plots. In contrast, working in <code>R</code> requires plots to be created by meticulously instructing the package what to do. While this is more laborious, it also means that you have complete control over the creation of plots, which in turn allows you to create more flexible and inventive visuals. Below are some of figures that I have created using <code>R</code> in recent years, including diagrams, thematic maps, and raster data.</p>
-<div class="figure"><span style="display:block;" id="fig:visualization-example-1"></span>
+<div class="figure"><span style="display:block;" id="fig:ch02-visualization-example-1"></span>
 <img src="figures/02-Figure-1.png" alt="\label{fig:visualization-example-1} Example of visualization: diagram of catchment areas for accessibility analysis (from [Paez, Higgins, and Vivona (2018)](https://doi.org/10.1371/journal.pone.0218773))" width="1054" />
 <p class="caption">
 FIGURE 2.1:  Example of visualization: diagram of catchment areas for accessibility analysis (from <a href="https://doi.org/10.1371/journal.pone.0218773">Paez, Higgins, and Vivona (2018)</a>)
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:visualization-example-2"></span>
+<div class="figure"><span style="display:block;" id="fig:ch02-visualization-example-2"></span>
 <img src="figures/02-Figure-2.png" alt="\label{fig:visualization-example-2} Example of visualization: accessibility to family doctors in Hamilton (from [Paez, Higgins, and Vivona (2018)](https://doi.org/10.1371/journal.pone.0218773))" width="1050" />
 <p class="caption">
 FIGURE 2.2:  Example of visualization: accessibility to family doctors in Hamilton (from <a href="https://doi.org/10.1371/journal.pone.0218773">Paez, Higgins, and Vivona (2018)</a>)
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:visualization-example-3"></span>
+<div class="figure"><span style="display:block;" id="fig:ch02-visualization-example-3"></span>
 <img src="figures/02-Figure-3.png" alt="\label{fig:visualization-example-3} Example of visualization: water sources (triangles) and households (circles) in a region in central Kenya (from [Paez et al. (2020)](https://doi.org/10.1016/j.jtrangeo.2019.102564))" width="1054" />
 <p class="caption">
 FIGURE 2.3:  Example of visualization: water sources (triangles) and households (circles) in a region in central Kenya (from <a href="https://doi.org/10.1016/j.jtrangeo.2019.102564">Paez et al. (2020)</a>)
 </p>
 </div>
 <p>And, these are some figures created using <code>R</code> by talented people around the world.</p>
-<div class="figure"><span style="display:block;" id="fig:visualization-example-4"></span>
-<img src="spatial-analysis-R_files/figure-html/visualization-example-4-1.png" alt="\label{fig:visualization-example-4} Example of visualization: Historical map with shading" width="672" />
+<div class="figure"><span style="display:block;" id="fig:ch02-visualization-example-4"></span>
+<img src="spatial-analysis-R_files/figure-html/ch02-visualization-example-4-1.png" alt="\label{fig:visualization-example-4} Example of visualization: Historical map with shading" width="672" />
 <p class="caption">
 FIGURE 2.4:  Example of visualization: Historical map with shading
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:visualization-example-5"></span>
-<img src="spatial-analysis-R_files/figure-html/visualization-example-5-1.png" alt="\label{fig:visualization-example-5} Example of visualization: Population density of Madagascar" width="672" />
+<div class="figure"><span style="display:block;" id="fig:ch02-visualization-example-5"></span>
+<img src="spatial-analysis-R_files/figure-html/ch02-visualization-example-5-1.png" alt="\label{fig:visualization-example-5} Example of visualization: Population density of Madagascar" width="672" />
 <p class="caption">
 FIGURE 2.5:  Example of visualization: Population density of Madagascar
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:visualization-example-6"></span>
-<img src="spatial-analysis-R_files/figure-html/visualization-example-6-1.png" alt="\label{fig:visualization-example-6} Example of visualization: Street map of Kyoto" width="672" />
+<div class="figure"><span style="display:block;" id="fig:ch02-visualization-example-6"></span>
+<img src="spatial-analysis-R_files/figure-html/ch02-visualization-example-6-1.png" alt="\label{fig:visualization-example-6} Example of visualization: Street map of Kyoto" width="672" />
 <p class="caption">
 FIGURE 2.6:  Example of visualization: Street map of Kyoto
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:visualization-example-7"></span>
-<img src="spatial-analysis-R_files/figure-html/visualization-example-7-1.png" alt="\label{fig:visualization-example-7} Example of visualization: Median household income in California" width="672" />
+<div class="figure"><span style="display:block;" id="fig:ch02-visualization-example-7"></span>
+<img src="spatial-analysis-R_files/figure-html/ch02-visualization-example-7-1.png" alt="\label{fig:visualization-example-7} Example of visualization: Median household income in California" width="672" />
 <p class="caption">
 FIGURE 2.7:  Example of visualization: Median household income in California
 </p>
