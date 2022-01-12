@@ -1,7 +1,5 @@
 # Mapping in R: Continued
 
-*NOTE*: You can download the source files for this book from [here](https://github.com/paezha/Spatial-Statistics-Course). The source files are in the format of R Notebooks. Notebooks are pretty neat, because the allow you execute code within the notebook, so that you can work interactively with the notes. 
-
 In the preceding chapters, you were introduced to the following concepts:
 
 1. Basic operations in `R`. These include arithmetic and logical operations, among others.
@@ -12,12 +10,6 @@ In the preceding chapters, you were introduced to the following concepts:
 
 Please review the previous practices if you need a refresher on these concepts.
 
-If you wish to work interactively with this chapter you will need the following:
-
-* An R markdown notebook version of this document (the source file).
-
-* A package called `isdas`.
-   
 ## Learning Objectives
 
 In this reading, you will learn:
@@ -46,20 +38,20 @@ A pipe operator allows you to pass the results of a function to another function
 ## Preliminaries
 
 As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
-```{r}
+```{r ch05-clear-workspace}
 rm(list = ls())
 ```
 
 Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
-```{r message=FALSE}
+```{r ch05-load-packages, message=FALSE}
 library(tidyverse)
 library(isdas)
 ```
 
 Now that your workspace is clear, you can proceed to invoke the sample dataset. You can do this by means of the function `data`.
-```{r}
+```{r ch05-load-data}
 data("missing_df")
 ```
 
@@ -70,7 +62,7 @@ In addition, there are three variables associated with the locations (VAR1, VAR2
 ## Summarizing a Dataframe
 
 Obtaining a set of descriptive statistics for a dataframe is very simple thanks to the function `summary`. For instance, the summary of `missing_df` is:
-```{r}
+```{r ch05-summary-of-data}
 # `summary()` reports basic descriptive statistics of columns in a data frame
 summary(missing_df)
 ```
@@ -80,7 +72,7 @@ This function reports the minimum, maximum, mean, median, and quantile values of
 ## Factors
 
 A factor describes a category. You can examine the class of a variable by means of the function `class`. From the summary, it is clear that several variables are numeric. However, for `Observed`, it is not evident if the variable is  a `character` or `factor`. Use of `class` reveals that it is indeed a factor:
-```{r}
+```{r ch05-class-of-data}
 class(missing_df$Observed)
 ```
 
@@ -93,7 +85,7 @@ Now, you may be wondering what does it mean when the status of a datum's `Observ
 ## Subsetting Data
 
 We subset data when we wish to work only with parts of a dataset. We can do this by indexing. For example, we could retrieve the part of the dataframe that corresponds to the `FALSE` values in the `Observed` variable:
-```{r}
+```{r ch05-data-subsetting-indexing}
 missing_df[missing_df$Observed == FALSE,]
 ```
 
@@ -102,22 +94,22 @@ Data are indexed by means of the square brackets `[` and `]`. The indices corres
 As you can see, the five `NA` values correspond, as anticipated, to the locations where `Observed` is `FALSE`.
 
 Using indices is only one of many ways of subsetting data. Base R also has a subset command, that is implemented as follows:
-```{r}
+```{r ch05-data-subsetting-subset}
 subset(missing_df, Observed == FALSE)
 ```
 
 And the package `dplyr` (part of the `tidyverse`) has a function called `filter`:
-```{r}
+```{r ch05-data-subsetting-filter}
 filter(missing_df, Observed == FALSE)
 ```
 
 The three approaches give the same result, but `subset` and `filter` are somewhat easier to write. You could nest any of the above approaches as part of another function. For instance, if you wanted to do a summary of the selected subset of the data, you would:
-```{r}
+```{r ch05-summary-data-filtered}
 summary(filter(missing_df, Observed == FALSE))
 ```
 
 Or:
-```{r}
+```{r ch05-summary-data-indexed}
 summary(missing_df[missing_df$Observed == FALSE,])
 ```
 
@@ -129,7 +121,8 @@ A pipe operator is written this way: `%>%`. Its objective is to pass forward the
 
 For instance, instead of nesting the subsetting instructions in the `summary` function, you could do the subsetting first, and pass the results of that to the summary for further processing. This would look like this:
 ```{r}
-# Remember, the pipe operator `%>%` passes the value of the left-hand side to the function on the right-hand side
+# Remember, the pipe operator `%>%` passes the value of the left-hand side 
+# to the function on the right-hand side
 subset(missing_df, Observed == FALSE) %>% summary()
 ```
 
@@ -137,66 +130,116 @@ The code above is read as "subset `missing_df` and pass the results to `summary`
 
 ## More on Visualization
 
-Observations in the sample dataset are georeferenced, and so they can be plotted. Since they are based on false origins and are normalized, we cannot map them to the surface of the Earth. However, we can still visualize their spatial distribution. This can be done by using `ggplot2`. For instance, for `missing_df`:
-```{r}
-# `coord_fixed()` forces the plot to use a ratio of 1:1 for the units in the x- and y-axis; in this case, since the values we are mapping to those axes are coordinates, we wish to represent them using the same scale, i.e., one unit in x looks identical to one unit in y (as an experiment, repeat the plot without fixing the coordinates) 
+Observations in the sample dataset are geo-referenced, and so they can be plotted. Since they are based on false origins and are normalized, we cannot map them to the surface of the Earth. However, we can still visualize their spatial distribution. This can be done by using `ggplot2`. For instance, for `missing_df`:
+```{r ch05-plot-data}
+# `coord_fixed()` forces the plot to use a ratio of 1:1 for the units 
+# in the x- and y-axis; in this case, since the values we are mapping 
+# to those axes are coordinates, we wish to represent them using the 
+# same scale, i.e., one unit in x looks identical to one unit in y 
+# (as an experiment, repeat the plot without fixing the coordinates) 
 ggplot() + 
-  geom_point(data = missing_df, aes(x = x, y = y), shape = 17, size = 3) + 
+  geom_point(data = missing_df, 
+             aes(x = x, 
+                 y = y), 
+             shape = 17, 
+             size = 3) + 
   coord_fixed()
 ```
 
 The above simply plots the coordinates, so that we can see the spatial distribution of the observations. (Notice the use of `coord_fixed` to maintain the aspect ratio of the plot to 1, i.e. the relationship between width and height). You have control of the `shape` of the markers, as well as their `size`. You can consult the shapes available [here](http://sape.inf.usi.ch/quick-reference/ggplot2/shape). Experiment with different shapes and sizes if you wish.
 
 The dataframe `missing_df` includes more attributes that could be used in the plot. For instance, if you wished to create a thematic map showing `VAR1` you would do the following:
-```{r}
+```{r ch05-plot-data-color}
 ggplot() + 
-  geom_point(data = missing_df, aes(x = x, y = y, color = VAR1), shape = 17, size = 3) + 
+  geom_point(data = missing_df,
+             aes(x = x, 
+                 y = y,
+                 color = VAR1), 
+             shape = 17, 
+             size = 3) + 
   coord_fixed()
 ```
 
 The `shape` and `size` assignments happen outside of `aes`, and so are applied equally to all observations. In some cases, you might want to let other aesthetic attributes vary with the values of a variable in the dataframe. For instance, if we let the sizes change with the value of the variable:
-```{r}
+```{r ch05-plot-data-color-size}
 ggplot() + 
-  geom_point(data = missing_df, aes(x = x, y = y, color = VAR1, size = VAR1), shape = 17) + 
+  geom_point(data = missing_df, 
+             aes(x = x, 
+                 y = y, 
+                 color = VAR1, 
+                 size = VAR1), 
+             shape = 17) + 
   coord_fixed()
 ```
 
 Note how there is a warning, saying that five observations were removed because data were missing! These are likely the five locations where `Observed == FALSE`!
 
 To make it more clear which observations are these, you could set the `shape` to vary according to the value of `Observed`, as follows:
-```{r}
+```{r ch05-plot-data-color-shape}
 ggplot() + 
-  geom_point(data = missing_df, aes(x = x, y = y, color = VAR1, shape = Observed), size = 3) +
+  geom_point(data = missing_df,
+             aes(x = x, 
+                 y = y, 
+                 color = VAR1, 
+                 shape = Observed), 
+             size = 3) +
   coord_fixed()
 ```
 Now it is easy to see the locations of the five observations that were `Observed == FALSE`!, which are labeled with gray circles. 
 
 You can change the coloring scheme by means of `scale_color_distiller` (you can can check the different color palettes available [here](http://ggplot2.tidyverse.org/reference/scale_brewer.html)):
-```{r}
+```{r ch05-plot-data-color-palette}
 ggplot() + 
-  geom_point(data = missing_df, aes(x = x, y = y, color = VAR1, shape = Observed), size = 3) +
+  geom_point(data = missing_df, 
+             aes(x = x,
+                 y = y, 
+                 color = VAR1,
+                 shape = Observed),
+             size = 3) +
   scale_color_distiller(palette = "RdBu") +
   coord_fixed()
 ```
 
 You will notice maybe that with this coloring scheme some observations become very light and difficult to distinguish from the background. This can be solved in many different ways (for instance, by changing the color of the background!). A simple fix is to add a layer with hollow symbols, as follows:
-```{r}
+```{r ch05-plot-data-improved}
 ggplot() + 
-  geom_point(data = missing_df, aes(x = x, y = y, color = VAR1), shape = 17, size = 3) +
-  geom_point(data = missing_df, aes(x = x, y = y), shape = 2, size = 3) +
+  geom_point(data = missing_df, 
+             aes(x = x, 
+                 y = y, 
+                 color = VAR1), 
+             shape = 17, 
+             size = 3) +
+  geom_point(data = missing_df, 
+             aes(x = x, 
+                 y = y), 
+             shape = 2, 
+             size = 3) +
   scale_color_distiller(palette = "RdBu") +
   coord_fixed()
 ```
 
 Finally, you could try subsetting the data to have greater control of the appearance of your plot, for instance:
-```{r}
+```{r ch05-plot-data-subsetting}
 ggplot() +
-  geom_point(data = subset(missing_df, Observed == TRUE),
-             aes(x = x, y= y, color = VAR1), shape = 17, size = 3) +
-  geom_point(data = subset(missing_df, Observed == TRUE),
-             aes(x = x, y= y), shape = 2, size = 3) +
-  geom_point(data = subset(missing_df, Observed == FALSE),
-             aes(x = x, y= y), shape = 18, size = 4) +
+  geom_point(data = subset(missing_df, 
+                           Observed == TRUE),
+             aes(x = x, 
+                 y= y, 
+                 color = VAR1), 
+             shape = 17, 
+             size = 3) +
+  geom_point(data = subset(missing_df, 
+                           Observed == TRUE),
+             aes(x = x, 
+                 y= y), 
+             shape = 2, 
+             size = 3) +
+  geom_point(data = subset(missing_df, 
+                           Observed == FALSE),
+             aes(x = x, 
+                 y= y), 
+             shape = 18, 
+             size = 4) +
   scale_color_distiller(palette = "RdBu") +
   coord_fixed()
 ```

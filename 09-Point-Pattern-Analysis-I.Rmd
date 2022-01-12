@@ -2,8 +2,6 @@
 
 # Point Pattern Analysis I
 
-*NOTE*: You can download the source files for this book from [here](https://github.com/paezha/Spatial-Statistics-Course). The source files are in the format of R Notebooks. Notebooks are pretty neat, because the allow you execute code within the notebook, so that you can work interactively with the notes. 
-
 In last practice your learning objectives were:
 
 1. How to generate random numbers with different properties.
@@ -12,12 +10,6 @@ In last practice your learning objectives were:
 4. How to simulate a spatial process.
 
 Please review the previous practices if you need a refresher on these concepts.
-
-If you wish to work interactively with this chapter you will need the following:
-
-* An R markdown notebook version of this document (the source file).
-
-* A package called `isdas`.
 
 ## Learning Objectives
 
@@ -40,26 +32,26 @@ In this practice, you will learn:
 ## Preliminaries
 
 As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
-```{r}
+```{r ch09-clear-workspace}
 rm(list = ls())
 ```
 
 Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
-```{r message=FALSE, warning=FALSE}
+```{r ch09-load-packages, message=FALSE, warning=FALSE}
 library(isdas)
 library(tidyverse)
 library(spatstat)
 ```
 
 Load the data that you will use for this practice:
-```{r}
+```{r ch09-load-data}
 data("PointPatterns")
 ```
 
 Quickly check the contents of this dataframe:
-```{r}
+```{r ch09-summary-data}
 summary(PointPatterns)
 ```
 
@@ -93,16 +85,22 @@ Imagine a point pattern that records crimes in a region. The pattern might be ra
 
 Consider for example the following patterns. To create the following figure, you can use _faceting_ by means of `ggplot2::facet_wrap()`:
 ```{r}
-# This uses function "ggplot" to plot data "PointPatterns" loaded into the data frame earlier, by means of X and Y coordinates
+# This uses function "ggplot" to plot data "PointPatterns" loaded 
+# into the data frame earlier, by means of X and Y coordinates
 
-# the function `facet_wrap()` is used to create multiple plots according to one (or more) variables in the dataset. Here, it is used to create individual plots for each of the four patterns in the dataframe, but put them all in a single figure
+# the function `facet_wrap()` is used to create multiple plots 
+# according to one (or more) variables in the dataset. Here, it 
+# is used to create individual plots for each of the four patterns 
+# in the dataframe, but put them all in a single figure
 ggplot() + 
-  geom_point(data = PointPatterns, aes(x = x, y = y)) + 
+  geom_point(data = PointPatterns, 
+             aes(x = x, 
+                 y = y)) + 
   facet_wrap(~ Pattern) +
   coord_fixed()
 ```
 
-As you can see, faceting is a convenient way to simultaneously plot different parts of a dataframe (in the present case, the different `Pattern`s).
+As you can see, faceting is a convenient way to simultaneously plot different parts of a dataframe (in the present case, the different `Pattern`'s).
 
 In the preceding activity, you were asked to generate ideas regarding possible ways of deciding whether a map of events (i.e., a point pattern) is random. In this chapter we will formalize a specific way to do so, by considering the _intensity_ of the process.
 
@@ -130,17 +128,23 @@ This is the _overall density_ of the point pattern.
 
 ## Quadrats and Density Maps
 
-The overall density of a point process (calculated above) can be mapped by means of the `geom_bin2d` function of the `ggplot2` package. This function divides two dimensional space into bins and reports the number of events or the density of the events in the bins. Let's give this a try:
-```{r}
-# `geom_bin2d()` creates a tessellation and counts the number of events in each of the "tiles" in the tessellation. It then assigns colors based on the count of events. The `binwidth` determines the size of the squares in the tessellation, in this case squares of size 1 by 1...which corresponds to the size of the region!
+The overall density of a point process (calculated above) can be mapped by means of the `geom_bin2d` function of the `ggplot2` package. This function divides two dimensional space into bins and reports the number of events or the density of the events in the bins. We will give this a try next:
+```{r ch09-2d-bins}
+# `geom_bin2d()` creates a tessellation and counts the number of events
+# in each of the "tiles" in the tessellation. It then assigns colors based 
+# on the count of events. The `binwidth` determines the size of the squares 
+# in the tessellation, in this case squares of size 1 by 1...which corresponds 
+# to the size of the region!
 ggplot() +
-  geom_bin2d(data = subset(PointPatterns, Pattern == "Pattern 1"),
-             aes(x = x, y = y),
+  geom_bin2d(data = subset(PointPatterns, 
+                           Pattern == "Pattern 1"),
+             aes(x = x, 
+                 y = y),
              binwidth = c(1, 1)) +
   coord_fixed()
 ```
 
-Let's see step-by-step how this plot is made. 
+Let us see step-by-step how this plot is made. 
 
 1. `ggplot()` creates a plot object.
 2. `geom_bin2d` is called to plot a map of counts of events in the space defined by the bins.
@@ -154,40 +158,56 @@ The map of the overall density of the process above is not terribly interesting.
 We do this by means of the concept of _quadrats_.
 
 Imagine that instead of calculating the overall (or global) intensity of the point pattern, we subdivided the region into a set of smaller subregions. For instance, we could draw horizontal and vertical lines to create smaller squares:
-```{r}
-# `geom_vline()` draws vertical lines that cross the x-axis at the points indicated; `geom_hline()` draws horizontal lines that cross the y-axis at the points indicated
+```{r ch09-add-grid}
+# `geom_vline()` draws vertical lines that cross the x-axis at 
+# the points indicated; `geom_hline()` draws horizontal lines 
+# that cross the y-axis at the points indicated
 ggplot() + 
-  geom_vline(xintercept = seq(from = 0, to = 1, by = 0.25)) +
-  geom_hline(yintercept = seq(from = 0, to = 1, by = 0.25)) +
-  geom_point(data = filter(PointPatterns, Pattern == "Pattern 1"), 
-             aes(x = x, y = y)) +
+  geom_vline(xintercept = seq(from = 0, 
+                              to = 1, 
+                              by = 0.25)) +
+  geom_hline(yintercept = seq(from = 0, 
+                              to = 1, 
+                              by = 0.25)) +
+  geom_point(data = filter(PointPatterns, 
+                           Pattern == "Pattern 1"), 
+             aes(x = x, 
+                 y = y)) +
   coord_fixed()
 ```
 
 Notice how we used to create the vertical lines (`geom_vline`) and horizontal lines (`geom_hline`), from 0 to 1 every 0.25 units of distance respectively. This creates a tessellation that divides the original region into 16 smaller squares, or subregions. Each of the smaller squares used to subdivide the region is called a _quadrat_.
 
 To make things more interesting, instead of calculating the overall density, we can calculate the density for each quadrat. Now the size of the quadrats will be $0.25\times 0.25$. Here we visualize the density of the quadrats:
-```{r}
+```{r ch09-2d-bin-change-size}
 ggplot() +
-  geom_bin2d(data = filter(PointPatterns, Pattern == "Pattern 1"),
-             aes(x = x, y = y),
-             binwidth = c(0.25, 0.25)) +
-    geom_point(data = filter(PointPatterns, Pattern == "Pattern 1"), 
-             aes(x = x, y = y)) +
+  geom_bin2d(data = filter(PointPatterns, 
+                           Pattern == "Pattern 1"),
+             aes(x = x, 
+                 y = y),
+             binwidth = c(0.25, 
+                          0.25)) +
+    geom_point(data = filter(PointPatterns, 
+                             Pattern == "Pattern 1"), 
+             aes(x = x, 
+                 y = y)) +
   scale_fill_distiller(palette = "RdBu") +
   coord_fixed()
 ```
 
-You can, of course, change the size of the quadrats. Let's take a look at the four point patterns (by means of faceting), after creating a variable to easily control the size of the quadrat. Let's call this variable `q_size`:
-```{r}
+You can, of course, change the size of the quadrats. We can take a look at the four point patterns (by means of faceting), after creating a variable to easily control the size of the quadrat. Let us call this variable `q_size`:
+```{r ch09-change-size-of-quadrats}
 # `q_size` controls the size of the quadrats; experiment changing this parameter
 q_size <- 0.5
 ggplot() +
   geom_bin2d(data = PointPatterns,
-             aes(x = x, y = y),
-             binwidth = c(q_size, q_size)) +
-    geom_point(data = PointPatterns, 
-             aes(x = x, y = y)) +
+             aes(x = x, 
+                 y = y),
+             binwidth = c(q_size, 
+                          q_size)) +
+  geom_point(data = PointPatterns, 
+             aes(x = x, 
+                 y = y)) +
   facet_wrap(~ Pattern) +
   scale_fill_distiller(palette = "RdBu") +
   coord_fixed()
@@ -200,37 +220,48 @@ The package `spatstat` [@Baddeley2015] includes numerous functions for the analy
 To use this function, we need to convert the point patterns to a type of object used by `spatstat` denominated `ppp` (for *p*lannar *p*oint *p*attern). This is simple, thanks to a utility function in `spatstat` called `as.ppp`. This function takes as arguments (inputs) a set of coordinates, and data to define a window. To benefit from the functionality of `spatstat` we will convert our data frame with spatial patterns into `ppp` objects.
 
 First, define the window by means of the `owin` function, and using the 0 to 1 interval for our region:
-```{r}
-# `owin()` creates a window for `ppp` objects, which becomes the _region_ under study. Here, we define a window that is the unit square and we will discuss the importance of an appropriate definition of the region later. The windows in `spatstat` need not be squares or rectangles, and can actually be irregular shapes
+```{r ch09-define-window}
+# `owin()` creates a window for `ppp` objects, which becomes 
+# the _region_ under study. Here, we define a window that is 
+# the unit square and we will discuss the importance of an 
+#appropriate definition of the region later. The windows in 
+# `spatstat` need not be squares or rectangles, and can actually 
+# be irregular shapes
 Wnd <- owin(c(0,1), c(0,1)) 
 ```
 
 Now, a `ppp` object can be created:
-```{r}
-# `as.ppp()` will take an object and convert it to a `ppp` object. Here, it does a fairly good job of guessing the contents of the data frame! The second argument to create the `ppp` object is a window, that is, an `owin` object
-ppp1 <- as.ppp(PointPatterns, Wnd)
+```{r ch09-create-ppp1-object}
+# `as.ppp()` will take an object and convert it to a `ppp` object.
+# Here, it does a fairly good job of guessing the contents of the 
+# data frame! The second argument to create the `ppp` object is a 
+# window, that is, an `owin` object
+ppp1 <- as.ppp(PointPatterns, 
+               Wnd)
 ```
 
 If you examine these new `ppp` objects, you will see that they pack the same basic information (i.e., the coordinates), but also the range of the region and so on:
-```{r}
+```{r ch09-summary-ppp1}
 summary(ppp1)
 ```
 
 As you can see, the `ppp` object includes the four patterns, calculates the frequency of each (the number of events), and their respective overall intensities.
 
 Objects of the class `ppp` can be plotted using base `R` plotting functions:
-```{r}
+```{r ch09-plot-ppp1}
 plot(ppp1)
 ```
 
 To plot each pattern separately we can split the different patterns using the function `split.ppp()`. Notice how `$` works for indexing the patterns here, just as it does for indexing columns in a data frame:
-```{r}
+```{r ch09-split-ppp}
 plot(split.ppp(ppp1)$`Pattern 1`)
 ```
 
 Once the patterns are in `ppp` form, `quadratcount` can be used to compute the counts of events. To calculate the count separately for each pattern, you need to use again `split.ppp()` (if you don't index a pattern, it will apply the function to all of them). The other two arguments are the number of quadrats in the horizontal (nx) and the vertical (ny) directions:  
-```{r}
-quadratcount(split(ppp1), nx = 4, ny = 4)
+```{r ch09-quadrat-counts}
+quadratcount(split(ppp1),
+             nx = 4,
+             ny = 4)
 ```
 
 Compare the counts of the quadrats for each pattern. They should replicate what you observed in the density plots before.
@@ -240,34 +271,39 @@ Compare the counts of the quadrats for each pattern. They should replicate what 
 It is important when conducting the type of analysis described above (and more generally any analysis with point patterns), to define a region for analysis that is consistent with the pattern of interest. 
 
 Consider for instance what would happen if the region was defined, instead of in the unit square, as a bigger region. Create a second window:
-```{r}
-# This new window measure 3 units in the x-axis, and also 3 units in the y-axis (from -1 to 2)
-Wnd2 <- owin(c(-1,2), c(-1,2)) 
+```{r ch09-big-window}
+# This new window measure 3 units in the x-axis, 
+# and also 3 units in the y-axis (from -1 to 2)
+Wnd2 <- owin(c(-1,2), 
+             c(-1,2)) 
 ```
 
 Create a second `ppp` object using this new window:
-```{r}
+```{r ch09-create-ppp2}
 # Here, we use the same events as before, but place them in the larger window we just created
-ppp2 <- as.ppp(PointPatterns, Wnd2)
+ppp2 <- as.ppp(PointPatterns,
+               Wnd2)
 ```
 
 Repeat the plot but using the new `ppp` object: 
-```{r}
+```{r ch09-plot-ppp2}
 plot(split.ppp(ppp2)$`Pattern 1`)
 ```
 
 Repeat but now using an even bigger region. Create a third window:
-```{r}
-Wnd3 <- owin(c(-2, 3), c(-2, 3)) 
+```{r ch09-bigger-window}
+Wnd3 <- owin(c(-2, 3), 
+             c(-2, 3)) 
 ```
 
 And also a third `ppp` object using the third window:
-```{r}
-ppp3 <- as.ppp(PointPatterns, Wnd3)
+```{r ch09-create-ppp3}
+ppp3 <- as.ppp(PointPatterns, 
+               Wnd3)
 ```
 
 Now the plot looks like this: 
-```{r}
+```{r ch09-plot-ppp3}
 plot(split.ppp(ppp3)$`Pattern 1`)
 ```
 
