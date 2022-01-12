@@ -1,5 +1,7 @@
 # Maps as Processes: Null Landscapes, Spatial Processes, and Statistical Maps
 
+*NOTE*: The source files for this book are available with companion package [{isdas}](https://paezha.github.io/isdas/). The source files are in Rmarkdown format and packed as templates. These files allow you execute code within the notebook, so that you can work interactively with the notes. 
+
 In last practice your learning objectives were:
 
 1. How to obtain a descriptive summary of a dataframe.

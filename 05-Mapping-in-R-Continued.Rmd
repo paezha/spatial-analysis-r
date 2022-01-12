@@ -1,5 +1,7 @@
 # Mapping in R: Continued
 
+*NOTE*: The source files for this book are available with companion package [{isdas}](https://paezha.github.io/isdas/). The source files are in Rmarkdown format and packed as templates. These files allow you execute code within the notebook, so that you can work interactively with the notes. 
+
 In the preceding chapters, you were introduced to the following concepts:
 
 1. Basic operations in `R`. These include arithmetic and logical operations, among others.

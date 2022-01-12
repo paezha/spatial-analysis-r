@@ -2,15 +2,9 @@
 
 # Spatially Continuous Data I {#spatially-continuous-data-i}
 
-*NOTE*: You can download the source files for this book from [here](https://github.com/paezha/Spatial-Statistics-Course). The source files are in the format of R Notebooks. Notebooks are pretty neat, because the allow you execute code within the notebook, so that you can work interactively with the notes.
+*NOTE*: The source files for this book are available with companion package [{isdas}](https://paezha.github.io/isdas/). The source files are in Rmarkdown format and packed as templates. These files allow you execute code within the notebook, so that you can work interactively with the notes. 
 
-If you wish to work interactively with this chapter you will need the following:
-
-* An R markdown notebook version of this document (the source file).
-
-* A package called `isdas`.
-
-You will also use a custom function that is included in the package `isdas` as follows:
+In this chapter you will use a custom function that is included in the package `isdas` as follows:
 
 `kpointmeans(source_xy, z, target_xy, k, latlong)`
 

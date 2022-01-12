@@ -2,6 +2,8 @@
 
 # Introduction to Mapping in `R`
 
+*NOTE*: The source files for this book are available with companion package [{isdas}](https://paezha.github.io/isdas/). The source files are in Rmarkdown format and packed as templates. These files allow you execute code within the notebook, so that you can work interactively with the notes. 
+
 Spatial statistics is a sub-field of spatial analysis that has grown in relevance in recent years as a result of 1) the availability of information that is geo-coded, in other words, that has geographical references; and 2) the availability of software to analyze such information.
 
 A key technology fueling this trend is that of Geographical Information Systems (GIS). GIS are, in simplest terms, digital mapping for the 21st century. In most cases, however, GIS go beyond cartographic functions to also enable and enhance our ability to analyze data.

@@ -1,5 +1,7 @@
 # Basic Operations and Data Structures in `R`
 
+*NOTE*: The source files for this book are available with companion package [{isdas}](https://paezha.github.io/isdas/). The source files are in Rmarkdown format and packed as templates. These files allow you execute code within the notebook, so that you can work interactively with the notes. 
+
 The preceding chapter showed you how to install `R` and RStudio, and explained some key concepts, such as packages as fundamental units of reproducible code, and the concept of your library (where the packages that you install are stored).
 
 Now that you have installed `R` and RStudio we can begin with an overview of basic operations and data structures in this computing language. Please note that this document you are reading, called an _`R` Notebook_, is an example of what is called [_literate programming_](https://en.wikipedia.org/wiki/Literate_programming), a style of document that uses code to illustrate a discussion, as opposed to the traditional programming style that uses natural language to discuss/document the code. By focusing on natural language as opposed to computer-speak, literate programming flips around the usual manner of technical writing to make documents more intuitive and accessible. 

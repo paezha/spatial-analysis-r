@@ -1,5 +1,7 @@
 # Activity 15: Spatially Continuous Data I
 
+*NOTE*: The source files for this book are available with companion package [{isdas}](https://paezha.github.io/isdas/). The source files are in Rmarkdown format and packed as templates. These files allow you execute code within the notebook, so that you can work interactively with the notes. 
+
 ## Practice questions
 
 Answer the following questions:
@@ -27,12 +29,6 @@ In this activity, you will:
 - O'Sullivan D and Unwin D [-@Osullivan2010] Geographic Information Analysis, 2nd Edition, Chapters 9 and 10. John Wiley & Sons: New Jersey.
 
 ## Preliminaries
-
-For this activity you will need the following:
-
-* An R markdown notebook version of this document (the source file).
-
-* A package called `isdas`.
 
 It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
