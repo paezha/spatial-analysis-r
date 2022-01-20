@@ -89,6 +89,14 @@ pennlc.sf <- st_as_sf(pennlc)
 
 ## Activity
 
+::: {.infobox .caution data-latex="{caution}"}
+**Capstone Activity**
+
+This is a capstone activity where you can work free-style
+on a data set of your choice, and put in practice what you
+have learned with respect to the analysis of point patterns.
+:::
+
 1. Partner with a fellow student to analyze the chosen dataset.
 
 2. Visualize/explore the dataset using appropriate tools.

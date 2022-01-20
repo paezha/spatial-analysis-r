@@ -78,15 +78,23 @@ You are now ready for the next activity.
 
 ## Activity
 
-**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).
+**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.
 
-1. (*)Create a spatial weights matrix for the census tracts in the Hamilton CMA. Use adjacency as your criterion for proximity.
+::: {.infobox .software data-latex="{software}"}
+**Activity Part I**
+:::
 
-2. (*)Calculate the spatial moving average for the following two variables: 1) proportion of the population who are 20 to 34 years old; and 2) proportion of the population who are 65 and older.
+1. Create a spatial weights matrix for the census tracts in the Hamilton CMA. Use adjacency as your criterion for proximity.
 
-3. (*)Append the spatial moving averages to your dataframe.
+2. Calculate the spatial moving average for the following two variables: 1) proportion of the population who are 20 to 34 years old; and 2) proportion of the population who are 65 and older.
 
-4. (*)Choose one age group and create a scatterplot of the proportion of population in that group versus its spatial moving average. (Hint: if you create the scatterplot using `ggplot2` you can add the 45 degree line by means of `geom_abline(slope = 1, intercept = 0)`).
+3. Append the spatial moving averages to your dataframe.
+
+4. Choose one age group and create a scatterplot of the proportion of population in that group versus its spatial moving average. (Hint: if you create the scatterplot using `ggplot2` you can add the 45 degree line by means of `geom_abline(slope = 1, intercept = 0)`).
+
+::: {.infobox .brainware data-latex="{brainware}"}
+**Activity Part II**
+:::
 
 5. Show your scatterplot of the population versus its spatial moving average to a fellow student. What is the meaning of the 45 degree line in this plot?
 

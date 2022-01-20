@@ -63,15 +63,23 @@ aquifer$ID <- factor(c(1:nrow(aquifer)))
 
 ## Activity
 
-**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).
+**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.
 
-1. (*)Map the Wolfcamp Aquifer data.
+::: {.infobox .software data-latex="{software}"}
+**Activity Part I**
+:::
 
-2. (*)Create a surface using Voronoi polygons.
+1. Map the Wolfcamp Aquifer data.
 
-3. (*)Create a surface using IDW.
+2. Create a surface using Voronoi polygons.
 
-4. (*)Create a surface using k-point means. 
+3. Create a surface using IDW.
+
+4. Create a surface using k-point means. 
+
+::: {.infobox .brainware data-latex="{brainware}"}
+**Activity Part II**
+:::
 
 5. What is the effect of changing the power of the inverse distance function?
 

@@ -72,13 +72,21 @@ Note that the proportion of people who traveled by car as passengers are not inc
 
 ## Activity
 
-**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).
+**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.
 
-1. (*)Examine your dataframe. What variables are included? Are there any missing values?
+::: {.infobox .software data-latex="{software}"}
+**Activity Part I**
+:::
 
-2. (*)Map the variable `Auto_driver.prop`, and use Moran's I to test for spatial autocorrelation. 
+1. Examine your dataframe. What variables are included? Are there any missing values?
 
-3. (*)Estimate regression model using the variables `Pop_Density` and travel time in `minutes`.
+2. Map the variable `Auto_driver.prop`, and use Moran's I to test for spatial autocorrelation. 
+
+3. Estimate regression model using the variables `Pop_Density` and travel time in `minutes`.
+
+::: {.infobox .brainware data-latex="{brainware}"}
+**Activity Part II**
+:::
 
 4. What does the analysis of autocorrelation in point 2* tell you about `Auto_driver.prop`? Would you say that autocorrelation in this variable is a sign that autocorrelation will be an issue in regression analysis? Why or why not?
 

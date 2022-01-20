@@ -77,9 +77,17 @@ Now that you have loaded the dataframe and converted to a `ppp` object, you are 
 
 ## Activity
 
-**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).
+**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.
 
-1. (*)Analyze the point pattern for the movements of the bear using quadrat and kernel density methods. Experiment with different quadrat sizes and kernel bandwidths. 
+::: {.infobox .software data-latex="{software}"}
+**Activity Part I**
+:::
+
+1. Analyze the point pattern for the movements of the bear using quadrat and kernel density methods. Experiment with different quadrat sizes and kernel bandwidths. 
+
+::: {.infobox .brainware data-latex="{brainware}"}
+**Activity Part II**
+:::
 
 2. Explain your choice of parameters (quadrat sizes and kernel bandwidths) to a fellow student.
 

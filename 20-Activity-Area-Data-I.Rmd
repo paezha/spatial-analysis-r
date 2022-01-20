@@ -66,13 +66,21 @@ You are ready for the next activity.
 
 ## Activity
 
-**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).
+**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.
 
-1. (*)Create choropleth maps for the proportion of the population who are 20 to 34 years old, 35 to 49 years old, 50 to 65 years old, and 65 and older.
+::: {.infobox .software data-latex="{software}"}
+**Activity Part I**
+:::
 
-2. (*)Create cartograms for the proportion of the population who are 20 to 34 years old, 35 to 49 years old, 50 to 65 years old, and 65 and older.
+1. Create choropleth maps for the proportion of the population who are 20 to 34 years old, 35 to 49 years old, 50 to 65 years old, and 65 and older.
 
-3. (*)Change the scheme and colors of your maps to obtain maps with 2 classes/colors, 5 classes/colors, and 10 classes/colors. You can check different color palettes [in the documentation of `ggplot2`](https://ggplot2.tidyverse.org/reference/scale_brewer.html). Which scheme is more informative? What colors looked better to you?
+2. Create cartograms for the proportion of the population who are 20 to 34 years old, 35 to 49 years old, 50 to 65 years old, and 65 and older.
+
+3. Change the scheme and colors of your maps to obtain maps with 2 classes/colors, 5 classes/colors, and 10 classes/colors. You can check different color palettes [in the documentation of `ggplot2`](https://ggplot2.tidyverse.org/reference/scale_brewer.html). Which scheme is more informative? What colors looked better to you?
+
+::: {.infobox .brainware data-latex="{brainware}"}
+**Activity Part II**
+:::
 
 4. Show your maps to a fellow student. What patterns do you notice in the distribution of population by age in Hamilton? Do you think the distribution of the population by age is random, or not random?
 

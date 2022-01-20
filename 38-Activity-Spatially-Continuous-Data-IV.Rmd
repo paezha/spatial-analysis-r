@@ -63,6 +63,14 @@ aquifer.sf <- aquifer %>%
 
 ## Activity
 
+::: {.infobox .caution data-latex="{caution}"}
+**Capstone Activity**
+
+This is a capstone activity where you can work free-style
+on a data set of your choice, and put in practice what you
+have learned with respect to the analysis of point patterns.
+:::
+
 1. Partner with a fellow student to analyze the dataset provided.
 
 2. Use kriging to interpolate the underlying field. Justify your modeling choices.

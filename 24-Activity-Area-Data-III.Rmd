@@ -59,13 +59,21 @@ You are now ready for the next activity.
 
 ## Activity
 
-**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).
+**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.
 
-1. (*)Create a spatial weights matrix for the census tracts in the Hamilton CMA.
+::: {.infobox .software data-latex="{software}"}
+**Activity Part I**
+:::
 
-2. (*)Use `moran.test` to test the following variables for spatial autocorrelation: proportion of the population who are 20 to 34 years old, 35 to 49 years old, 50 to 65 years old, and 65 and older.
+1. Create a spatial weights matrix for the census tracts in the Hamilton CMA.
 
-3. (*)Use `moran.plot()` to create Moran's scatterplots to complement your tests of spatial autocorrelation.
+2. Use `moran.test` to test the following variables for spatial autocorrelation: proportion of the population who are 20 to 34 years old, 35 to 49 years old, 50 to 65 years old, and 65 and older.
+
+3. Use `moran.plot()` to create Moran's scatterplots to complement your tests of spatial autocorrelation.
+
+::: {.infobox .brainware data-latex="{brainware}"}
+**Activity Part II**
+:::
 
 4. How confident are you deciding whether the variables under analysis are not spatially random? What can you say regarding the relative strength of the spatial pattern of these variables?
 

@@ -123,13 +123,21 @@ Now that you have seen how to do some analysis using quadrats, you are ready for
 
 ## Activity
 
-**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).
+**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.
 
-1. (*)Use `Fast_Food`, `Gas_Stands`, `Paez_Mart`, and `Toronto` to create density maps for the three point patterns. Select a quadrat size that you think is appropriate. 
+::: {.infobox .software data-latex="{software}"}
+**Activity Part I**
+:::
 
-2. (*)Use `Fast_Food.ppp`, `Gas_Stands`, and `Paez_Mart`, and the function `quadratcount` to calculate the number of events per quadrat. Remember that you need to select the number of quadrats in the horizontal and vertical directions!
+1. Use `Fast_Food`, `Gas_Stands`, `Paez_Mart`, and `Toronto` to create density maps for the three point patterns. Select a quadrat size that you think is appropriate. 
 
-3. (*)Use the function `table()` to examine the frequency of events per quadrat for each of the point patterns. 
+2. Use `Fast_Food.ppp`, `Gas_Stands`, and `Paez_Mart`, and the function `quadratcount` to calculate the number of events per quadrat. Remember that you need to select the number of quadrats in the horizontal and vertical directions!
+
+3. Use the function `table()` to examine the frequency of events per quadrat for each of the point patterns. 
+
+::: {.infobox .brainware data-latex="{brainware}"}
+**Activity Part II**
+:::
 
 4. Show your density maps to a fellow student. Did they select the same quadrat size? If not, what was their rationale for their size?
 

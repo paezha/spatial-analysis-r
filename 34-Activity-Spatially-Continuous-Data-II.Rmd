@@ -58,11 +58,19 @@ The data set consists of 85 georeferenced measurements of piezometric head. Poss
 
 ## Activity
 
-**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).
+**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.
 
-1. (*)Estimate a trend surface for the dataset experimenting with different polynomials.
+::: {.infobox .software data-latex="{software}"}
+**Activity Part I**
+:::
 
-2. (*)Create an interpolation grid, and use the function `predict` to interpolate the field using your chosen model. Plot the interpolated field using a method of your choice (e.g., `ggplot2`, `plot_ly()` for 3D plotting, etc.)
+1. Estimate a trend surface for the dataset experimenting with different polynomials.
+
+2. Create an interpolation grid, and use the function `predict` to interpolate the field using your chosen model. Plot the interpolated field using a method of your choice (e.g., `ggplot2`, `plot_ly()` for 3D plotting, etc.)
+
+::: {.infobox .brainware data-latex="{brainware}"}
+**Activity Part II**
+:::
 
 3. Which polynomial in your experiments provides the best fit (hint: consider the coefficient of multiple determination $R^2$ and the standard error, in addition to the significance of the parameters). Justify your choice of a polynomial.
 

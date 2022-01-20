@@ -63,13 +63,21 @@ The data set consists of 85 georeferenced measurements of piezometric head. Poss
 
 ## Activity
 
-**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).
+**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.
 
-1. (*)Obtain and plot the empirical semivariogram for the head in the Walker Lake dataset.
+::: {.infobox .software data-latex="{software}"}
+**Activity Part I**
+:::
 
-2. (*)Estimate a trend surface of your choice, and obtain and plot an empirical semivariogram using the residuals. How would you interpret this semivariogram?
+1. Obtain and plot the empirical semivariogram for the head in the Walker Lake dataset.
 
-3. (*)Estimate and plot a theoretical semivariogram model for the residual variogram. 
+2. Estimate a trend surface of your choice, and obtain and plot an empirical semivariogram using the residuals. How would you interpret this semivariogram?
+
+3. Estimate and plot a theoretical semivariogram model for the residual variogram. 
+
+::: {.infobox .brainware data-latex="{brainware}"}
+**Activity Part II**
+:::
 
 4. What is your interpretation of the semivariograms above?
 

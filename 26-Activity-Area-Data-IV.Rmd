@@ -127,13 +127,21 @@ You are now ready for the next activity.
 
 ## Activity
 
-**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).
+**NOTE**: Activities include technical "how to" tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.
 
-1. (*)Create local Moran maps for the population in age group 20-34 and _proportion_ of population in age group 20-34. 
+::: {.infobox .software data-latex="{software}"}
+**Activity Part I**
+:::
 
-2. (\*) Use the $G_i^*$ statistic to analyze the population _and_ proportion of population in the age group 20-34.
+1. Create local Moran maps for the population in age group 20-34 and _proportion_ of population in age group 20-34. 
 
-3. (*)Now create local Moran maps for the population and _population density_ in the age group 20-34. 
+2.  Use the $G_i^*$ statistic to analyze the population _and_ proportion of population in the age group 20-34.
+
+3. Now create local Moran maps for the population and _population density_ in the age group 20-34. 
+
+::: {.infobox .brainware data-latex="{brainware}"}
+**Activity Part II**
+:::
 
 4. Concerning the analysis in point 1: What is the difference between using population (absolute) and population density (rate)?
 
