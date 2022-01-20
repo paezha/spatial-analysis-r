@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2022-01-12" />
+<meta name="date" content="2022-01-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -635,16 +635,16 @@ div.csl-indent {
 <div id="preliminaries-7" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> Preliminaries</h2>
 <p>As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in <code>R</code> to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="point-pattern-analysis-i.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="point-pattern-analysis-i.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity:</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="point-pattern-analysis-i.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
-<span id="cb182-2"><a href="point-pattern-analysis-i.html#cb182-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb182-3"><a href="point-pattern-analysis-i.html#cb182-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="point-pattern-analysis-i.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
+<span id="cb184-2"><a href="point-pattern-analysis-i.html#cb184-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb184-3"><a href="point-pattern-analysis-i.html#cb184-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span></code></pre></div>
 <p>Load the data that you will use for this practice:</p>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="point-pattern-analysis-i.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;PointPatterns&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="point-pattern-analysis-i.html#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;PointPatterns&quot;</span>)</span></code></pre></div>
 <p>Quickly check the contents of this dataframe:</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="point-pattern-analysis-i.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(PointPatterns)</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="point-pattern-analysis-i.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(PointPatterns)</span></code></pre></div>
 <pre><code>##        x                y                 Pattern  
 ##  Min.   :0.0169   Min.   :0.005306   Pattern 1:60  
 ##  1st Qu.:0.2731   1st Qu.:0.289020   Pattern 2:60  
@@ -675,19 +675,19 @@ Sometimes other attributes of the events have been measured as well. For example
 <p>Point patterns are interesting in many applications. In these applications, a key question of interest is whether the pattern is <em>random</em>.</p>
 <p>Imagine a point pattern that records crimes in a region. The pattern might be random, in which case there is no way to anticipate where the next occurrence of criminal activity will be. Non-random patterns, on the other hand, are likely the outcome of some meaningful process. For instance, crimes might <em>cluster</em> as a consequence of some common environmental variable (e.g., concentration of wealth). On the contrary, they might repeal each other (e.g., the location of a crime draws attention of law enforcement, and therefore the next occurrence of a crime tends to happen away from it). Deciding whether the pattern is random or not is the initial step towards developing hypotheses about the underlying process.</p>
 <p>Consider for example the following patterns. To create the following figure, you can use <em>faceting</em> by means of <code>ggplot2::facet_wrap()</code>:</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="point-pattern-analysis-i.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This uses function &quot;ggplot&quot; to plot data &quot;PointPatterns&quot; loaded </span></span>
-<span id="cb186-2"><a href="point-pattern-analysis-i.html#cb186-2" aria-hidden="true" tabindex="-1"></a><span class="co"># into the data frame earlier, by means of X and Y coordinates</span></span>
-<span id="cb186-3"><a href="point-pattern-analysis-i.html#cb186-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb186-4"><a href="point-pattern-analysis-i.html#cb186-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the function `facet_wrap()` is used to create multiple plots </span></span>
-<span id="cb186-5"><a href="point-pattern-analysis-i.html#cb186-5" aria-hidden="true" tabindex="-1"></a><span class="co"># according to one (or more) variables in the dataset. Here, it </span></span>
-<span id="cb186-6"><a href="point-pattern-analysis-i.html#cb186-6" aria-hidden="true" tabindex="-1"></a><span class="co"># is used to create individual plots for each of the four patterns </span></span>
-<span id="cb186-7"><a href="point-pattern-analysis-i.html#cb186-7" aria-hidden="true" tabindex="-1"></a><span class="co"># in the dataframe, but put them all in a single figure</span></span>
-<span id="cb186-8"><a href="point-pattern-analysis-i.html#cb186-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb186-9"><a href="point-pattern-analysis-i.html#cb186-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> PointPatterns, </span>
-<span id="cb186-10"><a href="point-pattern-analysis-i.html#cb186-10" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
-<span id="cb186-11"><a href="point-pattern-analysis-i.html#cb186-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y)) <span class="sc">+</span> </span>
-<span id="cb186-12"><a href="point-pattern-analysis-i.html#cb186-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Pattern) <span class="sc">+</span></span>
-<span id="cb186-13"><a href="point-pattern-analysis-i.html#cb186-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="point-pattern-analysis-i.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This uses function &quot;ggplot&quot; to plot data &quot;PointPatterns&quot; loaded </span></span>
+<span id="cb188-2"><a href="point-pattern-analysis-i.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="co"># into the data frame earlier, by means of X and Y coordinates</span></span>
+<span id="cb188-3"><a href="point-pattern-analysis-i.html#cb188-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-4"><a href="point-pattern-analysis-i.html#cb188-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the function `facet_wrap()` is used to create multiple plots </span></span>
+<span id="cb188-5"><a href="point-pattern-analysis-i.html#cb188-5" aria-hidden="true" tabindex="-1"></a><span class="co"># according to one (or more) variables in the dataset. Here, it </span></span>
+<span id="cb188-6"><a href="point-pattern-analysis-i.html#cb188-6" aria-hidden="true" tabindex="-1"></a><span class="co"># is used to create individual plots for each of the four patterns </span></span>
+<span id="cb188-7"><a href="point-pattern-analysis-i.html#cb188-7" aria-hidden="true" tabindex="-1"></a><span class="co"># in the dataframe, but put them all in a single figure</span></span>
+<span id="cb188-8"><a href="point-pattern-analysis-i.html#cb188-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb188-9"><a href="point-pattern-analysis-i.html#cb188-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> PointPatterns, </span>
+<span id="cb188-10"><a href="point-pattern-analysis-i.html#cb188-10" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb188-11"><a href="point-pattern-analysis-i.html#cb188-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y)) <span class="sc">+</span> </span>
+<span id="cb188-12"><a href="point-pattern-analysis-i.html#cb188-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Pattern) <span class="sc">+</span></span>
+<span id="cb188-13"><a href="point-pattern-analysis-i.html#cb188-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
 <p><img src="spatial-analysis-R_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>As you can see, faceting is a convenient way to simultaneously plot different parts of a dataframe (in the present case, the different <code>Pattern</code>’s).</p>
 <p>In the preceding activity, you were asked to generate ideas regarding possible ways of deciding whether a map of events (i.e., a point pattern) is random. In this chapter we will formalize a specific way to do so, by considering the <em>intensity</em> of the process.</p>
@@ -701,7 +701,7 @@ Sometimes other attributes of the events have been measured as well. For example
 \]</span>
 Notice the use of the “hat” symbol on top of the Greek lambda. This symbol is called “caret”. The hat notation is used to indicate an estimated value of an unobserved parameter of a process as opposed to the true (but usually unknown) value. In the present case this is the intensity of the spatial point process.</p>
 <p>Consider one of the point patterns in your sample dataset, say “Pattern 1”. If we filter for “Pattern 1” we can then summarize it:</p>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="point-pattern-analysis-i.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(PointPatterns, Pattern <span class="sc">==</span> <span class="st">&quot;Pattern 1&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="point-pattern-analysis-i.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(PointPatterns, Pattern <span class="sc">==</span> <span class="st">&quot;Pattern 1&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
 <pre><code>##        x                y                 Pattern  
 ##  Min.   :0.0285   Min.   :0.005306   Pattern 1:60  
 ##  1st Qu.:0.3344   1st Qu.:0.236509   Pattern 2: 0  
@@ -718,18 +718,18 @@ Notice the use of the “hat” symbol on top of the Greek lambda. This symbol i
 <div id="quadrats-and-density-maps" class="section level2" number="9.7">
 <h2><span class="header-section-number">9.7</span> Quadrats and Density Maps</h2>
 <p>The overall density of a point process (calculated above) can be mapped by means of the <code>geom_bin2d</code> function of the <code>ggplot2</code> package. This function divides two dimensional space into bins and reports the number of events or the density of the events in the bins. We will give this a try next:</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="point-pattern-analysis-i.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `geom_bin2d()` creates a tessellation and counts the number of events</span></span>
-<span id="cb189-2"><a href="point-pattern-analysis-i.html#cb189-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in each of the &quot;tiles&quot; in the tessellation. It then assigns colors based </span></span>
-<span id="cb189-3"><a href="point-pattern-analysis-i.html#cb189-3" aria-hidden="true" tabindex="-1"></a><span class="co"># on the count of events. The `binwidth` determines the size of the squares </span></span>
-<span id="cb189-4"><a href="point-pattern-analysis-i.html#cb189-4" aria-hidden="true" tabindex="-1"></a><span class="co"># in the tessellation, in this case squares of size 1 by 1...which corresponds </span></span>
-<span id="cb189-5"><a href="point-pattern-analysis-i.html#cb189-5" aria-hidden="true" tabindex="-1"></a><span class="co"># to the size of the region!</span></span>
-<span id="cb189-6"><a href="point-pattern-analysis-i.html#cb189-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb189-7"><a href="point-pattern-analysis-i.html#cb189-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>(<span class="at">data =</span> <span class="fu">subset</span>(PointPatterns, </span>
-<span id="cb189-8"><a href="point-pattern-analysis-i.html#cb189-8" aria-hidden="true" tabindex="-1"></a>                           Pattern <span class="sc">==</span> <span class="st">&quot;Pattern 1&quot;</span>),</span>
-<span id="cb189-9"><a href="point-pattern-analysis-i.html#cb189-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
-<span id="cb189-10"><a href="point-pattern-analysis-i.html#cb189-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y),</span>
-<span id="cb189-11"><a href="point-pattern-analysis-i.html#cb189-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">binwidth =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb189-12"><a href="point-pattern-analysis-i.html#cb189-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="point-pattern-analysis-i.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `geom_bin2d()` creates a tessellation and counts the number of events</span></span>
+<span id="cb191-2"><a href="point-pattern-analysis-i.html#cb191-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in each of the &quot;tiles&quot; in the tessellation. It then assigns colors based </span></span>
+<span id="cb191-3"><a href="point-pattern-analysis-i.html#cb191-3" aria-hidden="true" tabindex="-1"></a><span class="co"># on the count of events. The `binwidth` determines the size of the squares </span></span>
+<span id="cb191-4"><a href="point-pattern-analysis-i.html#cb191-4" aria-hidden="true" tabindex="-1"></a><span class="co"># in the tessellation, in this case squares of size 1 by 1...which corresponds </span></span>
+<span id="cb191-5"><a href="point-pattern-analysis-i.html#cb191-5" aria-hidden="true" tabindex="-1"></a><span class="co"># to the size of the region!</span></span>
+<span id="cb191-6"><a href="point-pattern-analysis-i.html#cb191-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb191-7"><a href="point-pattern-analysis-i.html#cb191-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>(<span class="at">data =</span> <span class="fu">subset</span>(PointPatterns, </span>
+<span id="cb191-8"><a href="point-pattern-analysis-i.html#cb191-8" aria-hidden="true" tabindex="-1"></a>                           Pattern <span class="sc">==</span> <span class="st">&quot;Pattern 1&quot;</span>),</span>
+<span id="cb191-9"><a href="point-pattern-analysis-i.html#cb191-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb191-10"><a href="point-pattern-analysis-i.html#cb191-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y),</span>
+<span id="cb191-11"><a href="point-pattern-analysis-i.html#cb191-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">binwidth =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb191-12"><a href="point-pattern-analysis-i.html#cb191-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
 <p><img src="spatial-analysis-R_files/figure-html/ch09-2d-bins-1.png" width="672" /></p>
 <p>Let us see step-by-step how this plot is made.</p>
 <ol style="list-style-type: decimal">
@@ -743,74 +743,74 @@ Notice the use of the “hat” symbol on top of the Greek lambda. This symbol i
 <p>The map of the overall density of the process above is not terribly interesting. It only reports what we already knew, that globally the density of the point pattern is 60. It would be more interesting to see how the density varies across the region.</p>
 <p>We do this by means of the concept of <em>quadrats</em>.</p>
 <p>Imagine that instead of calculating the overall (or global) intensity of the point pattern, we subdivided the region into a set of smaller subregions. For instance, we could draw horizontal and vertical lines to create smaller squares:</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="point-pattern-analysis-i.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `geom_vline()` draws vertical lines that cross the x-axis at </span></span>
-<span id="cb190-2"><a href="point-pattern-analysis-i.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the points indicated; `geom_hline()` draws horizontal lines </span></span>
-<span id="cb190-3"><a href="point-pattern-analysis-i.html#cb190-3" aria-hidden="true" tabindex="-1"></a><span class="co"># that cross the y-axis at the points indicated</span></span>
-<span id="cb190-4"><a href="point-pattern-analysis-i.html#cb190-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb190-5"><a href="point-pattern-analysis-i.html#cb190-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, </span>
-<span id="cb190-6"><a href="point-pattern-analysis-i.html#cb190-6" aria-hidden="true" tabindex="-1"></a>                              <span class="at">to =</span> <span class="dv">1</span>, </span>
-<span id="cb190-7"><a href="point-pattern-analysis-i.html#cb190-7" aria-hidden="true" tabindex="-1"></a>                              <span class="at">by =</span> <span class="fl">0.25</span>)) <span class="sc">+</span></span>
-<span id="cb190-8"><a href="point-pattern-analysis-i.html#cb190-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, </span>
-<span id="cb190-9"><a href="point-pattern-analysis-i.html#cb190-9" aria-hidden="true" tabindex="-1"></a>                              <span class="at">to =</span> <span class="dv">1</span>, </span>
-<span id="cb190-10"><a href="point-pattern-analysis-i.html#cb190-10" aria-hidden="true" tabindex="-1"></a>                              <span class="at">by =</span> <span class="fl">0.25</span>)) <span class="sc">+</span></span>
-<span id="cb190-11"><a href="point-pattern-analysis-i.html#cb190-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">filter</span>(PointPatterns, </span>
-<span id="cb190-12"><a href="point-pattern-analysis-i.html#cb190-12" aria-hidden="true" tabindex="-1"></a>                           Pattern <span class="sc">==</span> <span class="st">&quot;Pattern 1&quot;</span>), </span>
-<span id="cb190-13"><a href="point-pattern-analysis-i.html#cb190-13" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
-<span id="cb190-14"><a href="point-pattern-analysis-i.html#cb190-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb190-15"><a href="point-pattern-analysis-i.html#cb190-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="point-pattern-analysis-i.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `geom_vline()` draws vertical lines that cross the x-axis at </span></span>
+<span id="cb192-2"><a href="point-pattern-analysis-i.html#cb192-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the points indicated; `geom_hline()` draws horizontal lines </span></span>
+<span id="cb192-3"><a href="point-pattern-analysis-i.html#cb192-3" aria-hidden="true" tabindex="-1"></a><span class="co"># that cross the y-axis at the points indicated</span></span>
+<span id="cb192-4"><a href="point-pattern-analysis-i.html#cb192-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb192-5"><a href="point-pattern-analysis-i.html#cb192-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, </span>
+<span id="cb192-6"><a href="point-pattern-analysis-i.html#cb192-6" aria-hidden="true" tabindex="-1"></a>                              <span class="at">to =</span> <span class="dv">1</span>, </span>
+<span id="cb192-7"><a href="point-pattern-analysis-i.html#cb192-7" aria-hidden="true" tabindex="-1"></a>                              <span class="at">by =</span> <span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb192-8"><a href="point-pattern-analysis-i.html#cb192-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, </span>
+<span id="cb192-9"><a href="point-pattern-analysis-i.html#cb192-9" aria-hidden="true" tabindex="-1"></a>                              <span class="at">to =</span> <span class="dv">1</span>, </span>
+<span id="cb192-10"><a href="point-pattern-analysis-i.html#cb192-10" aria-hidden="true" tabindex="-1"></a>                              <span class="at">by =</span> <span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb192-11"><a href="point-pattern-analysis-i.html#cb192-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">filter</span>(PointPatterns, </span>
+<span id="cb192-12"><a href="point-pattern-analysis-i.html#cb192-12" aria-hidden="true" tabindex="-1"></a>                           Pattern <span class="sc">==</span> <span class="st">&quot;Pattern 1&quot;</span>), </span>
+<span id="cb192-13"><a href="point-pattern-analysis-i.html#cb192-13" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb192-14"><a href="point-pattern-analysis-i.html#cb192-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb192-15"><a href="point-pattern-analysis-i.html#cb192-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
 <p><img src="spatial-analysis-R_files/figure-html/ch09-add-grid-1.png" width="672" /></p>
 <p>Notice how we used to create the vertical lines (<code>geom_vline</code>) and horizontal lines (<code>geom_hline</code>), from 0 to 1 every 0.25 units of distance respectively. This creates a tessellation that divides the original region into 16 smaller squares, or subregions. Each of the smaller squares used to subdivide the region is called a <em>quadrat</em>.</p>
 <p>To make things more interesting, instead of calculating the overall density, we can calculate the density for each quadrat. Now the size of the quadrats will be <span class="math inline">\(0.25\times 0.25\)</span>. Here we visualize the density of the quadrats:</p>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="point-pattern-analysis-i.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb191-2"><a href="point-pattern-analysis-i.html#cb191-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>(<span class="at">data =</span> <span class="fu">filter</span>(PointPatterns, </span>
-<span id="cb191-3"><a href="point-pattern-analysis-i.html#cb191-3" aria-hidden="true" tabindex="-1"></a>                           Pattern <span class="sc">==</span> <span class="st">&quot;Pattern 1&quot;</span>),</span>
-<span id="cb191-4"><a href="point-pattern-analysis-i.html#cb191-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
-<span id="cb191-5"><a href="point-pattern-analysis-i.html#cb191-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y),</span>
-<span id="cb191-6"><a href="point-pattern-analysis-i.html#cb191-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">binwidth =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, </span>
-<span id="cb191-7"><a href="point-pattern-analysis-i.html#cb191-7" aria-hidden="true" tabindex="-1"></a>                          <span class="fl">0.25</span>)) <span class="sc">+</span></span>
-<span id="cb191-8"><a href="point-pattern-analysis-i.html#cb191-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">filter</span>(PointPatterns, </span>
-<span id="cb191-9"><a href="point-pattern-analysis-i.html#cb191-9" aria-hidden="true" tabindex="-1"></a>                             Pattern <span class="sc">==</span> <span class="st">&quot;Pattern 1&quot;</span>), </span>
-<span id="cb191-10"><a href="point-pattern-analysis-i.html#cb191-10" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
-<span id="cb191-11"><a href="point-pattern-analysis-i.html#cb191-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb191-12"><a href="point-pattern-analysis-i.html#cb191-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
-<span id="cb191-13"><a href="point-pattern-analysis-i.html#cb191-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="point-pattern-analysis-i.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb193-2"><a href="point-pattern-analysis-i.html#cb193-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>(<span class="at">data =</span> <span class="fu">filter</span>(PointPatterns, </span>
+<span id="cb193-3"><a href="point-pattern-analysis-i.html#cb193-3" aria-hidden="true" tabindex="-1"></a>                           Pattern <span class="sc">==</span> <span class="st">&quot;Pattern 1&quot;</span>),</span>
+<span id="cb193-4"><a href="point-pattern-analysis-i.html#cb193-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb193-5"><a href="point-pattern-analysis-i.html#cb193-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y),</span>
+<span id="cb193-6"><a href="point-pattern-analysis-i.html#cb193-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">binwidth =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, </span>
+<span id="cb193-7"><a href="point-pattern-analysis-i.html#cb193-7" aria-hidden="true" tabindex="-1"></a>                          <span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb193-8"><a href="point-pattern-analysis-i.html#cb193-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">filter</span>(PointPatterns, </span>
+<span id="cb193-9"><a href="point-pattern-analysis-i.html#cb193-9" aria-hidden="true" tabindex="-1"></a>                             Pattern <span class="sc">==</span> <span class="st">&quot;Pattern 1&quot;</span>), </span>
+<span id="cb193-10"><a href="point-pattern-analysis-i.html#cb193-10" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb193-11"><a href="point-pattern-analysis-i.html#cb193-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb193-12"><a href="point-pattern-analysis-i.html#cb193-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
+<span id="cb193-13"><a href="point-pattern-analysis-i.html#cb193-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
 <p><img src="spatial-analysis-R_files/figure-html/ch09-2d-bin-change-size-1.png" width="672" /></p>
 <p>You can, of course, change the size of the quadrats. We can take a look at the four point patterns (by means of faceting), after creating a variable to easily control the size of the quadrat. Let us call this variable <code>q_size</code>:</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="point-pattern-analysis-i.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `q_size` controls the size of the quadrats; experiment changing this parameter</span></span>
-<span id="cb192-2"><a href="point-pattern-analysis-i.html#cb192-2" aria-hidden="true" tabindex="-1"></a>q_size <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb192-3"><a href="point-pattern-analysis-i.html#cb192-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb192-4"><a href="point-pattern-analysis-i.html#cb192-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>(<span class="at">data =</span> PointPatterns,</span>
-<span id="cb192-5"><a href="point-pattern-analysis-i.html#cb192-5" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
-<span id="cb192-6"><a href="point-pattern-analysis-i.html#cb192-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y),</span>
-<span id="cb192-7"><a href="point-pattern-analysis-i.html#cb192-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">binwidth =</span> <span class="fu">c</span>(q_size, </span>
-<span id="cb192-8"><a href="point-pattern-analysis-i.html#cb192-8" aria-hidden="true" tabindex="-1"></a>                          q_size)) <span class="sc">+</span></span>
-<span id="cb192-9"><a href="point-pattern-analysis-i.html#cb192-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> PointPatterns, </span>
-<span id="cb192-10"><a href="point-pattern-analysis-i.html#cb192-10" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
-<span id="cb192-11"><a href="point-pattern-analysis-i.html#cb192-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb192-12"><a href="point-pattern-analysis-i.html#cb192-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Pattern) <span class="sc">+</span></span>
-<span id="cb192-13"><a href="point-pattern-analysis-i.html#cb192-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
-<span id="cb192-14"><a href="point-pattern-analysis-i.html#cb192-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="point-pattern-analysis-i.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `q_size` controls the size of the quadrats; experiment changing this parameter</span></span>
+<span id="cb194-2"><a href="point-pattern-analysis-i.html#cb194-2" aria-hidden="true" tabindex="-1"></a>q_size <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb194-3"><a href="point-pattern-analysis-i.html#cb194-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb194-4"><a href="point-pattern-analysis-i.html#cb194-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bin2d</span>(<span class="at">data =</span> PointPatterns,</span>
+<span id="cb194-5"><a href="point-pattern-analysis-i.html#cb194-5" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb194-6"><a href="point-pattern-analysis-i.html#cb194-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y),</span>
+<span id="cb194-7"><a href="point-pattern-analysis-i.html#cb194-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">binwidth =</span> <span class="fu">c</span>(q_size, </span>
+<span id="cb194-8"><a href="point-pattern-analysis-i.html#cb194-8" aria-hidden="true" tabindex="-1"></a>                          q_size)) <span class="sc">+</span></span>
+<span id="cb194-9"><a href="point-pattern-analysis-i.html#cb194-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> PointPatterns, </span>
+<span id="cb194-10"><a href="point-pattern-analysis-i.html#cb194-10" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb194-11"><a href="point-pattern-analysis-i.html#cb194-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb194-12"><a href="point-pattern-analysis-i.html#cb194-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Pattern) <span class="sc">+</span></span>
+<span id="cb194-13"><a href="point-pattern-analysis-i.html#cb194-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdBu&quot;</span>) <span class="sc">+</span></span>
+<span id="cb194-14"><a href="point-pattern-analysis-i.html#cb194-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div>
 <p><img src="spatial-analysis-R_files/figure-html/ch09-change-size-of-quadrats-1.png" width="672" /></p>
 <p>Notice the differences in the density maps? Try changing the size of the quadrat to 1. What happens, and why? Next, try a smaller quadrat size, say 0.25. What happens, and why? Try even smaller quadrat sizes, but greater than zero. What happens now?</p>
 <p>The package <code>spatstat</code> <span class="citation">(<a href="#ref-Baddeley2015" role="doc-biblioref">Baddeley, Rubak, and Turner 2016</a>)</span> includes numerous functions for the analysis of point patterns. A relevant function for us at this stage, is <code>quadratcount()</code>, which returns the number of events per quadrat.</p>
 <p>To use this function, we need to convert the point patterns to a type of object used by <code>spatstat</code> denominated <code>ppp</code> (for <em>p</em>lannar <em>p</em>oint <em>p</em>attern). This is simple, thanks to a utility function in <code>spatstat</code> called <code>as.ppp</code>. This function takes as arguments (inputs) a set of coordinates, and data to define a window. To benefit from the functionality of <code>spatstat</code> we will convert our data frame with spatial patterns into <code>ppp</code> objects.</p>
 <p>First, define the window by means of the <code>owin</code> function, and using the 0 to 1 interval for our region:</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="point-pattern-analysis-i.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `owin()` creates a window for `ppp` objects, which becomes </span></span>
-<span id="cb193-2"><a href="point-pattern-analysis-i.html#cb193-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the _region_ under study. Here, we define a window that is </span></span>
-<span id="cb193-3"><a href="point-pattern-analysis-i.html#cb193-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the unit square and we will discuss the importance of an </span></span>
-<span id="cb193-4"><a href="point-pattern-analysis-i.html#cb193-4" aria-hidden="true" tabindex="-1"></a><span class="co">#appropriate definition of the region later. The windows in </span></span>
-<span id="cb193-5"><a href="point-pattern-analysis-i.html#cb193-5" aria-hidden="true" tabindex="-1"></a><span class="co"># `spatstat` need not be squares or rectangles, and can actually </span></span>
-<span id="cb193-6"><a href="point-pattern-analysis-i.html#cb193-6" aria-hidden="true" tabindex="-1"></a><span class="co"># be irregular shapes</span></span>
-<span id="cb193-7"><a href="point-pattern-analysis-i.html#cb193-7" aria-hidden="true" tabindex="-1"></a>Wnd <span class="ot">&lt;-</span> <span class="fu">owin</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="point-pattern-analysis-i.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `owin()` creates a window for `ppp` objects, which becomes </span></span>
+<span id="cb195-2"><a href="point-pattern-analysis-i.html#cb195-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the _region_ under study. Here, we define a window that is </span></span>
+<span id="cb195-3"><a href="point-pattern-analysis-i.html#cb195-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the unit square and we will discuss the importance of an </span></span>
+<span id="cb195-4"><a href="point-pattern-analysis-i.html#cb195-4" aria-hidden="true" tabindex="-1"></a><span class="co">#appropriate definition of the region later. The windows in </span></span>
+<span id="cb195-5"><a href="point-pattern-analysis-i.html#cb195-5" aria-hidden="true" tabindex="-1"></a><span class="co"># `spatstat` need not be squares or rectangles, and can actually </span></span>
+<span id="cb195-6"><a href="point-pattern-analysis-i.html#cb195-6" aria-hidden="true" tabindex="-1"></a><span class="co"># be irregular shapes</span></span>
+<span id="cb195-7"><a href="point-pattern-analysis-i.html#cb195-7" aria-hidden="true" tabindex="-1"></a>Wnd <span class="ot">&lt;-</span> <span class="fu">owin</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) </span></code></pre></div>
 <p>Now, a <code>ppp</code> object can be created:</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="point-pattern-analysis-i.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `as.ppp()` will take an object and convert it to a `ppp` object.</span></span>
-<span id="cb194-2"><a href="point-pattern-analysis-i.html#cb194-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Here, it does a fairly good job of guessing the contents of the </span></span>
-<span id="cb194-3"><a href="point-pattern-analysis-i.html#cb194-3" aria-hidden="true" tabindex="-1"></a><span class="co"># data frame! The second argument to create the `ppp` object is a </span></span>
-<span id="cb194-4"><a href="point-pattern-analysis-i.html#cb194-4" aria-hidden="true" tabindex="-1"></a><span class="co"># window, that is, an `owin` object</span></span>
-<span id="cb194-5"><a href="point-pattern-analysis-i.html#cb194-5" aria-hidden="true" tabindex="-1"></a>ppp1 <span class="ot">&lt;-</span> <span class="fu">as.ppp</span>(PointPatterns, </span>
-<span id="cb194-6"><a href="point-pattern-analysis-i.html#cb194-6" aria-hidden="true" tabindex="-1"></a>               Wnd)</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="point-pattern-analysis-i.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `as.ppp()` will take an object and convert it to a `ppp` object.</span></span>
+<span id="cb196-2"><a href="point-pattern-analysis-i.html#cb196-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Here, it does a fairly good job of guessing the contents of the </span></span>
+<span id="cb196-3"><a href="point-pattern-analysis-i.html#cb196-3" aria-hidden="true" tabindex="-1"></a><span class="co"># data frame! The second argument to create the `ppp` object is a </span></span>
+<span id="cb196-4"><a href="point-pattern-analysis-i.html#cb196-4" aria-hidden="true" tabindex="-1"></a><span class="co"># window, that is, an `owin` object</span></span>
+<span id="cb196-5"><a href="point-pattern-analysis-i.html#cb196-5" aria-hidden="true" tabindex="-1"></a>ppp1 <span class="ot">&lt;-</span> <span class="fu">as.ppp</span>(PointPatterns, </span>
+<span id="cb196-6"><a href="point-pattern-analysis-i.html#cb196-6" aria-hidden="true" tabindex="-1"></a>               Wnd)</span></code></pre></div>
 <p>If you examine these new <code>ppp</code> objects, you will see that they pack the same basic information (i.e., the coordinates), but also the range of the region and so on:</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="point-pattern-analysis-i.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ppp1)</span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="point-pattern-analysis-i.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ppp1)</span></code></pre></div>
 <pre><code>## Marked planar point pattern:  240 points
 ## Average intensity 240 points per square unit
 ## 
@@ -827,15 +827,15 @@ Notice the use of the “hat” symbol on top of the Greek lambda. This symbol i
 ## Window area = 1 square unit</code></pre>
 <p>As you can see, the <code>ppp</code> object includes the four patterns, calculates the frequency of each (the number of events), and their respective overall intensities.</p>
 <p>Objects of the class <code>ppp</code> can be plotted using base <code>R</code> plotting functions:</p>
-<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="point-pattern-analysis-i.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ppp1)</span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="point-pattern-analysis-i.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ppp1)</span></code></pre></div>
 <p><img src="spatial-analysis-R_files/figure-html/ch09-plot-ppp1-1.png" width="672" /></p>
 <p>To plot each pattern separately we can split the different patterns using the function <code>split.ppp()</code>. Notice how <code>$</code> works for indexing the patterns here, just as it does for indexing columns in a data frame:</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="point-pattern-analysis-i.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">split.ppp</span>(ppp1)<span class="sc">$</span><span class="st">`</span><span class="at">Pattern 1</span><span class="st">`</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="point-pattern-analysis-i.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">split.ppp</span>(ppp1)<span class="sc">$</span><span class="st">`</span><span class="at">Pattern 1</span><span class="st">`</span>)</span></code></pre></div>
 <p><img src="spatial-analysis-R_files/figure-html/ch09-split-ppp-1.png" width="672" /></p>
 <p>Once the patterns are in <code>ppp</code> form, <code>quadratcount</code> can be used to compute the counts of events. To calculate the count separately for each pattern, you need to use again <code>split.ppp()</code> (if you don’t index a pattern, it will apply the function to all of them). The other two arguments are the number of quadrats in the horizontal (nx) and the vertical (ny) directions:</p>
-<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="point-pattern-analysis-i.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadratcount</span>(<span class="fu">split</span>(ppp1),</span>
-<span id="cb199-2"><a href="point-pattern-analysis-i.html#cb199-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">nx =</span> <span class="dv">4</span>,</span>
-<span id="cb199-3"><a href="point-pattern-analysis-i.html#cb199-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">ny =</span> <span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="point-pattern-analysis-i.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadratcount</span>(<span class="fu">split</span>(ppp1),</span>
+<span id="cb201-2"><a href="point-pattern-analysis-i.html#cb201-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">nx =</span> <span class="dv">4</span>,</span>
+<span id="cb201-3"><a href="point-pattern-analysis-i.html#cb201-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">ny =</span> <span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## List of spatial objects
 ## 
 ## Pattern 1:
@@ -875,25 +875,25 @@ Notice the use of the “hat” symbol on top of the Greek lambda. This symbol i
 <h2><span class="header-section-number">9.8</span> Defining the Region for Analysis</h2>
 <p>It is important when conducting the type of analysis described above (and more generally any analysis with point patterns), to define a region for analysis that is consistent with the pattern of interest.</p>
 <p>Consider for instance what would happen if the region was defined, instead of in the unit square, as a bigger region. Create a second window:</p>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="point-pattern-analysis-i.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This new window measure 3 units in the x-axis, </span></span>
-<span id="cb201-2"><a href="point-pattern-analysis-i.html#cb201-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and also 3 units in the y-axis (from -1 to 2)</span></span>
-<span id="cb201-3"><a href="point-pattern-analysis-i.html#cb201-3" aria-hidden="true" tabindex="-1"></a>Wnd2 <span class="ot">&lt;-</span> <span class="fu">owin</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">2</span>), </span>
-<span id="cb201-4"><a href="point-pattern-analysis-i.html#cb201-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">2</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="point-pattern-analysis-i.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This new window measure 3 units in the x-axis, </span></span>
+<span id="cb203-2"><a href="point-pattern-analysis-i.html#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and also 3 units in the y-axis (from -1 to 2)</span></span>
+<span id="cb203-3"><a href="point-pattern-analysis-i.html#cb203-3" aria-hidden="true" tabindex="-1"></a>Wnd2 <span class="ot">&lt;-</span> <span class="fu">owin</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">2</span>), </span>
+<span id="cb203-4"><a href="point-pattern-analysis-i.html#cb203-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">2</span>)) </span></code></pre></div>
 <p>Create a second <code>ppp</code> object using this new window:</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="point-pattern-analysis-i.html#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here, we use the same events as before, but place them in the larger window we just created</span></span>
-<span id="cb202-2"><a href="point-pattern-analysis-i.html#cb202-2" aria-hidden="true" tabindex="-1"></a>ppp2 <span class="ot">&lt;-</span> <span class="fu">as.ppp</span>(PointPatterns,</span>
-<span id="cb202-3"><a href="point-pattern-analysis-i.html#cb202-3" aria-hidden="true" tabindex="-1"></a>               Wnd2)</span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="point-pattern-analysis-i.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here, we use the same events as before, but place them in the larger window we just created</span></span>
+<span id="cb204-2"><a href="point-pattern-analysis-i.html#cb204-2" aria-hidden="true" tabindex="-1"></a>ppp2 <span class="ot">&lt;-</span> <span class="fu">as.ppp</span>(PointPatterns,</span>
+<span id="cb204-3"><a href="point-pattern-analysis-i.html#cb204-3" aria-hidden="true" tabindex="-1"></a>               Wnd2)</span></code></pre></div>
 <p>Repeat the plot but using the new <code>ppp</code> object:</p>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="point-pattern-analysis-i.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">split.ppp</span>(ppp2)<span class="sc">$</span><span class="st">`</span><span class="at">Pattern 1</span><span class="st">`</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="point-pattern-analysis-i.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">split.ppp</span>(ppp2)<span class="sc">$</span><span class="st">`</span><span class="at">Pattern 1</span><span class="st">`</span>)</span></code></pre></div>
 <p><img src="spatial-analysis-R_files/figure-html/ch09-plot-ppp2-1.png" width="672" /></p>
 <p>Repeat but now using an even bigger region. Create a third window:</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="point-pattern-analysis-i.html#cb204-1" aria-hidden="true" tabindex="-1"></a>Wnd3 <span class="ot">&lt;-</span> <span class="fu">owin</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">3</span>), </span>
-<span id="cb204-2"><a href="point-pattern-analysis-i.html#cb204-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">3</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="point-pattern-analysis-i.html#cb206-1" aria-hidden="true" tabindex="-1"></a>Wnd3 <span class="ot">&lt;-</span> <span class="fu">owin</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">3</span>), </span>
+<span id="cb206-2"><a href="point-pattern-analysis-i.html#cb206-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">3</span>)) </span></code></pre></div>
 <p>And also a third <code>ppp</code> object using the third window:</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="point-pattern-analysis-i.html#cb205-1" aria-hidden="true" tabindex="-1"></a>ppp3 <span class="ot">&lt;-</span> <span class="fu">as.ppp</span>(PointPatterns, </span>
-<span id="cb205-2"><a href="point-pattern-analysis-i.html#cb205-2" aria-hidden="true" tabindex="-1"></a>               Wnd3)</span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="point-pattern-analysis-i.html#cb207-1" aria-hidden="true" tabindex="-1"></a>ppp3 <span class="ot">&lt;-</span> <span class="fu">as.ppp</span>(PointPatterns, </span>
+<span id="cb207-2"><a href="point-pattern-analysis-i.html#cb207-2" aria-hidden="true" tabindex="-1"></a>               Wnd3)</span></code></pre></div>
 <p>Now the plot looks like this:</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="point-pattern-analysis-i.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">split.ppp</span>(ppp3)<span class="sc">$</span><span class="st">`</span><span class="at">Pattern 1</span><span class="st">`</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="point-pattern-analysis-i.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">split.ppp</span>(ppp3)<span class="sc">$</span><span class="st">`</span><span class="at">Pattern 1</span><span class="st">`</span>)</span></code></pre></div>
 <p><img src="spatial-analysis-R_files/figure-html/ch09-plot-ppp3-1.png" width="672" /></p>
 <p>Which of the three regions that you saw above is more appropriate? What do you think is the effect of selecting an inappropriate region for the analysis?</p>
 <p>This concludes this chapter. The next activity will illustrate how quadrats are a useful tool to explore the question whether a map is random.</p>

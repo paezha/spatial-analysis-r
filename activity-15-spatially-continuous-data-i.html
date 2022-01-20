@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2022-01-12" />
+<meta name="date" content="2022-01-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -635,29 +635,37 @@ div.csl-indent {
 <div id="preliminaries-30" class="section level2" number="32.4">
 <h2><span class="header-section-number">32.4</span> Preliminaries</h2>
 <p>It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
-<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="activity-15-spatially-continuous-data-i.html#cb705-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="activity-15-spatially-continuous-data-i.html#cb707-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity (load other packages as appropriate).</p>
-<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="activity-15-spatially-continuous-data-i.html#cb706-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
-<span id="cb706-2"><a href="activity-15-spatially-continuous-data-i.html#cb706-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb706-3"><a href="activity-15-spatially-continuous-data-i.html#cb706-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span>
-<span id="cb706-4"><a href="activity-15-spatially-continuous-data-i.html#cb706-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span></code></pre></div>
+<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="activity-15-spatially-continuous-data-i.html#cb708-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
+<span id="cb708-2"><a href="activity-15-spatially-continuous-data-i.html#cb708-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb708-3"><a href="activity-15-spatially-continuous-data-i.html#cb708-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span>
+<span id="cb708-4"><a href="activity-15-spatially-continuous-data-i.html#cb708-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span></code></pre></div>
 <p>Load the data that you will use in this activity:</p>
-<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="activity-15-spatially-continuous-data-i.html#cb707-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;aquifer&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb709-1"><a href="activity-15-spatially-continuous-data-i.html#cb709-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;aquifer&quot;</span>)</span></code></pre></div>
 <p>The data is a set of piezometric head (watertable pressure) observations of the Wolfcamp Aquifer in Texas (<a href="https://en.wikipedia.org/wiki/Hydraulic_head" class="uri">https://en.wikipedia.org/wiki/Hydraulic_head</a>). Measures of pressure can be used to infer the flow of underground water, since water flows from high to low pressure areas.</p>
 <p>These data were collected to evaluate potential flow of contamination related to a high level toxic waste repository in Texas. The Deaf Smith county site in Texas was one of three potential sites proposed for this repository. Beneath the site is a deep brine aquifer known as the Wolfcamp aquifer that may serve as a conduit of contamination leaking from the repository.</p>
 <p>The data set consists of 85 georeferenced measurements of piezometric head. Possible applications of interpolation are to determine sites at risk and to quantify uncertainty of the interpolated surface, to evaluate the best locations for monitoring stations.</p>
 <p>Create an a unique identifier variable:</p>
-<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="activity-15-spatially-continuous-data-i.html#cb708-1" aria-hidden="true" tabindex="-1"></a>aquifer<span class="sc">$</span>ID <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(aquifer)))</span></code></pre></div>
+<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb710-1"><a href="activity-15-spatially-continuous-data-i.html#cb710-1" aria-hidden="true" tabindex="-1"></a>aquifer<span class="sc">$</span>ID <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(aquifer)))</span></code></pre></div>
 </div>
 <div id="activity-14" class="section level2" number="32.5">
 <h2><span class="header-section-number">32.5</span> Activity</h2>
-<p><strong>NOTE</strong>: Activities include technical “how to” tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).</p>
+<p><strong>NOTE</strong>: Activities include technical “how to” tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.</p>
+<div class="infobox software">
+<p><strong>Activity Part I</strong></p>
+</div>
 <ol style="list-style-type: decimal">
-<li><p>(*)Map the Wolfcamp Aquifer data.</p></li>
-<li><p>(*)Create a surface using Voronoi polygons.</p></li>
-<li><p>(*)Create a surface using IDW.</p></li>
-<li><p>(*)Create a surface using k-point means.</p></li>
+<li><p>Map the Wolfcamp Aquifer data.</p></li>
+<li><p>Create a surface using Voronoi polygons.</p></li>
+<li><p>Create a surface using IDW.</p></li>
+<li><p>Create a surface using k-point means.</p></li>
+</ol>
+<div class="infobox brainware">
+<p><strong>Activity Part II</strong></p>
+</div>
+<ol start="5" style="list-style-type: decimal">
 <li><p>What is the effect of changing the power of the inverse distance function?</p></li>
 <li><p>What is the effect of changing the number of points used in this algorithm?</p></li>
 <li><p>Discuss the limitations of these approaches. How can you calculate the uncertainty in the predictions?</p></li>

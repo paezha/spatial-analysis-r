@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2022-01-12" />
+<meta name="date" content="2022-01-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -628,18 +628,18 @@ div.csl-indent {
 <div id="preliminaries-28" class="section level2" number="30.4">
 <h2><span class="header-section-number">30.4</span> Preliminaries</h2>
 <p>It is good practice to clear the workspace to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
-<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="activity-14-area-data-vi.html#cb658-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="activity-14-area-data-vi.html#cb660-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity (load other packages as appropriate).</p>
-<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb659-1"><a href="activity-14-area-data-vi.html#cb659-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
-<span id="cb659-2"><a href="activity-14-area-data-vi.html#cb659-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb659-3"><a href="activity-14-area-data-vi.html#cb659-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span>
-<span id="cb659-4"><a href="activity-14-area-data-vi.html#cb659-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span>
-<span id="cb659-5"><a href="activity-14-area-data-vi.html#cb659-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb661-1"><a href="activity-14-area-data-vi.html#cb661-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
+<span id="cb661-2"><a href="activity-14-area-data-vi.html#cb661-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb661-3"><a href="activity-14-area-data-vi.html#cb661-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span>
+<span id="cb661-4"><a href="activity-14-area-data-vi.html#cb661-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span>
+<span id="cb661-5"><a href="activity-14-area-data-vi.html#cb661-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <p>Choose one of the following datasets.</p>
 <div id="new-york-leukemia-data" class="section level3" number="30.4.1">
 <h3><span class="header-section-number">30.4.1</span> New York leukemia data</h3>
-<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="activity-14-area-data-vi.html#cb660-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;nyleukemia&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="activity-14-area-data-vi.html#cb662-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;nyleukemia&quot;</span>)</span></code></pre></div>
 <p>A <code>SpatialPolygonsDataFrame</code> that contains the following variables:</p>
 <ul>
 <li>AREANAME name of census tract</li>
@@ -654,11 +654,11 @@ div.csl-indent {
 <li>PEXPOSURE “exposure potential”: inverse distance between each census tract centroid and the nearest TCE site, IDIST, transformed via log(100*IDIST)</li>
 </ul>
 <p>This can be converted to a simple features object as follows:</p>
-<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb661-1"><a href="activity-14-area-data-vi.html#cb661-1" aria-hidden="true" tabindex="-1"></a>nyleukemia.sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(nyleukemia)</span></code></pre></div>
+<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb663-1"><a href="activity-14-area-data-vi.html#cb663-1" aria-hidden="true" tabindex="-1"></a>nyleukemia.sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(nyleukemia)</span></code></pre></div>
 </div>
 <div id="pennsylvania-lung-cancer" class="section level3" number="30.4.2">
 <h3><span class="header-section-number">30.4.2</span> Pennsylvania lung cancer</h3>
-<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="activity-14-area-data-vi.html#cb662-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;pennlc&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="activity-14-area-data-vi.html#cb664-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;pennlc&quot;</span>)</span></code></pre></div>
 <p>A <code>SpatialPolygonsDataFrame</code> that contains the following variables:</p>
 <ul>
 <li>county: Name of the county</li>
@@ -670,11 +670,17 @@ div.csl-indent {
 <li>smoking_rate: Smoking rate by county (%)</li>
 </ul>
 <p>This can be converted to a simple features object as follows:</p>
-<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb663-1"><a href="activity-14-area-data-vi.html#cb663-1" aria-hidden="true" tabindex="-1"></a>pennlc.sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(pennlc)</span></code></pre></div>
+<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="activity-14-area-data-vi.html#cb665-1" aria-hidden="true" tabindex="-1"></a>pennlc.sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(pennlc)</span></code></pre></div>
 </div>
 </div>
 <div id="activity-13" class="section level2" number="30.5">
 <h2><span class="header-section-number">30.5</span> Activity</h2>
+<div class="infobox caution">
+<p><strong>Capstone Activity</strong></p>
+<p>This is a capstone activity where you can work free-style
+on a data set of your choice, and put in practice what you
+have learned with respect to the analysis of point patterns.</p>
+</div>
 <ol style="list-style-type: decimal">
 <li><p>Partner with a fellow student to analyze the chosen dataset.</p></li>
 <li><p>Visualize/explore the dataset using appropriate tools.</p></li>

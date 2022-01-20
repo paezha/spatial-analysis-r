@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2022-01-12" />
+<meta name="date" content="2022-01-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -631,20 +631,20 @@ div.csl-indent {
 <div id="preliminaries-10" class="section level2" number="12.4">
 <h2><span class="header-section-number">12.4</span> Preliminaries</h2>
 <p>It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="activity-5-point-pattern-analysis-ii.html#cb263-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="activity-5-point-pattern-analysis-ii.html#cb265-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the worspace.</p>
 <p>Load the libraries you will use in this activity. In addition to <code>tidyverse</code>, you will need <code>spatstat</code>, a package designed for the analysis of point patterns (you can learn about <code>spatstat</code> <a href="https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf">here</a> and <a href="http://spatstat.org/resources/spatstatJSSpaper.pdf">here</a>):</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="activity-5-point-pattern-analysis-ii.html#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
-<span id="cb264-2"><a href="activity-5-point-pattern-analysis-ii.html#cb264-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span>
-<span id="cb264-3"><a href="activity-5-point-pattern-analysis-ii.html#cb264-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="activity-5-point-pattern-analysis-ii.html#cb266-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
+<span id="cb266-2"><a href="activity-5-point-pattern-analysis-ii.html#cb266-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span>
+<span id="cb266-3"><a href="activity-5-point-pattern-analysis-ii.html#cb266-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <p>In the practice that preceded this activity, you learned about the concepts of intensity and density, about quadrats, and also how to create density maps.
 Begin by loading the data that you will use in this activity:</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="activity-5-point-pattern-analysis-ii.html#cb265-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;bear_df&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="activity-5-point-pattern-analysis-ii.html#cb267-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;bear_df&quot;</span>)</span></code></pre></div>
 <p>This dataset was sourced from the Scandinavia Bear Project, a Swedish-Noruegian collaboration that aims to study the ecology of brown bears, to provide decision makers with evidence to support bear management, and to provide information regarding bears to the public. You can learn more about this project <a href="http://bearproject.info/about-the-project/">here</a>.</p>
 <p>The project involves tagging bears with GPS units, so that their movements can be tracked.</p>
 <p>The dataset includes coordinates of one bear’s movement over a period of several weeksin 2004. The dataset was originally taken from the <code>adehabitatLT</code> package but was somewhat simplified for this activity. Instead of full date and time information, the point pattern is marked more simply as “Day Time” and “Night Time”, to distinguish between diurnal and nocturnal activity of the bear.</p>
 <p>Summarize the contents of this dataframe:</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="activity-5-point-pattern-analysis-ii.html#cb266-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bear_df)</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="activity-5-point-pattern-analysis-ii.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bear_df)</span></code></pre></div>
 <pre><code>##        x                y                  marks    
 ##  Min.   :515743   Min.   :6812138   Day Time  :502  
 ##  1st Qu.:518994   1st Qu.:6813396   Night Time:498  
@@ -653,11 +653,11 @@ Begin by loading the data that you will use in this activity:</p>
 ##  3rd Qu.:519982   3rd Qu.:6818111                   
 ##  Max.   :522999   Max.   :6821440</code></pre>
 <p>The Min. and Max. of <code>x</code> and <code>y</code> give us an idea of the region covered by this dataset. We can use these values to approximate a window for the region (as an experiment, you could try changing these values to create regions of different sizes):</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="activity-5-point-pattern-analysis-ii.html#cb268-1" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">owin</span>(<span class="at">xrange =</span> <span class="fu">c</span>(<span class="dv">515000</span>, <span class="dv">523500</span>), <span class="at">yrange =</span> <span class="fu">c</span>(<span class="dv">6812000</span>, <span class="dv">6822000</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="activity-5-point-pattern-analysis-ii.html#cb270-1" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">owin</span>(<span class="at">xrange =</span> <span class="fu">c</span>(<span class="dv">515000</span>, <span class="dv">523500</span>), <span class="at">yrange =</span> <span class="fu">c</span>(<span class="dv">6812000</span>, <span class="dv">6822000</span>))</span></code></pre></div>
 <p>Next, we can convert the dataframe into a <code>ppp</code>-class object suitable for analysis using the package <code>spatstat</code>:</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="activity-5-point-pattern-analysis-ii.html#cb269-1" aria-hidden="true" tabindex="-1"></a>bear.ppp <span class="ot">&lt;-</span> <span class="fu">as.ppp</span>(bear_df, <span class="at">W =</span> W)</span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="activity-5-point-pattern-analysis-ii.html#cb271-1" aria-hidden="true" tabindex="-1"></a>bear.ppp <span class="ot">&lt;-</span> <span class="fu">as.ppp</span>(bear_df, <span class="at">W =</span> W)</span></code></pre></div>
 <p>You can check the contents of the <code>ppp</code> object by means of <code>summary</code>:</p>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="activity-5-point-pattern-analysis-ii.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bear.ppp)</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="activity-5-point-pattern-analysis-ii.html#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bear.ppp)</span></code></pre></div>
 <pre><code>## Marked planar point pattern:  1000 points
 ## Average intensity 1.176471e-05 points per square unit
 ## 
@@ -676,9 +676,17 @@ Begin by loading the data that you will use in this activity:</p>
 </div>
 <div id="activity-4" class="section level2" number="12.5">
 <h2><span class="header-section-number">12.5</span> Activity</h2>
-<p><strong>NOTE</strong>: Activities include technical “how to” tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).</p>
+<p><strong>NOTE</strong>: Activities include technical “how to” tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.</p>
+<div class="infobox software">
+<p><strong>Activity Part I</strong></p>
+</div>
 <ol style="list-style-type: decimal">
-<li><p>(*)Analyze the point pattern for the movements of the bear using quadrat and kernel density methods. Experiment with different quadrat sizes and kernel bandwidths.</p></li>
+<li>Analyze the point pattern for the movements of the bear using quadrat and kernel density methods. Experiment with different quadrat sizes and kernel bandwidths.</li>
+</ol>
+<div class="infobox brainware">
+<p><strong>Activity Part II</strong></p>
+</div>
+<ol start="2" style="list-style-type: decimal">
 <li><p>Explain your choice of parameters (quadrat sizes and kernel bandwidths) to a fellow student.</p></li>
 <li><p>Decide whether these patterns are random, and support your decision.</p></li>
 <li><p>Do you see differences in the activity patterns of the bear by time of day? What could explain those differences, if any?</p></li>

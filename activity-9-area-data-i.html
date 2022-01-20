@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2022-01-12" />
+<meta name="date" content="2022-01-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -629,35 +629,43 @@ div.csl-indent {
 <div id="preliminaries-18" class="section level2" number="20.4">
 <h2><span class="header-section-number">20.4</span> Preliminaries</h2>
 <p>It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="activity-9-area-data-i.html#cb426-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="activity-9-area-data-i.html#cb428-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity.</p>
 <p>In addition to <code>tidyverse</code>, you will need <code>sf</code>, a package that implements simple features in R (you can learn more about this package <a href="https://cran.r-project.org/web/packages/sf/vignettes/sf1.html">here</a>):</p>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="activity-9-area-data-i.html#cb427-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb427-2"><a href="activity-9-area-data-i.html#cb427-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb427-3"><a href="activity-9-area-data-i.html#cb427-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cartogram)</span>
-<span id="cb427-4"><a href="activity-9-area-data-i.html#cb427-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span></code></pre></div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="activity-9-area-data-i.html#cb429-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb429-2"><a href="activity-9-area-data-i.html#cb429-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb429-3"><a href="activity-9-area-data-i.html#cb429-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cartogram)</span>
+<span id="cb429-4"><a href="activity-9-area-data-i.html#cb429-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span></code></pre></div>
 <p>In the practice that preceded this activity, you learned about the area data and visualization techniques for area data.</p>
 <p>Begin by loading the data that you will use in this activity:</p>
-<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="activity-9-area-data-i.html#cb428-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;Hamilton_CT&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="activity-9-area-data-i.html#cb430-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;Hamilton_CT&quot;</span>)</span></code></pre></div>
 <p>This is an <code>sf</code> object with census tracts and selected demographic variables for the Hamilton CMA in Canada.</p>
 <p>You can obtain new (calculated) variables as follows. For instance, to obtain the proportion of residents who are between 20 and 34 years old, and between 35 and 49:</p>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="activity-9-area-data-i.html#cb429-1" aria-hidden="true" tabindex="-1"></a>Hamilton_CT <span class="ot">&lt;-</span> Hamilton_CT <span class="sc">%&gt;%</span></span>
-<span id="cb429-2"><a href="activity-9-area-data-i.html#cb429-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Prop20to34 =</span> (AGE_20_TO_24 <span class="sc">+</span> </span>
-<span id="cb429-3"><a href="activity-9-area-data-i.html#cb429-3" aria-hidden="true" tabindex="-1"></a>                         AGE_25_TO_29 <span class="sc">+</span> </span>
-<span id="cb429-4"><a href="activity-9-area-data-i.html#cb429-4" aria-hidden="true" tabindex="-1"></a>                         AGE_30_TO_34)<span class="sc">/</span>POPULATION, </span>
-<span id="cb429-5"><a href="activity-9-area-data-i.html#cb429-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">Prop35to49 =</span> (AGE_35_TO_39 <span class="sc">+</span> </span>
-<span id="cb429-6"><a href="activity-9-area-data-i.html#cb429-6" aria-hidden="true" tabindex="-1"></a>                         AGE_40_TO_44 <span class="sc">+</span> </span>
-<span id="cb429-7"><a href="activity-9-area-data-i.html#cb429-7" aria-hidden="true" tabindex="-1"></a>                         AGE_45_TO_49)<span class="sc">/</span>POPULATION)</span></code></pre></div>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="activity-9-area-data-i.html#cb431-1" aria-hidden="true" tabindex="-1"></a>Hamilton_CT <span class="ot">&lt;-</span> Hamilton_CT <span class="sc">%&gt;%</span></span>
+<span id="cb431-2"><a href="activity-9-area-data-i.html#cb431-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Prop20to34 =</span> (AGE_20_TO_24 <span class="sc">+</span> </span>
+<span id="cb431-3"><a href="activity-9-area-data-i.html#cb431-3" aria-hidden="true" tabindex="-1"></a>                         AGE_25_TO_29 <span class="sc">+</span> </span>
+<span id="cb431-4"><a href="activity-9-area-data-i.html#cb431-4" aria-hidden="true" tabindex="-1"></a>                         AGE_30_TO_34)<span class="sc">/</span>POPULATION, </span>
+<span id="cb431-5"><a href="activity-9-area-data-i.html#cb431-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">Prop35to49 =</span> (AGE_35_TO_39 <span class="sc">+</span> </span>
+<span id="cb431-6"><a href="activity-9-area-data-i.html#cb431-6" aria-hidden="true" tabindex="-1"></a>                         AGE_40_TO_44 <span class="sc">+</span> </span>
+<span id="cb431-7"><a href="activity-9-area-data-i.html#cb431-7" aria-hidden="true" tabindex="-1"></a>                         AGE_45_TO_49)<span class="sc">/</span>POPULATION)</span></code></pre></div>
 <p>You are ready for the next activity.</p>
 </div>
 <div id="activity-8" class="section level2" number="20.5">
 <h2><span class="header-section-number">20.5</span> Activity</h2>
-<p><strong>NOTE</strong>: Activities include technical “how to” tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).</p>
+<p><strong>NOTE</strong>: Activities include technical “how to” tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.</p>
+<div class="infobox software">
+<p><strong>Activity Part I</strong></p>
+</div>
 <ol style="list-style-type: decimal">
-<li><p>(*)Create choropleth maps for the proportion of the population who are 20 to 34 years old, 35 to 49 years old, 50 to 65 years old, and 65 and older.</p></li>
-<li><p>(*)Create cartograms for the proportion of the population who are 20 to 34 years old, 35 to 49 years old, 50 to 65 years old, and 65 and older.</p></li>
-<li><p>(*)Change the scheme and colors of your maps to obtain maps with 2 classes/colors, 5 classes/colors, and 10 classes/colors. You can check different color palettes <a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">in the documentation of <code>ggplot2</code></a>. Which scheme is more informative? What colors looked better to you?</p></li>
+<li><p>Create choropleth maps for the proportion of the population who are 20 to 34 years old, 35 to 49 years old, 50 to 65 years old, and 65 and older.</p></li>
+<li><p>Create cartograms for the proportion of the population who are 20 to 34 years old, 35 to 49 years old, 50 to 65 years old, and 65 and older.</p></li>
+<li><p>Change the scheme and colors of your maps to obtain maps with 2 classes/colors, 5 classes/colors, and 10 classes/colors. You can check different color palettes <a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">in the documentation of <code>ggplot2</code></a>. Which scheme is more informative? What colors looked better to you?</p></li>
+</ol>
+<div class="infobox brainware">
+<p><strong>Activity Part II</strong></p>
+</div>
+<ol start="4" style="list-style-type: decimal">
 <li><p>Show your maps to a fellow student. What patterns do you notice in the distribution of population by age in Hamilton? Do you think the distribution of the population by age is random, or not random?</p></li>
 <li><p>Devise a rule to decide whether the pattern observed in a choropleth map is random.</p></li>
 </ol>

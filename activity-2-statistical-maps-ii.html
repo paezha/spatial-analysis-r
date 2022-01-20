@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2022-01-12" />
+<meta name="date" content="2022-01-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -628,16 +628,16 @@ div.csl-indent {
 <div id="preliminaries-4" class="section level2" number="6.4">
 <h2><span class="header-section-number">6.4</span> Preliminaries</h2>
 <p>It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="activity-2-statistical-maps-ii.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="activity-2-statistical-maps-ii.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity:</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="activity-2-statistical-maps-ii.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb144-2"><a href="activity-2-statistical-maps-ii.html#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="activity-2-statistical-maps-ii.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb146-2"><a href="activity-2-statistical-maps-ii.html#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span></code></pre></div>
 <p>Now that your workspace is clear, you can proceed to invoke the datasets required for this activity:</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="activity-2-statistical-maps-ii.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;missing_df&quot;</span>)</span>
-<span id="cb145-2"><a href="activity-2-statistical-maps-ii.html#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;PointPattern1&quot;</span>)</span>
-<span id="cb145-3"><a href="activity-2-statistical-maps-ii.html#cb145-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;PointPattern2&quot;</span>)</span>
-<span id="cb145-4"><a href="activity-2-statistical-maps-ii.html#cb145-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;PointPattern3&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="activity-2-statistical-maps-ii.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;missing_df&quot;</span>)</span>
+<span id="cb147-2"><a href="activity-2-statistical-maps-ii.html#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;PointPattern1&quot;</span>)</span>
+<span id="cb147-3"><a href="activity-2-statistical-maps-ii.html#cb147-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;PointPattern2&quot;</span>)</span>
+<span id="cb147-4"><a href="activity-2-statistical-maps-ii.html#cb147-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;PointPattern3&quot;</span>)</span></code></pre></div>
 <p>The datasets include the following dataframe which will be used in the first part of the activity:</p>
 <ul>
 <li><code>missing_df</code></li>
@@ -653,10 +653,18 @@ div.csl-indent {
 </div>
 <div id="activity-1" class="section level2" number="6.5">
 <h2><span class="header-section-number">6.5</span> Activity</h2>
-<p><strong>NOTE</strong>: Activities include technical “how to” tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).</p>
+<p><strong>NOTE</strong>: Activities include technical “how to” tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.</p>
+<div class="infobox software">
+<p><strong>Activity Part I</strong></p>
+</div>
 <ol style="list-style-type: decimal">
-<li><p>(*)Create thematic maps for variables VAR1 through VAR3 in the dataframe <code>missing_df</code>.</p></li>
-<li><p>(*)Plot all three point patterns.</p></li>
+<li><p>Create thematic maps for variables VAR1 through VAR3 in the dataframe <code>missing_df</code>.</p></li>
+<li><p>Plot all three point patterns.</p></li>
+</ol>
+<div class="infobox brainware">
+<p><strong>Activity Part II</strong></p>
+</div>
+<ol start="3" style="list-style-type: decimal">
 <li><p>Suppose that you were tasked with estimating the value of a variable for the locations where those were not measured. For instance, you could be a realtor, and you need to assess the value of a property, and the only information available is the published values of other properties in the region. As an alternative, you could be an environmental scientist, and you need to estimate what the concentration of a contaminant at a site, based on previous measurements at other sites in the region. Propose one or more ways to guess those missing values, and explain your reasoning. The approach does not need to be the same for all variables!</p></li>
 <li><p>Imagine that you are a public health official and you need to plan services to the public. If you were asked to guess where the next event would emerge, where would be your guess in each map? Explain your answer.</p></li>
 </ol>

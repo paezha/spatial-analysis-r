@@ -24,7 +24,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2022-01-12" />
+<meta name="date" content="2022-01-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -631,37 +631,45 @@ div.csl-indent {
 <div id="preliminaries-26" class="section level2" number="28.4">
 <h2><span class="header-section-number">28.4</span> Preliminaries</h2>
 <p>It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="activity-13-area-data-v.html#cb596-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="activity-13-area-data-v.html#cb598-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity. In addition to <code>tidyverse</code>, you will need <code>sf</code> and <code>isdas</code>:</p>
-<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="activity-13-area-data-v.html#cb597-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
-<span id="cb597-2"><a href="activity-13-area-data-v.html#cb597-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb597-3"><a href="activity-13-area-data-v.html#cb597-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb597-4"><a href="activity-13-area-data-v.html#cb597-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="activity-13-area-data-v.html#cb599-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
+<span id="cb599-2"><a href="activity-13-area-data-v.html#cb599-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb599-3"><a href="activity-13-area-data-v.html#cb599-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb599-4"><a href="activity-13-area-data-v.html#cb599-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span></code></pre></div>
 <p>Begin by loading the data files you will use in this activity:</p>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="activity-13-area-data-v.html#cb598-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;HamiltonDAs&quot;</span>)</span>
-<span id="cb598-2"><a href="activity-13-area-data-v.html#cb598-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;trips_by_mode&quot;</span>)</span>
-<span id="cb598-3"><a href="activity-13-area-data-v.html#cb598-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;travel_time_car&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="activity-13-area-data-v.html#cb600-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;HamiltonDAs&quot;</span>)</span>
+<span id="cb600-2"><a href="activity-13-area-data-v.html#cb600-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;trips_by_mode&quot;</span>)</span>
+<span id="cb600-3"><a href="activity-13-area-data-v.html#cb600-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;travel_time_car&quot;</span>)</span></code></pre></div>
 <p><code>HamiltonDAs</code> are the Dissemination Areas for Hamilton CMA, which coincide with the Traffic Analysis Zones (TAZ) of the Transportation Tomorrow Survey of 2011. The dataframe <code>trips_by_mode</code> includes the number of trips by mode of transportation by TAZ (equivalently DA), as well as other useful information from the 2011 census for Hamilton CMA. Finally, the dataframe <code>travel_time_car</code> includes the travel distance/time from TAZ/DA centroids to Jackson Square in downtown Hamilton.</p>
 <p>The data for this activity were retrieved from the 2011 Transportation Tomorrow Survey <a href="http://www.transportationtomorrow.on.ca/">TTS</a>, the periodic travel survey of the Greater Toronto and Hamilton Area, as well as data from the 2011 Canadian Census <a href="http://www12.statcan.gc.ca/census-recensement/index-eng.cfm">Census Program</a>.</p>
 <p>Before beginning the activity, join the information on trips and travel time to the <code>sf</code> object. Note that to complete the join, the identifier (in this case <code>GTA06</code>) must be in the same format in both data frames:</p>
-<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="activity-13-area-data-v.html#cb599-1" aria-hidden="true" tabindex="-1"></a>travel_time_car<span class="sc">$</span>GTA06 <span class="ot">&lt;-</span> <span class="fu">factor</span>(travel_time_car<span class="sc">$</span>GTA06)</span>
-<span id="cb599-2"><a href="activity-13-area-data-v.html#cb599-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb599-3"><a href="activity-13-area-data-v.html#cb599-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Travel time</span></span>
-<span id="cb599-4"><a href="activity-13-area-data-v.html#cb599-4" aria-hidden="true" tabindex="-1"></a>HamiltonDAs <span class="ot">&lt;-</span> <span class="fu">left_join</span>(HamiltonDAs, travel_time_car, <span class="at">by =</span> <span class="st">&quot;GTA06&quot;</span>)</span>
-<span id="cb599-5"><a href="activity-13-area-data-v.html#cb599-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Trips by mode</span></span>
-<span id="cb599-6"><a href="activity-13-area-data-v.html#cb599-6" aria-hidden="true" tabindex="-1"></a>HamiltonDAs <span class="ot">&lt;-</span> <span class="fu">left_join</span>(HamiltonDAs, trips_by_mode, <span class="at">by =</span> <span class="st">&quot;GTA06&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="activity-13-area-data-v.html#cb601-1" aria-hidden="true" tabindex="-1"></a>travel_time_car<span class="sc">$</span>GTA06 <span class="ot">&lt;-</span> <span class="fu">factor</span>(travel_time_car<span class="sc">$</span>GTA06)</span>
+<span id="cb601-2"><a href="activity-13-area-data-v.html#cb601-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb601-3"><a href="activity-13-area-data-v.html#cb601-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Travel time</span></span>
+<span id="cb601-4"><a href="activity-13-area-data-v.html#cb601-4" aria-hidden="true" tabindex="-1"></a>HamiltonDAs <span class="ot">&lt;-</span> <span class="fu">left_join</span>(HamiltonDAs, travel_time_car, <span class="at">by =</span> <span class="st">&quot;GTA06&quot;</span>)</span>
+<span id="cb601-5"><a href="activity-13-area-data-v.html#cb601-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Trips by mode</span></span>
+<span id="cb601-6"><a href="activity-13-area-data-v.html#cb601-6" aria-hidden="true" tabindex="-1"></a>HamiltonDAs <span class="ot">&lt;-</span> <span class="fu">left_join</span>(HamiltonDAs, trips_by_mode, <span class="at">by =</span> <span class="st">&quot;GTA06&quot;</span>)</span></code></pre></div>
 <p>The analysis will be based on travel by car in the Hamilton CMA. Calculate the proportion of trips by car by TAZ:</p>
-<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="activity-13-area-data-v.html#cb600-1" aria-hidden="true" tabindex="-1"></a>HamiltonDAs <span class="ot">&lt;-</span> <span class="fu">mutate</span>(HamiltonDAs, <span class="at">Auto_driver.prop =</span> Auto_driver <span class="sc">/</span> (Auto_driver <span class="sc">+</span> Cycle <span class="sc">+</span> Walk))</span></code></pre></div>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="activity-13-area-data-v.html#cb602-1" aria-hidden="true" tabindex="-1"></a>HamiltonDAs <span class="ot">&lt;-</span> <span class="fu">mutate</span>(HamiltonDAs, <span class="at">Auto_driver.prop =</span> Auto_driver <span class="sc">/</span> (Auto_driver <span class="sc">+</span> Cycle <span class="sc">+</span> Walk))</span></code></pre></div>
 <p>Note that the proportion of people who traveled by car as passengers are not included in the denominator of the proportion! This is because every trip as a passenger is already included in trips with one driver.</p>
 </div>
 <div id="activity-12" class="section level2" number="28.5">
 <h2><span class="header-section-number">28.5</span> Activity</h2>
-<p><strong>NOTE</strong>: Activities include technical “how to” tasks/questions. Usually, these ask you to organize data, create a plot, and so on in support of analysis and interpretation. These tasks are indicated by a star (*).</p>
+<p><strong>NOTE</strong>: Activities include technical “how to” tasks/questions. Usually, these ask you to practice using the software to organize data, create plots, and so on in support of analysis and interpretation. The second type of questions ask you to activate your brainware and to think geographically and statistically.</p>
+<div class="infobox software">
+<p><strong>Activity Part I</strong></p>
+</div>
 <ol style="list-style-type: decimal">
-<li><p>(*)Examine your dataframe. What variables are included? Are there any missing values?</p></li>
-<li><p>(*)Map the variable <code>Auto_driver.prop</code>, and use Moran’s I to test for spatial autocorrelation.</p></li>
-<li><p>(*)Estimate regression model using the variables <code>Pop_Density</code> and travel time in <code>minutes</code>.</p></li>
+<li><p>Examine your dataframe. What variables are included? Are there any missing values?</p></li>
+<li><p>Map the variable <code>Auto_driver.prop</code>, and use Moran’s I to test for spatial autocorrelation.</p></li>
+<li><p>Estimate regression model using the variables <code>Pop_Density</code> and travel time in <code>minutes</code>.</p></li>
+</ol>
+<div class="infobox brainware">
+<p><strong>Activity Part II</strong></p>
+</div>
+<ol start="4" style="list-style-type: decimal">
 <li><p>What does the analysis of autocorrelation in point 2* tell you about <code>Auto_driver.prop</code>? Would you say that autocorrelation in this variable is a sign that autocorrelation will be an issue in regression analysis? Why or why not?</p></li>
 <li><p>Discuss the model you estimated in point 3. Next, examine its residuals. Would you say that they are spatially random/independent?</p></li>
 <li><p>Propose ways to improve your model.</p></li>

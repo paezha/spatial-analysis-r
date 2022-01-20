@@ -14,26 +14,47 @@ pre code {
 }
 
 .infobox {
-  padding: 1em 1em 1em 4em;
+  padding: 1em 1em 1em 7em;
   margin-bottom: 10px;
-  background: lightgray 5px center/3em no-repeat;
-  border: 2px solid lightgray;
-  border-radius: 0px;
+  /*background: lightgray 5px center/3em no-repeat;*/
+  background: #FFD100 5px center/3em no-repeat;
+  border: 4px solid #A6192E;
+  border-radius: 5px;
 }
 .caution {
-  background-image: url("images/caution.png");
+  background-image: url("images/icon-caution.png");
+  background-size: 10%;
+  background-repeat: no-repeat;
 }
 .important {
-  background-image: url("images/important.png");
+  background-image: url("images/icon-important.png");
+  background-size: 10%;
+  background-repeat: no-repeat;
 }
 .note {
-  background-image: url("images/note.png");
+  background-image: url("images/icon-note.png");
+  background-size: 10%;
+  background-repeat: no-repeat;
 }
 .tip {
-  background-image: url("images/tip.png");
+  background-image: url("images/icon-tip.png");
+  background-size: 10%;
+  background-repeat: no-repeat;
 }
 .warning {
-  background-image: url("images/warning.png");
+  background-image: url("images/icon-warning.png");
+  background-size: 10%;
+  background-repeat: no-repeat;
+}
+.software {
+  background-image: url("images/icon-think-software.png");
+  background-size: 10%;
+  background-repeat: no-repeat;
+}
+.brainware {
+  background-image: url("images/icon-think-brainware.png");
+  background-size: 10%;
+  background-repeat: no-repeat;
 }
 
 /* Added by Antonio, based on Alex Quinto's code*/
