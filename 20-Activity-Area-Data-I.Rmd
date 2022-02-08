@@ -76,7 +76,7 @@ You are ready for the next activity.
 
 2. Create cartograms for the proportion of the population who are 20 to 34 years old, 35 to 49 years old, 50 to 65 years old, and 65 and older.
 
-3. Change the scheme and colors of your maps to obtain maps with 2 classes/colors, 5 classes/colors, and 10 classes/colors. You can check different color palettes [in the documentation of `ggplot2`](https://ggplot2.tidyverse.org/reference/scale_brewer.html). Which scheme is more informative? What colors looked better to you?
+3. Change the scheme and colors of your maps to obtain maps with 2 classes/colors, 5 classes/colors, and 10 classes/colors. You can check different color palettes [in the documentation of {ggplot2}](https://ggplot2.tidyverse.org/reference/scale_brewer.html). Which scheme is more informative? What colors looked better to you?
 
 ::: {.infobox .brainware data-latex="{brainware}"}
 **Activity Part II**
