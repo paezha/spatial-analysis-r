@@ -77,6 +77,6 @@ You are now ready for the next activity.
 
 4. How confident are you deciding whether the variables under analysis are not spatially random? What can you say regarding the relative strength of the spatial pattern of these variables?
 
-5. Show a fellow student the Moran's scatterplots you created in point 3. What can you tell about the spatial pattern based on these scatterplots? Create choropleth maps for the variables. If the spatial pattern is not random, what kind of process might have led to the patterns you observe? 
+5. Show a fellow student the Moran's scatterplots you created in Question 3. What can you tell about the spatial pattern based on these scatterplots? Create choropleth maps for the variables. If the spatial pattern is not random, what kind of process might have led to the patterns you observe? 
 
 6. The scatterplots created using `moran.plot` include some observations that are labeled with their id and a different symbol. Why do you think these observations are highlighted in such a way?

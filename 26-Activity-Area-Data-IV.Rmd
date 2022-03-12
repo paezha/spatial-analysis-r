@@ -57,27 +57,40 @@ Hamilton_CT <- mutate(Hamilton_CT, Prop20to34 = (AGE_20_TO_24 + AGE_25_TO_29 + A
 
 This function is used to create local Moran maps:
 ```{r}
-localmoran.map <- function(p = p, listw = listw, VAR = VAR, by = by){
+localmoran.map <- function(p, listw, VAR, by){
+  # p is a simple features object
   require(tidyverse)
   require(spdep)
   require(plotly)
   
-  df_msc <- transmute(p,
-                      key = p[[by]],
-                      Z = (p[[VAR]] - mean(p[[VAR]])) / var(p[[VAR]]),
-                      SMA = lag.listw(listw, Z),
-                      Type = case_when(Z < 0 & SMA < 0 ~ "LL",
-                                       Z > 0 & SMA > 0 ~ "HH",
-                                       TRUE ~ "HL/LH"))
+  df_msc <- p %>% 
+    rename(VAR = as.name(VAR),
+              key = as.name(by)) %>%
+    transmute(key,
+              VAR,
+              Z = (VAR - mean(VAR)) / var(VAR),
+              SMA = lag.listw(listw, Z),
+              Type = case_when(Z < 0 & SMA < 0 ~ "LL",
+                               Z > 0 & SMA > 0 ~ "HH",
+                               TRUE ~ "HL/LH"))
   
-  local_I <- localmoran(p[[VAR]], listw)
+  local_I <- localmoran(df_msc$VAR, listw)
+  
+  colnames(local_I) <- c("Ii", "E.Ii", "Var.Ii", "Z.Ii", "p.val")
   
   df_msc <- left_join(df_msc, 
-                  data.frame(key = p[[by]], local_I))
-  df_msc <- rename(df_msc, p.val = Pr.z...0.)
+                      data.frame(key = df_msc$key, 
+                                 local_I),
+                      by = "key")
   
   plot_ly(df_msc) %>%
-    add_sf(split = ~(p.val < 0.05), color = ~Type, colors = c("red", "khaki1", "dodgerblue", "dodgerblue4")) 
+    add_sf(type = "scatter",
+           split = ~(p.val < 0.05), 
+           color = ~Type, 
+           colors = c("red", 
+                      "khaki1",
+                      "dodgerblue", 
+                      "dodgerblue4")) 
 }
 ```
 
@@ -135,16 +148,16 @@ You are now ready for the next activity.
 
 1. Create local Moran maps for the population in age group 20-34 and _proportion_ of population in age group 20-34. 
 
-2.  Use the $G_i^*$ statistic to analyze the population _and_ proportion of population in the age group 20-34.
+2.  Use the $G_i^*$ statistic to analyze the population _and_ proportion of population in the age group 20-34. Then, use the `gistar.map` function to create $G_i^*$ maps.
 
-3. Now create local Moran maps for the population and _population density_ in the age group 20-34. 
+3. Create local Moran maps for the population and _population density_ in the age group 20-34. 
 
 ::: {.infobox .brainware data-latex="{brainware}"}
 **Activity Part II**
 :::
 
-4. Concerning the analysis in point 1: What is the difference between using population (absolute) and population density (rate)?
+4. Concerning the analysis in Question 3: What is the difference between using population (absolute) and population density (rate)?
 
-5. Concerning the analysis in point 2: What is the difference between using population (absolute) and proportion of population (rate)? Is there a reason to prefer either variable in analysis? Discuss.
+5. Concerning the analysis in Question 1: What is the difference between using population (absolute) and proportion of population (rate)? Is there a reason to prefer either variable in analysis? Discuss.
 
 6. More generally, what do you think should guide the decision of whether to analyze variables as absolute values or rates?
