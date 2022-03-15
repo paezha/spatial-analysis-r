@@ -113,13 +113,24 @@ A possible way of enhancing this approach to interpolation is to _exploit_ the i
 We  can illustrate this as follows. To interpolate the _residuals_, we first need the set of _target_ points (the points for the interpolation), as well as the _source_ (the observations):
 ```{r}
 # We will use the prediction grid we used above to interpolate the residuals 
-target_xy = expand.grid(x = X.p, y = Y.p)
-source_xy = cbind(x = Walker_Lake$X, y = Walker_Lake$Y)
+target_xy = expand.grid(x = X.p, 
+                        y = Y.p) %>%
+  st_as_sf(coords = c("x", "y"))
+
+# Convert the `Walker_Lake` dataframe to a simple features object using as follows:
+Walker_Lake.sf <- Walker_Lake %>% 
+  st_as_sf(coords = c("X", "Y"))
+
+# Append the residuals to the table
+Walker_Lake.sf$residuals <- WL.trend3$residuals
 ```
 
 It is possible now to use the `kpointmean` function to interpolate the residuals, for instance using $k=5$ neighbors:
 ```{r}
-kpoint.5 <- kpointmean(source_xy = source_xy, z = WL.trend3$residuals, target_xy = target_xy, k = 5)
+kpoint.5 <- kpointmean(source_xy = Walker_Lake.sf, 
+                       target_xy = target_xy, 
+                       z = residuals, 
+                       k = 5)
 ```
 
 Given the interpolated residuals, we can join them to the cubic trend surface, as follows:
