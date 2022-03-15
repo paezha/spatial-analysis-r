@@ -66,6 +66,7 @@ jobs:
            R -e 'install.packages("leaflet")'
            R -e 'install.packages("leaflet.extras")'
            R -e 'install.packages("maptools")'
+           R -e 'install.packages("nngeo")'
            R -e 'install.packages("plotly")'
            R -e 'install.packages("readr")'
            R -e 'install.packages("remotes")'
