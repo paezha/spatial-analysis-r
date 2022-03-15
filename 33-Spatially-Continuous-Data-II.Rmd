@@ -108,29 +108,41 @@ $$
 
 The standard deviation could be calculated also based in the values of the $k$-nearest neighbors, meaning that it would be based on the local mean. Here, we will interpolate the field using the Walker Lake data. First create a target grid for interpolation, and extract the coordinates of observations: 
 ```{r}
-target_xy = expand.grid(x = seq(0.5, 259.5, 2.2), y = seq(0.5, 299.5, 2.2))
-source_xy = cbind(x = Walker_Lake$X, y = Walker_Lake$Y)
+# Create a prediction grid and convert to simple features:
+target_xy = expand.grid(x = seq(0.5, 259.5, 2.2), 
+                        y = seq(0.5, 299.5, 2.2)) %>%
+  st_as_sf(coords = c("x", "y"))
+
+# Convert the `Walker_Lake` dataframe to a simple features object using as follows:
+Walker_Lake.sf <- Walker_Lake %>% 
+  st_as_sf(coords = c("X", "Y"))
 ```
 
 Interpolation using $k=5$ neighbors:
 ```{r cache=TRUE}
-kpoint.5 <- kpointmean(source_xy = source_xy, z = Walker_Lake$V, target_xy = target_xy, k = 5)
+kpoint.5 <- kpointmean(source_xy = Walker_Lake.sf, 
+                       target_xy = target_xy, 
+                       z = V,  
+                       k = 5) %>%
+  rename(V = z)
 ```
 
 We can plot the interpolated field now. These are the interpolated values:
 ```{r}
-ggplot(data = kpoint.5, aes(x = x, y = y, fill = z)) +
-  geom_tile() +
-  scale_fill_distiller(palette = "OrRd", trans = "reverse") +
-  coord_equal()
+ggplot() +
+  geom_sf(data = kpoint.5, 
+          aes(color = V)) +
+  scale_color_distiller(palette = "OrRd", 
+                       direction = 1)
 ```
 
 In addition, we can plot the _local_ standard deviation:
 ```{r}
-ggplot(data = kpoint.5, aes(x = x, y = y, fill = sd)) +
-  geom_tile() +
-  scale_fill_distiller(palette = "OrRd", trans = "reverse") +
-  coord_equal()
+ggplot() +
+  geom_sf(data = kpoint.5, 
+          aes(color = sd)) +
+  scale_color_distiller(palette = "OrRd", 
+                       direction = 1)
 ```
 
 The local standard deviation indicates the typical deviation from the local mean. As expected, the local values of the standard deviation are usually lower than the standard deviation of the sample, and it tends to be larger for the tails, that is the locations where the values are rare - we have less information, hence greater uncertainty.
@@ -231,7 +243,8 @@ trend.plot <- plot_ly(x = ~u.p, y = ~v.p, z = ~z.p,
               opacity = 0.5, showscale = FALSE) %>% 
   layout(scene = list(
     aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
-trend.plot #%>% add_markers(data = df, x = ~x, y = ~y, z = ~z, color = ~residual)
+
+trend.plot
 ```
 
 In this way, we have not only an estimate of the underlying field, but also a measure of uncertainty for our predictions, since our estimated values are bound, with 95% confidence, between the lower and upper surfaces.

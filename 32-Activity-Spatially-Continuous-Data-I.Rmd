@@ -75,7 +75,7 @@ aquifer$ID <- factor(c(1:nrow(aquifer)))
 
 3. Create a surface using IDW.
 
-4. Create a surface using k-point means. 
+4. Create a surface using $k$-point means. 
 
 ::: {.infobox .brainware data-latex="{brainware}"}
 **Activity Part II**
