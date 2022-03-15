@@ -129,7 +129,7 @@ Imagine that the observations are of a contaminant. The task could be to calcula
 
 Before proceeding, remember that the package `plotly` can be used to enhance exploratory analysis by allowing user interactivity. Below is the same plot as before, but now as an interactive 3D scatterplot:
 ```{r}
-im1 <- plot_ly(data = Walker_Lake,
+plot_ly(data = Walker_Lake,
                x = ~X, 
                y = ~Y, 
                z = ~V,
@@ -137,22 +137,6 @@ im1 <- plot_ly(data = Walker_Lake,
                              colorscale = c("Orange", "Red"), 
                              showscale = TRUE)) %>% 
   add_markers() #adding traces to a plotly visualization
-
-# This code takes a screen capture of the figure to include it in the 
-# pdf file when knitting
-htmlwidgets::saveWidget(widget = im1, 
-                        file = "im1.html")
-webshot2::webshot(url = "im1.html", 
-                  file = "im1.png", 
-                  delay = 1, 
-                  zoom = 4, 
-                  vheight = 500)
-```
-
-```{r eval=FALSE}
-# This code displays the figure in the Rmd document 
-# but is not run for knitting to pdf
-im1
 ```
 
 ## Tile-based methods
