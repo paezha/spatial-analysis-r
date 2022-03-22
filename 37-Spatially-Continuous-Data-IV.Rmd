@@ -14,7 +14,7 @@ In the previous practice you were introduced to the concept of variographic anal
 - Bailey TC and Gatrell AC [-@Bailey1995] Interactive Spatial Data Analysis, Chapters 5 and 6. Longman: Essex.
 - Bivand RS, Pebesma E, and Gomez-Rubio V [-@Bivand2008] Applied Spatial Data Analysis with R, Chapter 8. Springer: New York.
 - Brunsdon C and Comber L [-@Brunsdon2015R] An Introduction to R for Spatial Analysis and Mapping, Chapter 6, Sections 6.7 and 6.8. Sage: Los Angeles.
-- Isaaks EH and Srivastava RM  [-@Isaaks1989applied] An Introduction to Applied Geostatistics, **CHAPTERS**. Oxford University Press: Oxford.
+- Isaaks EH and Srivastava RM  [-@Isaaks1989applied] An Introduction to Applied Geostatistics, Chapter 12. Oxford University Press: Oxford.
 - O'Sullivan D and Unwin D [-@Osullivan2010] Geographic Information Analysis, 2nd Edition, Chapters 9 and 10. John Wiley & Sons: New Jersey.
 
 ## Preliminaries
@@ -54,9 +54,9 @@ The implication of non-random residuals is that there is systematic residual pat
 As before, we first calculate the polynomial terms of the coordinates to fit a trend surface to the data:
 ```{r}
 Walker_Lake <- mutate(Walker_Lake,
-                        X3 = X^3, X2Y = X^2 * Y, X2 = X^2, 
-                        XY = X * Y,
-                        Y2 = Y^2, XY2 = X * Y^2, Y3 = Y^3)
+                      X3 = X^3, X2Y = X^2 * Y, X2 = X^2, 
+                      XY = X * Y,
+                      Y2 = Y^2, XY2 = X * Y^2, Y3 = Y^3)
 ```
 
 Given the polynomial expansion, we can proceed to estimate the following cubic trend surface model, which we already know provided the best fit to the data:
@@ -68,12 +68,19 @@ summary(WL.trend3)
 
 We can next visualize the residuals which, as you can see, do not appear to be random 
 ```{r}
-plot_ly(x = ~Walker_Lake$X, y = ~Walker_Lake$Y, z = ~WL.trend3$residuals, color = ~WL.trend3$residuals < 0, colors = c("blue", "red"), type = "scatter3d")
+plot_ly(x = ~Walker_Lake$X, 
+        y = ~Walker_Lake$Y, 
+        z = ~WL.trend3$residuals, 
+        color = ~WL.trend3$residuals < 0, 
+        colors = c("blue", "red"), 
+        type = "scatter3d")
 ```
 
 Now we will create an interpolation grid:
 ```{r}
-# The function `sequence()` create a sequence of values from - to using by as the step increment. In this case, we generate a grid with points that are 2.5 m apart.
+# The function `sequence()` create a sequence of values from - to 
+# using by as the step increment. In this case, we generate a grid
+# with points that are 2.5 m apart.
 X.p <- seq(from = 0.1, to = 255.1, by = 2.5)
 Y.p <- seq(from = 0.1, to = 295.1, by = 2.5)
 df.p <- expand.grid(X = X.p, Y = Y.p)
@@ -88,21 +95,36 @@ df.p <- mutate(df.p, X3 = X^3, X2Y = X^2 * Y, X2 = X^2,
 
 The interpolated cubic surface is obtained by using the model and the interpolation grid as `newdata`:
 ```{r}
-# The function `predict()` is used to make predictions given a model and a possibly new dataset, different from the one used for estimation of the model.
-WL.preds3 <- predict(WL.trend3, newdata = df.p, se.fit = TRUE, interval = "prediction", level = 0.95)
+# The function `predict()` is used to make predictions given a model 
+# and a possibly new dataset, different from the one used for estimation 
+# of the model.
+WL.preds3 <- predict(WL.trend3, 
+                     newdata = df.p, 
+                     se.fit = TRUE, 
+                     interval = "prediction", 
+                     level = 0.95)
 ```
 
 The surface is converted into a matrix for 3D plotting:
 ```{r}
-z.p3 <- matrix(data = WL.preds3$fit[,1], nrow = length(Y.p), ncol = length(X.p), byrow = TRUE)
+z.p3 <- matrix(data = WL.preds3$fit[,1], 
+               nrow = length(Y.p), 
+               ncol = length(X.p), 
+               byrow = TRUE)
 ```
 
 And plot:
 ```{r}
-WL.plot3 <- plot_ly(x = ~X.p, y = ~Y.p, z = ~z.p3, 
-        type = "surface", colors = "YlOrRd") %>% 
-  layout(scene = list(
-    aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
+WL.plot3 <- plot_ly(x = ~X.p, 
+                    y = ~Y.p, 
+                    z = ~z.p3, 
+                    type = "surface", 
+                    colors = "YlOrRd") %>% 
+  layout(scene = list(aspectmode = "manual",
+                      aspectratio = list(x = 1, 
+                                         y = 1,
+                                         
+                                         z = 1)))
 WL.plot3
 ```
 
@@ -136,15 +158,22 @@ kpoint.5 <- kpointmean(source_xy = Walker_Lake.sf,
 Given the interpolated residuals, we can join them to the cubic trend surface, as follows:
 ```{r}
 z.p3 <- matrix(data = WL.preds3$fit[,1] + kpoint.5$z,
-               nrow = length(Y.p), ncol = length(X.p), byrow = TRUE)
+               nrow = length(Y.p), 
+               ncol = length(X.p), 
+               byrow = TRUE)
 ```
 
 This is now the interpolated field that combines the trend surface and the estimated residuals:
 ```{r}
-WL.plot3 <- plot_ly(x = ~X.p, y = ~Y.p, z = ~z.p3, 
-        type = "surface", colors = "YlOrRd") %>% 
-  layout(scene = list(
-    aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
+WL.plot3 <- plot_ly(x = ~X.p, 
+                    y = ~Y.p, 
+                    z = ~z.p3,
+                    type = "surface", 
+                    colors = "YlOrRd") %>% 
+  layout(scene = list(aspectmode = "manual",
+                      aspectratio = list(x = 1, 
+                                         y = 1, 
+                                         z = 1)))
 WL.plot3
 ```
 
@@ -238,17 +267,26 @@ To put kriging to work we must first conduct variographic analysis of the residu
 ```{r}
 Walker_Lake.sf <- Walker_Lake %>%
   st_as_sf(coords = c("X", "Y"),
-           remove = FALSE) # Remove set to false to retain the X and Y coordinates in the dataframe after they are converted to simple features
+           # Remove set to false to retain the X and Y coordinates 
+           # in the dataframe after they are converted to simple features
+           remove = FALSE) 
 ```
 
 The variogram of the residuals can be obtained by specifying a trend surface in the formula:
 ```{r}
 variogram_v <- variogram(V ~ X3 + X2Y + X2 + X + XY + Y + Y2 + XY2 + Y3, 
                          data = Walker_Lake.sf)
-ggplot(data = variogram_v, aes(x = dist, y = gamma)) +
+
+# Plot 
+ggplot(data = variogram_v, 
+       aes(x = dist, 
+           y = gamma)) +
   geom_point() + 
-  geom_text(aes(label = np), nudge_y = -1500) + # Nudge the labels away from the points
-  xlab("Distance") + ylab("Semivariance")
+  geom_text(aes(label = np), 
+            # Nudge the labels away from the points
+            nudge_y = -1500) +
+  xlab("Distance") +
+  ylab("Semivariance")
 ```
 
 You can verify that the semivariogram above corresponds to the residuals by repeating the analysis directly on the residuals. First join the residuals to the `SpatialPointsDataFrame`:
@@ -260,10 +298,16 @@ And then calculate the semivariogram and plot:
 ```{r}
 variogram_e <- variogram(e ~ 1, 
                          data = Walker_Lake.sf)
-ggplot(data = variogram_e, aes(x = dist, y = gamma)) +
+
+# Plot 
+ggplot(data = variogram_e, 
+       aes(x = dist, 
+           y = gamma)) +
   geom_point() + 
-  geom_text(aes(label = np), nudge_y = -1500) +
-  xlab("Distance") + ylab("Semivariance")
+  geom_text(aes(label = np), 
+            nudge_y = -1500) +
+  xlab("Distance") + 
+  ylab("Semivariance")
 ```
 
 The empirical semivariogram is used to estimate a semivariogram function:
@@ -275,10 +319,17 @@ variogram_v.t
 The variogram function plots as follows:
 ```{r}
 gamma.t <- variogramLine(variogram_v.t, maxdist = 130)
-ggplot(data = variogram_v, aes(x = dist, y = gamma)) +
+
+# Plot
+ggplot(data = variogram_v,
+       aes(x = dist, 
+           y = gamma)) +
   geom_point(size = 3) + 
-  geom_line(data = gamma.t, aes(x = dist, y = gamma)) +
-  xlab("Distance") + ylab("Semivariance")
+  geom_line(data = gamma.t,
+            aes(x = dist, 
+                y = gamma)) +
+  xlab("Distance") + 
+  ylab("Semivariance")
 ```
 
 We will convert the prediction grid to a simple features object:
@@ -291,32 +342,48 @@ df.sf <- df.p %>%
 Then, we can krige the field as follows (ensure that packages `sf` and `stars` are installed):
 ```{r}
 V.kriged <- krige(V ~ X3 + X2Y + X2 + X + XY + Y + Y2 + XY2 + Y3,
-              Walker_Lake.sf, df.sf, variogram_v.t)
+                  Walker_Lake.sf, 
+                  df.sf, 
+                  variogram_v.t)
 ```
 
 Extract the predictions and prediction variance from the object `V.kriged`:
 ```{r}
 V.km <- matrix(data = V.kriged$var1.pred,
-               nrow = 119, ncol = 103, byrow = TRUE)
+               nrow = 119,
+               ncol = 103, 
+               byrow = TRUE)
 V.sm <- matrix(data = V.kriged$var1.var,
-               nrow = 119, ncol = 103, byrow = TRUE)
+               nrow = 119,
+               ncol = 103,
+               byrow = TRUE)
 ```
 
 We can now plot the interpolated field:
 ```{r}
-V.km.plot <- plot_ly(x = ~X.p, y = ~Y.p, z = ~V.km, 
-        type = "surface", colors = "YlOrRd") %>% 
-  layout(scene = list(
-    aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
+V.km.plot <- plot_ly(x = ~X.p,
+                     y = ~Y.p, 
+                     z = ~V.km, 
+                     type = "surface", 
+                     colors = "YlOrRd") %>% 
+  layout(scene = list(aspectmode = "manual", 
+                      aspectratio = list(x = 1,
+                                         y = 1,
+                                         z = 1)))
 V.km.plot
 ```
 
 Also, we can plot the kriging standard errors (the square root of the prediction variance). This gives an estimate of the uncertainty in the predictions:
 ```{r}
-V.sm.plot <- plot_ly(x = ~X.p, y = ~Y.p, z = ~sqrt(V.sm), 
-        type = "surface", colors = "YlOrRd") %>% 
-  layout(scene = list(
-    aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
+V.sm.plot <- plot_ly(x = ~X.p, 
+                     y = ~Y.p,
+                     z = ~sqrt(V.sm), 
+                     type = "surface", 
+                     colors = "YlOrRd") %>% 
+  layout(scene = list(aspectmode = "manual",
+                      aspectratio = list(x = 1, 
+                                         y = 1, 
+                                         z = 1)))
 V.sm.plot
 ```
 
