@@ -69,7 +69,7 @@ The data set consists of 85 georeferenced measurements of piezometric head. Poss
 **Activity Part I**
 :::
 
-1. Obtain and plot the empirical semivariogram for the head in the Walker Lake dataset.
+1. Obtain and plot the empirical semivariogram for the head in the Wolfcamp Aquifer dataset.
 
 2. Estimate a trend surface of your choice, and obtain and plot an empirical semivariogram using the residuals. How would you interpret this semivariogram?
 
