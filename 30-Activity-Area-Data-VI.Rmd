@@ -99,7 +99,7 @@ have learned with respect to the analysis of point patterns.
 
 1. Partner with a fellow student to analyze the chosen dataset.
 
-2. Visualize/explore the dataset using appropriate tools.
+2. Visualize and explore the dataset using appropriate tools.
 
 3. Analyze your dataset by means of regression modeling. Which should be the dependent variable in your dataset? Why?
 

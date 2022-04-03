@@ -41,6 +41,7 @@ library(isdas)
 library(gstat)
 library(sf)
 library(tidyverse)
+library(stars)
 ```
 
 Load dataset:

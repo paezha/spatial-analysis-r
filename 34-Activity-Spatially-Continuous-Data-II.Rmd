@@ -43,6 +43,7 @@ library(isdas)
 library(tidyverse)
 library(spatstat)
 library(spdep)
+library(plotly)
 ```
 
 Load the data that you will use in this activity:
