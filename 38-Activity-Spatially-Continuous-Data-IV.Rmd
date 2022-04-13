@@ -23,7 +23,7 @@ In this activity, you will:
 - Bailey TC and Gatrell AC [-@Bailey1995] Interactive Spatial Data Analysis, Chapters 5 and 6. Longman: Essex.
 - Bivand RS, Pebesma E, and Gomez-Rubio V [-@Bivand2008] Applied Spatial Data Analysis with R, Chapter 8. Springer: New York.
 - Brunsdon C and Comber L [-@Brunsdon2015R] An Introduction to R for Spatial Analysis and Mapping, Chapter 6, Sections 6.7 and 6.8. Sage: Los Angeles.
-- Isaaks EH and Srivastava RM  [-@Isaaks1989applied] An Introduction to Applied Geostatistics, **CHAPTERS**. Oxford University Press: Oxford.
+- Isaaks EH and Srivastava RM  [-@Isaaks1989applied] An Introduction to Applied Geostatistics, Chapter 12. Oxford University Press: Oxford.
 - O'Sullivan D and Unwin D [-@Osullivan2010] Geographic Information Analysis, 2nd Edition, Chapters 9 and 10. John Wiley & Sons: New Jersey.
 
 ## Preliminaries
@@ -69,7 +69,8 @@ aquifer.sf <- aquifer %>%
 
 This is a capstone activity where you can work free-style
 on a data set of your choice, and put in practice what you
-have learned with respect to the analysis of point patterns.
+have learned with respect to the analysis of spatially continuous/
+field data.
 :::
 
 1. Partner with a fellow student to analyze the dataset provided.
