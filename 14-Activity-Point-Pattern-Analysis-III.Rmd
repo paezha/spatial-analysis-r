@@ -93,7 +93,7 @@ Now that you have the data that you need in the right format, you are ready for 
 
 1. Calculate the event-to-event distances to nearest neighbors using the function `nndist()`. Do this for all fast food establishments (pooled) and then for each type of establishment (i.e, "Chicken", "Hamburger", "Pizza", "Sub").
 
-2. Create Stienen diagrams using the distance vectors obtained in Step 1.
+2. Create Stienen diagrams using the distance vectors obtained in Question 1.
 
 3. Plot the empirical G-function for all fast food establishments (pooled) and then for each type of establishment (i.e, "Chicken", "Hamburger", "Pizza", "Sub").
 

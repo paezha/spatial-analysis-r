@@ -33,6 +33,7 @@ library(gstat)
 library(plotly)
 library(spdep)
 library(tidyverse)
+library(stars)
 ```
 
 Begin by loading the data file:

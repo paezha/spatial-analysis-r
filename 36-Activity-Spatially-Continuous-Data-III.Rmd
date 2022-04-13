@@ -71,9 +71,9 @@ The data set consists of 85 georeferenced measurements of piezometric head. Poss
 
 1. Obtain and plot the empirical semivariogram for the head in the Wolfcamp Aquifer dataset.
 
-2. Estimate a trend surface of your choice, and obtain and plot an empirical semivariogram using the residuals. How would you interpret this semivariogram?
+2. Fit a trend surface of your choice to the Aquifer data set (i.e., polynomial). Then, estimate the residuals and plot an empirical semivariogram using these residuals. How would you interpret this empirical semivariogram of residuals?
 
-3. Estimate and plot a theoretical semivariogram model for the residual variogram. 
+3. From the residual semivariogram estimated in Question 2, fit and plot a theoretical semivariogram model for the residual semivariogram. 
 
 ::: {.infobox .brainware data-latex="{brainware}"}
 **Activity Part II**
