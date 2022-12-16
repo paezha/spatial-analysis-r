@@ -18,6 +18,11 @@ cover-image: "images/cover.jpg"
 ---
 
 <!--
+TO RENDER:
+bookdown::render_book(input = ".", config_file = "_bookdown.yml")
+-->
+
+<!--
 NOTE: echo=is_html does not work
 
 Inspired by [**bookdown**](https://github.com/rstudio/bookdown) and the Free and Open Source Software for Geospatial ([FOSS4G](http://foss4g.org/)) movement, this book is open source.
