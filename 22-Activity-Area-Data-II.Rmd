@@ -96,7 +96,7 @@ You are now ready for the next activity.
 **Activity Part II**
 :::
 
-5. Show your scatterplot of the population versus its spatial moving average to a fellow student. What is the meaning of the 45 degree line in this plot?
+5. Show your scatterplot of the population versus its spatial moving average to a fellow student. Discuss what you believe is the meaning of the 45 degree line in this plot.
 
 6. Create a null-landscape by scrambling the values of your variable. For instance, you can use the variable `prop20to34` to generate a null landscape as follows:
 
@@ -104,4 +104,4 @@ You are now ready for the next activity.
 Hamilton_CT$Null_1 <- sample(Hamilton_CT$Prop20to34)
 ```
 
-7. Calculate the spatial moving average of your null landscape, and create a scatterplot just like you did for your variable. How is this scatterplot different?
+7. Calculate the spatial moving average of your null landscape, and create a scatterplot just like you did for your variable. How is this scatterplot different from the plot created in Question 4?

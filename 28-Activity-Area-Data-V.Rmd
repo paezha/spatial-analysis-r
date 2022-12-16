@@ -80,16 +80,16 @@ Note that the proportion of people who traveled by car as passengers are not inc
 
 1. Examine your dataframe. What variables are included? Are there any missing values?
 
-2. Map the variable `Auto_driver.prop`, and use Moran's I to test for spatial autocorrelation. 
+2. Map the variable `Auto_driver.prop`. Then use Moran's I to test for spatial autocorrelation. 
 
-3. Estimate regression model using the variables `Pop_Density` and travel time in `minutes`.
+3. Estimate a regression model using the variables `Pop_Density` and travel time in `minutes`.
 
 ::: {.infobox .brainware data-latex="{brainware}"}
 **Activity Part II**
 :::
 
-4. What does the analysis of autocorrelation in point 2* tell you about `Auto_driver.prop`? Would you say that autocorrelation in this variable is a sign that autocorrelation will be an issue in regression analysis? Why or why not?
+4. What does the analysis of autocorrelation in Question 2 tell you about `Auto_driver.prop`? Would you say that autocorrelation in this variable is a sign that autocorrelation will be an issue in regression analysis? Why or why not?
 
-5. Discuss the model you estimated in point 3. Next, examine its residuals. Would you say that they are spatially random/independent?
+5. Discuss the model you estimated in Question 3. Next, examine its residuals. Would you say that they are spatially random/independent?
 
 6. Propose ways to improve your model.
