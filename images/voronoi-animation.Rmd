@@ -5,23 +5,24 @@ output: html_notebook
 
 In this notebook I create an animation that shows how Voronoi polygons can be created by expanding circles until they intersect. This image contains several key elements of spatial statistics: points, areas, and continuous processes, as well as the problem of change of support. To run this notebook, I use data from the data package that I use to teach spatial statistics:
 ```{r}
-if(!require(geog4ga3)){
-  remotes::install_github("paezha/geog4ga3")
-  library(geog4ga3)
+if(!require(isdas)){
+  remotes::install_github("paezha/isdas")
+  library(isdas)
 }
 ```
 
 Load packages
 ```{r message=FALSE, warning=FALSE}
 library(deldir)
-library(geog4ga3)
 library(gganimate)
 library(ghibli)
+library(isdas)
 library(MexBrewer)
 #library(plotly)
 #library(spatstat)
 library(spdep)
 library(tidyverse)
+library(transformr)
 ```
 Convert Walker Lake data to simple features:
 ```{r}
