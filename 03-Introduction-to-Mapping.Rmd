@@ -8,7 +8,7 @@ Spatial statistics is a sub-field of spatial analysis that has grown in relevanc
 
 A key technology fueling this trend is that of Geographical Information Systems (GIS). GIS are, in simplest terms, digital mapping for the 21st century. In most cases, however, GIS go beyond cartographic functions to also enable and enhance our ability to analyze data.
 
-There are many available packages for geographical information analysis. Some are very user friendly, and widely available in many institutional contexts, such as ESRI's Arc software. Others are fairly specialized, such as Caliper's TransCAD, which implements many operations of interest for transportation engineering and planning. 
+There are many available packages for geographical information analysis. Some are very user friendly, and widely available in many institutional contexts, such as [QGIS](https://qgis.org/en/site/). Others are fairly specialized, such as Caliper's TransCAD, which implements many operations of interest for transportation engineering and planning. 
 
 Others packages have the advantage of being more flexible and/or free.
 
