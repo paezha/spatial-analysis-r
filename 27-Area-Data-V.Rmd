@@ -20,7 +20,7 @@ In the previous chapter, you learned how to decompose Moran's $I$ coefficient in
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to restart your `R` session, or at least clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -112,9 +112,9 @@ To implement this model, we need to add distance to the CBD as a covariate in ou
 # the same coordinate reference system of our Hamilton census tracts, which we retrieve
 # with the function `st_crs()`
 xy_cbd <- data.frame(x = -79.8708,
-                     y = 43.2584) %>%
+                     y = 43.2584) |>
   st_as_sf(coords = c("x", "y"),
-           crs = 4326) %>%
+           crs = 4326) |>
   st_transform(st_crs(Hamilton_CT))
 ```
 
@@ -164,10 +164,8 @@ ggplot(data = Hamilton_CT, aes(x = dist.sl,
   geom_point() +
   geom_abline(slope = model1$coefficients[2], # Recall that `geom_abline()` draws a line with intercept and slope as defined. Here the line is drawn using the coefficients of the regression model we estimated above. 
               intercept = model1$coefficients[1], 
-              color = "blue", size = 1) +
-  geom_vline(xintercept = 0) + # We also add the y axis... 
-  geom_hline(yintercept = 0) # ...and the x axis.
-
+              color = "blue", 
+              linewidth = 1) 
 ```
 
 Clearly, there remains a fair amount of noise after this model (the scatter of the dots around the regression line). In this case, the regression line captures the general trend of the data, but seems to underestimate most of the high population density areas closer to the CBD, and it also overestimates many of the low population areas.
@@ -181,7 +179,7 @@ Hamilton_CT$model1.e <- model1$residuals
 Since we are interested in statistical maps, we will create a map of the residuals. In this map, we will use red to indicate negative residuals (values of the dependent variable that the model _overestimates_), and blue for positive residuals (values of the dependent variable that the model _underestimates_):
 ```{r message = FALSE}
 # Recall that 'plot_ly()' is a function used to create interactive plots
-plot_ly(Hamilton_CT) %>% 
+plot_ly(Hamilton_CT) |> 
   # Recall that `add_sf()` is similar to `geom_sf()` and it draws a simple features object on a `plotly` plot. This example adds colors to represent positive (blue) and negative residuals (red).
   add_sf(type = "scatter",
          color = ~(model1.e > 0), 
@@ -194,9 +192,9 @@ In the legend of the plot, "TRUE" means that the residual is positive, and "FALS
 In this case, visual inspection is very suggestive. In addition, we have the tools to help us with this question, in particular how to make a decision while quantifying our levels of confidence: the $p$-values of Moran's $I$ coefficient, for instance. We will create a set of spatial weights:
 ```{r}
 # Here, we use use `poly2nb()` to create a list of neighbors, based on the criterion of adjacency. Next, we pass that list of neighbors to `nb2listw()` to create a set of spatial weights.  
-#Hamilton_CT.w <- Hamilton_CT.sp %>% 
-Hamilton_CT.w <- Hamilton_CT %>% 
-  poly2nb() %>%
+#Hamilton_CT.w <- Hamilton_CT.sp |> 
+Hamilton_CT.w <- Hamilton_CT |> 
+  poly2nb() |>
   nb2listw() 
 ```
 
@@ -245,9 +243,7 @@ ggplot(data = Hamilton_CT,
   stat_function(fun=function(x)model2$coefficients[1] + model2$coefficients[2]/x, 
                 geom="line", 
                 color = "blue",
-                size = 1) +
-  geom_vline(xintercept = 0) + 
-  geom_hline(yintercept = 0)
+                linewdith = 1)
 ```
 
 We will add the residuals of this model to the dataframe for further examination, in particular testing for spatial autocorrelation:
@@ -276,7 +272,7 @@ $$
 By transforming the dependent variable we obtain a function that is linear in the parameters. To implement this model, we need to create a new variable that is the logarithm of population density:
 ```{r}
 # Here we mutate the population density by taking its natural logarithm of both sides of the equation. This changes the coefficients back to a linear expression.
-Hamilton_CT <- Hamilton_CT %>%
+Hamilton_CT <- Hamilton_CT |>
   mutate(lnPOP_DEN = log(POP_DENSITY)) 
 ```
 
@@ -296,9 +292,7 @@ ggplot(data = Hamilton_CT,
   stat_function(fun=function(x)exp(model3$coefficients[1] + model3$coefficients[2] * x), 
                 geom="line", 
                 color = "blue", 
-                size = 1) +
-  geom_vline(xintercept = 0) + 
-  geom_hline(yintercept = 0)
+                linewidth = 1)
 ```
 
 As before, we can add the residuals of the model to the dataframe for further examination:
@@ -308,7 +302,7 @@ Hamilton_CT$model3.e <- model3$residuals
 
 While this latest model provides a somewhat better fit, there is still systematic under- and over-prediction, as seen in the map below (red are negative residuals and blue are positive):
 ```{r message = FALSE}
-plot_ly(Hamilton_CT) %>%
+plot_ly(Hamilton_CT) |>
   add_sf(type = "scatter",
          color = ~(model3.e > 0), 
          colors = c("red", 
@@ -349,7 +343,7 @@ colnames(POP_DEN.lm) <- c("Ii", "E.Ii", "Var.Ii", "Z.Ii", "p.val")
 
 Next, we will identify the type of tract based on the spatial relationships according to the local statistics (i.e., "HH", "LL", or "HL/LH"). 
 ```{r}
-df_msc <- Hamilton_CT %>%
+df_msc <- Hamilton_CT |>
   transmute(TRACT = TRACT,
             Z = (POP_DENSITY - mean(POP_DENSITY)) / var(POP_DENSITY),
             SMA = lag.listw(Hamilton_CT.w, Z),
@@ -404,7 +398,7 @@ This model provides a much better fit than the preceding models (see the the coe
 We can visually examine the spatial distribution of the residuals by means of the following map:
 ```{r }
 Hamilton_CT$model4.e <- model4$residuals
-plot_ly(Hamilton_CT) %>%
+plot_ly(Hamilton_CT) |>
   add_sf(type = "scatter",
          color = ~(model4.e > 0), 
          colors = c("red", 
@@ -428,19 +422,27 @@ fun.3 <- function(x)exp(model4$coefficients[1] + model4$coefficients[4] * x) #Ot
 
 ggplot(data = Hamilton_CT, aes(x = dist.sl, y = POP_DENSITY)) +
   geom_point() +
-  geom_point(data = filter(Hamilton_CT, CBD == 1), color = "Red") +
-  geom_point(data = filter(Hamilton_CT, Suburb == 1), color = "Blue") +
+  geom_point(data = filter(Hamilton_CT, CBD == 1), 
+             color = "Red") +
+  geom_point(data = filter(Hamilton_CT, Suburb == 1), 
+             color = "Blue") +
   # `stat_function()` draws custom functions on a `ggplot2` plot.
   stat_function(fun= fun.1, 
-                geom="line", size = 1, aes(color = "CBD")) +
+                geom="line", 
+                linewdith = 1, 
+                aes(color = "CBD")) +
   stat_function(fun=fun.2, 
-                geom="line", size = 1, aes(color = "Suburb")) +
+                geom="line", 
+                linewdith = 1, 
+                aes(color = "Suburb")) +
   stat_function(fun=fun.3, 
-                geom="line", size = 1, aes(color = "Other")) +
+                geom="line", 
+                linewdith = 1, 
+                aes(color = "Other")) +
   # Set the colors of the regression lines
-  scale_color_manual(values = c("CBD" = "red", "Other" = "black", "Suburb" = "blue")) +
-  geom_vline(xintercept = 0) + # Add the y axis...
-  geom_hline(yintercept = 0) # ...and the x axis.
+  scale_color_manual(values = c("CBD" = "red", 
+                                "Other" = "black", 
+                                "Suburb" = "blue"))
 ```
 
 This example illustrate how spatial exploratory analysis can provide valuable insights to improve our models, and in turn hopefully develop a better understanding of the underlying process. What can you say about population density in Hamilton based on this model?

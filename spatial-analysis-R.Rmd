@@ -3,16 +3,40 @@ title: "An Introduction to Spatial Data Analysis and Statistics: A Course in `R`
 author: "Antonio Paez"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-#output: 
-#  bookdown::gitbook:
-#      includes:
-#            in_header: images\html_test\styles.css
+output: 
+  bookdown::gitbook:
+    config:
+      toc:
+        collapse: subsection
+        scroll_highlight: true
+        before: null
+        after: null
+      toolbar:
+        position: fixed
+      edit : null
+      download: null
+      search:
+        engine: lunr # or fuse
+      # options to control/tune search engine behavior (for
+      # fuse.js, refer to https://fusejs.io/api/options.html)
+        options: null
+      fontsettings:
+        theme: white
+        family: sans
+        size: 2
+      sharing:
+        facebook: false
+        github: true
+        linkedin: true
+        twitter: false
+        whatsapp: true
+      info: true            
 documentclass: book
 bibliography: [bibliography.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: paezha/spatial-analysis-R
-description: "This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad, and Alexis Polidoro. The book is published with support of an Open Educational Resources grant from MacPherson Institute, McMaster University."
+description: "This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad and Alexis Polidoro. Further testing and refinements are due to John Merrall and Anastasia Soukhov. The book is published with support of an Open Educational Resources grant from MacPherson Institute, McMaster University."
 graphics: yes
 cover-image: "images/cover.jpg"
 ---
@@ -199,8 +223,9 @@ These freedoms cannot be revoked by the licensor (that is me) as long as you fol
 knitr::include_graphics(rep("images/license.png"))
 ```
 
+<!--
 ## How to support this project {-}
-
+-->
 
 
 <!--chapter:end:index.Rmd-->
@@ -313,7 +338,7 @@ These notes were developed using the following version of `R`:
 R.version
 ```
 
-
+A reproducible environment is available at https://github.com/paezha/Applied-Spatial-Statistics.
 
 <!--chapter:end:00-Front-Matter.Rmd-->
 
@@ -411,7 +436,8 @@ Similarly, once that the book is in my library, I do not need to retrieve it aga
 
 This analogy suggests that I can have many packages in my library, only some of which I may need at any specific time for a task. To retrieve a package (i.e., a book) from the library, so that we can use it, the function `library` is invoked as in this example:
 ```r 
-library(remotes)
+library(remotes) # R Package Installation from Remote Repositories, Including
+'GitHub'
 ```
 
 This allows you to use all the functions in the package `remotes`. In particular, at this point you want to use a function that allows you to retrieve other packages! With the functionality of `remotes::install_github` you can download and install the companion package for the book by running the following instruction:
@@ -420,6 +446,7 @@ remotes::install_github("paezha/isdas")
 ```
 
 This will install the package (i.e., put it in your library) so that you can also benefit from its functionality.
+
 
 <!--chapter:end:01-Installation.Rmd-->
 
@@ -433,7 +460,7 @@ Now that you have installed `R` and RStudio we can begin with an overview of bas
 
 Whenever you see a chunk of code in an `R` Notebook, you can run it (by clicking the 'play' icon on the top right corner) to see the results. Try it! You can also copy and paste to your console if you are reading the web version of the book.
 ```{r ch02-hello-world}
-print("Hello, Geography 4GA3")
+print("Hello, Environment and Society 4GA3")
 ```
 
 The chunk of code above instructed `R` (and through `R` the computer) to `print` (or display on the screen) some text.
@@ -686,7 +713,7 @@ Once the package is installed, it becomes available, but to use it you must load
 
 Assuming that you already have installed `ggplot2`, we proceed to load it:
 ```{r ch02-load-ggplot2}
-library(ggplot2)
+library(ggplot2) # Create Elegant Data Visualisations Using the Grammar of Graphics
 ```
 
 Now all commands from the `ggplot2` package are available to you.
@@ -770,7 +797,7 @@ The example above has guided you in the creation of a relatively simple proporti
 
 - Add stuff to the plot. For instance, to add points use `geom_point`, to add lines use `geom_line`, and so on.
 
-Check the `ggplot2` [Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf) for more information on how to use this package.
+Check the `ggplot2` [Cheat Sheet](https://rstudio.github.io/cheatsheets/html/data-visualization.html) for more information on how to use this package.
 
 ## Examples of digital cartography in `R`
 
@@ -789,32 +816,56 @@ knitr::include_graphics(rep("figures/02-Figure-3.png"))
 ```
 
 And, these are some figures created using `R` by talented people around the world.
-```{r ch02-load-tweetrmd-package, include=FALSE}
-if (!require("tweetrmd")) remotes::install_github("gadenbuie/tweetrmd")
-library(tweetrmd)
+```{r ch02-load-webshot2-package, include=FALSE}
 if (!require("webshot2")) remotes::install_github('rstudio/webshot2')
-library(webshot2)
+library(webshot2) # Take Screenshots of Web Pages
 ```
 
-```{r ch02-visualization-example-4, fig.cap= "\\label{fig:visualization-example-4} Example of visualization: Historical map with shading", echo=FALSE}
-tweet_screenshot(tweet_url("researchremora", "1479904879984492552"))
+```{r ch02-visualization-example-4-capture, include=FALSE}
+webshot("https://mastodon.online/deck/@terence@fosstodon.org/111404498052039281", 
+        file = "figures/02-Figure-4.png",
+        selector = "div.detailed-status")
 ```
 
-```{r ch02-visualization-example-5, fig.cap= "\\label{fig:visualization-example-5} Example of visualization: Population density of Madagascar", echo=FALSE}
-tweet_screenshot(tweet_url("researchremora", "1473129606383349760"))
+```{r ch02-visualization-example-4, fig.cap= "\\label{fig:visualization-example-4} Example of visualization: Income inequality in the US", echo=FALSE}
+
+knitr::include_graphics("figures/02-Figure-4.png")
 ```
 
-```{r ch02-visualization-example-6, fig.cap= "\\label{fig:visualization-example-6} Example of visualization: Street map of Kyoto", echo=FALSE}
-tweet_screenshot(tweet_url("researchremora", "1469484805033275402"))
+```{r ch02-visualization-example-5-capture, include=FALSE}
+webshot("https://mastodon.online/deck/@terence@fosstodon.org/111652744513157011", 
+        file = "figures/02-Figure-5.png",
+        selector = "div.detailed-status")
 ```
 
-```{r ch02-visualization-example-7, fig.cap= "\\label{fig:visualization-example-7} Example of visualization: Median household income in California", echo=FALSE}
-tweet_screenshot(tweet_url("researchremora", "1464214679136444452"))
+```{r ch02-visualization-example-5, fig.cap= "\\label{fig:visualization-example-5} Example of visualization: Types of forests in Brazil", echo=FALSE}
+knitr::include_graphics("figures/02-Figure-5.png")
+```
+
+```{r ch02-visualization-example-6-capture, include=FALSE}
+webshot("https://mastodon.online/deck/@terence@fosstodon.org/111575222127539953", 
+        file = "figures/02-Figure-6.png",
+        selector = "div.detailed-status")
+```
+
+```{r ch02-visualization-example-6, fig.cap= "\\label{fig:visualization-example-6} Example of visualization: Earthquakes in California", echo=FALSE}
+knitr::include_graphics("figures/02-Figure-6.png")
+```
+
+```{r ch02-visualization-example-7-capture, include=FALSE}
+webshot("https://mastodon.online/deck/@terence@fosstodon.org/111450552351044906", 
+        file = "figures/02-Figure-7.png",
+        selector = "div.detailed-status")
+```
+
+```{r ch02-visualization-example-7, fig.cap= "\\label{fig:visualization-example-7} Example of visualization: Population change in Japan", echo=FALSE}
+knitr::include_graphics("figures/02-Figure-7.png")
 ```
 
 This concludes your basic overview of basic operations and data structures in `R`. You will have an opportunity to learn more about creating maps in R with your reading.
 
 ## References
+
 
 <!--chapter:end:02-Basic-Operations-and-Data-Structures.Rmd-->
 
@@ -828,7 +879,7 @@ Spatial statistics is a sub-field of spatial analysis that has grown in relevanc
 
 A key technology fueling this trend is that of Geographical Information Systems (GIS). GIS are, in simplest terms, digital mapping for the 21st century. In most cases, however, GIS go beyond cartographic functions to also enable and enhance our ability to analyze data.
 
-There are many available packages for geographical information analysis. Some are very user friendly, and widely available in many institutional contexts, such as ESRI's Arc software. Others are fairly specialized, such as Caliper's TransCAD, which implements many operations of interest for transportation engineering and planning. 
+There are many available packages for geographical information analysis. Some are very user friendly, and widely available in many institutional contexts, including open source alternatives such as [QGIS](https://qgis.org/en/site/), or commercial software such as ESRI's Arc software. Others are fairly specialized, such as Caliper's TransCAD, which implements many operations of interest for transportation engineering and planning. 
 
 Others packages have the advantage of being more flexible and/or free.
 
@@ -854,7 +905,7 @@ In this reading, you will:
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed:
 ```{r ch03-clear-workspace}
 # The function `ls()` lists all objects in the Environment, that is, your current workspace;
 # `rm()` removes all objects listed in the argument `list = `
@@ -869,7 +920,7 @@ Now that your workspace is clear, you can proceed to load a package. In this cas
 ```{r ch03-load-packages, message=FALSE}
 #The function 'library' is used to load the data we want to work with. 
 # In this case, it is the isdas master package that we want to work with 
-library(isdas)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 ```
 
 The package includes a few datasets that will be used throughout the book:
@@ -900,7 +951,7 @@ head(snow_pumps)
 As in your previous reading, it is possible to map the cases using `ggplot2`. Begin by loading the package `tidyverse`:
 ```{r ch03-load-tidyverse, message=FALSE}
 #'Tidyverse' is a collection of R packages designed for data science used in everyday data analyses  
-library(tidyverse)
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 Now, you can create a blank `ggplot2` object from which you can render the points for deaths and the pumps.
@@ -926,10 +977,7 @@ A package that extends the functionality of mapping in `R` is `leaflet`. A key f
 ```{r ch03-load-more-packages, message=FALSE}
 # 'Leaflet' is a package used for visualizing data on a map in R. 
 if (!require("leaflet")) install.packages('leaflet')
-# 'Magrittr' is a package used for creating pipe operators 
-if (!require("leaflet")) install.packages('magrittr')
-library(leaflet)
-library(magrittr)
+library(leaflet) # Create Interactive Web Maps with the JavaScript 'Leaflet'
 ```
 
 The first step is to create a `leaflet` object, which will be saved in `m` : 
@@ -937,13 +985,13 @@ The first step is to create a `leaflet` object, which will be saved in `m` :
 # Here, we create a `leaflet` object and assign it to the variable, 'm'. 
 # The `setView` function sets the view of the map where `lng = -0.136` 
 # sets the longitutde, 'lat = 51.513' sets the latitude and the map zoom 
-# is set to 16. The `%>%` is a pipe operator that passes the output from 
+# is set to 16. The `|>` is a pipe operator that passes the output from 
 # the left hand side of the operator to the first argument of the right 
 # hand side of the operator. In this case we are telling `R` that we want 
 # to center the map on the set longitude and latitude, with a zoom level 
 # of 16, which corresponds roughly to a neighborhood 
 
-m <- leaflet(data = snow_deaths) %>% 
+m <- leaflet(data = snow_deaths) |> 
   setView(lng = -0.136, lat = 51.513, zoom = 16)
 ```
 
@@ -956,7 +1004,7 @@ The map is empty! This is because we have not yet added any geographical informa
 ```{r ch03-leaflet-add-basemap}
 # We are adding a basemap or background map of the study area 
 # by means of the `addTiles` function to the 'm' variable 
-m <- m %>% addTiles()
+m <- m |> addTiles()
 m
 ```
 
@@ -968,7 +1016,7 @@ The map now shows the neighborhood in Soho where the cholera outbreak happened. 
 # clusters a large number of markers on the map - in this case it is clusturing 
 # number of deaths into icons with numbers  
 
-m <- m %>% 
+m <- m |> 
   addMarkers(~long, 
              ~lat, 
              clusterOptions = markerClusterOptions(),
@@ -978,23 +1026,23 @@ m
 
 The map now displays the locations of cholera deaths on the map. If you zoom in, the clusters will rearrange accordingly. Try it! The other information that we have available is the location of the water pumps, which we can add to the map above (notice that the Broad Street Pump is already shown in the basemap!):
 ```{r ch03-leaflet-add-pumps}
-m %>% 
+m |> 
   addMarkers(data = snow_pumps, 
              ~long, 
              ~lat, 
              group = "Pumps")
 ```
 
-An alternative and quicker way to run the same bit of code is by means of pipe operators (`%>%`). These operators make writing code a lot faster, easier to read, and more intuitive! Recall that a pipe operator will take the output of the preceding function, and pass it on as the first argument of the next:
+An alternative and quicker way to run the same bit of code is by means of pipe operators (`|>`). These operators make writing code a lot faster, easier to read, and more intuitive! Recall that a pipe operator will take the output of the preceding function, and pass it on as the first argument of the next:
 ```{r ch03-leaflet-full-example}
-m_test <- leaflet () %>% 
-  setView(lng = -0.136, lat = 51.513, zoom = 16) %>% 
-  addTiles() %>% 
+m_test <- leaflet () |> 
+  setView(lng = -0.136, lat = 51.513, zoom = 16) |> 
+  addTiles() |> 
   addMarkers(data = snow_deaths, 
              ~long, 
              ~lat, 
              clusterOptions = markerClusterOptions(), 
-             group = "Deaths") %>% 
+             group = "Deaths") |> 
   addMarkers(data = snow_pumps, 
              ~long, 
              ~lat, 
@@ -1009,15 +1057,15 @@ The above results in a much nicer map. Is this map informative? What does it tel
 Despite the simplicity of this map, we can begin to do some spatial analysis. For instance, we could create a _heatmap_. You have probably seen heatmaps in many different situations before, as they are a popular visualization tool. Heatmaps are created based on a spatial analytical technique called _kernel analysis_. We will cover this technique in more detail later on. For the time being, it can be illustrated by taking advantage of the `leaflet.extras` package, which contains a heatmap function. Load the package as follows:
 ```{r ch03-load-leaflet-extras, message=FALSE}
 if (!require("leaflet.extras")) install.packages('leaflet.extras')
-library(leaflet.extras)
+library(leaflet.extras) # Extra Functionality for 'leaflet' Package
 ```
 
 Next, create a second leaflet object for this example, and call it `m2`. Notice that we are using the same `setView` parameters:
 ```{r ch03-second-leaflet-example}
-m2 <- leaflet(data = snow_deaths) %>% 
+m2 <- leaflet(data = snow_deaths) |> 
   setView(lng = -0.136, 
           lat = 51.513, 
-          zoom = 16) %>% 
+          zoom = 16) |> 
   addTiles()
 ```
 
@@ -1027,7 +1075,7 @@ Then, add the heatmap. The function used to do this is `addHeatmap`. We specify 
 # same as the block of code above. The 'intensity' function sets a numeric value, 
 # the 'blur' specifies the amount of blur to apply and the 'radius' function sets
 # the radius of each point on the heatmap 
-m2 %>% 
+m2 |> 
   addHeatmap(lng = ~long, 
              lat = ~lat, 
              intensity = ~Count,
@@ -1038,12 +1086,12 @@ m2 %>%
 
 Lastly, you can also add markers for the pumps as follows:
 ```{r ch03-leaflet-heatmap-with-pumps}
-m2 %>% addHeatmap(lng = ~long, 
+m2 |> addHeatmap(lng = ~long, 
                   lat = ~lat, 
                   intensity = ~Count,
                   blur = 40, 
                   max = 1, 
-                  radius = 25) %>%
+                  radius = 25) |>
   addMarkers(data = snow_pumps, 
              ~long, 
              ~lat, 
@@ -1052,22 +1100,22 @@ m2 %>% addHeatmap(lng = ~long,
 
 And everything together: 
 ```{r ch03-leaflet-put-everything-together}
-m2_test <- leaflet(data = snow_deaths) %>%
+m2_test <- leaflet(data = snow_deaths) |>
   setView(lng = -0.136, 
           lat = 51.513, 
-          zoom = 16) %>% 
-  addTiles() %>% 
+          zoom = 16) |> 
+  addTiles() |> 
   addHeatmap(lng = ~long,
              lat = ~lat, 
              intensity = ~Count,
              blur = 40, 
              max = 1, 
-             radius = 25) %>% 
+             radius = 25) |> 
   addMarkers(data = snow_deaths, 
              ~long, 
              ~lat, 
              clusterOptions = markerClusterOptions(), 
-             group = "Deaths") %>% 
+             group = "Deaths") |> 
   addMarkers(data = snow_pumps,
              ~long, 
              ~lat, 
@@ -1086,6 +1134,7 @@ In this practice you have learned how to implement some simple mapping and spati
 ## Other Resources
 
 For more information on the functionality of `leaflet`, please check [Leaflet for R](https://rstudio.github.io/leaflet/)
+
 
 <!--chapter:end:03-Introduction-to-Mapping.Rmd-->
 
@@ -1115,7 +1164,7 @@ In the practice that preceded this activity, you used `ggmap` to create a propor
 
 In this activity, we will map another type of spatial data, called _areal data_. Areas are often administrative or political jurisdictions.
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed:
 ```{r ch04-clear-workspace}
 rm(list = ls())
 ```
@@ -1124,9 +1173,9 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r ch04-load-packages}
-library(isdas)
-library(sf)
-library(tidyverse)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(sf) # Simple Features for R
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 ## Creating a simple thematic map
@@ -1194,6 +1243,7 @@ Now you have seen how to create a thematic map with polygons (areal data), you a
 
 2. Imagine that the maps you produced in the first question were found, and for some reason the variables were not labeled. They may represent income, or population density, or something else. Which of the five maps you just created is more interesting? Rank the five maps from most to least interesting. Explain the reasons for your ranking.
 
+
 <!--chapter:end:04-Activity-Statistical-Maps.Rmd-->
 
 # Mapping in R: Continued {#mapping-continued}
@@ -1225,7 +1275,7 @@ Sometimes you want to work with only a subset of a dataset. This can be done usi
 
 4. More on the use of _pipe operators_.
 
-A pipe operator allows you to pass the results of a function to another function. It makes writing instructions more intuitive and simple. You have already seen pipe operators earlier: they look like this `%>%`.
+A pipe operator allows you to pass the results of a function to another function. It makes writing instructions more intuitive and simple. You have already seen pipe operators earlier: they look like this `|>`.
 
 5. You will add layers to a `ggplot` object to improve a map.
 
@@ -1237,7 +1287,7 @@ A pipe operator allows you to pass the results of a function to another function
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed:
 ```{r ch05-clear-workspace}
 rm(list = ls())
 ```
@@ -1246,8 +1296,8 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r ch05-load-packages, message=FALSE}
-library(tidyverse)
-library(isdas)
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 ```
 
 Now that your workspace is clear, you can proceed to invoke the sample dataset. You can do this by means of the function `data`.
@@ -1317,13 +1367,13 @@ Nesting functions makes it difficult to read the code, since functions are evalu
 
 ## Pipe Operator
 
-A pipe operator is written this way: `%>%`. Its objective is to pass forward the output of a function to a second function, so that they can be chained to create more complex instructions that are still relatively easy to read.
+A pipe operator is written this way: `|>`. Its objective is to pass forward the output of a function to a second function, so that they can be chained to create more complex instructions that are still relatively easy to read.
 
 For instance, instead of nesting the subsetting instructions in the `summary` function, you could do the subsetting first, and pass the results of that to the summary for further processing. This would look like this:
 ```{r}
-# Remember, the pipe operator `%>%` passes the value of the left-hand side 
+# Remember, the pipe operator `|>` passes the value of the left-hand side 
 # to the function on the right-hand side
-subset(missing_df, Observed == FALSE) %>% summary()
+subset(missing_df, Observed == FALSE) |> summary()
 ```
 
 The code above is read as "subset `missing_df` and pass the results to `summary`". Pipe operators make writing and reading code somewhat more natural.
@@ -1446,6 +1496,7 @@ ggplot() +
 
 These are examples of creating and improving the aspect of simple symbol maps, which are often used to represent observations in space.
 
+
 <!--chapter:end:05-Mapping-in-R-Continued.Rmd-->
 
 # Activity 2: Statistical Maps II
@@ -1474,7 +1525,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed:
 ```{r}
 rm(list = ls())
 ```
@@ -1483,8 +1534,8 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r message=FALSE}
-library(tidyverse)
-library(isdas)
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 ```
 
 Now that your workspace is clear, you can proceed to invoke the datasets required for this activity:
@@ -1529,6 +1580,7 @@ The dataframes `PointPattern*` are locations of some generic events. The coordin
 
 4. Imagine that you are a public health official and you need to plan services to the public. If you were asked to guess where the next event would emerge, where would be your guess in each map? Explain your answer.
 
+
 <!--chapter:end:06-Activity-Mapping-in-R-Continued.Rmd-->
 
 # Maps as Processes: Null Landscapes, Spatial Processes, and Statistical Maps {#maps-as-processes}
@@ -1562,7 +1614,7 @@ In this chapter, you will learn:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r ch07-clear-workspace}
 rm(list = ls())
 ```
@@ -1571,7 +1623,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r ch07-load-packages, message=FALSE}
-library(tidyverse)
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 ## Random Numbers
@@ -1989,6 +2041,7 @@ The procedures in the preceding sections illustrate just a few different ways to
 
 It is important to note, however, that in the vast majority of cases we do not actually know the process; that is precisely what we wish to infer. Understanding process generation in a statistical sense, as well as null landscapes, is a useful tool that can help us to infer processes in applications with empirical (as opposed to simulated) data. In this sense, spatial statistics is often a tool used to make decisions about spatial patterns: are they random? And, if they are not random, can we infer the underlying process?
 
+
 <!--chapter:end:07-Maps-as-Processes.Rmd-->
 
 # Activity 3: Maps as Processes
@@ -2017,7 +2070,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -2026,7 +2079,7 @@ Note that `ls()` lists all objects currently on the worspace.
 
 Load the libraries you will use in this activity:
 ```{r message=FALSE}
-library(tidyverse)
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 In the practice that preceded this activity, you learned how to simulate null landscapes and spatial processes. 
@@ -2050,6 +2103,7 @@ In the practice that preceded this activity, you learned how to simulate null la
 3. Repeat step 2 several times (between two and four times).
 
 4. Propose one or more ways to decide whether a landscape is random, and explain your reasoning. The approach does not need to be the same for point patterns and continuous variables!
+
 
 <!--chapter:end:08-Activity-Maps-as-Processes.Rmd-->
 
@@ -2088,7 +2142,7 @@ In this practice, you will learn:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r ch09-clear-workspace}
 rm(list = ls())
 ```
@@ -2097,9 +2151,9 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r ch09-load-packages, message=FALSE, warning=FALSE}
-library(isdas)
-library(tidyverse)
-library(spatstat)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
+library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
 ```
 
 Load the data that you will use for this practice:
@@ -2173,7 +2227,7 @@ Notice the use of the "hat" symbol on top of the Greek lambda. This symbol is ca
 
 Consider one of the point patterns in your sample dataset, say "Pattern 1". If we filter for "Pattern 1" we can then summarize it:
 ```{r}
-filter(PointPatterns, Pattern == "Pattern 1") %>% summary()
+filter(PointPatterns, Pattern == "Pattern 1") |> summary()
 ```
 
 We see that there are $n = 60$ points in this dataset. Since the region is the unit square (check how the values of the coordinates range from approximately zero to approximately 1), the area of the region is 1. This means that for "Pattern 1":
@@ -2368,6 +2422,7 @@ Which of the three regions that you saw above is more appropriate? What do you t
 
 This concludes this chapter. The next activity will illustrate how quadrats are a useful tool to explore the question whether a map is random.
 
+
 <!--chapter:end:09-Point-Pattern-Analysis-I.Rmd-->
 
 # Activity 4: Point Pattern Analysis I
@@ -2400,7 +2455,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -2409,11 +2464,10 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `spatstat`, a package designed for the analysis of point patterns (you can learn about `spatstat` [here](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) and [here](http://spatstat.org/resources/spatstatJSSpaper.pdf)):
 ```{r message=FALSE}
-library(isdas)
-library(maptools) # Needed to convert a `Spatial Polygons` object into an `owin` object
-library(sf)
-library(spatstat)
-library(tidyverse)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(sf) # Simple Features for R
+library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 In the practice that preceded this activity, you learned about the concepts of intensity and density, about quadrats, and also how to create density maps. 
@@ -2452,8 +2506,9 @@ ggplot() +
 
 As discussed in the preceding chapter, the package `spatstat` offers a very rich collection of tools to do point pattern analysis. To convert the three sets of events (i.e., the fast food establishments, gas stands, and Paez Mart) into `ppp` objects we first must define a region or _window_. To do this we take the `sf` and convert to an `owin` (a window object) for use with the package `spatstat` (this is done via `SpatialPolygons`, hence `as(x, "Spatial")`:
 ```{r}
-# `as.owin()` will take a "foreign" object (foreign to `spatstat`) and convert it into an `owin` object. Here, there are two steps involved: first, we take the `sf` object with the boundaries of Toronto and convert it into a "Spatial" object, and then the "Spatial" object is passed on to `as.owin()`
-Toronto.owin <- as(Toronto, "Spatial") %>% as.owin() # Requires `maptools` package
+# `as.owin()` will take a "foreign" object (foreign to `spatstat`) and convert it into an `owin` object.`
+
+Toronto.owin <- Toronto |> as.owin() # Requires `maptools` package
 ```
 
 And, then convert the dataframes to `ppp` objects (this necessitates that we extract the coordinates of the events by means of `st_coordinates`): 
@@ -2517,6 +2572,7 @@ Now that you have seen how to do some analysis using quadrats, you are ready for
 
 6. Use `Fast_Food.ppp`, `Gas_Stands`, and `Paez_Mart`, and the function `quadrat.test` to calculate the test of spatial independence for these point patterns. What is your decision in each case? Explain.
 
+
 <!--chapter:end:10-Activity-Point-Pattern-Analysis-I.Rmd-->
 
 # Point Pattern Analysis II {#point-patern-analysis-ii}
@@ -2552,7 +2608,7 @@ In this practice, you will learn:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r ch11-clear-workspace}
 rm(list = ls())
 ```
@@ -2561,9 +2617,9 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r ch11-load-packages, message=FALSE, warning=FALSE}
-library(isdas)
-library(spatstat)
-library(tidyverse)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 Load the datasets that you will use for this practice:
@@ -2802,6 +2858,7 @@ It is important to note that the gradation of colors is different in the two ker
 
 The plots above illustrate how the map of the kernel density is better able to capture the variations in density across the region. In fact, kernel density is a smooth estimate of the underlying intensity of the process, and the degree of smoothing is controlled by the bandwidth.
 
+
 <!--chapter:end:11-Point-Pattern-Analysis-II.Rmd-->
 
 # Activity 5: Point Pattern Analysis II
@@ -2833,7 +2890,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -2842,9 +2899,9 @@ Note that `ls()` lists all objects currently on the worspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `spatstat`, a package designed for the analysis of point patterns (you can learn about `spatstat` [here](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) and [here](http://spatstat.org/resources/spatstatJSSpaper.pdf)):
 ```{r message=FALSE, warning=FALSE}
-library(isdas)
-library(spatstat)
-library(tidyverse)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 In the practice that preceded this activity, you learned about the concepts of intensity and density, about quadrats, and also how to create density maps. 
@@ -2903,6 +2960,7 @@ Now that you have loaded the dataframe and converted to a `ppp` object, you are 
 
 5. Discuss the limitations of your conclusions, and of quadrat/kernel (density-based) approaches more generally.
 
+
 <!--chapter:end:12-Activity-Point-Pattern-Analysis-II.Rmd-->
 
 # Point Pattern Analysis III
@@ -2941,7 +2999,7 @@ In this practice, you will learn:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r ch13-clear-workspace}
 rm(list = ls())
 ```
@@ -2950,9 +3008,9 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r ch13-load-pacakges, message=FALSE, warning=FALSE}
-library(isdas)
-library(spatstat)
-library(tidyverse)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 Load the dataset that you will use for this practice:
@@ -3206,6 +3264,7 @@ In this case, the empirical function more closely resembles the theoretical func
 
 By considering the distribution of distances to nearest neighbors, you can generate additional information on a point pattern to complement the density-based analysis of the preceding chapters.
 
+
 <!--chapter:end:13-Point-Pattern-Analysis-III.Rmd-->
 
 # Activity 6: Point Pattern Analysis III
@@ -3236,7 +3295,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -3245,11 +3304,10 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `spatstat`, a package designed for the analysis of point patterns (you can learn about `spatstat` [here](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) and [here](http://spatstat.org/resources/spatstatJSSpaper.pdf)):
 ```{r message=FALSE, warning=FALSE}
-library(isdas)
-library(maptools) # Needed to convert `SpatialPolygons` into `owin` object
-library(tidyverse)
-library(sf)
-library(spatstat)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
+library(sf) # Simple Features for R
+library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
 ```
 
 In the practice that preceded this activity, you learned about the concepts of intensity and density, about quadrats, and also how to create density maps. For this practice, you will use the data that you first encountered in Activity 4, that is, the business locations in Toronto.
@@ -3259,9 +3317,9 @@ Begin by reading the geospatial files, namely the city boundary of Toronto. You 
 data("Toronto")
 ```
 
-Convert the `sf` object to an `owin` object (via `SpatialPolygons`, hence `as(x, "Spatial")`:
+Convert the `sf` object to an `owin` object:
 ```{r}
-Toronto.owin <- as.owin(as(Toronto, "Spatial")) # Requires `maptools` package
+Toronto.owin <- as.owin(Toronto)
 ```
 
 Next the data that you will use in this activity needs to be loaded. Each dataframe is converted into a `ppp` object using the `as.ppp` function, again after extracting the coordinates of the events from the `sf` object:
@@ -3303,7 +3361,7 @@ Now that you have the data that you need in the right format, you are ready for 
 
 1. Calculate the event-to-event distances to nearest neighbors using the function `nndist()`. Do this for all fast food establishments (pooled) and then for each type of establishment (i.e, "Chicken", "Hamburger", "Pizza", "Sub").
 
-2. Create Stienen diagrams using the distance vectors obtained in Step 1.
+2. Create Stienen diagrams using the distance vectors obtained in Question 1.
 
 3. Plot the empirical G-function for all fast food establishments (pooled) and then for each type of establishment (i.e, "Chicken", "Hamburger", "Pizza", "Sub").
 
@@ -3316,6 +3374,7 @@ Now that you have the data that you need in the right format, you are ready for 
 5. Is there evidence of clustering/regularity? 
 
 6. How confident are you to make a decision whether the patterns are not random? What could you do to assess your confidence in making a decision whether the patterns are random? Explain.
+
 
 <!--chapter:end:14-Activity-Point-Pattern-Analysis-III.Rmd-->
 
@@ -3349,7 +3408,7 @@ In this chapter, you will:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -3358,9 +3417,9 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r message=FALSE, warning=FALSE}
-library(isdas)
-library(spatstat)
-library(tidyverse)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 Load the datasets that you will use for this practice:
@@ -3564,6 +3623,7 @@ Of the distance-based techniques that you have seen so far, $\hat{G}(x)$ and $\h
 
 This concludes the chapter, and our coverage of distance-based techniques.
 
+
 <!--chapter:end:15-Point-Pattern-Analysis-IV.Rmd-->
 
 # Activity 7: Point Pattern Analysis IV
@@ -3594,7 +3654,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -3603,11 +3663,10 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `spatstat`, a package designed for the analysis of point patterns (you can learn about `spatstat` [here](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) and [here](http://spatstat.org/resources/spatstatJSSpaper.pdf)):
 ```{r message=FALSE, warning=FALSE}
-library(isdas)
-library(maptools) # Needed to convert `SpatialPolygons` into `owin`-class object
-library(sf)
-library(spatstat)
-library(tidyverse)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(sf) # Simple Features for R
+library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 For this activity, you will use the same datasets that you used in Activity 6, including the geospatial files for Toronto's city boundary:
@@ -3617,7 +3676,7 @@ data("Toronto")
 
 Convert the `sf` object to an `owin` object (via `SpatialPolygons`, hence `as(x, "Spatial")`:
 ```{r}
-Toronto.owin <- as.owin(as(Toronto, "Spatial")) # Requires `maptools` package
+Toronto.owin <- as.owin(Toronto)
 ```
 
 Next, load the data that you will use in this activity. Each dataframe is converted into a `ppp` object using the `as.ppp` function, again after extracting the coordinates of the events from the `sf` object:
@@ -3657,6 +3716,7 @@ Now that you have the data sets in the appropriate format, you are ready for the
 4. What can you say about patterns at multiple-scales based on the graphs above?
 
 5. How confident are you to make a decision whether the patterns are not random? What could you do to assess your confidence in making a decision whether the patterns are random? Explain.
+
 
 <!--chapter:end:16-Activity-Point-Pattern-Analysis-IV.Rmd-->
 
@@ -3699,7 +3759,7 @@ In this chapter, you will:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, ti is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -3708,9 +3768,9 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r message=FALSE, warning=FALSE}
-library(isdas)
-library(spatstat)
-library(tidyverse)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 Load the datasets that you will use for this practice:
@@ -4024,6 +4084,7 @@ There are no good solutions to bias introduced by sampled point patterns, and it
 
 This concludes the topic of spatial point patterns.
 
+
 <!--chapter:end:17-Point-Pattern-Analysis-V.Rmd-->
 
 # Activity 8: Point Pattern Analysis V
@@ -4053,7 +4114,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -4062,9 +4123,9 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `spatstat`, a package designed for the analysis of point patterns (you can learn about `spatstat` [here](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) and [here](http://spatstat.org/resources/spatstatJSSpaper.pdf)):
 ```{r message=FALSE}
-library(isdas)
-library(spatstat)
-library(tidyverse)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 Load a dataset of your choice. It could be one of the datasets that we have used before (Toronto Business Points, Bear GPS Locations), or one of the datasets included with the package `spatstat`. To see what datasets are available through the package, do the following:
@@ -4104,6 +4165,7 @@ have learned with respect to the analysis of point patterns.
 
 4. Discuss the limitations of the analysis, for instance, choice of modeling parameters (size of region, kernel bandwidths, edge effects, etc.)
 
+
 <!--chapter:end:18-Activity-Point-Pattern-Analysis-V.Rmd-->
 
 # (PART) Part IV: Data in Areal Units {-}
@@ -4132,7 +4194,7 @@ In this practice, you will learn:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -4141,12 +4203,12 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r ch19-load-packages, message=FALSE, warning=FALSE}
-library(cartogram)
-library(isdas)
-library(gridExtra)
-library(plotly)
-library(sf)
-library(tidyverse)
+library(cartogram) # Create Cartograms with R
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(gridExtra) # Miscellaneous Functions for "Grid" Graphics
+library(plotly) # Create Interactive Web Graphics via 'plotly.js'
+library(sf) # Simple Features for R
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 Read the data used in this chapter.
@@ -4364,6 +4426,7 @@ grid.arrange(pop_den.map, pop_den.cartogram, nrow = 2)
 
 This concludes this chapter.
 
+
 <!--chapter:end:19-Area-Data-I.Rmd-->
 
 # Activity 9: Area Data I
@@ -4393,7 +4456,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+To start with a clean session restart the application or enter `command/ctrl + shift + F10`. A weaker alternative to this is to _only_ purge user-created objects from memory with the `R` command `rm` (for "remove"), followed by a list of items to be removed. This way at least the working space is clear of extraneous items when you begin your work:
 ```{r}
 rm(list = ls())
 ```
@@ -4421,7 +4484,7 @@ This is an `sf` object with census tracts and selected demographic variables for
 
 You can obtain new (calculated) variables as follows. For instance, to obtain the proportion of residents who are between 20 and 34 years old, and between 35 and 49:
 ```{r}
-Hamilton_CT <- Hamilton_CT %>%
+Hamilton_CT <- Hamilton_CT |>
   mutate(Prop20to34 = (AGE_20_TO_24 + 
                          AGE_25_TO_29 + 
                          AGE_30_TO_34)/POPULATION, 
@@ -4444,7 +4507,7 @@ You are ready for the next activity.
 
 2. Create cartograms for the proportion of the population who are 20 to 34 years old, 35 to 49 years old, 50 to 65 years old, and 65 and older.
 
-3. Change the scheme and colors of your maps to obtain maps with 2 classes/colors, 5 classes/colors, and 10 classes/colors. You can check different color palettes [in the documentation of {ggplot2}](https://ggplot2.tidyverse.org/reference/scale_brewer.html). Which scheme is more informative? What colors looked better to you?
+3. Choose one of the maps you made in Question 1 or Question 2 and prepare to change the scheme and colors of this map to obtain 3 new maps. One map should have 2 classes/colors, another should have 5 classes/colors, and another should have 10 classes/colors. You can check different color palettes [in the documentation of {ggplot2}](https://ggplot2.tidyverse.org/reference/scale_brewer.html). Which scheme is more informative? What colors looked better to you?
 
 ::: {.infobox .brainware data-latex="{brainware}"}
 **Activity Part II**
@@ -4452,7 +4515,7 @@ You are ready for the next activity.
 
 4. Show your maps to a fellow student. What patterns do you notice in the distribution of population by age in Hamilton? Do you think the distribution of the population by age is random, or not random?
 
-5. Devise a rule to decide whether the pattern observed in a choropleth map is random.
+5. Devise a rule or a type of benchmark you could use to decide whether the pattern observed in a choropleth map is random. Discuss how this rule/benchmark would work. 
 
 <!--chapter:end:20-Activity-Area-Data-I.Rmd-->
 
@@ -4481,7 +4544,7 @@ In this practice, you will learn about:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to begin from a new `R` session, or at least to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -4625,27 +4688,20 @@ The row-standardized spatial weights matrix has the following properties:
 
 Coding spatial weights matrices by hand is a tedious and error-prone process. Fortunately, functions to generate them exist in `R`. The package `spdep` in particular has a number of useful utilities for working with spatial weights matrices.
 
-The first step to create a spatial weights matrix is to find the neighbors (i.e., areas adjacent to) for each area. The function `poly2nb` is used for this. The input argument is a `SpatialPolygonDataFrame`, a kind of object that `spdep` uses. Fortunately, it is straightforward to convert our `sf` object into a `SpatialPolygonDataFrame` by means of the function `as()`:
-```{r}
-# Function `as()` is used to convert between object classes
-
-Hamilton_CT.sp <- as(Hamilton_CT, "Spatial")
-```
-
-The following finds the neighbors (note that the default adjacency criterion is queen):
+The first step to create a spatial weights matrix is to find the neighbors (i.e., areas adjacent to) for each area. The function `poly2nb` is used for this (note that the default adjacency criterion is queen):
 ```{r}
 # The function `poly2nb()` takes an object of class "Spatial" with polygons, and finds the neighbors
 
-Hamilton_CT.nb <- poly2nb(pl = Hamilton_CT.sp, queen = TRUE)
+Hamilton_CT.nb <- poly2nb(pl = Hamilton_CT, queen = TRUE)
 ```
 
 The value (output) of the function is an object of class `nb`:
-```{r}
+```{r ch21-check-class}
 class(Hamilton_CT.nb)
 ```
 
 The function `summary()` applied to an object of this class gives some useful information about the neighbors in the region, including the number of zones in this system ($188$), the total number of neighbors ($1,180$), and the percentage of neighbors out of all pairs of areas (3.34%; conversely, 96.66% of all possible zone pairs are _not_ neighbors!) Other information includes the distribution of neighbors (3 zones have two neighbors, 8 zones have three neighbors, 22 zones have four neighbors, and so on): 
-```{r}
+```{r ch21-summary-nb}
 summary(Hamilton_CT.nb)
 ```
 
@@ -4657,14 +4713,23 @@ Hamilton_CT$TRACT[Hamilton_CT.nb[[1]]]
 ```
 
 The list of neighbors can be converted into a list of entries in a spatial weights matrix $W$ by means of the function `nb2listw` (for "neighbors to matrix W in list form"):
-```{r}
+```{r ch21-obtain-w-from-nb}
 Hamilton_CT.w <- nb2listw(Hamilton_CT.nb)
 ```
 
-We can visualize the neighbors (adjacent) areas:
-```{r}
-plot(Hamilton_CT.sp, border = "gray")
-plot(Hamilton_CT.nb, coordinates(Hamilton_CT.sp), col = "red", add = TRUE)
+We can use base `R` functions to visualize the neighbors (adjacent) areas in our system:
+```{r ch21-plot-spatial-proximities}
+# Plot the geometry of the zoning system
+plot(Hamilton_CT |>
+       st_geometry(), border = "gray")
+# Plot the neighbhorhood relationships; this uses two arguments: the `nb` class object and the coordinates of the centroids of the zoning system
+plot(Hamilton_CT.nb,
+     Hamilton_CT |> 
+       st_centroid() |> 
+       st_coordinates(),
+     # Add to the previous plot
+     add = TRUE,
+     col = "red")
 ```
 
 ## Spatial Moving Averages
@@ -4771,12 +4836,15 @@ Spatial moving averages can be calculated in a straightforward way by means of t
 
 Here, we calculate the spatial moving average of population density:
 ```{r}
-POP_DENSITY.sma <- lag.listw(x = Hamilton_CT.w, Hamilton_CT$POP_DENSITY)
+POP_DENSITY.sma <- lag.listw(x = Hamilton_CT.w, 
+                             Hamilton_CT$POP_DENSITY)
 ```
 
 And now we can plot the spatial moving average of population density. First we join this variable to our `sf` dataframe with the census tracts. The key for joining the two dataframes is the unique tract identifier :
 ```{r warning=FALSE}
-Hamilton_CT <- left_join(Hamilton_CT, data.frame(TRACT = Hamilton_CT$TRACT, POP_DENSITY.sma), by = "TRACT")
+Hamilton_CT <- left_join(Hamilton_CT, 
+                         data.frame(TRACT = Hamilton_CT$TRACT, POP_DENSITY.sma), 
+                         by = "TRACT")
 ```
 
 And plot:
@@ -4835,19 +4903,27 @@ Distance-based nearest neighbors can be obtained in `R` by means of the function
 
 To implement this criterion we need to find the centroids of the polygons with `st_centroid()` and then extract the coordinates of the centroids with `st_coordinates()`:
 ```{r}
-CT_centroids <- st_centroid(Hamilton_CT) %>% 
+CT_centroids <- Hamilton_CT |>
+  st_centroid() |> 
   st_coordinates()
 ```
 
 We can create a nearest neighbors object `nb` using two threshold distances, a minimum and a maximum distance value. In this example we will consider that the neighbors of zone $A_i$ are all zones $A_j$ whose centroids are within $0$ and $5,000$ meters of the centroid of $A_i$:
 ```{r}
-Hamilton_CT.dnb <- dnearneigh(CT_centroids, d1 = 0, d2 = 5000)
+Hamilton_CT.dnb <- dnearneigh(CT_centroids, 
+                              d1 = 0, 
+                              d2 = 5000)
 ```
 
 We can visualize the neighbors (adjacent) areas:
 ```{r}
-plot(Hamilton_CT.sp, border = "gray")
-plot(Hamilton_CT.dnb, CT_centroids, col = "red", add = TRUE)
+plot(Hamilton_CT |>
+       st_geometry(),
+     border = "gray")
+plot(Hamilton_CT.dnb, 
+     CT_centroids, 
+     col = "red", 
+     add = TRUE)
 ```
 
 Try changing the distance threshold to see how different neighborhoods are defined.
@@ -4871,8 +4947,13 @@ Hamilton_CT.knb <- knn2nb(knearneigh(CT_centroids, k = 3))
 
 We can again visualize the neighbors ("adjacent") areas:
 ```{r}
-plot(Hamilton_CT.sp, border = "gray")
-plot(Hamilton_CT.knb, CT_centroids, col = "red", add = TRUE)
+plot(Hamilton_CT |>
+       st_geometry(),
+     border = "gray")
+plot(Hamilton_CT.knb, 
+     CT_centroids, 
+     col = "red", 
+     add = TRUE)
 ```
 
 Try changing the value of `k` to see how the neighborhoods change.
@@ -4918,7 +4999,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+Remember to restart your `R` session or at least clear all extraneous objects from the workspace with `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -4947,7 +5028,7 @@ This is a `sf` object with census tracts and selected demographic variables for 
 
 You can obtain new (calculated) variables as follows. For instance, to obtain the proportion of residents who are between 20 and 34 years old, and between 35 and 49:
 ```{r}
-Hamilton_CT <- Hamilton_CT %>%
+Hamilton_CT <- Hamilton_CT |>
   mutate(Prop20to34 = (AGE_20_TO_24 + AGE_25_TO_29 + AGE_30_TO_34)/POPULATION,
          Prop35to49 = (AGE_35_TO_39 + AGE_40_TO_44 + AGE_45_TO_49)/POPULATION)
 ```
@@ -4979,7 +5060,7 @@ You are now ready for the next activity.
 **Activity Part II**
 :::
 
-5. Show your scatterplot of the population versus its spatial moving average to a fellow student. What is the meaning of the 45 degree line in this plot?
+5. Show your scatterplot of the population versus its spatial moving average to a fellow student. Discuss what you believe is the meaning of the 45 degree line in this plot.
 
 6. Create a null-landscape by scrambling the values of your variable. For instance, you can use the variable `prop20to34` to generate a null landscape as follows:
 
@@ -4987,7 +5068,7 @@ You are now ready for the next activity.
 Hamilton_CT$Null_1 <- sample(Hamilton_CT$Prop20to34)
 ```
 
-7. Calculate the spatial moving average of your null landscape, and create a scatterplot just like you did for your variable. How is this scatterplot different?
+7. Calculate the spatial moving average of your null landscape, and create a scatterplot just like you did for your variable. How is this scatterplot different from the plot created in Question 4?
 
 <!--chapter:end:22-Activity-Area-Data-II.Rmd-->
 
@@ -5015,7 +5096,7 @@ In this practice, you will learn about:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to restart the `R` session or at least to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -5146,11 +5227,11 @@ Hamilton_CT$POP_DENSITY_s7.sma <- POP_DENSITY_s7.sma
 Hamilton_CT$POP_DENSITY_s8.sma <- POP_DENSITY_s8.sma
 ```
 
-It would be useful to compare the original landscape of population density to the null landscapes that you created before. To create a single figure with choropleth maps of the empirical variable and the eight simulated variables using the `facet_wrap()` function of `ggplot2`, we must first reorganize the data so that all the population density variables are in a single column, and all spatial moving average variables are also in a single column. Further, we need a new column to identifies which variable the values in this column correspond to. We will solve this little data management problem by copying only the data we are interested in into a new dataframe (by means of `select()`), and then _gathering_ the spatial moving averages into a single column: 
+It would be useful to compare the original landscape of population density to the null landscapes that you created before. To create a single figure with choropleth maps of the empirical variable and the eight simulated variables using the `facet_wrap()` function of `ggplot2`, we must first reorganize the data so that all the population density variables are in a single column, and all spatial moving average variables are also in a single column. Further, we need a new column to identifies which variable the values in this column correspond to. We will solve this little data management problem by copying only the data we are interested in into a new dataframe (by means of `select()`), and then _pivoting_ the spatial moving averages into a single column (i.e., a long table): 
 ```{r}
-#"Hamilton_CT2 is a new dataframe. Here, the pipe operators (%>%) are used to pass the original dataframe to the select() function, and then the output of that is passed on to the `gather()` function. Notice that we are selecting the empirical spatial moving average and the 8 simulated instances of population densities. 
+#"Hamilton_CT2 is a new dataframe. Here, the pipe operators (|>) are used to pass the original dataframe to the select() function, and then the output of that is passed on to the `gather()` function. Notice that we are selecting the empirical spatial moving average and the 8 simulated instances of population densities. 
 
-Hamilton_CT2 <- Hamilton_CT %>% # This pipe operator passes the dataframe to `select()`
+Hamilton_CT2 <- Hamilton_CT |> # This pipe operator passes the dataframe to `select()`
   # `select()` keeps only the spatial moving averages and geometry
   select(POP_DENSITY.sma, 
          POP_DENSITY_s1.sma,
@@ -5161,9 +5242,11 @@ Hamilton_CT2 <- Hamilton_CT %>% # This pipe operator passes the dataframe to `se
          POP_DENSITY_s6.sma,
          POP_DENSITY_s7.sma,
          POP_DENSITY_s8.sma,
-         geometry) %>% # This pipe operator passes the dataframe with only the spatial moving average variables and the geometry to `gather()`
-  # `gather()` places all variables with the exception of `geometry` in a single column named `DENSITY_SMA` and creates a new variable called `VAR` with the names of the original columns (i.e., POP_DENSITY.sma, POP_DENSITY_s1.sma, etc.)
-  gather(VAR, DENSITY_SMA, -geometry)
+         geometry) |> # This pipe operator passes the dataframe with only the spatial moving average variables and the geometry to `pivot_longer()`
+  # `pivot_longer()` takes a wide table and makes it longer; in this case, it places all variables with the exception of `geometry` in a single column named `DENSITY_SMA` and creates a new variable called `VAR` with the names of the original columns (i.e., POP_DENSITY.sma, POP_DENSITY_s1.sma, etc.)
+  pivot_longer(cols = -geometry,
+               names_to = "VAR",
+               values_to = "DENSITY_SMA")
 ```
 
 Now the new dataframe with all spatial moving averages in a single column can be used to create choropleth maps. The function `facet_wrap()` is used to create facet plots so that we can place all maps in a single figure:
@@ -5186,9 +5269,9 @@ An additional advantage of the spatial moving average is its use in the developm
 
 Let us explore the use of spatial moving average scatterplots. First, we will extract the density information from the original `sf` object, reorganize, and bind to `Hamilton_CT2` so that we can plot using faceting:
 ```{r}
-Hamilton_CT2 <- Hamilton_CT2 %>% # Pass `Hamilton_CT2` as the first argument of `data.frame()`
-  data.frame(Hamilton_CT %>% # Pass `Hamilton_CT` to `st_drop_geometry()`
-               st_drop_geometry() %>% # Drop the geometry because it is already available in `Hamilton_CT2`.
+Hamilton_CT2 <- Hamilton_CT2 |> # Pass `Hamilton_CT2` as the first argument of `data.frame()`
+  data.frame(Hamilton_CT |> # Pass `Hamilton_CT` to `st_drop_geometry()`
+               st_drop_geometry() |> # Drop the geometry because it is already available in `Hamilton_CT2`.
                # Select from `Hamilton_CT` the original population density and the 8 null landscapes simulated from it.
                select(POP_DENSITY,
                       POP_DENSITY_s1,
@@ -5198,8 +5281,10 @@ Hamilton_CT2 <- Hamilton_CT2 %>% # Pass `Hamilton_CT2` as the first argument of 
                       POP_DENSITY_s5,
                       POP_DENSITY_s6,
                       POP_DENSITY_s7,
-                      POP_DENSITY_s8) %>% # Pass the result to `gather()`  
-               gather(VAR, DENSITY) %>% # Copy all density variables to a single column, and create a new variable called `VAR` with the names of the original columns (i.e., POP_DENSITY, POP_DENSITY_s1, etc.) 
+                      POP_DENSITY_s8) |> # Pass the result to `pivot_longer()`  
+               pivot_longer(cols = everything(),
+                            names_to = "VAR", 
+                            values_to = "DENSITY") |> # Copy all density variables to a single column, and create a new variable called `VAR` with the names of the original columns (i.e., POP_DENSITY, POP_DENSITY_s1, etc.) 
                select(DENSITY)) # Drop VAR from the the dataframe
 ```
 
@@ -5407,7 +5492,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+Restart your `R` session or at least make sure that the working space is clean when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -5458,7 +5543,7 @@ You are now ready for the next activity.
 
 4. How confident are you deciding whether the variables under analysis are not spatially random? What can you say regarding the relative strength of the spatial pattern of these variables?
 
-5. Show a fellow student the Moran's scatterplots you created in point 3. What can you tell about the spatial pattern based on these scatterplots? Create choropleth maps for the variables. If the spatial pattern is not random, what kind of process might have led to the patterns you observe? 
+5. Show a fellow student the Moran's scatterplots you created in Question 3. What can you tell about the spatial pattern based on these scatterplots? Create choropleth maps for the variables. If the spatial pattern is not random, what kind of process might have led to the patterns you observe? 
 
 6. The scatterplots created using `moran.plot` include some observations that are labeled with their id and a different symbol. Why do you think these observations are highlighted in such a way?
 
@@ -5489,7 +5574,7 @@ In this practice, you will learn about:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is recommended that you begin your work with a new session of `R`. At the very least, make sure that the working space is clear from extraneous items there may have been there from earlier. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -5545,7 +5630,7 @@ The reason some observations are highlighted is because they have been identifie
 
 To explore this, we will recreate the scatterplot manually to have better control of its aspect. To do this, we first create a dataframe with the mean-centered and scaled variable $z_i=(x_i-\overline{x})/\sum z_i^2$, and its spatial moving average. We will also create a factor variable (call it `Type`) to identify the type of spatial relationship (Low & Low, if both $z_i$ and its spatial moving average are negative, High & High, if both $z_i$ and its spatial moving average are positive, and Low & High/High & Low otherwise). This is information is useful for mapping the results:
 ```{r}
-Hamilton_CT <- Hamilton_CT %>% # Use the pipe operator to pass the dataframe as an argument to `mutate()`, which is used to create new variables.
+Hamilton_CT <- Hamilton_CT |> # Use the pipe operator to pass the dataframe as an argument to `mutate()`, which is used to create new variables.
   mutate(Z = (POP_DENSITY - mean(POP_DENSITY)) / var(POP_DENSITY), # Create a mean-centered variable that is standardized by the variance.
          SMA = lag.listw(Hamilton_CT.w, Z), # Calculate the spatial moving average of variable `Z`.
          # The function `case_when()` is used to evaluate several logical conditions and respond to them. 
@@ -5566,14 +5651,14 @@ The function `bscols()` (for bootstrap columns) is used to array two `plotly` ob
 ```{r warning=FALSE, message=FALSE}
 bscols(
   # The first plot is Moran's scatterplot
-  plot_ly(df_msc.sd) %>% # Create a `plotly` object using the dataframe as an input. The pipe operator passes this object to the function `add_markers()`; this function is similar to the `geom_point()` function in `ggplot2` and it draws objects on the blank plot created by `plot_ly()`
-    add_markers(x = ~Z, y = ~SMA, color = ~POP_DENSITY, size = ~(Z * SMA), colors = "YlOrRd") %>%
-    hide_colorbar() %>%     # Remove the colorbar from the plot.
+  plot_ly(df_msc.sd) |> # Create a `plotly` object using the dataframe as an input. The pipe operator passes this object to the function `add_markers()`; this function is similar to the `geom_point()` function in `ggplot2` and it draws objects on the blank plot created by `plot_ly()`
+    add_markers(x = ~Z, y = ~SMA, color = ~POP_DENSITY, size = ~(Z * SMA), colors = "YlOrRd") |>
+    hide_colorbar() |>     # Remove the colorbar from the plot.
     highlight("plotly_selected"), # Highlight observations when selected.
   # The second plot is a choropleth map
-  plot_ly(df_msc.sd) %>% # Create a `plotly` object using the dataframe as an input. The pipe operator passes this object to the function `add_sf()`; this function is similar to the `geom_sf()` functions in `ggplot2` and it draws a simple features object on the blank plot created by `plot_ly()`
-    add_sf(split = ~TRACT, color = ~POP_DENSITY, colors = "YlOrRd", showlegend = FALSE) %>%
-    hide_colorbar() %>% # Remove colorbar from the plot.
+  plot_ly(df_msc.sd) |> # Create a `plotly` object using the dataframe as an input. The pipe operator passes this object to the function `add_sf()`; this function is similar to the `geom_sf()` functions in `ggplot2` and it draws a simple features object on the blank plot created by `plot_ly()`
+    add_sf(split = ~TRACT, color = ~POP_DENSITY, colors = "YlOrRd", showlegend = FALSE) |>
+    hide_colorbar() |> # Remove colorbar from the plot.
     highlight(dynamic = TRUE) # Highlight observations when selected.
 )
 ```
@@ -5618,7 +5703,7 @@ Similar to the global version of Moran's $I$, hypothesis testing can be conducte
 
 For further exploration, join the local statistics to the dataframe:
 ```{r }
-Hamilton_CT <- Hamilton_CT %>% 
+Hamilton_CT <- Hamilton_CT |> 
   left_join(data.frame(TRACT = Hamilton_CT$TRACT, 
                        POP_DENSITY.lm), 
             by = "TRACT") # Join the results of `localmoran()` to the dataframe
@@ -5627,7 +5712,7 @@ Hamilton_CT <- Hamilton_CT %>%
 Now it is possible to map the local statistics. Since we added the $p$-value of the local statistics, we can distinguish between those with small (say, less than 0.05) and large $p$-values:
 ```{r }
 # The function `add_sf()` draws a simple features object, similar to `geom_sf()` in `ggplot2`. We "split" observations based on their p-values: if the p-value is less than 0.05, the condition is "TRUE" and otherwise it is "FALSE". Finally, we color the zones based on their `Type`: that is, whether they are High & High according to the local statistic, or Low & Low, etc.
-  plot_ly(Hamilton_CT) %>%
+  plot_ly(Hamilton_CT) |>
     add_sf(type = "scatter",
            split = ~(p.val < 0.05), 
            color = ~Type, 
@@ -5653,9 +5738,9 @@ localmoran.map <- function(p, listw, VAR, by){
   require(spdep)
   require(plotly)
   
-  df_msc <- p %>% 
+  df_msc <- p |> 
     rename(VAR = as.name(VAR),
-              key = as.name(by)) %>%
+              key = as.name(by)) |>
     transmute(key,
               VAR,
               Z = (VAR - mean(VAR)) / var(VAR),
@@ -5673,7 +5758,7 @@ localmoran.map <- function(p, listw, VAR, by){
                                  local_I),
                       by = "key")
   
-  plot_ly(df_msc) %>%
+  plot_ly(df_msc) |>
     add_sf(type = "scatter",
            split = ~(p.val < 0.05), 
            color = ~Type, 
@@ -5728,7 +5813,7 @@ plot_ly(df1_simulated,
         marker = list(color = ~z, 
                       colorscale = c('#FFE1A1', 
                                      '#683531'), 
-                      showscale = TRUE)) %>%
+                      showscale = TRUE)) |>
   add_markers()
 ```
 
@@ -5739,9 +5824,9 @@ xy0 <- c(53, 34)
 # Select a radius
 r <- 10
 # Extract observations that are within a radius of `r` from focal point `xy0` (note that sqrt((x - xy0)^2 + (x - xy0)^2) is Pythagoras's formula for calculating the distance between two points; if this distance is less than `r`, the point is kept)
-df1_simulated %>% 
-  subset(sqrt((x - xy0[1])^2 + (y - xy0[2])^2) < r) %>%
-  select(z) %>% 
+df1_simulated |> 
+  subset(sqrt((x - xy0[1])^2 + (y - xy0[2])^2) < r) |>
+  select(z) |> 
   sum()
 ```
 
@@ -5760,7 +5845,7 @@ plot_ly(df2_simulated,
         marker = list(color = ~z,
                       colorscale = c('#FFE1A1', 
                                      '#683531'), 
-                      showscale = TRUE)) %>%
+                      showscale = TRUE)) |>
   add_markers()
 ```
 
@@ -5770,9 +5855,9 @@ xy0 <- c(53, 34)
 # Select a radius
 r <- 10
 # Extract observations that are within a radius of `r` from focal point `xy0` (note that sqrt((x - xy0)^2 + (x - xy0)^2) is Pythagoras's formula for calculating the distance between two points; if this distance is less than `r`, the point is kept)
-df2_simulated %>% 
-  subset(sqrt((x - xy0[1])^2 + (y - xy0[2])^2) < r) %>%
-  select(z) %>% 
+df2_simulated |> 
+  subset(sqrt((x - xy0[1])^2 + (y - xy0[2])^2) < r) |>
+  select(z) |> 
   sum()
 ```
 
@@ -5852,7 +5937,7 @@ df2.lg <- data.frame(Gstar = df2.lg, p.val = 2 * pnorm(abs(df2.lg), lower.tail =
 If we bind the results of the $G_i^*(d)$ analysis to the dataframe, we can plot the results for further exploration. We will classify the results by their type, in this case high and low concentrations:
 ```{r}
 df2 <- cbind(df2_simulated[,1:3],df2.lg)
-df2 <- df2 %>%
+df2 <- df2 |>
   mutate(Type = case_when(Gstar < 0 & p.val <= 0.05 ~ "Low Concentration",
                           Gstar > 0 & p.val <= 0.05 ~ "High Concentration", 
                           TRUE ~ "Not Signicant"))
@@ -5868,7 +5953,7 @@ plot_ly(df2,
         colors = c("red", 
                    "blue", 
                    "gray"),
-        marker = list()) %>%
+        marker = list()) |>
   add_markers()
 ```
 
@@ -5915,7 +6000,7 @@ plot_ly(df2,
         colors = c("red", 
                    "blue",
                    "gray"),
-        marker = list()) %>%
+        marker = list()) |>
   add_markers()
 ```
 
@@ -5966,7 +6051,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+Before you begin your work restart the `R` session, or at least clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -5996,27 +6081,40 @@ Hamilton_CT <- mutate(Hamilton_CT, Prop20to34 = (AGE_20_TO_24 + AGE_25_TO_29 + A
 
 This function is used to create local Moran maps:
 ```{r}
-localmoran.map <- function(p = p, listw = listw, VAR = VAR, by = by){
+localmoran.map <- function(p, listw, VAR, by){
+  # p is a simple features object
   require(tidyverse)
   require(spdep)
   require(plotly)
   
-  df_msc <- transmute(p,
-                      key = p[[by]],
-                      Z = (p[[VAR]] - mean(p[[VAR]])) / var(p[[VAR]]),
-                      SMA = lag.listw(listw, Z),
-                      Type = case_when(Z < 0 & SMA < 0 ~ "LL",
-                                       Z > 0 & SMA > 0 ~ "HH",
-                                       TRUE ~ "HL/LH"))
+  df_msc <- p |> 
+    rename(VAR = as.name(VAR),
+              key = as.name(by)) |>
+    transmute(key,
+              VAR,
+              Z = (VAR - mean(VAR)) / var(VAR),
+              SMA = lag.listw(listw, Z),
+              Type = case_when(Z < 0 & SMA < 0 ~ "LL",
+                               Z > 0 & SMA > 0 ~ "HH",
+                               TRUE ~ "HL/LH"))
   
-  local_I <- localmoran(p[[VAR]], listw)
+  local_I <- localmoran(df_msc$VAR, listw)
+  
+  colnames(local_I) <- c("Ii", "E.Ii", "Var.Ii", "Z.Ii", "p.val")
   
   df_msc <- left_join(df_msc, 
-                  data.frame(key = p[[by]], local_I))
-  df_msc <- rename(df_msc, p.val = Pr.z...0.)
+                      data.frame(key = df_msc$key, 
+                                 local_I),
+                      by = "key")
   
-  plot_ly(df_msc) %>%
-    add_sf(split = ~(p.val < 0.05), color = ~Type, colors = c("red", "khaki1", "dodgerblue", "dodgerblue4")) 
+  plot_ly(df_msc) |>
+    add_sf(type = "scatter",
+           split = ~(p.val < 0.05), 
+           color = ~Type, 
+           colors = c("red", 
+                      "khaki1",
+                      "dodgerblue", 
+                      "dodgerblue4")) 
 }
 ```
 
@@ -6042,7 +6140,7 @@ gistar.map <- function(p = p, listw = listw, VAR = VAR, by = by){
   p <- left_join(p, 
                   data.frame(key = p[[by]], df.lg))
   
-  plot_ly(p) %>%
+  plot_ly(p) |>
     add_sf(split = ~(p.val < 0.05), color = ~Type, colors = c("red", "dodgerblue", "gray"))
 }
 ```
@@ -6056,8 +6154,8 @@ Hamilton_CT.w <- nb2listw(poly2nb(pl = Hamilton_CT))
 
 2) Binary, by distance (3 km threshold) _including self_.
 ```{r}
-Hamilton_CT.3knb <- Hamilton_CT %>% 
-  st_centroid() %>%
+Hamilton_CT.3knb <- Hamilton_CT |> 
+  st_centroid() |>
   dnearneigh(d1 = 0, d2 = 3)
 Hamilton_CT.3kw <- nb2listw(include.self(Hamilton_CT.3knb), style = "B")
 ```
@@ -6074,17 +6172,17 @@ You are now ready for the next activity.
 
 1. Create local Moran maps for the population in age group 20-34 and _proportion_ of population in age group 20-34. 
 
-2.  Use the $G_i^*$ statistic to analyze the population _and_ proportion of population in the age group 20-34.
+2.  Use the $G_i^*$ statistic to analyze the population _and_ proportion of population in the age group 20-34. Then, use the `gistar.map` function to create $G_i^*$ maps.
 
-3. Now create local Moran maps for the population and _population density_ in the age group 20-34. 
+3. Create local Moran maps for the population and _population density_ in the age group 20-34. 
 
 ::: {.infobox .brainware data-latex="{brainware}"}
 **Activity Part II**
 :::
 
-4. Concerning the analysis in point 1: What is the difference between using population (absolute) and population density (rate)?
+4. Concerning the analysis in Question 3: What is the difference between using population (absolute) and population density (rate)?
 
-5. Concerning the analysis in point 2: What is the difference between using population (absolute) and proportion of population (rate)? Is there a reason to prefer either variable in analysis? Discuss.
+5. Concerning the analysis in Question 1: What is the difference between using population (absolute) and proportion of population (rate)? Is there a reason to prefer either variable in analysis? Discuss.
 
 6. More generally, what do you think should guide the decision of whether to analyze variables as absolute values or rates?
 
@@ -6112,7 +6210,7 @@ In the previous chapter, you learned how to decompose Moran's $I$ coefficient in
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to restart your `R` session, or at least clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -6204,9 +6302,9 @@ To implement this model, we need to add distance to the CBD as a covariate in ou
 # the same coordinate reference system of our Hamilton census tracts, which we retrieve
 # with the function `st_crs()`
 xy_cbd <- data.frame(x = -79.8708,
-                     y = 43.2584) %>%
+                     y = 43.2584) |>
   st_as_sf(coords = c("x", "y"),
-           crs = 4326) %>%
+           crs = 4326) |>
   st_transform(st_crs(Hamilton_CT))
 ```
 
@@ -6256,10 +6354,8 @@ ggplot(data = Hamilton_CT, aes(x = dist.sl,
   geom_point() +
   geom_abline(slope = model1$coefficients[2], # Recall that `geom_abline()` draws a line with intercept and slope as defined. Here the line is drawn using the coefficients of the regression model we estimated above. 
               intercept = model1$coefficients[1], 
-              color = "blue", size = 1) +
-  geom_vline(xintercept = 0) + # We also add the y axis... 
-  geom_hline(yintercept = 0) # ...and the x axis.
-
+              color = "blue", 
+              linewidth = 1) 
 ```
 
 Clearly, there remains a fair amount of noise after this model (the scatter of the dots around the regression line). In this case, the regression line captures the general trend of the data, but seems to underestimate most of the high population density areas closer to the CBD, and it also overestimates many of the low population areas.
@@ -6273,7 +6369,7 @@ Hamilton_CT$model1.e <- model1$residuals
 Since we are interested in statistical maps, we will create a map of the residuals. In this map, we will use red to indicate negative residuals (values of the dependent variable that the model _overestimates_), and blue for positive residuals (values of the dependent variable that the model _underestimates_):
 ```{r message = FALSE}
 # Recall that 'plot_ly()' is a function used to create interactive plots
-plot_ly(Hamilton_CT) %>% 
+plot_ly(Hamilton_CT) |> 
   # Recall that `add_sf()` is similar to `geom_sf()` and it draws a simple features object on a `plotly` plot. This example adds colors to represent positive (blue) and negative residuals (red).
   add_sf(type = "scatter",
          color = ~(model1.e > 0), 
@@ -6286,9 +6382,9 @@ In the legend of the plot, "TRUE" means that the residual is positive, and "FALS
 In this case, visual inspection is very suggestive. In addition, we have the tools to help us with this question, in particular how to make a decision while quantifying our levels of confidence: the $p$-values of Moran's $I$ coefficient, for instance. We will create a set of spatial weights:
 ```{r}
 # Here, we use use `poly2nb()` to create a list of neighbors, based on the criterion of adjacency. Next, we pass that list of neighbors to `nb2listw()` to create a set of spatial weights.  
-#Hamilton_CT.w <- Hamilton_CT.sp %>% 
-Hamilton_CT.w <- Hamilton_CT %>% 
-  poly2nb() %>%
+#Hamilton_CT.w <- Hamilton_CT.sp |> 
+Hamilton_CT.w <- Hamilton_CT |> 
+  poly2nb() |>
   nb2listw() 
 ```
 
@@ -6337,9 +6433,7 @@ ggplot(data = Hamilton_CT,
   stat_function(fun=function(x)model2$coefficients[1] + model2$coefficients[2]/x, 
                 geom="line", 
                 color = "blue",
-                size = 1) +
-  geom_vline(xintercept = 0) + 
-  geom_hline(yintercept = 0)
+                linewdith = 1)
 ```
 
 We will add the residuals of this model to the dataframe for further examination, in particular testing for spatial autocorrelation:
@@ -6368,7 +6462,7 @@ $$
 By transforming the dependent variable we obtain a function that is linear in the parameters. To implement this model, we need to create a new variable that is the logarithm of population density:
 ```{r}
 # Here we mutate the population density by taking its natural logarithm of both sides of the equation. This changes the coefficients back to a linear expression.
-Hamilton_CT <- Hamilton_CT %>%
+Hamilton_CT <- Hamilton_CT |>
   mutate(lnPOP_DEN = log(POP_DENSITY)) 
 ```
 
@@ -6388,9 +6482,7 @@ ggplot(data = Hamilton_CT,
   stat_function(fun=function(x)exp(model3$coefficients[1] + model3$coefficients[2] * x), 
                 geom="line", 
                 color = "blue", 
-                size = 1) +
-  geom_vline(xintercept = 0) + 
-  geom_hline(yintercept = 0)
+                linewidth = 1)
 ```
 
 As before, we can add the residuals of the model to the dataframe for further examination:
@@ -6400,7 +6492,7 @@ Hamilton_CT$model3.e <- model3$residuals
 
 While this latest model provides a somewhat better fit, there is still systematic under- and over-prediction, as seen in the map below (red are negative residuals and blue are positive):
 ```{r message = FALSE}
-plot_ly(Hamilton_CT) %>%
+plot_ly(Hamilton_CT) |>
   add_sf(type = "scatter",
          color = ~(model3.e > 0), 
          colors = c("red", 
@@ -6441,7 +6533,7 @@ colnames(POP_DEN.lm) <- c("Ii", "E.Ii", "Var.Ii", "Z.Ii", "p.val")
 
 Next, we will identify the type of tract based on the spatial relationships according to the local statistics (i.e., "HH", "LL", or "HL/LH"). 
 ```{r}
-df_msc <- Hamilton_CT %>%
+df_msc <- Hamilton_CT |>
   transmute(TRACT = TRACT,
             Z = (POP_DENSITY - mean(POP_DENSITY)) / var(POP_DENSITY),
             SMA = lag.listw(Hamilton_CT.w, Z),
@@ -6496,7 +6588,7 @@ This model provides a much better fit than the preceding models (see the the coe
 We can visually examine the spatial distribution of the residuals by means of the following map:
 ```{r }
 Hamilton_CT$model4.e <- model4$residuals
-plot_ly(Hamilton_CT) %>%
+plot_ly(Hamilton_CT) |>
   add_sf(type = "scatter",
          color = ~(model4.e > 0), 
          colors = c("red", 
@@ -6520,19 +6612,27 @@ fun.3 <- function(x)exp(model4$coefficients[1] + model4$coefficients[4] * x) #Ot
 
 ggplot(data = Hamilton_CT, aes(x = dist.sl, y = POP_DENSITY)) +
   geom_point() +
-  geom_point(data = filter(Hamilton_CT, CBD == 1), color = "Red") +
-  geom_point(data = filter(Hamilton_CT, Suburb == 1), color = "Blue") +
+  geom_point(data = filter(Hamilton_CT, CBD == 1), 
+             color = "Red") +
+  geom_point(data = filter(Hamilton_CT, Suburb == 1), 
+             color = "Blue") +
   # `stat_function()` draws custom functions on a `ggplot2` plot.
   stat_function(fun= fun.1, 
-                geom="line", size = 1, aes(color = "CBD")) +
+                geom="line", 
+                linewdith = 1, 
+                aes(color = "CBD")) +
   stat_function(fun=fun.2, 
-                geom="line", size = 1, aes(color = "Suburb")) +
+                geom="line", 
+                linewdith = 1, 
+                aes(color = "Suburb")) +
   stat_function(fun=fun.3, 
-                geom="line", size = 1, aes(color = "Other")) +
+                geom="line", 
+                linewdith = 1, 
+                aes(color = "Other")) +
   # Set the colors of the regression lines
-  scale_color_manual(values = c("CBD" = "red", "Other" = "black", "Suburb" = "blue")) +
-  geom_vline(xintercept = 0) + # Add the y axis...
-  geom_hline(yintercept = 0) # ...and the x axis.
+  scale_color_manual(values = c("CBD" = "red", 
+                                "Other" = "black", 
+                                "Suburb" = "blue"))
 ```
 
 This example illustrate how spatial exploratory analysis can provide valuable insights to improve our models, and in turn hopefully develop a better understanding of the underlying process. What can you say about population density in Hamilton based on this model?
@@ -6568,7 +6668,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+Begin by restarting your `R` session, or at least by clearing the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -6621,17 +6721,17 @@ Note that the proportion of people who traveled by car as passengers are not inc
 
 1. Examine your dataframe. What variables are included? Are there any missing values?
 
-2. Map the variable `Auto_driver.prop`, and use Moran's I to test for spatial autocorrelation. 
+2. Map the variable `Auto_driver.prop`. Then use Moran's I to test for spatial autocorrelation. 
 
-3. Estimate regression model using the variables `Pop_Density` and travel time in `minutes`.
+3. Estimate a regression model using the variables `Pop_Density` and travel time in `minutes`.
 
 ::: {.infobox .brainware data-latex="{brainware}"}
 **Activity Part II**
 :::
 
-4. What does the analysis of autocorrelation in point 2* tell you about `Auto_driver.prop`? Would you say that autocorrelation in this variable is a sign that autocorrelation will be an issue in regression analysis? Why or why not?
+4. What does the analysis of autocorrelation in Question 2 tell you about `Auto_driver.prop`? Would you say that autocorrelation in this variable is a sign that autocorrelation will be an issue in regression analysis? Why or why not?
 
-5. Discuss the model you estimated in point 3. Next, examine its residuals. Would you say that they are spatially random/independent?
+5. Discuss the model you estimated in Question 3. Next, examine its residuals. Would you say that they are spatially random/independent?
 
 6. Propose ways to improve your model.
 
@@ -6662,7 +6762,7 @@ In the previous chapter, you practiced how to estimate linear regression models 
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+Remember that it is good practice to begin your work with a new `R` session. To reduce the risk of errors caused by extraneous items in memory, you should at least clear the working space. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -6720,7 +6820,7 @@ b2 = 4
 uv_coords <- st_coordinates(st_centroid(HamiltonDAs))
 
 # Add the coordinates of the centroids to the dataframe, but first transform them so that they have a false origin at the minimum values of u and v, and scaled by 100000. Simulate variable z using the coefficients defined above, the transformed coordinates, and add a random component with a mean of zero and standard deviation of one.
-HamiltonDAs <- HamiltonDAs %>%
+HamiltonDAs <- HamiltonDAs |>
   mutate(u = (uv_coords[,1] - min(uv_coords[,1]))/100000,
          v = (uv_coords[,2] - min(uv_coords[,2]))/100000,
          z = exp(b0) * exp(b1 * u) * exp(b2 * v) +
@@ -6729,8 +6829,8 @@ HamiltonDAs <- HamiltonDAs %>%
 
 This is the summary of the simulated variables:
 ```{r}
-HamiltonDAs %>% 
-  select(u, v, z) %>%
+HamiltonDAs |> 
+  select(u, v, z) |>
   summary()
 ```
 
@@ -6749,7 +6849,7 @@ HamiltonDAs$model1.e <- model1$residuals
 A map of the residuals can help s to examine their spatial pattern (negative residuals are red, positive are blue):
 ```{r message = FALSE, warning = FALSE}
 # Create a `plotly` object with the dataframe and plot the the simple features object with colors per the sign of the residuals (negative residuals = FALSE, positive residuals = TRUE)
-  plot_ly(HamiltonDAs) %>%
+  plot_ly(HamiltonDAs) |>
     add_sf(color = ~ifelse(model1.e > 0, "Positive", "Negative"), colors = c("red", "dodgerblue4"))
 ```
 
@@ -6757,9 +6857,9 @@ Visual inspection of the spatial distribution of residuals is suggestive. Positi
 
 To do this, we need to create a set of spatial weights:
 ```{r}
-HamiltonDAs.w <- HamiltonDAs %>%
-  as("Spatial") %>%
-  poly2nb() %>%
+HamiltonDAs.w <- HamiltonDAs |>
+  as("Spatial") |>
+  poly2nb() |>
   nb2listw()
 ```
 
@@ -6804,7 +6904,7 @@ HamiltonDAs$model3.e <- model3$residuals
 
 We can plot a map of the residuals to examine their spatial pattern (negative residuals are red, positive are blue):
 ```{r message = FALSE, warning = FALSE}
-  plot_ly(HamiltonDAs) %>%
+  plot_ly(HamiltonDAs) |>
     add_sf(type = "scatter",
            color = ~ifelse(model3.e > 0, 
                            "Positive", 
@@ -6868,8 +6968,8 @@ z1 <- matrix(z1, nrow = 21, ncol = 21)
 The plot is as follows:
 ```{r}
 # Create a `plotly` object and add a surface.
-plot_ly(z = ~z1) %>% 
-  add_surface() %>%
+plot_ly(z = ~z1) |> 
+  add_surface() |>
   # The function `layout()` defines several aspects of the plot, in this case the labels for the ticks on the axes and the axes titles. 
   layout(scene = list(xaxis = list(ticktext = c("-2", "0", "2"), 
                                    tickvals = c(0, 10, 20)), 
@@ -6902,7 +7002,7 @@ z2 <- matrix(z2, nrow = 21, ncol = 21)
 
 And the plot is as follows:
 ```{r}
-plot_ly(z = ~z2) %>% add_surface() %>%
+plot_ly(z = ~z2) |> add_surface() |>
   layout(scene = list(xaxis = list(ticktext = c("-2", "0", "2"), tickvals = c(0, 10, 20)), 
                       yaxis = list(ticktext = c("-2", "0", "2"), tickvals = c(0, 10, 20)),
                       xaxis = list(title = "v"), 
@@ -6918,7 +7018,7 @@ Higher order polynomials (i.e., cubic, quartic, etc.) are possible in principle.
 Powers of variables tend to be highly correlated with each other. See the following table of correlations for the `u` coordinate in the example:
 ```{r echo = FALSE, results = "asis"}
 kable(cor(cbind(u = df$u, `u^2` = df$u^2, `u^3` = df$u^3, `u^4` = df$u^4)), 
-      digits = 2, format = "html") %>% kable_styling()
+      digits = 2, format = "html") |> kable_styling()
 ```
 
 When two variables are highly collinear, the model has difficulties discriminating their relative contribution to the model. This is manifested by inflated standard errors that may depress the significance of the coefficients, and occasionally by sign reversals.
@@ -7180,7 +7280,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the workspace to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+Restart your `R` session or at least use the `R` command to clear the workspace, `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following. This ensures that your working space is clean to begin with:
 ```{r}
 rm(list = ls())
 ```
@@ -7255,7 +7355,7 @@ have learned with respect to the analysis of area data.
 
 1. Partner with a fellow student to analyze the chosen dataset.
 
-2. Visualize/explore the dataset using appropriate tools.
+2. Visualize and explore the dataset using appropriate tools.
 
 3. Analyze your dataset by means of regression modeling. Which should be the dependent variable in your dataset? Why?
 
@@ -7296,7 +7396,7 @@ Previously, you learned about the analysis of area data. Starting with this prac
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As a reminder, it is good practice to begin with a new `R` session or to at least clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -7400,7 +7500,7 @@ plot_ly(data = Walker_Lake,
                z = ~V,
                marker = list(color = ~V, 
                              colorscale = c("Orange", "Red"), 
-                             showscale = TRUE)) %>% 
+                             showscale = TRUE)) |> 
   add_markers() #adding traces to a plotly visualization
 ```
 
@@ -7413,7 +7513,7 @@ A widely used algorithm to convert points into tiles is called Voronoi polygons,
 1. Given a set of generating points $p_g$ with coordinates $(u_g, u_g)$ (for $g = 1,...,n$) and values of a variable $z_{p_g}$:
 ```{r}
 # Create a set of coordinates for the example
-uv_coords <- matrix(c(0.7, 5.2, 3.3, 1.3, 5.4, 0.5, 1.8, 2.3, 4.8, 5.5), c(5, 2)) %>% 
+uv_coords <- matrix(c(0.7, 5.2, 3.3, 1.3, 5.4, 0.5, 1.8, 2.3, 4.8, 5.5), c(5, 2)) |> 
   st_multipoint("XY")
 
 # Create a window for the points, this is similar to the windows 
@@ -7482,7 +7582,7 @@ First, we will convert the `Walker_Lake` dataframe to a simple features object u
 # into a simple features object. If the foreign 
 # object is points, the coordinates can be named 
 # by means of the argument `coords`. 
-Walker_Lake.sf <- Walker_Lake %>% 
+Walker_Lake.sf <- Walker_Lake |> 
   st_as_sf(coords = c("X", "Y"))
 ```
 
@@ -7494,8 +7594,8 @@ Once we have an `sf` object of the points, the geometry can be used to create th
 # of the points) and apply the function `c()` to concatenate 
 # the coordinates to obtain a MULTIPOINT object.   
 # The pipe operator passes the MuLTIPOINT object to function `st_voronoi()`
-vpolygons <- do.call(c, st_geometry(Walker_Lake.sf)) %>% 
-  st_voronoi() %>% 
+vpolygons <- do.call(c, st_geometry(Walker_Lake.sf)) |> 
+  st_voronoi() |> 
   # The output of `st_voronoi()` is a collection of geometries, 
   # which we pass to the following function for extraction.
   st_collection_extract()
@@ -7546,7 +7646,7 @@ W.bbox <- st_polygon(list(rbind(c(0,0),
 
 The intersection of the polygons with the box clips the polygons:
 ```{r}
-Walker_Lake.v <- Walker_Lake.v %>%
+Walker_Lake.v <- Walker_Lake.v |>
   st_intersection(W.bbox)
 ```
 
@@ -7608,7 +7708,7 @@ Or the information can be extracted for greater control of the aspect of the plo
 data.frame(expand.grid(X= z_p.idw1$xcol,
                        Y = z_p.idw1$yrow),
            # transpose matrix
-           V = as.vector(t(z_p.idw1$v))) %>%
+           V = as.vector(t(z_p.idw1$v))) |>
   ggplot(aes(x = X,
              y = Y, 
              fill = V)) + 
@@ -7716,17 +7816,17 @@ target_xy <- expand.grid(x = seq(0.5,
                                 2.2), 
                         y = seq(0.5, 
                                 299.5, 
-                                2.2)) %>%
+                                2.2)) |>
   st_as_sf(coords = c("x", "y"))
 ```
 
 The inputs to the function are a simple features object with the variable that we wish to interpolate, a simple features object with the point to which we wish to interpolate, the name of the variable to interpolate (which must be in the source table), and the number of points to use for interpolations (see below). The value (output) of the function is a simple features table with the target points, as well as estimated values of $\hat{z_p}$ at those points. Using the three nearest neighbors:
-```{r cache=TRUE}
+```{r cache=FALSE}
 # Use the source and target points to interpolate
 kpoint.3 <- kpointmean(source_xy = Walker_Lake.sf, 
                        target_xy = target_xy,
                        z = V,
-                       k = 3) %>% 
+                       k = 3) |> 
   # Rename the columns to match the names of columns in
   # our other data frame
   rename(V = z)
@@ -7742,12 +7842,12 @@ ggplot() +
 ```
 
 As with other spatially moving averages, the crucial aspect of implementing $k$-point means is the selection of $k$. A large value will tend towards the global average, whereas a value of 1 will tend to replicate the Voronoi polygons (see below):
-```{r cache=TRUE}
+```{r cache=FALSE}
 # Calculate k-point means using only one point. Rename the variables to match 
 kpoint.1 <- kpointmean(source_xy = Walker_Lake.sf, 
                        target_xy = target_xy,
                        z = V,
-                       k = 1) %>% 
+                       k = 1) |> 
   # Rename the columns to match the names of columns in
   # our other data frame
   rename(V = z)
@@ -7801,7 +7901,7 @@ In this activity, you will:
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+Remember to begin your work with a clean session. At least, you need to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -7814,6 +7914,7 @@ library(isdas)
 library(tidyverse)
 library(spatstat)
 library(spdep)
+library(plotly)
 ```
 
 Load the data that you will use in this activity:
@@ -7884,7 +7985,7 @@ In the previous practice you were introduced to the concept of fields/spatially 
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to begin with a new session of `R` or at least to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -7972,20 +8073,20 @@ The standard deviation could be calculated also based in the values of the $k$-n
 ```{r}
 # Create a prediction grid and convert to simple features:
 target_xy = expand.grid(x = seq(0.5, 259.5, 2.2), 
-                        y = seq(0.5, 299.5, 2.2)) %>%
+                        y = seq(0.5, 299.5, 2.2)) |>
   st_as_sf(coords = c("x", "y"))
 
 # Convert the `Walker_Lake` dataframe to a simple features object using as follows:
-Walker_Lake.sf <- Walker_Lake %>% 
+Walker_Lake.sf <- Walker_Lake |> 
   st_as_sf(coords = c("X", "Y"))
 ```
 
 Interpolation using $k=5$ neighbors:
-```{r cache=TRUE}
+```{r cache=FALSE}
 kpoint.5 <- kpointmean(source_xy = Walker_Lake.sf, 
                        target_xy = target_xy, 
                        z = V,  
-                       k = 5) %>%
+                       k = 5) |>
   rename(V = z)
 ```
 
@@ -8043,8 +8144,8 @@ df <- mutate(df, z = 0.5 + 0.3 * u + 0.7 * v + rnorm(n = n, mean = 0, sd = 0.1))
 A 3D scatterplot can be useful to explore the data:
 ```{r}
 # Create a 3D scatterplot with the function `plot_ly()`. Notice that the way this function works is similar to `ggplot2`: the arguments are a dataframe, what should be plotted on the x-axis, the y-axis, the z-axis, and other aesthetics (aspects) of the plot. Here the color will be proportional to the values of `z`. The function `add_markers()` is similar to the family of `geom_` functions in `ggplot2`, but more general, since it will try to guess what you are trying to plot based on the inputs (in this case points). The function `layout()` is used to control other parts of the plot: here the `aspectratio` is selected so that the scale is identical for all three axes.
-plot_ly(data = df, x = ~u, y = ~v, z = ~z, color = ~z) %>% 
-  add_markers() %>% 
+plot_ly(data = df, x = ~u, y = ~v, z = ~z, color = ~z) |> 
+  add_markers() |> 
   layout(scene = list(
     aspectmode = "manual", aspectratio = list(x=1, y=1, z=1)))
 ```
@@ -8098,11 +8199,11 @@ z.p_u <- matrix(data = preds$fit[,3], nrow = 21, ncol = 21, byrow = TRUE)
 The plot is created using the coordinates used for interpolation (`x.p` and `y.p`) and the matrices with the point estimates `z.p` and the upper and lower bounds. The type of plot in the package `plotly` is a _surface_:
 ```{r}
 trend.plot <- plot_ly(x = ~u.p, y = ~v.p, z = ~z.p, 
-        type = "surface", colors = "YlOrRd") %>% 
+        type = "surface", colors = "YlOrRd") |> 
   add_surface(x = ~u.p, y = ~v.p, z = ~z.p_l, 
-              opacity = 0.5, showscale = FALSE) %>%
+              opacity = 0.5, showscale = FALSE) |>
   add_surface(x = ~u.p, y = ~v.p, z = ~z.p_u, 
-              opacity = 0.5, showscale = FALSE) %>% 
+              opacity = 0.5, showscale = FALSE) |> 
   layout(scene = list(
     aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
 
@@ -8196,11 +8297,11 @@ z.p3_u <- matrix(data = WL.preds3$fit[,3], nrow = 119, ncol = 103, byrow = TRUE)
 This is the quadratic trend surface with its confidence interval of predictions:
 ```{r}
 WL.plot2 <- plot_ly(x = ~X.p, y = ~Y.p, z = ~z.p2, 
-        type = "surface", colors = "YlOrRd") %>% 
+        type = "surface", colors = "YlOrRd") |> 
   add_surface(x = ~X.p, y = ~Y.p, z = ~z.p2_l, 
-              opacity = 0.5, showscale = FALSE) %>%
+              opacity = 0.5, showscale = FALSE) |>
   add_surface(x = ~X.p, y = ~Y.p, z = ~z.p2_u, 
-              opacity = 0.5, showscale = FALSE) %>% 
+              opacity = 0.5, showscale = FALSE) |> 
   layout(scene = list(
     aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
 WL.plot2
@@ -8209,11 +8310,11 @@ WL.plot2
 And, this is the cubic trend surface with its confidence interval of predictions:
 ```{r}
 WL.plot3 <- plot_ly(x = ~X.p, y = ~Y.p, z = ~z.p3, 
-        type = "surface", colors = "YlOrRd") %>% 
+        type = "surface", colors = "YlOrRd") |> 
   add_surface(x = ~X.p, y = ~Y.p, z = ~z.p3_l, 
-              opacity = 0.5, showscale = FALSE) %>%
+              opacity = 0.5, showscale = FALSE) |>
   add_surface(x = ~X.p, y = ~Y.p, z = ~z.p3_u, 
-              opacity = 0.5, showscale = FALSE) %>% 
+              opacity = 0.5, showscale = FALSE) |> 
   layout(scene = list(
     aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
 WL.plot3
@@ -8223,7 +8324,7 @@ Alas, these models are not very reliable estimates of the underlying field. As c
 
 Another question, however, is whether the point estimates are accurate. To get a sense of whether this is the case we can add the observations to the plot:
 ```{r}
-WL.plot3 %>%
+WL.plot3 |>
   add_markers(data = Walker_Lake, x = ~X, y = ~Y, z = ~V, 
               color = ~V, opacity = 0.7, showlegend = FALSE)
 ```
@@ -8246,10 +8347,10 @@ ggplot(data = Walker_Lake,
 Visual inspection of the distribution of the residuals strongly suggests that they are not random. We can check this by means of Moran's $I$ coefficient, if we create a list of spatial weights as follows:
 ```{r}
 # Create a set of spatial weights with the 5 nearest neighbors.
-WL.listw <- Walker_Lake[,2:3] %>% 
-  as.matrix() %>%
-  knearneigh(k = 5) %>%
-  knn2nb() %>%
+WL.listw <- Walker_Lake[,2:3] |> 
+  as.matrix() |>
+  knearneigh(k = 5) |>
+  knn2nb() |>
   nb2listw()
 ```
 
@@ -8318,7 +8419,7 @@ In this activity, you will:
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+Before you begin your work, it is good practice to restart your session of `R`; a weaker alternative is to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -8331,6 +8432,7 @@ library(isdas)
 library(tidyverse)
 library(spatstat)
 library(spdep)
+library(plotly)
 ```
 
 Load the data that you will use in this activity:
@@ -8392,7 +8494,7 @@ Previously, in Chapter \@ref(spatially-continuous-data-ii), we discussed some li
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+Begin by restarting `R` or at least clearing the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -8463,7 +8565,7 @@ To examine the residuals, first we label them as "positive" or "negative":
 ```{r}
 # The function `ifelse()` is used to label the residuals as "Positive" if they are 
 # greater than zero, or "Negative" if they are zero or less.
-Walker_Lake <- Walker_Lake %>%
+Walker_Lake <- Walker_Lake |>
   mutate(residual3 = ifelse(WL.trend3$residuals > 0, 
                             "Positive", 
                             "Negative"))
@@ -8481,11 +8583,11 @@ ggplot(data = Walker_Lake,
 As seen before, there is considerable spatial autocorrelation as confirmed by Moran's $I$ coefficient:
 ```{r}
 # Take the coordinates of Walker Lake and convert to matrix.
-WL.listw <- as.matrix(Walker_Lake[,2:3]) %>% 
+WL.listw <- as.matrix(Walker_Lake[,2:3]) |> 
   # Find the 5 nearest neighbors of each observations.
-  knearneigh(k = 5) %>% 
+  knearneigh(k = 5) |> 
   # Convert the nearest neighbors to `nb` object.
-  knn2nb() %>% 
+  knn2nb() |> 
   # Convert the `nb` object into spatial weights. 
   nb2listw() 
 
@@ -8547,11 +8649,11 @@ correlogram <- data.frame(k, moranI)
 # A `for` loop is a way of repeating instructions a defined number of times, 
 # here from 1 to the length of vector `k`.
 for(i in 1:length(k)){
-  listwk <- Walker_Lake[,2:3] %>%
-    as.matrix() %>%
+  listwk <- Walker_Lake[,2:3] |>
+    as.matrix() |>
      # Use the ith element of vector `k` to find the nearest neighbors
-    knearneigh(k = k[i]) %>%
-    knn2nb() %>%
+    knearneigh(k = k[i]) |>
+    knn2nb() |>
     nb2listw()
   
   # Moran test for residuals
@@ -8900,7 +9002,7 @@ In this activity, you will:
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, please remember to start with a new session of `R` or at least use the command `rm` (for "remove") to clear the workspace, followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -8942,9 +9044,9 @@ The data set consists of 85 georeferenced measurements of piezometric head. Poss
 
 1. Obtain and plot the empirical semivariogram for the head in the Wolfcamp Aquifer dataset.
 
-2. Estimate a trend surface of your choice, and obtain and plot an empirical semivariogram using the residuals. How would you interpret this semivariogram?
+2. Fit a trend surface of your choice to the Aquifer data set (i.e., polynomial). Then, estimate the residuals and plot an empirical semivariogram using these residuals. How would you interpret this empirical semivariogram of residuals?
 
-3. Estimate and plot a theoretical semivariogram model for the residual variogram. 
+3. From the residual semivariogram estimated in Question 2, fit and plot a theoretical semivariogram model for the residual semivariogram. 
 
 ::: {.infobox .brainware data-latex="{brainware}"}
 **Activity Part II**
@@ -8977,7 +9079,7 @@ In the previous practice you were introduced to the concept of variographic anal
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, remember to begin work with a new session of `R`. At least, remembert to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -8991,6 +9093,7 @@ library(gstat)
 library(plotly)
 library(spdep)
 library(tidyverse)
+library(stars)
 ```
 
 Begin by loading the data file:
@@ -9077,7 +9180,7 @@ WL.plot3 <- plot_ly(x = ~X.p,
                     y = ~Y.p, 
                     z = ~z.p3, 
                     type = "surface", 
-                    colors = "YlOrRd") %>% 
+                    colors = "YlOrRd") |> 
   layout(scene = list(aspectmode = "manual",
                       aspectratio = list(x = 1, 
                                          y = 1,
@@ -9094,11 +9197,11 @@ We  can illustrate this as follows. To interpolate the _residuals_, we first nee
 ```{r}
 # We will use the prediction grid we used above to interpolate the residuals 
 target_xy = expand.grid(x = X.p, 
-                        y = Y.p) %>%
+                        y = Y.p) |>
   st_as_sf(coords = c("x", "y"))
 
 # Convert the `Walker_Lake` dataframe to a simple features object using as follows:
-Walker_Lake.sf <- Walker_Lake %>% 
+Walker_Lake.sf <- Walker_Lake |> 
   st_as_sf(coords = c("X", "Y"))
 
 # Append the residuals to the table
@@ -9127,7 +9230,7 @@ WL.plot3 <- plot_ly(x = ~X.p,
                     y = ~Y.p, 
                     z = ~z.p3,
                     type = "surface", 
-                    colors = "YlOrRd") %>% 
+                    colors = "YlOrRd") |> 
   layout(scene = list(aspectmode = "manual",
                       aspectratio = list(x = 1, 
                                          y = 1, 
@@ -9223,7 +9326,7 @@ Kriging is implemented in the package `gstat` as follows.
 
 To put kriging to work we must first conduct variographic analysis of the residuals. The function `variogram` uses as an argument a simple features object that we can create as follows:
 ```{r}
-Walker_Lake.sf <- Walker_Lake %>%
+Walker_Lake.sf <- Walker_Lake |>
   st_as_sf(coords = c("X", "Y"),
            # Remove set to false to retain the X and Y coordinates 
            # in the dataframe after they are converted to simple features
@@ -9292,7 +9395,7 @@ ggplot(data = variogram_v,
 
 We will convert the prediction grid to a simple features object:
 ```{r}
-df.sf <- df.p %>%
+df.sf <- df.p |>
   st_as_sf(coords = c("X", "Y"),
            remove = FALSE)
 ```
@@ -9323,7 +9426,7 @@ V.km.plot <- plot_ly(x = ~X.p,
                      y = ~Y.p, 
                      z = ~V.km, 
                      type = "surface", 
-                     colors = "YlOrRd") %>% 
+                     colors = "YlOrRd") |> 
   layout(scene = list(aspectmode = "manual", 
                       aspectratio = list(x = 1,
                                          y = 1,
@@ -9337,7 +9440,7 @@ V.sm.plot <- plot_ly(x = ~X.p,
                      y = ~Y.p,
                      z = ~sqrt(V.sm), 
                      type = "surface", 
-                     colors = "YlOrRd") %>% 
+                     colors = "YlOrRd") |> 
   layout(scene = list(aspectmode = "manual",
                       aspectratio = list(x = 1, 
                                          y = 1, 
@@ -9379,7 +9482,7 @@ In this activity, you will:
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+Restart `R` to begin work with a new session, or at least clear the working space to ensure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -9392,6 +9495,7 @@ library(isdas)
 library(gstat)
 library(sf)
 library(tidyverse)
+library(stars)
 ```
 
 Load dataset:
@@ -9407,7 +9511,7 @@ The data set consists of 85 georeferenced measurements of piezometric head. Poss
 
 Convert to a `SpatialPointsDataFrame`:
 ```{r}
-aquifer.sf <- aquifer %>%
+aquifer.sf <- aquifer |>
   st_as_sf(coords = c("X", "Y"),
            remove = FALSE)
 ```

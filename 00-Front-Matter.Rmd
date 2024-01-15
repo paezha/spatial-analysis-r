@@ -106,4 +106,4 @@ These notes were developed using the following version of `R`:
 R.version
 ```
 
-
+A reproducible environment is available at https://github.com/paezha/Applied-Spatial-Statistics.

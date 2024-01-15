@@ -27,7 +27,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+Before you begin your work restart the `R` session, or at least clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -63,9 +63,9 @@ localmoran.map <- function(p, listw, VAR, by){
   require(spdep)
   require(plotly)
   
-  df_msc <- p %>% 
+  df_msc <- p |> 
     rename(VAR = as.name(VAR),
-              key = as.name(by)) %>%
+              key = as.name(by)) |>
     transmute(key,
               VAR,
               Z = (VAR - mean(VAR)) / var(VAR),
@@ -83,7 +83,7 @@ localmoran.map <- function(p, listw, VAR, by){
                                  local_I),
                       by = "key")
   
-  plot_ly(df_msc) %>%
+  plot_ly(df_msc) |>
     add_sf(type = "scatter",
            split = ~(p.val < 0.05), 
            color = ~Type, 
@@ -116,7 +116,7 @@ gistar.map <- function(p = p, listw = listw, VAR = VAR, by = by){
   p <- left_join(p, 
                   data.frame(key = p[[by]], df.lg))
   
-  plot_ly(p) %>%
+  plot_ly(p) |>
     add_sf(split = ~(p.val < 0.05), color = ~Type, colors = c("red", "dodgerblue", "gray"))
 }
 ```
@@ -130,8 +130,8 @@ Hamilton_CT.w <- nb2listw(poly2nb(pl = Hamilton_CT))
 
 2) Binary, by distance (3 km threshold) _including self_.
 ```{r}
-Hamilton_CT.3knb <- Hamilton_CT %>% 
-  st_centroid() %>%
+Hamilton_CT.3knb <- Hamilton_CT |> 
+  st_centroid() |>
   dnearneigh(d1 = 0, d2 = 3)
 Hamilton_CT.3kw <- nb2listw(include.self(Hamilton_CT.3knb), style = "B")
 ```

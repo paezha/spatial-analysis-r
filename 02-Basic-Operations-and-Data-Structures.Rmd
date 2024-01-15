@@ -8,7 +8,7 @@ Now that you have installed `R` and RStudio we can begin with an overview of bas
 
 Whenever you see a chunk of code in an `R` Notebook, you can run it (by clicking the 'play' icon on the top right corner) to see the results. Try it! You can also copy and paste to your console if you are reading the web version of the book.
 ```{r ch02-hello-world}
-print("Hello, Geography 4GA3")
+print("Hello, Environment and Society 4GA3")
 ```
 
 The chunk of code above instructed `R` (and through `R` the computer) to `print` (or display on the screen) some text.
@@ -261,7 +261,7 @@ Once the package is installed, it becomes available, but to use it you must load
 
 Assuming that you already have installed `ggplot2`, we proceed to load it:
 ```{r ch02-load-ggplot2}
-library(ggplot2)
+library(ggplot2) # Create Elegant Data Visualisations Using the Grammar of Graphics
 ```
 
 Now all commands from the `ggplot2` package are available to you.
@@ -345,7 +345,7 @@ The example above has guided you in the creation of a relatively simple proporti
 
 - Add stuff to the plot. For instance, to add points use `geom_point`, to add lines use `geom_line`, and so on.
 
-Check the `ggplot2` [Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf) for more information on how to use this package.
+Check the `ggplot2` [Cheat Sheet](https://rstudio.github.io/cheatsheets/html/data-visualization.html) for more information on how to use this package.
 
 ## Examples of digital cartography in `R`
 
@@ -364,29 +364,53 @@ knitr::include_graphics(rep("figures/02-Figure-3.png"))
 ```
 
 And, these are some figures created using `R` by talented people around the world.
-```{r ch02-load-tweetrmd-package, include=FALSE}
-if (!require("tweetrmd")) remotes::install_github("gadenbuie/tweetrmd")
-library(tweetrmd)
+```{r ch02-load-webshot2-package, include=FALSE}
 if (!require("webshot2")) remotes::install_github('rstudio/webshot2')
-library(webshot2)
+library(webshot2) # Take Screenshots of Web Pages
 ```
 
-```{r ch02-visualization-example-4, fig.cap= "\\label{fig:visualization-example-4} Example of visualization: Historical map with shading", echo=FALSE}
-tweet_screenshot(tweet_url("researchremora", "1479904879984492552"))
+```{r ch02-visualization-example-4-capture, include=FALSE}
+webshot("https://mastodon.online/deck/@terence@fosstodon.org/111404498052039281", 
+        file = "figures/02-Figure-4.png",
+        selector = "div.detailed-status")
 ```
 
-```{r ch02-visualization-example-5, fig.cap= "\\label{fig:visualization-example-5} Example of visualization: Population density of Madagascar", echo=FALSE}
-tweet_screenshot(tweet_url("researchremora", "1473129606383349760"))
+```{r ch02-visualization-example-4, fig.cap= "\\label{fig:visualization-example-4} Example of visualization: Income inequality in the US", echo=FALSE}
+
+knitr::include_graphics("figures/02-Figure-4.png")
 ```
 
-```{r ch02-visualization-example-6, fig.cap= "\\label{fig:visualization-example-6} Example of visualization: Street map of Kyoto", echo=FALSE}
-tweet_screenshot(tweet_url("researchremora", "1469484805033275402"))
+```{r ch02-visualization-example-5-capture, include=FALSE}
+webshot("https://mastodon.online/deck/@terence@fosstodon.org/111652744513157011", 
+        file = "figures/02-Figure-5.png",
+        selector = "div.detailed-status")
 ```
 
-```{r ch02-visualization-example-7, fig.cap= "\\label{fig:visualization-example-7} Example of visualization: Median household income in California", echo=FALSE}
-tweet_screenshot(tweet_url("researchremora", "1464214679136444452"))
+```{r ch02-visualization-example-5, fig.cap= "\\label{fig:visualization-example-5} Example of visualization: Types of forests in Brazil", echo=FALSE}
+knitr::include_graphics("figures/02-Figure-5.png")
+```
+
+```{r ch02-visualization-example-6-capture, include=FALSE}
+webshot("https://mastodon.online/deck/@terence@fosstodon.org/111575222127539953", 
+        file = "figures/02-Figure-6.png",
+        selector = "div.detailed-status")
+```
+
+```{r ch02-visualization-example-6, fig.cap= "\\label{fig:visualization-example-6} Example of visualization: Earthquakes in California", echo=FALSE}
+knitr::include_graphics("figures/02-Figure-6.png")
+```
+
+```{r ch02-visualization-example-7-capture, include=FALSE}
+webshot("https://mastodon.online/deck/@terence@fosstodon.org/111450552351044906", 
+        file = "figures/02-Figure-7.png",
+        selector = "div.detailed-status")
+```
+
+```{r ch02-visualization-example-7, fig.cap= "\\label{fig:visualization-example-7} Example of visualization: Population change in Japan", echo=FALSE}
+knitr::include_graphics("figures/02-Figure-7.png")
 ```
 
 This concludes your basic overview of basic operations and data structures in `R`. You will have an opportunity to learn more about creating maps in R with your reading.
 
 ## References
+
