@@ -1153,14 +1153,14 @@
     },
     "isdas": {
       "Package": "isdas",
-      "Version": "0.0.0.0510",
+      "Version": "0.0.1-2024",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "paezha",
       "RemoteRepo": "isdas",
       "RemoteRef": "master",
-      "RemoteSha": "e4e8158c91bb674df3977d63db1b4331bb60e4fe",
+      "RemoteSha": "a8fb12618f53cf01deb254524e2498eeb885abdf",
       "Requirements": [
         "deldir",
         "dplyr",
@@ -1170,7 +1170,7 @@
         "sp",
         "spdep"
       ],
-      "Hash": "fe8c37cf4ac24d219bd03ce66127524c"
+      "Hash": "01f22943305144106c816387ccc5340f"
     },
     "isoband": {
       "Package": "isoband",
@@ -1898,12 +1898,9 @@
     "renv": {
       "Package": "renv",
       "Version": "1.0.3",
-      "Source": "Repository",
+      "OS_type": null,
       "Repository": "CRAN",
-      "Requirements": [
-        "utils"
-      ],
-      "Hash": "41b847654f567341725473431dd0d5ab"
+      "Source": "Repository"
     },
     "reprex": {
       "Package": "reprex",

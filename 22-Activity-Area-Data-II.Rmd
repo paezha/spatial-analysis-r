@@ -69,11 +69,6 @@ Hamilton_CT <- Hamilton_CT |>
          Prop35to49 = (AGE_35_TO_39 + AGE_40_TO_44 + AGE_45_TO_49)/POPULATION)
 ```
 
-You can also convert the `sf` object into a `SpatialPolygonsDataFrame` object for use with the `spdedp` package:
-```{r}
-Hamilton_CT.sp <- as(Hamilton_CT, "Spatial")
-```
-
 You are now ready for the next activity.
 
 ## Activity
