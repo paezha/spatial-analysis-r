@@ -22,7 +22,7 @@ In the previous practice you were introduced to the concept of fields/spatially 
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to begin with a new session of `R` or at least to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -110,20 +110,20 @@ The standard deviation could be calculated also based in the values of the $k$-n
 ```{r}
 # Create a prediction grid and convert to simple features:
 target_xy = expand.grid(x = seq(0.5, 259.5, 2.2), 
-                        y = seq(0.5, 299.5, 2.2)) %>%
+                        y = seq(0.5, 299.5, 2.2)) |>
   st_as_sf(coords = c("x", "y"))
 
 # Convert the `Walker_Lake` dataframe to a simple features object using as follows:
-Walker_Lake.sf <- Walker_Lake %>% 
+Walker_Lake.sf <- Walker_Lake |> 
   st_as_sf(coords = c("X", "Y"))
 ```
 
 Interpolation using $k=5$ neighbors:
-```{r cache=TRUE}
+```{r cache=FALSE}
 kpoint.5 <- kpointmean(source_xy = Walker_Lake.sf, 
                        target_xy = target_xy, 
                        z = V,  
-                       k = 5) %>%
+                       k = 5) |>
   rename(V = z)
 ```
 
@@ -181,8 +181,8 @@ df <- mutate(df, z = 0.5 + 0.3 * u + 0.7 * v + rnorm(n = n, mean = 0, sd = 0.1))
 A 3D scatterplot can be useful to explore the data:
 ```{r}
 # Create a 3D scatterplot with the function `plot_ly()`. Notice that the way this function works is similar to `ggplot2`: the arguments are a dataframe, what should be plotted on the x-axis, the y-axis, the z-axis, and other aesthetics (aspects) of the plot. Here the color will be proportional to the values of `z`. The function `add_markers()` is similar to the family of `geom_` functions in `ggplot2`, but more general, since it will try to guess what you are trying to plot based on the inputs (in this case points). The function `layout()` is used to control other parts of the plot: here the `aspectratio` is selected so that the scale is identical for all three axes.
-plot_ly(data = df, x = ~u, y = ~v, z = ~z, color = ~z) %>% 
-  add_markers() %>% 
+plot_ly(data = df, x = ~u, y = ~v, z = ~z, color = ~z) |> 
+  add_markers() |> 
   layout(scene = list(
     aspectmode = "manual", aspectratio = list(x=1, y=1, z=1)))
 ```
@@ -236,11 +236,11 @@ z.p_u <- matrix(data = preds$fit[,3], nrow = 21, ncol = 21, byrow = TRUE)
 The plot is created using the coordinates used for interpolation (`x.p` and `y.p`) and the matrices with the point estimates `z.p` and the upper and lower bounds. The type of plot in the package `plotly` is a _surface_:
 ```{r}
 trend.plot <- plot_ly(x = ~u.p, y = ~v.p, z = ~z.p, 
-        type = "surface", colors = "YlOrRd") %>% 
+        type = "surface", colors = "YlOrRd") |> 
   add_surface(x = ~u.p, y = ~v.p, z = ~z.p_l, 
-              opacity = 0.5, showscale = FALSE) %>%
+              opacity = 0.5, showscale = FALSE) |>
   add_surface(x = ~u.p, y = ~v.p, z = ~z.p_u, 
-              opacity = 0.5, showscale = FALSE) %>% 
+              opacity = 0.5, showscale = FALSE) |> 
   layout(scene = list(
     aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
 
@@ -334,11 +334,11 @@ z.p3_u <- matrix(data = WL.preds3$fit[,3], nrow = 119, ncol = 103, byrow = TRUE)
 This is the quadratic trend surface with its confidence interval of predictions:
 ```{r}
 WL.plot2 <- plot_ly(x = ~X.p, y = ~Y.p, z = ~z.p2, 
-        type = "surface", colors = "YlOrRd") %>% 
+        type = "surface", colors = "YlOrRd") |> 
   add_surface(x = ~X.p, y = ~Y.p, z = ~z.p2_l, 
-              opacity = 0.5, showscale = FALSE) %>%
+              opacity = 0.5, showscale = FALSE) |>
   add_surface(x = ~X.p, y = ~Y.p, z = ~z.p2_u, 
-              opacity = 0.5, showscale = FALSE) %>% 
+              opacity = 0.5, showscale = FALSE) |> 
   layout(scene = list(
     aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
 WL.plot2
@@ -347,11 +347,11 @@ WL.plot2
 And, this is the cubic trend surface with its confidence interval of predictions:
 ```{r}
 WL.plot3 <- plot_ly(x = ~X.p, y = ~Y.p, z = ~z.p3, 
-        type = "surface", colors = "YlOrRd") %>% 
+        type = "surface", colors = "YlOrRd") |> 
   add_surface(x = ~X.p, y = ~Y.p, z = ~z.p3_l, 
-              opacity = 0.5, showscale = FALSE) %>%
+              opacity = 0.5, showscale = FALSE) |>
   add_surface(x = ~X.p, y = ~Y.p, z = ~z.p3_u, 
-              opacity = 0.5, showscale = FALSE) %>% 
+              opacity = 0.5, showscale = FALSE) |> 
   layout(scene = list(
     aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1)))
 WL.plot3
@@ -361,7 +361,7 @@ Alas, these models are not very reliable estimates of the underlying field. As c
 
 Another question, however, is whether the point estimates are accurate. To get a sense of whether this is the case we can add the observations to the plot:
 ```{r}
-WL.plot3 %>%
+WL.plot3 |>
   add_markers(data = Walker_Lake, x = ~X, y = ~Y, z = ~V, 
               color = ~V, opacity = 0.7, showlegend = FALSE)
 ```
@@ -384,10 +384,10 @@ ggplot(data = Walker_Lake,
 Visual inspection of the distribution of the residuals strongly suggests that they are not random. We can check this by means of Moran's $I$ coefficient, if we create a list of spatial weights as follows:
 ```{r}
 # Create a set of spatial weights with the 5 nearest neighbors.
-WL.listw <- Walker_Lake[,2:3] %>% 
-  as.matrix() %>%
-  knearneigh(k = 5) %>%
-  knn2nb() %>%
+WL.listw <- Walker_Lake[,2:3] |> 
+  as.matrix() |>
+  knearneigh(k = 5) |>
+  knn2nb() |>
   nb2listw()
 ```
 

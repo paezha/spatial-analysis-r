@@ -27,7 +27,7 @@ Sometimes you want to work with only a subset of a dataset. This can be done usi
 
 4. More on the use of _pipe operators_.
 
-A pipe operator allows you to pass the results of a function to another function. It makes writing instructions more intuitive and simple. You have already seen pipe operators earlier: they look like this `%>%`.
+A pipe operator allows you to pass the results of a function to another function. It makes writing instructions more intuitive and simple. You have already seen pipe operators earlier: they look like this `|>`.
 
 5. You will add layers to a `ggplot` object to improve a map.
 
@@ -39,7 +39,7 @@ A pipe operator allows you to pass the results of a function to another function
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed:
 ```{r ch05-clear-workspace}
 rm(list = ls())
 ```
@@ -48,8 +48,8 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r ch05-load-packages, message=FALSE}
-library(tidyverse)
-library(isdas)
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 ```
 
 Now that your workspace is clear, you can proceed to invoke the sample dataset. You can do this by means of the function `data`.
@@ -119,13 +119,13 @@ Nesting functions makes it difficult to read the code, since functions are evalu
 
 ## Pipe Operator
 
-A pipe operator is written this way: `%>%`. Its objective is to pass forward the output of a function to a second function, so that they can be chained to create more complex instructions that are still relatively easy to read.
+A pipe operator is written this way: `|>`. Its objective is to pass forward the output of a function to a second function, so that they can be chained to create more complex instructions that are still relatively easy to read.
 
 For instance, instead of nesting the subsetting instructions in the `summary` function, you could do the subsetting first, and pass the results of that to the summary for further processing. This would look like this:
 ```{r}
-# Remember, the pipe operator `%>%` passes the value of the left-hand side 
+# Remember, the pipe operator `|>` passes the value of the left-hand side 
 # to the function on the right-hand side
-subset(missing_df, Observed == FALSE) %>% summary()
+subset(missing_df, Observed == FALSE) |> summary()
 ```
 
 The code above is read as "subset `missing_df` and pass the results to `summary`". Pipe operators make writing and reading code somewhat more natural.
@@ -247,3 +247,4 @@ ggplot() +
 ```
 
 These are examples of creating and improving the aspect of simple symbol maps, which are often used to represent observations in space.
+

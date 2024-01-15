@@ -19,7 +19,7 @@ In the previous practice you were introduced to the concept of variographic anal
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, remember to begin work with a new session of `R`. At least, remembert to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -120,7 +120,7 @@ WL.plot3 <- plot_ly(x = ~X.p,
                     y = ~Y.p, 
                     z = ~z.p3, 
                     type = "surface", 
-                    colors = "YlOrRd") %>% 
+                    colors = "YlOrRd") |> 
   layout(scene = list(aspectmode = "manual",
                       aspectratio = list(x = 1, 
                                          y = 1,
@@ -137,11 +137,11 @@ We  can illustrate this as follows. To interpolate the _residuals_, we first nee
 ```{r}
 # We will use the prediction grid we used above to interpolate the residuals 
 target_xy = expand.grid(x = X.p, 
-                        y = Y.p) %>%
+                        y = Y.p) |>
   st_as_sf(coords = c("x", "y"))
 
 # Convert the `Walker_Lake` dataframe to a simple features object using as follows:
-Walker_Lake.sf <- Walker_Lake %>% 
+Walker_Lake.sf <- Walker_Lake |> 
   st_as_sf(coords = c("X", "Y"))
 
 # Append the residuals to the table
@@ -170,7 +170,7 @@ WL.plot3 <- plot_ly(x = ~X.p,
                     y = ~Y.p, 
                     z = ~z.p3,
                     type = "surface", 
-                    colors = "YlOrRd") %>% 
+                    colors = "YlOrRd") |> 
   layout(scene = list(aspectmode = "manual",
                       aspectratio = list(x = 1, 
                                          y = 1, 
@@ -266,7 +266,7 @@ Kriging is implemented in the package `gstat` as follows.
 
 To put kriging to work we must first conduct variographic analysis of the residuals. The function `variogram` uses as an argument a simple features object that we can create as follows:
 ```{r}
-Walker_Lake.sf <- Walker_Lake %>%
+Walker_Lake.sf <- Walker_Lake |>
   st_as_sf(coords = c("X", "Y"),
            # Remove set to false to retain the X and Y coordinates 
            # in the dataframe after they are converted to simple features
@@ -335,7 +335,7 @@ ggplot(data = variogram_v,
 
 We will convert the prediction grid to a simple features object:
 ```{r}
-df.sf <- df.p %>%
+df.sf <- df.p |>
   st_as_sf(coords = c("X", "Y"),
            remove = FALSE)
 ```
@@ -366,7 +366,7 @@ V.km.plot <- plot_ly(x = ~X.p,
                      y = ~Y.p, 
                      z = ~V.km, 
                      type = "surface", 
-                     colors = "YlOrRd") %>% 
+                     colors = "YlOrRd") |> 
   layout(scene = list(aspectmode = "manual", 
                       aspectratio = list(x = 1,
                                          y = 1,
@@ -380,7 +380,7 @@ V.sm.plot <- plot_ly(x = ~X.p,
                      y = ~Y.p,
                      z = ~sqrt(V.sm), 
                      type = "surface", 
-                     colors = "YlOrRd") %>% 
+                     colors = "YlOrRd") |> 
   layout(scene = list(aspectmode = "manual",
                       aspectratio = list(x = 1, 
                                          y = 1, 

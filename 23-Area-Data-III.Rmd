@@ -22,7 +22,7 @@ In this practice, you will learn about:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to restart the `R` session or at least to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -153,11 +153,11 @@ Hamilton_CT$POP_DENSITY_s7.sma <- POP_DENSITY_s7.sma
 Hamilton_CT$POP_DENSITY_s8.sma <- POP_DENSITY_s8.sma
 ```
 
-It would be useful to compare the original landscape of population density to the null landscapes that you created before. To create a single figure with choropleth maps of the empirical variable and the eight simulated variables using the `facet_wrap()` function of `ggplot2`, we must first reorganize the data so that all the population density variables are in a single column, and all spatial moving average variables are also in a single column. Further, we need a new column to identifies which variable the values in this column correspond to. We will solve this little data management problem by copying only the data we are interested in into a new dataframe (by means of `select()`), and then _gathering_ the spatial moving averages into a single column: 
+It would be useful to compare the original landscape of population density to the null landscapes that you created before. To create a single figure with choropleth maps of the empirical variable and the eight simulated variables using the `facet_wrap()` function of `ggplot2`, we must first reorganize the data so that all the population density variables are in a single column, and all spatial moving average variables are also in a single column. Further, we need a new column to identifies which variable the values in this column correspond to. We will solve this little data management problem by copying only the data we are interested in into a new dataframe (by means of `select()`), and then _pivoting_ the spatial moving averages into a single column (i.e., a long table): 
 ```{r}
-#"Hamilton_CT2 is a new dataframe. Here, the pipe operators (%>%) are used to pass the original dataframe to the select() function, and then the output of that is passed on to the `gather()` function. Notice that we are selecting the empirical spatial moving average and the 8 simulated instances of population densities. 
+#"Hamilton_CT2 is a new dataframe. Here, the pipe operators (|>) are used to pass the original dataframe to the select() function, and then the output of that is passed on to the `gather()` function. Notice that we are selecting the empirical spatial moving average and the 8 simulated instances of population densities. 
 
-Hamilton_CT2 <- Hamilton_CT %>% # This pipe operator passes the dataframe to `select()`
+Hamilton_CT2 <- Hamilton_CT |> # This pipe operator passes the dataframe to `select()`
   # `select()` keeps only the spatial moving averages and geometry
   select(POP_DENSITY.sma, 
          POP_DENSITY_s1.sma,
@@ -168,9 +168,11 @@ Hamilton_CT2 <- Hamilton_CT %>% # This pipe operator passes the dataframe to `se
          POP_DENSITY_s6.sma,
          POP_DENSITY_s7.sma,
          POP_DENSITY_s8.sma,
-         geometry) %>% # This pipe operator passes the dataframe with only the spatial moving average variables and the geometry to `gather()`
-  # `gather()` places all variables with the exception of `geometry` in a single column named `DENSITY_SMA` and creates a new variable called `VAR` with the names of the original columns (i.e., POP_DENSITY.sma, POP_DENSITY_s1.sma, etc.)
-  gather(VAR, DENSITY_SMA, -geometry)
+         geometry) |> # This pipe operator passes the dataframe with only the spatial moving average variables and the geometry to `pivot_longer()`
+  # `pivot_longer()` takes a wide table and makes it longer; in this case, it places all variables with the exception of `geometry` in a single column named `DENSITY_SMA` and creates a new variable called `VAR` with the names of the original columns (i.e., POP_DENSITY.sma, POP_DENSITY_s1.sma, etc.)
+  pivot_longer(cols = -geometry,
+               names_to = "VAR",
+               values_to = "DENSITY_SMA")
 ```
 
 Now the new dataframe with all spatial moving averages in a single column can be used to create choropleth maps. The function `facet_wrap()` is used to create facet plots so that we can place all maps in a single figure:
@@ -193,9 +195,9 @@ An additional advantage of the spatial moving average is its use in the developm
 
 Let us explore the use of spatial moving average scatterplots. First, we will extract the density information from the original `sf` object, reorganize, and bind to `Hamilton_CT2` so that we can plot using faceting:
 ```{r}
-Hamilton_CT2 <- Hamilton_CT2 %>% # Pass `Hamilton_CT2` as the first argument of `data.frame()`
-  data.frame(Hamilton_CT %>% # Pass `Hamilton_CT` to `st_drop_geometry()`
-               st_drop_geometry() %>% # Drop the geometry because it is already available in `Hamilton_CT2`.
+Hamilton_CT2 <- Hamilton_CT2 |> # Pass `Hamilton_CT2` as the first argument of `data.frame()`
+  data.frame(Hamilton_CT |> # Pass `Hamilton_CT` to `st_drop_geometry()`
+               st_drop_geometry() |> # Drop the geometry because it is already available in `Hamilton_CT2`.
                # Select from `Hamilton_CT` the original population density and the 8 null landscapes simulated from it.
                select(POP_DENSITY,
                       POP_DENSITY_s1,
@@ -205,8 +207,10 @@ Hamilton_CT2 <- Hamilton_CT2 %>% # Pass `Hamilton_CT2` as the first argument of 
                       POP_DENSITY_s5,
                       POP_DENSITY_s6,
                       POP_DENSITY_s7,
-                      POP_DENSITY_s8) %>% # Pass the result to `gather()`  
-               gather(VAR, DENSITY) %>% # Copy all density variables to a single column, and create a new variable called `VAR` with the names of the original columns (i.e., POP_DENSITY, POP_DENSITY_s1, etc.) 
+                      POP_DENSITY_s8) |> # Pass the result to `pivot_longer()`  
+               pivot_longer(cols = everything(),
+                            names_to = "VAR", 
+                            values_to = "DENSITY") |> # Copy all density variables to a single column, and create a new variable called `VAR` with the names of the original columns (i.e., POP_DENSITY, POP_DENSITY_s1, etc.) 
                select(DENSITY)) # Drop VAR from the the dataframe
 ```
 

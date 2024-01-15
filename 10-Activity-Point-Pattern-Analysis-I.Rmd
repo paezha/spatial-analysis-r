@@ -28,7 +28,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -37,11 +37,10 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `spatstat`, a package designed for the analysis of point patterns (you can learn about `spatstat` [here](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) and [here](http://spatstat.org/resources/spatstatJSSpaper.pdf)):
 ```{r message=FALSE}
-library(isdas)
-library(maptools) # Needed to convert a `Spatial Polygons` object into an `owin` object
-library(sf)
-library(spatstat)
-library(tidyverse)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(sf) # Simple Features for R
+library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 In the practice that preceded this activity, you learned about the concepts of intensity and density, about quadrats, and also how to create density maps. 
@@ -80,8 +79,9 @@ ggplot() +
 
 As discussed in the preceding chapter, the package `spatstat` offers a very rich collection of tools to do point pattern analysis. To convert the three sets of events (i.e., the fast food establishments, gas stands, and Paez Mart) into `ppp` objects we first must define a region or _window_. To do this we take the `sf` and convert to an `owin` (a window object) for use with the package `spatstat` (this is done via `SpatialPolygons`, hence `as(x, "Spatial")`:
 ```{r}
-# `as.owin()` will take a "foreign" object (foreign to `spatstat`) and convert it into an `owin` object. Here, there are two steps involved: first, we take the `sf` object with the boundaries of Toronto and convert it into a "Spatial" object, and then the "Spatial" object is passed on to `as.owin()`
-Toronto.owin <- as(Toronto, "Spatial") %>% as.owin() # Requires `maptools` package
+# `as.owin()` will take a "foreign" object (foreign to `spatstat`) and convert it into an `owin` object.`
+
+Toronto.owin <- Toronto |> as.owin() # Requires `maptools` package
 ```
 
 And, then convert the dataframes to `ppp` objects (this necessitates that we extract the coordinates of the events by means of `st_coordinates`): 
@@ -144,3 +144,4 @@ Now that you have seen how to do some analysis using quadrats, you are ready for
 5. Again, use the function `table()` to examine the frequency of events per quadrat for each of the point patterns. What are the differences among these point patterns? What would you expect the frequency of events per quadrat to be in a null landscape?
 
 6. Use `Fast_Food.ppp`, `Gas_Stands`, and `Paez_Mart`, and the function `quadrat.test` to calculate the test of spatial independence for these point patterns. What is your decision in each case? Explain.
+
