@@ -5,32 +5,6 @@ on:
 
 name: renderbook
 
-
-
-bookdown:
-    name: Render-Book
-    runs-on: ubuntu-latest
-    container: geocompr/geocompr:suggests
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: Render Book
-        run: |
-          Rscript -e 'remotes::install_github("geocompx/geocompkg", dependencies = TRUE, force = TRUE)'
-          Rscript -e 'bookdown::render_book("index.Rmd")'
-          cp -fvr _redirects _book/
-          cp -fvr .htaccess _book/
-          #cp -fvr es.html fr.html solutions.html htaccess.txt _book/
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_book
-          publish_branch: gh-pages
-          commit_message: 'Deploy commit: ${{ github.event.head_commit.message }}'
-
-
 jobs:
   bookdown:
      name: Render-Book
