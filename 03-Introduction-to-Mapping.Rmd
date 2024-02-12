@@ -8,7 +8,7 @@ Spatial statistics is a sub-field of spatial analysis that has grown in relevanc
 
 A key technology fueling this trend is that of Geographical Information Systems (GIS). GIS are, in simplest terms, digital mapping for the 21st century. In most cases, however, GIS go beyond cartographic functions to also enable and enhance our ability to analyze data.
 
-There are many available packages for geographical information analysis. Some are very user friendly, and widely available in many institutional contexts, such as ESRI's Arc software. Others are fairly specialized, such as Caliper's TransCAD, which implements many operations of interest for transportation engineering and planning. 
+There are many available packages for geographical information analysis. Some are very user friendly, and widely available in many institutional contexts, including open source alternatives such as [QGIS](https://qgis.org/en/site/), or commercial software such as ESRI's Arc software. Others are fairly specialized, such as Caliper's TransCAD, which implements many operations of interest for transportation engineering and planning. 
 
 Others packages have the advantage of being more flexible and/or free.
 
@@ -34,7 +34,7 @@ In this reading, you will:
 
 ## Preliminaries
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed:
 ```{r ch03-clear-workspace}
 # The function `ls()` lists all objects in the Environment, that is, your current workspace;
 # `rm()` removes all objects listed in the argument `list = `
@@ -49,7 +49,7 @@ Now that your workspace is clear, you can proceed to load a package. In this cas
 ```{r ch03-load-packages, message=FALSE}
 #The function 'library' is used to load the data we want to work with. 
 # In this case, it is the isdas master package that we want to work with 
-library(isdas)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 ```
 
 The package includes a few datasets that will be used throughout the book:
@@ -80,7 +80,7 @@ head(snow_pumps)
 As in your previous reading, it is possible to map the cases using `ggplot2`. Begin by loading the package `tidyverse`:
 ```{r ch03-load-tidyverse, message=FALSE}
 #'Tidyverse' is a collection of R packages designed for data science used in everyday data analyses  
-library(tidyverse)
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 Now, you can create a blank `ggplot2` object from which you can render the points for deaths and the pumps.
@@ -106,10 +106,7 @@ A package that extends the functionality of mapping in `R` is `leaflet`. A key f
 ```{r ch03-load-more-packages, message=FALSE}
 # 'Leaflet' is a package used for visualizing data on a map in R. 
 if (!require("leaflet")) install.packages('leaflet')
-# 'Magrittr' is a package used for creating pipe operators 
-if (!require("leaflet")) install.packages('magrittr')
-library(leaflet)
-library(magrittr)
+library(leaflet) # Create Interactive Web Maps with the JavaScript 'Leaflet'
 ```
 
 The first step is to create a `leaflet` object, which will be saved in `m` : 
@@ -117,13 +114,13 @@ The first step is to create a `leaflet` object, which will be saved in `m` :
 # Here, we create a `leaflet` object and assign it to the variable, 'm'. 
 # The `setView` function sets the view of the map where `lng = -0.136` 
 # sets the longitutde, 'lat = 51.513' sets the latitude and the map zoom 
-# is set to 16. The `%>%` is a pipe operator that passes the output from 
+# is set to 16. The `|>` is a pipe operator that passes the output from 
 # the left hand side of the operator to the first argument of the right 
 # hand side of the operator. In this case we are telling `R` that we want 
 # to center the map on the set longitude and latitude, with a zoom level 
 # of 16, which corresponds roughly to a neighborhood 
 
-m <- leaflet(data = snow_deaths) %>% 
+m <- leaflet(data = snow_deaths) |> 
   setView(lng = -0.136, lat = 51.513, zoom = 16)
 ```
 
@@ -136,7 +133,7 @@ The map is empty! This is because we have not yet added any geographical informa
 ```{r ch03-leaflet-add-basemap}
 # We are adding a basemap or background map of the study area 
 # by means of the `addTiles` function to the 'm' variable 
-m <- m %>% addTiles()
+m <- m |> addTiles()
 m
 ```
 
@@ -148,7 +145,7 @@ The map now shows the neighborhood in Soho where the cholera outbreak happened. 
 # clusters a large number of markers on the map - in this case it is clusturing 
 # number of deaths into icons with numbers  
 
-m <- m %>% 
+m <- m |> 
   addMarkers(~long, 
              ~lat, 
              clusterOptions = markerClusterOptions(),
@@ -158,23 +155,23 @@ m
 
 The map now displays the locations of cholera deaths on the map. If you zoom in, the clusters will rearrange accordingly. Try it! The other information that we have available is the location of the water pumps, which we can add to the map above (notice that the Broad Street Pump is already shown in the basemap!):
 ```{r ch03-leaflet-add-pumps}
-m %>% 
+m |> 
   addMarkers(data = snow_pumps, 
              ~long, 
              ~lat, 
              group = "Pumps")
 ```
 
-An alternative and quicker way to run the same bit of code is by means of pipe operators (`%>%`). These operators make writing code a lot faster, easier to read, and more intuitive! Recall that a pipe operator will take the output of the preceding function, and pass it on as the first argument of the next:
+An alternative and quicker way to run the same bit of code is by means of pipe operators (`|>`). These operators make writing code a lot faster, easier to read, and more intuitive! Recall that a pipe operator will take the output of the preceding function, and pass it on as the first argument of the next:
 ```{r ch03-leaflet-full-example}
-m_test <- leaflet () %>% 
-  setView(lng = -0.136, lat = 51.513, zoom = 16) %>% 
-  addTiles() %>% 
+m_test <- leaflet () |> 
+  setView(lng = -0.136, lat = 51.513, zoom = 16) |> 
+  addTiles() |> 
   addMarkers(data = snow_deaths, 
              ~long, 
              ~lat, 
              clusterOptions = markerClusterOptions(), 
-             group = "Deaths") %>% 
+             group = "Deaths") |> 
   addMarkers(data = snow_pumps, 
              ~long, 
              ~lat, 
@@ -189,15 +186,15 @@ The above results in a much nicer map. Is this map informative? What does it tel
 Despite the simplicity of this map, we can begin to do some spatial analysis. For instance, we could create a _heatmap_. You have probably seen heatmaps in many different situations before, as they are a popular visualization tool. Heatmaps are created based on a spatial analytical technique called _kernel analysis_. We will cover this technique in more detail later on. For the time being, it can be illustrated by taking advantage of the `leaflet.extras` package, which contains a heatmap function. Load the package as follows:
 ```{r ch03-load-leaflet-extras, message=FALSE}
 if (!require("leaflet.extras")) install.packages('leaflet.extras')
-library(leaflet.extras)
+library(leaflet.extras) # Extra Functionality for 'leaflet' Package
 ```
 
 Next, create a second leaflet object for this example, and call it `m2`. Notice that we are using the same `setView` parameters:
 ```{r ch03-second-leaflet-example}
-m2 <- leaflet(data = snow_deaths) %>% 
+m2 <- leaflet(data = snow_deaths) |> 
   setView(lng = -0.136, 
           lat = 51.513, 
-          zoom = 16) %>% 
+          zoom = 16) |> 
   addTiles()
 ```
 
@@ -207,7 +204,7 @@ Then, add the heatmap. The function used to do this is `addHeatmap`. We specify 
 # same as the block of code above. The 'intensity' function sets a numeric value, 
 # the 'blur' specifies the amount of blur to apply and the 'radius' function sets
 # the radius of each point on the heatmap 
-m2 %>% 
+m2 |> 
   addHeatmap(lng = ~long, 
              lat = ~lat, 
              intensity = ~Count,
@@ -218,12 +215,12 @@ m2 %>%
 
 Lastly, you can also add markers for the pumps as follows:
 ```{r ch03-leaflet-heatmap-with-pumps}
-m2 %>% addHeatmap(lng = ~long, 
+m2 |> addHeatmap(lng = ~long, 
                   lat = ~lat, 
                   intensity = ~Count,
                   blur = 40, 
                   max = 1, 
-                  radius = 25) %>%
+                  radius = 25) |>
   addMarkers(data = snow_pumps, 
              ~long, 
              ~lat, 
@@ -232,22 +229,22 @@ m2 %>% addHeatmap(lng = ~long,
 
 And everything together: 
 ```{r ch03-leaflet-put-everything-together}
-m2_test <- leaflet(data = snow_deaths) %>%
+m2_test <- leaflet(data = snow_deaths) |>
   setView(lng = -0.136, 
           lat = 51.513, 
-          zoom = 16) %>% 
-  addTiles() %>% 
+          zoom = 16) |> 
+  addTiles() |> 
   addHeatmap(lng = ~long,
              lat = ~lat, 
              intensity = ~Count,
              blur = 40, 
              max = 1, 
-             radius = 25) %>% 
+             radius = 25) |> 
   addMarkers(data = snow_deaths, 
              ~long, 
              ~lat, 
              clusterOptions = markerClusterOptions(), 
-             group = "Deaths") %>% 
+             group = "Deaths") |> 
   addMarkers(data = snow_pumps,
              ~long, 
              ~lat, 
@@ -266,3 +263,4 @@ In this practice you have learned how to implement some simple mapping and spati
 ## Other Resources
 
 For more information on the functionality of `leaflet`, please check [Leaflet for R](https://rstudio.github.io/leaflet/)
+

@@ -33,7 +33,7 @@ In this practice, you will learn:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r ch09-clear-workspace}
 rm(list = ls())
 ```
@@ -42,9 +42,9 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r ch09-load-packages, message=FALSE, warning=FALSE}
-library(isdas)
-library(tidyverse)
-library(spatstat)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
+library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
 ```
 
 Load the data that you will use for this practice:
@@ -118,7 +118,7 @@ Notice the use of the "hat" symbol on top of the Greek lambda. This symbol is ca
 
 Consider one of the point patterns in your sample dataset, say "Pattern 1". If we filter for "Pattern 1" we can then summarize it:
 ```{r}
-filter(PointPatterns, Pattern == "Pattern 1") %>% summary()
+filter(PointPatterns, Pattern == "Pattern 1") |> summary()
 ```
 
 We see that there are $n = 60$ points in this dataset. Since the region is the unit square (check how the values of the coordinates range from approximately zero to approximately 1), the area of the region is 1. This means that for "Pattern 1":
@@ -312,3 +312,4 @@ plot(split.ppp(ppp3)$`Pattern 1`)
 Which of the three regions that you saw above is more appropriate? What do you think is the effect of selecting an inappropriate region for the analysis?
 
 This concludes this chapter. The next activity will illustrate how quadrats are a useful tool to explore the question whether a map is random.
+

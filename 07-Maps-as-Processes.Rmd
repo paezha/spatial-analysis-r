@@ -29,7 +29,7 @@ In this chapter, you will learn:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r ch07-clear-workspace}
 rm(list = ls())
 ```
@@ -38,7 +38,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r ch07-load-packages, message=FALSE}
-library(tidyverse)
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 ## Random Numbers
@@ -455,3 +455,4 @@ You can think of the simulation procedures above as having two components: the p
 The procedures in the preceding sections illustrate just a few different ways to simulate spatial processes with the aim of generating statistical maps that display spatial patterns. There are in fact many more ways to simulate spatial processes, and articles [e.g., @Geyer1994simulation] - and even books [e.g., @Moller2003statistical] - have been written on this topic! Simulation is a very valuable tool in spatial statistics, as we shall see in later chapters. 
 
 It is important to note, however, that in the vast majority of cases we do not actually know the process; that is precisely what we wish to infer. Understanding process generation in a statistical sense, as well as null landscapes, is a useful tool that can help us to infer processes in applications with empirical (as opposed to simulated) data. In this sense, spatial statistics is often a tool used to make decisions about spatial patterns: are they random? And, if they are not random, can we infer the underlying process?
+

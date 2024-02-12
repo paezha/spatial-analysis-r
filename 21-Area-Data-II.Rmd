@@ -23,7 +23,7 @@ In this practice, you will learn about:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to begin from a new `R` session, or at least to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -167,27 +167,20 @@ The row-standardized spatial weights matrix has the following properties:
 
 Coding spatial weights matrices by hand is a tedious and error-prone process. Fortunately, functions to generate them exist in `R`. The package `spdep` in particular has a number of useful utilities for working with spatial weights matrices.
 
-The first step to create a spatial weights matrix is to find the neighbors (i.e., areas adjacent to) for each area. The function `poly2nb` is used for this. The input argument is a `SpatialPolygonDataFrame`, a kind of object that `spdep` uses. Fortunately, it is straightforward to convert our `sf` object into a `SpatialPolygonDataFrame` by means of the function `as()`:
-```{r}
-# Function `as()` is used to convert between object classes
-
-Hamilton_CT.sp <- as(Hamilton_CT, "Spatial")
-```
-
-The following finds the neighbors (note that the default adjacency criterion is queen):
+The first step to create a spatial weights matrix is to find the neighbors (i.e., areas adjacent to) for each area. The function `poly2nb` is used for this (note that the default adjacency criterion is queen):
 ```{r}
 # The function `poly2nb()` takes an object of class "Spatial" with polygons, and finds the neighbors
 
-Hamilton_CT.nb <- poly2nb(pl = Hamilton_CT.sp, queen = TRUE)
+Hamilton_CT.nb <- poly2nb(pl = Hamilton_CT, queen = TRUE)
 ```
 
 The value (output) of the function is an object of class `nb`:
-```{r}
+```{r ch21-check-class}
 class(Hamilton_CT.nb)
 ```
 
 The function `summary()` applied to an object of this class gives some useful information about the neighbors in the region, including the number of zones in this system ($188$), the total number of neighbors ($1,180$), and the percentage of neighbors out of all pairs of areas (3.34%; conversely, 96.66% of all possible zone pairs are _not_ neighbors!) Other information includes the distribution of neighbors (3 zones have two neighbors, 8 zones have three neighbors, 22 zones have four neighbors, and so on): 
-```{r}
+```{r ch21-summary-nb}
 summary(Hamilton_CT.nb)
 ```
 
@@ -199,14 +192,23 @@ Hamilton_CT$TRACT[Hamilton_CT.nb[[1]]]
 ```
 
 The list of neighbors can be converted into a list of entries in a spatial weights matrix $W$ by means of the function `nb2listw` (for "neighbors to matrix W in list form"):
-```{r}
+```{r ch21-obtain-w-from-nb}
 Hamilton_CT.w <- nb2listw(Hamilton_CT.nb)
 ```
 
-We can visualize the neighbors (adjacent) areas:
-```{r}
-plot(Hamilton_CT.sp, border = "gray")
-plot(Hamilton_CT.nb, coordinates(Hamilton_CT.sp), col = "red", add = TRUE)
+We can use base `R` functions to visualize the neighbors (adjacent) areas in our system:
+```{r ch21-plot-spatial-proximities}
+# Plot the geometry of the zoning system
+plot(Hamilton_CT |>
+       st_geometry(), border = "gray")
+# Plot the neighbhorhood relationships; this uses two arguments: the `nb` class object and the coordinates of the centroids of the zoning system
+plot(Hamilton_CT.nb,
+     Hamilton_CT |> 
+       st_centroid() |> 
+       st_coordinates(),
+     # Add to the previous plot
+     add = TRUE,
+     col = "red")
 ```
 
 ## Spatial Moving Averages
@@ -313,12 +315,15 @@ Spatial moving averages can be calculated in a straightforward way by means of t
 
 Here, we calculate the spatial moving average of population density:
 ```{r}
-POP_DENSITY.sma <- lag.listw(x = Hamilton_CT.w, Hamilton_CT$POP_DENSITY)
+POP_DENSITY.sma <- lag.listw(x = Hamilton_CT.w, 
+                             Hamilton_CT$POP_DENSITY)
 ```
 
 And now we can plot the spatial moving average of population density. First we join this variable to our `sf` dataframe with the census tracts. The key for joining the two dataframes is the unique tract identifier :
 ```{r warning=FALSE}
-Hamilton_CT <- left_join(Hamilton_CT, data.frame(TRACT = Hamilton_CT$TRACT, POP_DENSITY.sma), by = "TRACT")
+Hamilton_CT <- left_join(Hamilton_CT, 
+                         data.frame(TRACT = Hamilton_CT$TRACT, POP_DENSITY.sma), 
+                         by = "TRACT")
 ```
 
 And plot:
@@ -377,19 +382,27 @@ Distance-based nearest neighbors can be obtained in `R` by means of the function
 
 To implement this criterion we need to find the centroids of the polygons with `st_centroid()` and then extract the coordinates of the centroids with `st_coordinates()`:
 ```{r}
-CT_centroids <- st_centroid(Hamilton_CT) %>% 
+CT_centroids <- Hamilton_CT |>
+  st_centroid() |> 
   st_coordinates()
 ```
 
 We can create a nearest neighbors object `nb` using two threshold distances, a minimum and a maximum distance value. In this example we will consider that the neighbors of zone $A_i$ are all zones $A_j$ whose centroids are within $0$ and $5,000$ meters of the centroid of $A_i$:
 ```{r}
-Hamilton_CT.dnb <- dnearneigh(CT_centroids, d1 = 0, d2 = 5000)
+Hamilton_CT.dnb <- dnearneigh(CT_centroids, 
+                              d1 = 0, 
+                              d2 = 5000)
 ```
 
 We can visualize the neighbors (adjacent) areas:
 ```{r}
-plot(Hamilton_CT.sp, border = "gray")
-plot(Hamilton_CT.dnb, CT_centroids, col = "red", add = TRUE)
+plot(Hamilton_CT |>
+       st_geometry(),
+     border = "gray")
+plot(Hamilton_CT.dnb, 
+     CT_centroids, 
+     col = "red", 
+     add = TRUE)
 ```
 
 Try changing the distance threshold to see how different neighborhoods are defined.
@@ -413,8 +426,13 @@ Hamilton_CT.knb <- knn2nb(knearneigh(CT_centroids, k = 3))
 
 We can again visualize the neighbors ("adjacent") areas:
 ```{r}
-plot(Hamilton_CT.sp, border = "gray")
-plot(Hamilton_CT.knb, CT_centroids, col = "red", add = TRUE)
+plot(Hamilton_CT |>
+       st_geometry(),
+     border = "gray")
+plot(Hamilton_CT.knb, 
+     CT_centroids, 
+     col = "red", 
+     add = TRUE)
 ```
 
 Try changing the value of `k` to see how the neighborhoods change.

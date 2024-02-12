@@ -23,7 +23,7 @@ In the previous chapter, you practiced how to estimate linear regression models 
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+Remember that it is good practice to begin your work with a new `R` session. To reduce the risk of errors caused by extraneous items in memory, you should at least clear the working space. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -81,7 +81,7 @@ b2 = 4
 uv_coords <- st_coordinates(st_centroid(HamiltonDAs))
 
 # Add the coordinates of the centroids to the dataframe, but first transform them so that they have a false origin at the minimum values of u and v, and scaled by 100000. Simulate variable z using the coefficients defined above, the transformed coordinates, and add a random component with a mean of zero and standard deviation of one.
-HamiltonDAs <- HamiltonDAs %>%
+HamiltonDAs <- HamiltonDAs |>
   mutate(u = (uv_coords[,1] - min(uv_coords[,1]))/100000,
          v = (uv_coords[,2] - min(uv_coords[,2]))/100000,
          z = exp(b0) * exp(b1 * u) * exp(b2 * v) +
@@ -90,8 +90,8 @@ HamiltonDAs <- HamiltonDAs %>%
 
 This is the summary of the simulated variables:
 ```{r}
-HamiltonDAs %>% 
-  select(u, v, z) %>%
+HamiltonDAs |> 
+  select(u, v, z) |>
   summary()
 ```
 
@@ -110,7 +110,7 @@ HamiltonDAs$model1.e <- model1$residuals
 A map of the residuals can help s to examine their spatial pattern (negative residuals are red, positive are blue):
 ```{r message = FALSE, warning = FALSE}
 # Create a `plotly` object with the dataframe and plot the the simple features object with colors per the sign of the residuals (negative residuals = FALSE, positive residuals = TRUE)
-  plot_ly(HamiltonDAs) %>%
+  plot_ly(HamiltonDAs) |>
     add_sf(color = ~ifelse(model1.e > 0, "Positive", "Negative"), colors = c("red", "dodgerblue4"))
 ```
 
@@ -118,9 +118,9 @@ Visual inspection of the spatial distribution of residuals is suggestive. Positi
 
 To do this, we need to create a set of spatial weights:
 ```{r}
-HamiltonDAs.w <- HamiltonDAs %>%
-  as("Spatial") %>%
-  poly2nb() %>%
+HamiltonDAs.w <- HamiltonDAs |>
+  as("Spatial") |>
+  poly2nb() |>
   nb2listw()
 ```
 
@@ -165,7 +165,7 @@ HamiltonDAs$model3.e <- model3$residuals
 
 We can plot a map of the residuals to examine their spatial pattern (negative residuals are red, positive are blue):
 ```{r message = FALSE, warning = FALSE}
-  plot_ly(HamiltonDAs) %>%
+  plot_ly(HamiltonDAs) |>
     add_sf(type = "scatter",
            color = ~ifelse(model3.e > 0, 
                            "Positive", 
@@ -229,8 +229,8 @@ z1 <- matrix(z1, nrow = 21, ncol = 21)
 The plot is as follows:
 ```{r}
 # Create a `plotly` object and add a surface.
-plot_ly(z = ~z1) %>% 
-  add_surface() %>%
+plot_ly(z = ~z1) |> 
+  add_surface() |>
   # The function `layout()` defines several aspects of the plot, in this case the labels for the ticks on the axes and the axes titles. 
   layout(scene = list(xaxis = list(ticktext = c("-2", "0", "2"), 
                                    tickvals = c(0, 10, 20)), 
@@ -263,7 +263,7 @@ z2 <- matrix(z2, nrow = 21, ncol = 21)
 
 And the plot is as follows:
 ```{r}
-plot_ly(z = ~z2) %>% add_surface() %>%
+plot_ly(z = ~z2) |> add_surface() |>
   layout(scene = list(xaxis = list(ticktext = c("-2", "0", "2"), tickvals = c(0, 10, 20)), 
                       yaxis = list(ticktext = c("-2", "0", "2"), tickvals = c(0, 10, 20)),
                       xaxis = list(title = "v"), 
@@ -279,7 +279,7 @@ Higher order polynomials (i.e., cubic, quartic, etc.) are possible in principle.
 Powers of variables tend to be highly correlated with each other. See the following table of correlations for the `u` coordinate in the example:
 ```{r echo = FALSE, results = "asis"}
 kable(cor(cbind(u = df$u, `u^2` = df$u^2, `u^3` = df$u^3, `u^4` = df$u^4)), 
-      digits = 2, format = "html") %>% kable_styling()
+      digits = 2, format = "html") |> kable_styling()
 ```
 
 When two variables are highly collinear, the model has difficulties discriminating their relative contribution to the model. This is manifested by inflated standard errors that may depress the significance of the coefficients, and occasionally by sign reversals.

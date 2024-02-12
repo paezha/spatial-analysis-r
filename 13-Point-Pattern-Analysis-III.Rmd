@@ -34,7 +34,7 @@ In this practice, you will learn:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r ch13-clear-workspace}
 rm(list = ls())
 ```
@@ -43,9 +43,9 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r ch13-load-pacakges, message=FALSE, warning=FALSE}
-library(isdas)
-library(spatstat)
-library(tidyverse)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 Load the dataset that you will use for this practice:
@@ -298,3 +298,4 @@ plot(g_pattern_rnd)
 In this case, the empirical function more closely resembles the theoretical function for the null landscape. This suggests a random pattern. 
 
 By considering the distribution of distances to nearest neighbors, you can generate additional information on a point pattern to complement the density-based analysis of the preceding chapters.
+

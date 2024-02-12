@@ -23,7 +23,7 @@ In this practice, you will learn about:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is recommended that you begin your work with a new session of `R`. At the very least, make sure that the working space is clear from extraneous items there may have been there from earlier. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -79,7 +79,7 @@ The reason some observations are highlighted is because they have been identifie
 
 To explore this, we will recreate the scatterplot manually to have better control of its aspect. To do this, we first create a dataframe with the mean-centered and scaled variable $z_i=(x_i-\overline{x})/\sum z_i^2$, and its spatial moving average. We will also create a factor variable (call it `Type`) to identify the type of spatial relationship (Low & Low, if both $z_i$ and its spatial moving average are negative, High & High, if both $z_i$ and its spatial moving average are positive, and Low & High/High & Low otherwise). This is information is useful for mapping the results:
 ```{r}
-Hamilton_CT <- Hamilton_CT %>% # Use the pipe operator to pass the dataframe as an argument to `mutate()`, which is used to create new variables.
+Hamilton_CT <- Hamilton_CT |> # Use the pipe operator to pass the dataframe as an argument to `mutate()`, which is used to create new variables.
   mutate(Z = (POP_DENSITY - mean(POP_DENSITY)) / var(POP_DENSITY), # Create a mean-centered variable that is standardized by the variance.
          SMA = lag.listw(Hamilton_CT.w, Z), # Calculate the spatial moving average of variable `Z`.
          # The function `case_when()` is used to evaluate several logical conditions and respond to them. 
@@ -100,14 +100,14 @@ The function `bscols()` (for bootstrap columns) is used to array two `plotly` ob
 ```{r warning=FALSE, message=FALSE}
 bscols(
   # The first plot is Moran's scatterplot
-  plot_ly(df_msc.sd) %>% # Create a `plotly` object using the dataframe as an input. The pipe operator passes this object to the function `add_markers()`; this function is similar to the `geom_point()` function in `ggplot2` and it draws objects on the blank plot created by `plot_ly()`
-    add_markers(x = ~Z, y = ~SMA, color = ~POP_DENSITY, size = ~(Z * SMA), colors = "YlOrRd") %>%
-    hide_colorbar() %>%     # Remove the colorbar from the plot.
+  plot_ly(df_msc.sd) |> # Create a `plotly` object using the dataframe as an input. The pipe operator passes this object to the function `add_markers()`; this function is similar to the `geom_point()` function in `ggplot2` and it draws objects on the blank plot created by `plot_ly()`
+    add_markers(x = ~Z, y = ~SMA, color = ~POP_DENSITY, size = ~(Z * SMA), colors = "YlOrRd") |>
+    hide_colorbar() |>     # Remove the colorbar from the plot.
     highlight("plotly_selected"), # Highlight observations when selected.
   # The second plot is a choropleth map
-  plot_ly(df_msc.sd) %>% # Create a `plotly` object using the dataframe as an input. The pipe operator passes this object to the function `add_sf()`; this function is similar to the `geom_sf()` functions in `ggplot2` and it draws a simple features object on the blank plot created by `plot_ly()`
-    add_sf(split = ~TRACT, color = ~POP_DENSITY, colors = "YlOrRd", showlegend = FALSE) %>%
-    hide_colorbar() %>% # Remove colorbar from the plot.
+  plot_ly(df_msc.sd) |> # Create a `plotly` object using the dataframe as an input. The pipe operator passes this object to the function `add_sf()`; this function is similar to the `geom_sf()` functions in `ggplot2` and it draws a simple features object on the blank plot created by `plot_ly()`
+    add_sf(split = ~TRACT, color = ~POP_DENSITY, colors = "YlOrRd", showlegend = FALSE) |>
+    hide_colorbar() |> # Remove colorbar from the plot.
     highlight(dynamic = TRUE) # Highlight observations when selected.
 )
 ```
@@ -152,7 +152,7 @@ Similar to the global version of Moran's $I$, hypothesis testing can be conducte
 
 For further exploration, join the local statistics to the dataframe:
 ```{r }
-Hamilton_CT <- Hamilton_CT %>% 
+Hamilton_CT <- Hamilton_CT |> 
   left_join(data.frame(TRACT = Hamilton_CT$TRACT, 
                        POP_DENSITY.lm), 
             by = "TRACT") # Join the results of `localmoran()` to the dataframe
@@ -161,7 +161,7 @@ Hamilton_CT <- Hamilton_CT %>%
 Now it is possible to map the local statistics. Since we added the $p$-value of the local statistics, we can distinguish between those with small (say, less than 0.05) and large $p$-values:
 ```{r }
 # The function `add_sf()` draws a simple features object, similar to `geom_sf()` in `ggplot2`. We "split" observations based on their p-values: if the p-value is less than 0.05, the condition is "TRUE" and otherwise it is "FALSE". Finally, we color the zones based on their `Type`: that is, whether they are High & High according to the local statistic, or Low & Low, etc.
-  plot_ly(Hamilton_CT) %>%
+  plot_ly(Hamilton_CT) |>
     add_sf(type = "scatter",
            split = ~(p.val < 0.05), 
            color = ~Type, 
@@ -187,9 +187,9 @@ localmoran.map <- function(p, listw, VAR, by){
   require(spdep)
   require(plotly)
   
-  df_msc <- p %>% 
+  df_msc <- p |> 
     rename(VAR = as.name(VAR),
-              key = as.name(by)) %>%
+              key = as.name(by)) |>
     transmute(key,
               VAR,
               Z = (VAR - mean(VAR)) / var(VAR),
@@ -207,7 +207,7 @@ localmoran.map <- function(p, listw, VAR, by){
                                  local_I),
                       by = "key")
   
-  plot_ly(df_msc) %>%
+  plot_ly(df_msc) |>
     add_sf(type = "scatter",
            split = ~(p.val < 0.05), 
            color = ~Type, 
@@ -262,7 +262,7 @@ plot_ly(df1_simulated,
         marker = list(color = ~z, 
                       colorscale = c('#FFE1A1', 
                                      '#683531'), 
-                      showscale = TRUE)) %>%
+                      showscale = TRUE)) |>
   add_markers()
 ```
 
@@ -273,9 +273,9 @@ xy0 <- c(53, 34)
 # Select a radius
 r <- 10
 # Extract observations that are within a radius of `r` from focal point `xy0` (note that sqrt((x - xy0)^2 + (x - xy0)^2) is Pythagoras's formula for calculating the distance between two points; if this distance is less than `r`, the point is kept)
-df1_simulated %>% 
-  subset(sqrt((x - xy0[1])^2 + (y - xy0[2])^2) < r) %>%
-  select(z) %>% 
+df1_simulated |> 
+  subset(sqrt((x - xy0[1])^2 + (y - xy0[2])^2) < r) |>
+  select(z) |> 
   sum()
 ```
 
@@ -294,7 +294,7 @@ plot_ly(df2_simulated,
         marker = list(color = ~z,
                       colorscale = c('#FFE1A1', 
                                      '#683531'), 
-                      showscale = TRUE)) %>%
+                      showscale = TRUE)) |>
   add_markers()
 ```
 
@@ -304,9 +304,9 @@ xy0 <- c(53, 34)
 # Select a radius
 r <- 10
 # Extract observations that are within a radius of `r` from focal point `xy0` (note that sqrt((x - xy0)^2 + (x - xy0)^2) is Pythagoras's formula for calculating the distance between two points; if this distance is less than `r`, the point is kept)
-df2_simulated %>% 
-  subset(sqrt((x - xy0[1])^2 + (y - xy0[2])^2) < r) %>%
-  select(z) %>% 
+df2_simulated |> 
+  subset(sqrt((x - xy0[1])^2 + (y - xy0[2])^2) < r) |>
+  select(z) |> 
   sum()
 ```
 
@@ -386,7 +386,7 @@ df2.lg <- data.frame(Gstar = df2.lg, p.val = 2 * pnorm(abs(df2.lg), lower.tail =
 If we bind the results of the $G_i^*(d)$ analysis to the dataframe, we can plot the results for further exploration. We will classify the results by their type, in this case high and low concentrations:
 ```{r}
 df2 <- cbind(df2_simulated[,1:3],df2.lg)
-df2 <- df2 %>%
+df2 <- df2 |>
   mutate(Type = case_when(Gstar < 0 & p.val <= 0.05 ~ "Low Concentration",
                           Gstar > 0 & p.val <= 0.05 ~ "High Concentration", 
                           TRUE ~ "Not Signicant"))
@@ -402,7 +402,7 @@ plot_ly(df2,
         colors = c("red", 
                    "blue", 
                    "gray"),
-        marker = list()) %>%
+        marker = list()) |>
   add_markers()
 ```
 
@@ -449,7 +449,7 @@ plot_ly(df2,
         colors = c("red", 
                    "blue",
                    "gray"),
-        marker = list()) %>%
+        marker = list()) |>
   add_markers()
 ```
 

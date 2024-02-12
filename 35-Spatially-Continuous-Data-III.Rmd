@@ -22,7 +22,7 @@ Previously, in Chapter \@ref(spatially-continuous-data-ii), we discussed some li
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+Begin by restarting `R` or at least clearing the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -93,7 +93,7 @@ To examine the residuals, first we label them as "positive" or "negative":
 ```{r}
 # The function `ifelse()` is used to label the residuals as "Positive" if they are 
 # greater than zero, or "Negative" if they are zero or less.
-Walker_Lake <- Walker_Lake %>%
+Walker_Lake <- Walker_Lake |>
   mutate(residual3 = ifelse(WL.trend3$residuals > 0, 
                             "Positive", 
                             "Negative"))
@@ -111,11 +111,11 @@ ggplot(data = Walker_Lake,
 As seen before, there is considerable spatial autocorrelation as confirmed by Moran's $I$ coefficient:
 ```{r}
 # Take the coordinates of Walker Lake and convert to matrix.
-WL.listw <- as.matrix(Walker_Lake[,2:3]) %>% 
+WL.listw <- as.matrix(Walker_Lake[,2:3]) |> 
   # Find the 5 nearest neighbors of each observations.
-  knearneigh(k = 5) %>% 
+  knearneigh(k = 5) |> 
   # Convert the nearest neighbors to `nb` object.
-  knn2nb() %>% 
+  knn2nb() |> 
   # Convert the `nb` object into spatial weights. 
   nb2listw() 
 
@@ -177,11 +177,11 @@ correlogram <- data.frame(k, moranI)
 # A `for` loop is a way of repeating instructions a defined number of times, 
 # here from 1 to the length of vector `k`.
 for(i in 1:length(k)){
-  listwk <- Walker_Lake[,2:3] %>%
-    as.matrix() %>%
+  listwk <- Walker_Lake[,2:3] |>
+    as.matrix() |>
      # Use the ith element of vector `k` to find the nearest neighbors
-    knearneigh(k = k[i]) %>%
-    knn2nb() %>%
+    knearneigh(k = k[i]) |>
+    knn2nb() |>
     nb2listw()
   
   # Moran test for residuals

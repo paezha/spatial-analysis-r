@@ -24,7 +24,7 @@ In this practice, you will learn:
 
 ## Preliminaries
 
-As usual, it is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+As usual, it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 ```{r}
 rm(list = ls())
 ```
@@ -33,12 +33,12 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r ch19-load-packages, message=FALSE, warning=FALSE}
-library(cartogram)
-library(isdas)
-library(gridExtra)
-library(plotly)
-library(sf)
-library(tidyverse)
+library(cartogram) # Create Cartograms with R
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(gridExtra) # Miscellaneous Functions for "Grid" Graphics
+library(plotly) # Create Interactive Web Graphics via 'plotly.js'
+library(sf) # Simple Features for R
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 Read the data used in this chapter.
@@ -255,3 +255,4 @@ grid.arrange(pop_den.map, pop_den.cartogram, nrow = 2)
 ```
 
 This concludes this chapter.
+

@@ -24,7 +24,7 @@ In the practice that preceded this activity, you used `ggmap` to create a propor
 
 In this activity, we will map another type of spatial data, called _areal data_. Areas are often administrative or political jurisdictions.
 
-It is good practice to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
+it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed:
 ```{r ch04-clear-workspace}
 rm(list = ls())
 ```
@@ -33,9 +33,9 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r ch04-load-packages}
-library(isdas)
-library(sf)
-library(tidyverse)
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(sf) # Simple Features for R
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 ## Creating a simple thematic map
@@ -102,3 +102,4 @@ Now you have seen how to create a thematic map with polygons (areal data), you a
 :::
 
 2. Imagine that the maps you produced in the first question were found, and for some reason the variables were not labeled. They may represent income, or population density, or something else. Which of the five maps you just created is more interesting? Rank the five maps from most to least interesting. Explain the reasons for your ranking.
+
