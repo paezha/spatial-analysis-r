@@ -1,0 +1,231 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+.infobox {
+  padding: 1em 1em 1em 7em;
+  margin-bottom: 10px;
+  /*background: lightgray 5px center/3em no-repeat;*/
+  background: #FFD100 5px center/3em no-repeat;
+  border: 4px solid #A6192E;
+  border-radius: 5px;
+}
+.caution {
+  background-image: url("images/icon-caution.png");
+  background-size: 10%;
+  background-repeat: no-repeat;
+}
+.important {
+  background-image: url("images/icon-important.png");
+  background-size: 10%;
+  background-repeat: no-repeat;
+}
+.note {
+  background-image: url("images/icon-note.png");
+  background-size: 10%;
+  background-repeat: no-repeat;
+}
+.tip {
+  background-image: url("images/icon-tip.png");
+  background-size: 10%;
+  background-repeat: no-repeat;
+}
+.warning {
+  background-image: url("images/icon-warning.png");
+  background-size: 10%;
+  background-repeat: no-repeat;
+}
+.software {
+  background-image: url("images/icon-think-software.png");
+  background-size: 10%;
+  background-repeat: no-repeat;
+}
+.brainware {
+  background-image: url("images/icon-think-brainware.png");
+  background-size: 10%;
+  background-repeat: no-repeat;
+}
+
+/* Added by Antonio, based on Alex Quinto's code*/
+/* THIS CODE USED FOR THE BOOK COVERS */
+.cover1, .cover2, .cover4, .cover4b {
+    width: 400px;
+    height: 500px;
+    background-color:darkgray;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: auto;
+}
+
+.cover1 {
+    background-image: url("images/cover-2021/voronoi_ponyo.gif");
+}
+
+.cover2 {
+    background-image: url("images/cover-2021/voronoi_ponyo.gif");
+}
+
+.cover1 img, .cover2 img {
+    width: 400px;
+}
+.cover3 {
+ width: 400px;
+ height: 300px;
+ background-image: url("images/cover-2021/voronoi_ponyo.gif");
+ background-position: center;
+ background-size: 150%;
+ overflow: hidden;
+ margin: auto;
+}
+.header3b {
+  width: 400px;
+  height: 210px;
+  margin: auto;
+  background:darksalmon;
+}
+.header3b img { width: 400px;}
+
+.cover4, .cover4b {
+    position: relative;
+    overflow: visible;
+}
+.cover4 img, .cover4b img {
+    position: absolute;
+    width: 400px;
+    height: 500px;
+    opacity: 0.4;
+    left: 0%;
+    top: 0%;
+    z-index: 0;
+}
+.cover4 .subtitle, .cover4b .subtitle {
+    font-size: .5em;
+    color: white;
+    -webkit-text-stroke: 0px;
+}
+
+.cover5, .cover5b {
+  background: url("https://images.unsplash.com/photo-1465447142348-e9952c393450?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80");
+}
+.cover5, .cover5b, .cover5c {
+    width: 400px;
+    height: 566px;
+    background-position: 0px 50px;
+    background-repeat: no-repeat;
+    margin: auto;
+    animation: animatedBackground 50s linear 0s infinite alternate;
+}
+.cover5c {
+  background: url("images/cover-2021/voronoi_ponyo.gif");
+  background-size: 180%;
+}
+
+@keyframes animatedBackground {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 100% 0;
+    }
+  }
+
+.cover5 img, .cover5b img, .cover5c img {
+    width: 400px;
+}
+
+.fade-in-text {
+    width: 400px;
+    display: inline-block;
+    font-size: 33px;
+    font-weight: bold;
+    color: black;
+    padding: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    animation: fadeIn linear 5s;
+    -webkit-animation: fadeIn linear 5s;
+    -moz-animation: fadeIn linear 5s;
+    -o-animation: fadeIn linear 5s;
+    -ms-animation: fadeIn linear 5s;
+  }
+
+
+.cover4 .fade-in-text, .cover4b .fade-in-text {
+    position: absolute;
+    z-index: 99;
+    left: 0;
+  }
+.cover4b .fade-in-text {
+  -webkit-text-stroke: 1px white;
+}
+
+.header3 {
+    margin: auto;
+    width: 400px;
+}
+
+.header3 .fade-in-text {
+      font-size: 18px;
+      background:darksalmon;
+}
+
+.bottom, .bottom3 {
+    background:white;
+    width: 400px;
+    margin: auto;
+}
+
+.bottom3 p {
+    text-align: center;
+    margin: 0;
+    padding: 1em;
+}
+
+  @keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+
+  @-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+
+  @-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+
+  @-o-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+
+  @-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+/*End of book covers */
+/*End of addition by Antonio, based on Alex Quinto's code*/
+
+.level1 h1 {
+  border-bottom: 1px solid;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+h1.title {
+  font-weight: 700;
+}

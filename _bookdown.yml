@@ -8,7 +8,6 @@ language:
     chapter_name: "Chapter "
 delete_merged_file: false
 output_dir:
-#  - "_book"
   - "docs"
 new_session: yes
 

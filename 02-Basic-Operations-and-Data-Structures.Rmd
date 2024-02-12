@@ -369,8 +369,9 @@ if (!require("webshot2")) remotes::install_github('rstudio/webshot2')
 library(webshot2) # Take Screenshots of Web Pages
 ```
 
+<<<<<<< HEAD
 ```{r ch02-visualization-example-4-capture, include=FALSE, eval=FALSE}
-webshot2::webshot("https://mastodon.online/@terence@fosstodon.org/111404498052039281", 
+webshot("https://mastodon.online/deck/@terence@fosstodon.org/111404498052039281", 
         file = "figures/02-Figure-4.png",
         selector = "div.detailed-status")
 ```

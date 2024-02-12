@@ -1898,6 +1898,11 @@
     "renv": {
       "Package": "renv",
       "Version": "1.0.3",
+<<<<<<< HEAD
+=======
+      "OS_type": null,
+      "Repository": "CRAN",
+>>>>>>> 980b8e095d2648332834def4cb272ac8daaa1776
       "Source": "Repository"
     },
     "reprex": {
