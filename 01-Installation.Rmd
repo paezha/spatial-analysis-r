@@ -1,4 +1,8 @@
-# (PART) Part I: Getting to Know the Technology {-} 
+# PART I: Getting to know the technology {-}
+
+```{r coverlet-part-i, echo=FALSE}
+knitr::include_graphics(path = "images/part-01.jpg")
+```
 
 # Preliminaries: Installing `R` and RStudio {#preliminaries}
 

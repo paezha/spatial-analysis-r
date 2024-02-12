@@ -1,4 +1,8 @@
-# (PART) Part III: Analysis of Point Patterns {-}
+# Part III: Analysis of Point Patterns {-}
+
+```{r coverlet-part-iii, echo=FALSE}
+knitr::include_graphics(path = "images/part-03.jpg")
+```
 
 # Point Pattern Analysis I {#point-pattern-analysis-i}
 

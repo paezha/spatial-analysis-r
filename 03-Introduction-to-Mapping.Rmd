@@ -1,4 +1,8 @@
-# (PART) Part II: Statistics and Maps {-}
+# Part II: Statistics and Maps {-}
+
+```{r coverlet-part-ii, echo=FALSE}
+knitr::include_graphics(path = "images/part-02.jpg")
+```
 
 # Introduction to Mapping in `R` {#introduction-to-maps}
 

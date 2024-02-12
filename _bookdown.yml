@@ -10,11 +10,11 @@ delete_merged_file: false
 output_dir:
 #  - "_book"
   - "docs"
+new_session: yes
 
 rmd_files:
     - "index.Rmd"
     - "00-Front-Matter.Rmd"
-    - "01-Coverlet-Part-1.Rmd"
     - "01-Installation.Rmd"
     - "02-Basic-Operations-and-Data-Structures.Rmd"
     - "03-Introduction-to-Mapping.Rmd"

@@ -1,8 +1,10 @@
-# (PART) Part V: Analysis and Prediction of Fields {-}
+# Part V: Analysis and Prediction of Fields {-}
+
+```{r coverlet-part-v, echo=FALSE}
+knitr::include_graphics(path = "images/part-05.jpg")
+```
 
 # Spatially Continuous Data I {#spatially-continuous-data-i}
-
-*NOTE*: The source files for this book are available with companion package [{isdas}](https://paezha.github.io/isdas/). The source files are in Rmarkdown format and packed as templates. These files allow you execute code within the notebook, so that you can work interactively with the notes. 
 
 In this chapter you will use a custom function that is included in the package `isdas` as follows:
 
@@ -40,12 +42,13 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 ```{r message=FALSE, warning=FALSE}
-library(deldir)
-library(isdas)
-library(plotly)
-library(spatstat)
-library(spdep)
-library(tidyverse)
+library(deldir) # Delaunay Triangulation and Dirichlet (Voronoi) Tessellation
+library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
+library(plotly) # Create Interactive Web Graphics via 'plotly.js'
+library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
+#library(spatstat.explore) # Exploratory Data Analysis for the 'spatstat' Family
+library(spdep) # Spatial Dependence: Weighting Schemes, Statistics
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 Begin by loading the data you will need for this Chapter:
@@ -501,3 +504,4 @@ ggplot() +
 ```
 
 This shows that Voronoi polygons can be seen as a special case of IDW or $k$-point means depending on the way these two techniques are implemented.
+

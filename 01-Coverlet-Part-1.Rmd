@@ -1,6 +1,0 @@
-# (PART) Part 1: Getting to know the technology {-}
-
-```{r part-0, echo=FALSE}
-knitr::include_graphics("images/part-01.jpg")
-```
-

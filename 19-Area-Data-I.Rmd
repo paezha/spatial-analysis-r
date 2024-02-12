@@ -1,4 +1,8 @@
-# (PART) Part IV: Data in Areal Units {-}
+# Part IV: Data in Areal Units {-}
+
+```{r coverlet-part-iv, echo=FALSE}
+knitr::include_graphics(path = "images/part-04.jpg")
+```
 
 # Area Data I
 

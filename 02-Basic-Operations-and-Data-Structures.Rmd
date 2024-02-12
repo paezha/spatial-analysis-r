@@ -369,8 +369,8 @@ if (!require("webshot2")) remotes::install_github('rstudio/webshot2')
 library(webshot2) # Take Screenshots of Web Pages
 ```
 
-```{r ch02-visualization-example-4-capture, include=FALSE}
-webshot("https://mastodon.online/deck/@terence@fosstodon.org/111404498052039281", 
+```{r ch02-visualization-example-4-capture, include=FALSE, eval=FALSE}
+webshot2::webshot("https://mastodon.online/@terence@fosstodon.org/111404498052039281", 
         file = "figures/02-Figure-4.png",
         selector = "div.detailed-status")
 ```
@@ -380,7 +380,7 @@ webshot("https://mastodon.online/deck/@terence@fosstodon.org/111404498052039281"
 knitr::include_graphics("figures/02-Figure-4.png")
 ```
 
-```{r ch02-visualization-example-5-capture, include=FALSE}
+```{r ch02-visualization-example-5-capture, include=FALSE, eval=FALSE}
 webshot("https://mastodon.online/deck/@terence@fosstodon.org/111652744513157011", 
         file = "figures/02-Figure-5.png",
         selector = "div.detailed-status")
@@ -390,7 +390,7 @@ webshot("https://mastodon.online/deck/@terence@fosstodon.org/111652744513157011"
 knitr::include_graphics("figures/02-Figure-5.png")
 ```
 
-```{r ch02-visualization-example-6-capture, include=FALSE}
+```{r ch02-visualization-example-6-capture, include=FALSE, eval=FALSE}
 webshot("https://mastodon.online/deck/@terence@fosstodon.org/111575222127539953", 
         file = "figures/02-Figure-6.png",
         selector = "div.detailed-status")
@@ -400,7 +400,7 @@ webshot("https://mastodon.online/deck/@terence@fosstodon.org/111575222127539953"
 knitr::include_graphics("figures/02-Figure-6.png")
 ```
 
-```{r ch02-visualization-example-7-capture, include=FALSE}
+```{r ch02-visualization-example-7-capture, include=FALSE, eval=FALSE}
 webshot("https://mastodon.online/deck/@terence@fosstodon.org/111450552351044906", 
         file = "figures/02-Figure-7.png",
         selector = "div.detailed-status")
