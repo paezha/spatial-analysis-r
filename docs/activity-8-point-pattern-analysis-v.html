@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 18 Activity 8: Point Pattern Analysis V | An Introduction to Spatial Data Analysis and Statistics: A Course in R</title>
   <meta name="description" content="This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad and Alexis Polidoro. Further testing and refinements are due to John Merrall and Anastasia Soukhov. The book is published with support of an Open Educational Resources grant from MacPherson Institute, McMaster University." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 18 Activity 8: Point Pattern Analysis V | An Introduction to Spatial Data Analysis and Statistics: A Course in R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2024-02-11" />
+<meta name="date" content="2025-01-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,14 +53,15 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
 <script src="libs/proj4-2.6.2/proj4.min.js"></script>
 <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.2.0/leaflet.js"></script>
+<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
 <link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet" />
 <link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet" />
 <script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script>
@@ -68,10 +69,10 @@
 <script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script>
 <script src="libs/lfx-heat-0.1.0/lfx-heat-prod.js"></script>
 <script src="libs/lfx-heat-0.1.0/lfx-heat-bindings.js"></script>
-<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 <link href="libs/colourpicker-1.1/colourpicker.min.css" rel="stylesheet" />
@@ -84,7 +85,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -94,7 +95,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -156,6 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -703,19 +705,21 @@ div.csl-indent {
 ## 60                  residualspaper  list     7
 ## 61                         shapley   ppp     6
 ## 62         shapley.extra (shapley)  list     3
-## 63                           simba  list  10x2
-## 64                          simdat   ppp     5
-## 65                       simplenet  list    10
-## 66                         spiders   ppx     3
-## 67                     sporophores   ppp     6
-## 68                         spruces   ppp     6
-## 69                      stonetools   ppp     6
-## 70                    swedishpines   ppp     5
-## 71                         urkiola   ppp     6
-## 72                        vesicles   ppp     5
-## 73       vesicles.extra (vesicles)  list     4
-## 74                            waka   ppp     6
-## 75                   waterstriders  list     3
+## 63                        shelling   ppp     5
+## 64            shelling2 (shelling)   ppp     5
+## 65                           simba  list  10x2
+## 66                          simdat   ppp     5
+## 67                       simplenet  list    10
+## 68                         spiders   ppx     3
+## 69                     sporophores   ppp     6
+## 70                         spruces   ppp     6
+## 71                      stonetools   ppp     6
+## 72                    swedishpines   ppp     5
+## 73                         urkiola   ppp     6
+## 74                        vesicles   ppp     5
+## 75       vesicles.extra (vesicles)  list     4
+## 76                            waka   ppp     6
+## 77                   waterstriders  list     3
 ##                                                                                        Title
 ## 1                                          Colour Sequences with Uniform Perceptual Contrast
 ## 2                                                                 Hughes&#39; Amacrine Cell Data
@@ -779,19 +783,21 @@ div.csl-indent {
 ## 60                                     Data and Code From JRSS Discussion Paper on Residuals
 ## 61                                                      Galaxies in the Shapley Supercluster
 ## 62                                                      Galaxies in the Shapley Supercluster
-## 63            Simulated data from a two-group experiment with replication within each group.
-## 64                                                                   Simulated Point Pattern
-## 65                                                          Simple Example of Linear Network
-## 66                                               Spider Webs on Mortar Lines of a Brick Wall
-## 67                                                                          Sporophores Data
-## 68                                                                     Spruces Point Pattern
-## 69                                                                  Palaeolithic Stone Tools
-## 70                                                               Swedish Pines Point Pattern
-## 71                                                               Urkiola Woods Point Pattern
-## 72                                                                             Vesicles Data
-## 73                                                                             Vesicles Data
-## 74                                                               Trees in Waka national park
-## 75 Waterstriders data.  Three independent replications of a point pattern formed by insects.</code></pre>
+## 63                                                              Artillery Impacts in Ukraine
+## 64                                                              Artillery Impacts in Ukraine
+## 65            Simulated data from a two-group experiment with replication within each group.
+## 66                                                                   Simulated Point Pattern
+## 67                                                          Simple Example of Linear Network
+## 68                                               Spider Webs on Mortar Lines of a Brick Wall
+## 69                                                                          Sporophores Data
+## 70                                                                     Spruces Point Pattern
+## 71                                                                  Palaeolithic Stone Tools
+## 72                                                               Swedish Pines Point Pattern
+## 73                                                               Urkiola Woods Point Pattern
+## 74                                                                             Vesicles Data
+## 75                                                                             Vesicles Data
+## 76                                                               Trees in Waka national park
+## 77 Waterstriders data.  Three independent replications of a point pattern formed by insects.</code></pre>
 <p>Load a dataset of your choice.</p>
 <p>You can do this by using the <code>load()</code> function if the dataset is in your drive (e.g., the GPS coordinates of the bear).</p>
 <p>On the other hand, if the dataset is included with the <code>spatstat</code> package you can do the following, for example to load the <code>gorillas</code> dataset:</p>
@@ -808,13 +814,13 @@ div.csl-indent {
 ## 
 ## Mark variables: group, season, date
 ## Summary:
-##     group              season               date           
-##  Length:647         Length:647         Min.   :2006-01-06  
-##  Class :character   Class :character   1st Qu.:2007-03-15  
-##  Mode  :character   Mode  :character   Median :2008-02-05  
-##                                        Mean   :2007-12-14  
-##                                        3rd Qu.:2008-09-23  
-##                                        Max.   :2009-05-31  
+##    group       season         date           
+##  major:350   dry  :275   Min.   :2006-01-06  
+##  minor:297   rainy:372   1st Qu.:2007-03-15  
+##                          Median :2008-02-05  
+##                          Mean   :2007-12-14  
+##                          3rd Qu.:2008-09-23  
+##                          Max.   :2009-05-31  
 ## 
 ## Window: polygonal boundary
 ## single connected closed polygon with 21 vertices

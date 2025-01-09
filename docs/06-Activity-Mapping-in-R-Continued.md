@@ -26,7 +26,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -34,7 +34,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 
-```r
+``` r
 library(tidyverse) # Easily Install and Load the 'Tidyverse'
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 ```
@@ -51,7 +51,7 @@ library(isdas) # Companion Package for Book An Introduction to Spatial Data Anal
 
 Now that your workspace is clear, you can proceed to invoke the datasets required for this activity:
 
-```r
+``` r
 data("missing_df")
 data("PointPattern1")
 data("PointPattern2")

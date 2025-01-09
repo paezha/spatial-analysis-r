@@ -26,7 +26,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 Restart your `R` session or at least use the `R` command to clear the workspace, `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following. This ensures that your working space is clean to begin with:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -34,7 +34,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity (load other packages as appropriate). 
 
-```r
+``` r
 library(isdas)
 library(sf)
 library(spatstat)
@@ -47,7 +47,7 @@ Choose a data set with area data that interests you. These are two possibilities
 ### New York leukemia data
 
 
-```r
+``` r
 data("nyleukemia")
 ```
 
@@ -66,14 +66,14 @@ A `SpatialPolygonsDataFrame` that contains the following variables:
 
 This can be converted to a simple features object as follows:
 
-```r
+``` r
 nyleukemia.sf <- st_as_sf(nyleukemia)
 ```
 
 ### Pennsylvania lung cancer
 
 
-```r
+``` r
 data("pennlc")
 ```
 
@@ -89,7 +89,7 @@ A `SpatialPolygonsDataFrame` that contains the following variables:
 
 This can be converted to a simple features object as follows:
 
-```r
+``` r
 pennlc.sf <- st_as_sf(pennlc)
 ```
 

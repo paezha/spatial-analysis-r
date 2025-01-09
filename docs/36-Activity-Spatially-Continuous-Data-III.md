@@ -31,7 +31,7 @@ In this activity, you will:
 
 As usual, please remember to start with a new session of `R` or at least use the command `rm` (for "remove") to clear the workspace, followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -39,7 +39,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity (load other packages as appropriate). 
 
-```r
+``` r
 library(isdas)
 library(gstat)
 library(sf)
@@ -49,13 +49,13 @@ library(tidyverse)
 
 Load dataset:
 
-```r
+``` r
 data("aquifer")
 ```
 
 Convert to a simple features object:
 
-```r
+``` r
 aquifer.sf <- st_as_sf(aquifer, coords = c("X", "Y"))
 ```
 

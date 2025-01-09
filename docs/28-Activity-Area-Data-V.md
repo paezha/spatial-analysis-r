@@ -29,7 +29,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 Begin by restarting your `R` session, or at least by clearing the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -37,7 +37,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `sf` and `isdas`:
 
-```r
+``` r
 library(isdas)
 library(tidyverse)
 library(sf)
@@ -46,7 +46,7 @@ library(spdep)
 
 Begin by loading the data files you will use in this activity:
 
-```r
+``` r
 data("HamiltonDAs")
 data("trips_by_mode")
 data("travel_time_car")
@@ -58,7 +58,7 @@ The data for this activity were retrieved from the 2011 Transportation Tomorrow 
 
 Before beginning the activity, join the information on trips and travel time to the `sf` object. Note that to complete the join, the identifier (in this case `GTA06`) must be in the same format in both data frames:
 
-```r
+``` r
 travel_time_car$GTA06 <- factor(travel_time_car$GTA06)
 
 # Travel time
@@ -69,7 +69,7 @@ HamiltonDAs <- left_join(HamiltonDAs, trips_by_mode, by = "GTA06")
 
 The analysis will be based on travel by car in the Hamilton CMA. Calculate the proportion of trips by car by TAZ:
 
-```r
+``` r
 HamiltonDAs <- mutate(HamiltonDAs, Auto_driver.prop = Auto_driver / (Auto_driver + Cycle + Walk))
 ```
 

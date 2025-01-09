@@ -28,7 +28,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 Restart your `R` session or at least make sure that the working space is clean when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -38,7 +38,7 @@ Load the libraries you will use in this activity.
 
 In addition to `tidyverse`, you will need `sf`, a package that implements simple features in R (you can learn about `sf` [here](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html)) and `spdep`, a package that implements several spatial statistical methods (you can learn more about it [here](https://cran.r-project.org/web/packages/spdep/index.html)):
 
-```r
+``` r
 library(isdas)
 library(sf)
 library(spdep)
@@ -47,7 +47,7 @@ library(tidyverse)
 
 Begin by loading the data that you will use in this activity:
 
-```r
+``` r
 data(Hamilton_CT)
 ```
 
@@ -55,7 +55,7 @@ This is a `sf` object with census tracts and selected demographic variables for 
 
 You can obtain new (calculated) variables as follows. For instance, to obtain the proportion of residents who are between 20 and 34 years old, and between 35 and 49:
 
-```r
+``` r
 Hamilton_CT <- mutate(Hamilton_CT, Prop20to34 = (AGE_20_TO_24 + AGE_25_TO_29 + AGE_30_TO_34)/POPULATION, Prop35to49 = (AGE_35_TO_39 + AGE_40_TO_44 + AGE_45_TO_49)/POPULATION)
 ```
 

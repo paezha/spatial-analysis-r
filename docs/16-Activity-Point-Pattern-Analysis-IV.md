@@ -28,7 +28,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -36,7 +36,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `spatstat`, a package designed for the analysis of point patterns (you can learn about `spatstat` [here](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) and [here](http://spatstat.org/resources/spatstatJSSpaper.pdf)):
 
-```r
+``` r
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 library(sf) # Simple Features for R
 library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
@@ -45,19 +45,19 @@ library(tidyverse) # Easily Install and Load the 'Tidyverse'
 
 For this activity, you will use the same datasets that you used in Activity 6, including the geospatial files for Toronto's city boundary:
 
-```r
+``` r
 data("Toronto")
 ```
 
 Convert the `sf` object to an `owin` object (via `SpatialPolygons`, hence `as(x, "Spatial")`:
 
-```r
+``` r
 Toronto.owin <- as.owin(Toronto)
 ```
 
 Next, load the data that you will use in this activity. Each dataframe is converted into a `ppp` object using the `as.ppp` function, again after extracting the coordinates of the events from the `sf` object:
 
-```r
+``` r
 data("Fast_Food")
 Fast_Food.ppp <- as.ppp(st_coordinates(Fast_Food), W = Toronto.owin)
 # Add the classes of fast food to the ppp object:

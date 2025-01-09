@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 28 Activity 13: Area Data V | An Introduction to Spatial Data Analysis and Statistics: A Course in R</title>
   <meta name="description" content="This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad and Alexis Polidoro. Further testing and refinements are due to John Merrall and Anastasia Soukhov. The book is published with support of an Open Educational Resources grant from MacPherson Institute, McMaster University." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 28 Activity 13: Area Data V | An Introduction to Spatial Data Analysis and Statistics: A Course in R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2024-02-11" />
+<meta name="date" content="2025-01-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,14 +53,15 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
 <script src="libs/proj4-2.6.2/proj4.min.js"></script>
 <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.2.0/leaflet.js"></script>
+<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
 <link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet" />
 <link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet" />
 <script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script>
@@ -68,10 +69,10 @@
 <script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script>
 <script src="libs/lfx-heat-0.1.0/lfx-heat-prod.js"></script>
 <script src="libs/lfx-heat-0.1.0/lfx-heat-bindings.js"></script>
-<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 <link href="libs/colourpicker-1.1/colourpicker.min.css" rel="stylesheet" />
@@ -84,7 +85,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -94,7 +95,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -156,6 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -630,28 +632,28 @@ div.csl-indent {
 <div id="preliminaries-26" class="section level2 hasAnchor" number="28.4">
 <h2><span class="header-section-number">28.4</span> Preliminaries<a href="activity-13-area-data-v.html#preliminaries-26" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Begin by restarting your <code>R</code> session, or at least by clearing the working space to make sure that you do not have extraneous items there when you begin your work. The command in <code>R</code> to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="activity-13-area-data-v.html#cb586-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="activity-13-area-data-v.html#cb589-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity. In addition to <code>tidyverse</code>, you will need <code>sf</code> and <code>isdas</code>:</p>
-<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="activity-13-area-data-v.html#cb587-1" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
-<span id="cb587-2"><a href="activity-13-area-data-v.html#cb587-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb587-3"><a href="activity-13-area-data-v.html#cb587-3" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb587-4"><a href="activity-13-area-data-v.html#cb587-4" tabindex="-1"></a><span class="fu">library</span>(spdep)</span></code></pre></div>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="activity-13-area-data-v.html#cb590-1" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
+<span id="cb590-2"><a href="activity-13-area-data-v.html#cb590-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb590-3"><a href="activity-13-area-data-v.html#cb590-3" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb590-4"><a href="activity-13-area-data-v.html#cb590-4" tabindex="-1"></a><span class="fu">library</span>(spdep)</span></code></pre></div>
 <p>Begin by loading the data files you will use in this activity:</p>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="activity-13-area-data-v.html#cb588-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;HamiltonDAs&quot;</span>)</span>
-<span id="cb588-2"><a href="activity-13-area-data-v.html#cb588-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;trips_by_mode&quot;</span>)</span>
-<span id="cb588-3"><a href="activity-13-area-data-v.html#cb588-3" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;travel_time_car&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="activity-13-area-data-v.html#cb591-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;HamiltonDAs&quot;</span>)</span>
+<span id="cb591-2"><a href="activity-13-area-data-v.html#cb591-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;trips_by_mode&quot;</span>)</span>
+<span id="cb591-3"><a href="activity-13-area-data-v.html#cb591-3" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;travel_time_car&quot;</span>)</span></code></pre></div>
 <p><code>HamiltonDAs</code> are the Dissemination Areas for Hamilton CMA, which coincide with the Traffic Analysis Zones (TAZ) of the Transportation Tomorrow Survey of 2011. The dataframe <code>trips_by_mode</code> includes the number of trips by mode of transportation by TAZ (equivalently DA), as well as other useful information from the 2011 census for Hamilton CMA. Finally, the dataframe <code>travel_time_car</code> includes the travel distance/time from TAZ/DA centroids to Jackson Square in downtown Hamilton.</p>
 <p>The data for this activity were retrieved from the 2011 Transportation Tomorrow Survey <a href="http://www.transportationtomorrow.on.ca/">TTS</a>, the periodic travel survey of the Greater Toronto and Hamilton Area, as well as data from the 2011 Canadian Census <a href="http://www12.statcan.gc.ca/census-recensement/index-eng.cfm">Census Program</a>.</p>
 <p>Before beginning the activity, join the information on trips and travel time to the <code>sf</code> object. Note that to complete the join, the identifier (in this case <code>GTA06</code>) must be in the same format in both data frames:</p>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="activity-13-area-data-v.html#cb589-1" tabindex="-1"></a>travel_time_car<span class="sc">$</span>GTA06 <span class="ot">&lt;-</span> <span class="fu">factor</span>(travel_time_car<span class="sc">$</span>GTA06)</span>
-<span id="cb589-2"><a href="activity-13-area-data-v.html#cb589-2" tabindex="-1"></a></span>
-<span id="cb589-3"><a href="activity-13-area-data-v.html#cb589-3" tabindex="-1"></a><span class="co"># Travel time</span></span>
-<span id="cb589-4"><a href="activity-13-area-data-v.html#cb589-4" tabindex="-1"></a>HamiltonDAs <span class="ot">&lt;-</span> <span class="fu">left_join</span>(HamiltonDAs, travel_time_car, <span class="at">by =</span> <span class="st">&quot;GTA06&quot;</span>)</span>
-<span id="cb589-5"><a href="activity-13-area-data-v.html#cb589-5" tabindex="-1"></a><span class="co"># Trips by mode</span></span>
-<span id="cb589-6"><a href="activity-13-area-data-v.html#cb589-6" tabindex="-1"></a>HamiltonDAs <span class="ot">&lt;-</span> <span class="fu">left_join</span>(HamiltonDAs, trips_by_mode, <span class="at">by =</span> <span class="st">&quot;GTA06&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="activity-13-area-data-v.html#cb592-1" tabindex="-1"></a>travel_time_car<span class="sc">$</span>GTA06 <span class="ot">&lt;-</span> <span class="fu">factor</span>(travel_time_car<span class="sc">$</span>GTA06)</span>
+<span id="cb592-2"><a href="activity-13-area-data-v.html#cb592-2" tabindex="-1"></a></span>
+<span id="cb592-3"><a href="activity-13-area-data-v.html#cb592-3" tabindex="-1"></a><span class="co"># Travel time</span></span>
+<span id="cb592-4"><a href="activity-13-area-data-v.html#cb592-4" tabindex="-1"></a>HamiltonDAs <span class="ot">&lt;-</span> <span class="fu">left_join</span>(HamiltonDAs, travel_time_car, <span class="at">by =</span> <span class="st">&quot;GTA06&quot;</span>)</span>
+<span id="cb592-5"><a href="activity-13-area-data-v.html#cb592-5" tabindex="-1"></a><span class="co"># Trips by mode</span></span>
+<span id="cb592-6"><a href="activity-13-area-data-v.html#cb592-6" tabindex="-1"></a>HamiltonDAs <span class="ot">&lt;-</span> <span class="fu">left_join</span>(HamiltonDAs, trips_by_mode, <span class="at">by =</span> <span class="st">&quot;GTA06&quot;</span>)</span></code></pre></div>
 <p>The analysis will be based on travel by car in the Hamilton CMA. Calculate the proportion of trips by car by TAZ:</p>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="activity-13-area-data-v.html#cb590-1" tabindex="-1"></a>HamiltonDAs <span class="ot">&lt;-</span> <span class="fu">mutate</span>(HamiltonDAs, <span class="at">Auto_driver.prop =</span> Auto_driver <span class="sc">/</span> (Auto_driver <span class="sc">+</span> Cycle <span class="sc">+</span> Walk))</span></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="activity-13-area-data-v.html#cb593-1" tabindex="-1"></a>HamiltonDAs <span class="ot">&lt;-</span> <span class="fu">mutate</span>(HamiltonDAs, <span class="at">Auto_driver.prop =</span> Auto_driver <span class="sc">/</span> (Auto_driver <span class="sc">+</span> Cycle <span class="sc">+</span> Walk))</span></code></pre></div>
 <p>Note that the proportion of people who traveled by car as passengers are not included in the denominator of the proportion! This is because every trip as a passenger is already included in trips with one driver.</p>
 </div>
 <div id="activity-12" class="section level2 hasAnchor" number="28.5">

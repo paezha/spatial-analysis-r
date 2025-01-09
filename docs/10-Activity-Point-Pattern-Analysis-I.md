@@ -30,7 +30,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -38,7 +38,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `spatstat`, a package designed for the analysis of point patterns (you can learn about `spatstat` [here](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) and [here](http://spatstat.org/resources/spatstatJSSpaper.pdf)):
 
-```r
+``` r
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 ```
 
@@ -52,7 +52,7 @@ library(isdas) # Companion Package for Book An Introduction to Spatial Data Anal
 ## loading 'isdas'
 ```
 
-```r
+``` r
 library(sf) # Simple Features for R
 library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
 library(tidyverse) # Easily Install and Load the 'Tidyverse'
@@ -61,7 +61,7 @@ library(tidyverse) # Easily Install and Load the 'Tidyverse'
 In the practice that preceded this activity, you learned about the concepts of intensity and density, about quadrats, and also how to create density maps. 
 Begin by loading the data that you will use in this activity:
 
-```r
+``` r
 data("Fast_Food")
 data("Gas_Stands")
 data("Paez_Mart")
@@ -69,7 +69,7 @@ data("Paez_Mart")
 
 Next the geospatial files need to be read. For this example, the city boundary of Toronto is provided in two different formats, as a dataframe (which can be used to plot using `ggplot2`) and as a `SpatialPolygons` object, a format widely used in R for spatial analysis. The :
 
-```r
+``` r
 data("Toronto")
 ```
 
@@ -83,7 +83,7 @@ These are locations of a selection of fast food restaurants, and also of gas sta
 
 Also, there should be an object of class `sf`. This dataframe contains the city boundary of Toronto:
 
-```r
+``` r
 class(Toronto)
 ```
 
@@ -93,7 +93,7 @@ class(Toronto)
 
 Try plotting the following:
 
-```r
+``` r
 ggplot() +
   geom_sf(data = Toronto, color = "black", fill = NA, alpha = 1, size = .3) +
   geom_sf(data = Paez_Mart) +
@@ -104,7 +104,7 @@ ggplot() +
 
 As discussed in the preceding chapter, the package `spatstat` offers a very rich collection of tools to do point pattern analysis. To convert the three sets of events (i.e., the fast food establishments, gas stands, and Paez Mart) into `ppp` objects we first must define a region or _window_. To do this we take the `sf` and convert to an `owin` (a window object) for use with the package `spatstat` (this is done via `SpatialPolygons`, hence `as(x, "Spatial")`:
 
-```r
+``` r
 # `as.owin()` will take a "foreign" object (foreign to `spatstat`) and convert it into an `owin` object.`
 
 Toronto.owin <- Toronto |> as.owin() # Requires `maptools` package
@@ -112,7 +112,7 @@ Toronto.owin <- Toronto |> as.owin() # Requires `maptools` package
 
 And, then convert the dataframes to `ppp` objects (this necessitates that we extract the coordinates of the events by means of `st_coordinates`): 
 
-```r
+``` r
 Fast_Food.ppp <- as.ppp(st_coordinates(Fast_Food), W = Toronto.owin)
 Gas_Stands.ppp <- as.ppp(st_coordinates(Gas_Stands), W = Toronto.owin)
 Paez_Mart.ppp <- as.ppp(st_coordinates(Paez_Mart), W = Toronto.owin)
@@ -120,7 +120,7 @@ Paez_Mart.ppp <- as.ppp(st_coordinates(Paez_Mart), W = Toronto.owin)
 
 These objects can now be used with the functions of the `spatstat` package. For instance, you can calculate the counts of events by quadrat by means of `quadrat.count`. The input must be a `ppp` object, and the number of quadrats on the horizontal (nx) and vertical (ny) direction (notice how I use the function `table` to present the frequency of quadrats with number of events):
 
-```r
+``` r
 q_count <- quadratcount(Fast_Food.ppp, nx = 3, ny = 3)
 table(q_count)
 ```
@@ -135,7 +135,7 @@ As you see from the table, there is one quadrat with zero events, one quadrat wi
 
 You can also plot the results of the `quadratcount()` function!
 
-```r
+``` r
 plot(q_count)
 ```
 
@@ -145,7 +145,7 @@ A useful function in the `spatstat` package is `quadrat.test`. This function imp
 
 This is implemented as follows:
 
-```r
+``` r
 q_test <- quadrat.test(Fast_Food.ppp, nx = 3, ny = 3)
 ```
 
@@ -153,7 +153,7 @@ q_test <- quadrat.test(Fast_Food.ppp, nx = 3, ny = 3)
 ## Warning: Some expected counts are small; chi^2 approximation may be inaccurate
 ```
 
-```r
+``` r
 q_test
 ```
 
@@ -172,7 +172,7 @@ The quadrat test reports a $p$-value which can be used to make a decision. The $
 
 Try plotting the results of `quadrat.test`:
 
-```r
+``` r
 plot(q_test)
 ```
 

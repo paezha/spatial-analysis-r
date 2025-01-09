@@ -31,7 +31,7 @@ In this chapter, you will learn:
 
 As usual, it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -39,7 +39,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 
-```r
+``` r
 library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
@@ -65,7 +65,7 @@ For instance, a formula for processes similar to coin flips was discovered by Be
 
 The following function reports a random binomial variable. The number of observations `n` is how many random numbers we require. The `size` is the number of trials. For instance, if the experiment was flipping a coin, it would be how many times we get heads in `size` flips. The probability of success `prob` is the probability of getting heads in any given toss. Execute the chunk repeatedly to see what happens. 
 
-```r
+``` r
 #This function simulates the outcome of flipping a coin. 
 # Here, we are simulating the result for flipping heads, 
 # which has a probability of 0.5. The value of `n` is the 
@@ -77,12 +77,12 @@ rbinom(n = 1,
 ```
 
 ```
-## [1] 0
+## [1] 1
 ```
 
 It can be noted that although there are only two outcomes, we do not have control over the result of the process, making the result random. If you tried this "experiment" repeatedly, you would find that "heads" (1s) and "tails" (0s) appear each about 50% of the time. A way to implement this is to increase `n`- think of this as recruiting more people to do coin flips at the same time:
 
-```r
+``` r
 n <- 1000 # Number of people tossing the coin one time.
 coin_flips <- rbinom(n = n, 
                      size = 1, 
@@ -91,7 +91,7 @@ sum(coin_flips)/n
 ```
 
 ```
-## [1] 0.486
+## [1] 0.511
 ```
 
 What happens if you change the `size` to 0, and why?
@@ -104,7 +104,7 @@ The normal distribution is defined by a centering parameter (the mean of the dis
 
 The following function reports a value taken at random from a normal distribution with `mean` zero and standard deviation `sd` of one. Execute this chunk repeatedly to see what happens:
 
-```r
+``` r
 # This function generates random numbers based on 
 # the normal distribution conditional on the given 
 # arguments, i.e., the mean and the standard deviation `sd`. 
@@ -114,24 +114,24 @@ rnorm(1,
 ```
 
 ```
-## [1] 0.4639886
+## [1] 1.015896
 ```
 
 Let's say that the average height of men in Canada is 170.7 cm and the standard deviation is 7 cm. The height of a random person in this population would be:
 
-```r
+``` r
 rnorm(1, 
       mean = 170.7, 
       sd = 7)
 ```
 
 ```
-## [1] 169.8266
+## [1] 174.07
 ```
 
 And the distribution of heights of `n` men in this population would be:
 
-```r
+``` r
 #Creating a data frame using the random numbers generated 
 # from n=1000 people. The results in the data frame are then 
 # plotted using ggplot. The end result is a distribution of 
@@ -170,7 +170,7 @@ Suppose that there is a landscape with coordinates in the unit square, that is d
 
 Let's first create a landscape. For this, we will use the `expand.grid` function to find all combinations of two sets of coordinates in the unit interval, using small partitions:
 
-```r
+``` r
 # expand.grid created a set of coordinates by obtaining 
 # all the combinations of the input variables. Here, our 
 # landscape ranges in the x-axis from 0 to 1, increasing 
@@ -185,7 +185,7 @@ coords <- expand.grid(x = seq(from = 0,
 
 Now, let's generate a binomial random variable to go with these coordinates. 
 
-```r
+``` r
 # `nrow()` returns the number of rows that are present 
 # in a data frame. Here, it returns the number of rows 
 # in the data frame `coords` 
@@ -196,7 +196,7 @@ events <- rbinom(n = nrow(coords),
 
 We will collect the coordinates and the random variable in a dataframe for plotting:
 
-```r
+``` r
 # `data.frame()` collects the inputs in a data frame;
 # they must have the same number of rows
 null_pattern <- data.frame(coords, 
@@ -205,7 +205,7 @@ null_pattern <- data.frame(coords,
 
 We can plot the null landscape we just generated as follows:
 
-```r
+``` r
 ggplot() + 
   geom_point(data = filter(null_pattern, 
                            events == 1), 
@@ -221,7 +221,7 @@ By changing the probability `prob` in the function `rbinom` you can make the eve
 
 A continuous random variable can also be used to generate a null landscape. For instance, imagine that a group of individuals are asked to stand in formation, and that they arrange themselves purely at random. What would a map of their heights look like? First, we will generate a random variable using the same parameters we mentioned above for the height of men in Canada:
 
-```r
+``` r
 #heights will be random numbers generated based on 
 # the average height of men, 7 standard deviations, 
 # and the null landscape "coords" created previously.
@@ -232,14 +232,14 @@ heights <- rnorm(n = nrow(coords),
 
 The random values that were generated can be collected in a dataframe with the coordinates for the purpose of plotting:
 
-```r
+``` r
 null_trend <- data.frame(coords, 
                          heights)
 ```
 
 One possible map of heights when the individuals stand in formation at random would look like this:
 
-```r
+``` r
 # Our plot is created based on the dataframe of coords and heights. 
 # The value of `x` is plotted to the x-axis, the value of `y` is plotted 
 # to the y-axis, and the color of the points depends on the values of 
@@ -269,7 +269,7 @@ Some processes are _random_, such as the ones used above to create _null landsca
 
 We will illustrate this, using again a unit square:
 
-```r
+``` r
 # Remember that `expand.grid()` will find all combinations of values in the inputs
 coords <- expand.grid(x = seq(from = 0, 
                               to = 1, 
@@ -281,7 +281,7 @@ coords <- expand.grid(x = seq(from = 0,
 
 Here is an example of a random pattern of events:
 
-```r
+``` r
 # Create a random variable and join to the coordinates to generate a null landscape
 events <- rbinom(n = nrow(coords), 
                  size = 1, 
@@ -303,7 +303,7 @@ ggplot() +
 
 A _systematic_ or _deterministic_ process is one that contains no elements of randomness, and can therefore be predicted with complete certainty. For instance (note the use of `xlim` to set the extent of x axis in the plot):
 
-```r
+``` r
 # Copy the coordinates to a new object
 deterministic_point_pattern <- coords
 
@@ -335,7 +335,7 @@ In the process above, we used the function `round()` and the coordinate `x`. The
 
 A _stochastic process_, on the other hand, is a process that is neither fully random or deterministic, but rather a combination of the two. Let's illustrate:
 
-```r
+``` r
 # Copy the coordinates to a new object 
 stochastic_point_pattern <- coords
 
@@ -368,14 +368,14 @@ Null landscapes are interesting as a benchmark. More interesting are landscapes 
 
 Let's begin with the point pattern, using the same landscape that we used above. We will first copy the coordinates of the landscape to a new dataframe, that we will call `pattern1`:
 
-```r
+``` r
 # Copy the coordinates to a new object, called `pattern1`
 pattern1 <- coords
 ```
 
 Next, we will use the function `mutate` from the `dplyr` package that is part of the `tidyverse`. This function adds a column to a data frame that could be calculated using a formula. For instance, we will now make the probability `prob` of the random binomial number generator a function of the coordinates:
 
-```r
+``` r
 # Remember, mutate adds a new column to a data frame. In this 
 # example, mutate creates a new column, `events` using random
 # binomial values; however, notice that the `prob` is not 0.5! 
@@ -388,7 +388,7 @@ pattern1 <- mutate(pattern1,
 
 Plot this pattern:
 
-```r
+``` r
 ggplot() + 
   geom_point(data = subset(pattern1, 
                            events == 1), 
@@ -404,7 +404,7 @@ Since the probability of a "success" in the binomial experiment is proportional 
 
 Let us see what happens when we make this probability a function of the y coordinate:
 
-```r
+``` r
 # Overwrite the `events`, now the probability of success 
 # in the random binomial number generator is a function of 
 # `y`, the position of the event on the y-axis 
@@ -427,7 +427,7 @@ ggplot() +
 
 Since the probability of a "success" in the binomial experiment is proportional to the value of y (the coordinate of the event), now the events are clustered to the top. The probability could be the interaction of the two coordinates:
 
-```r
+``` r
 # Now the probability is the product of `x` and `y`
 pattern1 <- mutate(pattern1, 
                    events = rbinom(n = nrow(pattern1), 
@@ -450,7 +450,7 @@ Which of course means that the events cluster on the top-right corner.
 
 A somewhat more sophisticated example could make the probability a function of distance from the center of the region:
 
-```r
+``` r
 # Copy the coordinates to the object `pattern1`
 pattern1 <- coords
 
@@ -469,7 +469,7 @@ Do not worry too much about the formula that I selected to generate this process
 
 Plot this pattern:
 
-```r
+``` r
 ggplot() + 
   geom_point(data = subset(pattern1, 
                            events == 1), 
@@ -487,13 +487,13 @@ To conclude this practice, let's revisit the example of the people standing in f
 
 First, we copy the coordinates to a new dataframe for our trend experiment:
 
-```r
+``` r
 trend1 <- coords
 ```
 
 Again we use `mutate` to add a column to a data frame that could be calculated using a formula. For instance, we will now make the probability `prob` of the random binomial number generator a function of the coordinates:
 
-```r
+``` r
 trend1 <- mutate(trend1,
                  heights = 160 + 20 * y  + rnorm(n = nrow(pattern1), 
                                                  mean = 0, 
@@ -502,7 +502,7 @@ trend1 <- mutate(trend1,
 
 If people have a preference for standing next to people about their same height, and shorter people have a preference for standing near the front, this is a possible map of heights in the formation:
 
-```r
+``` r
 ggplot() + 
   geom_point(data = trend1, aes(x = x, 
                                 y = y, 

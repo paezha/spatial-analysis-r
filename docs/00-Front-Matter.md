@@ -104,22 +104,21 @@ Working with these wonderful individuals has been a pleasure, and I am grateful 
 These notes were developed using the following version of `R`:
 
 ```
-##                _                                
-## platform       x86_64-w64-mingw32               
-## arch           x86_64                           
-## os             mingw32                          
-## crt            ucrt                             
-## system         x86_64, mingw32                  
-## status                                          
-## major          4                                
-## minor          3.2                              
-## year           2023                             
-## month          10                               
-## day            31                               
-## svn rev        85441                            
-## language       R                                
-## version.string R version 4.3.2 (2023-10-31 ucrt)
-## nickname       Eye Holes
+##                _                           
+## platform       x86_64-pc-linux-gnu         
+## arch           x86_64                      
+## os             linux-gnu                   
+## system         x86_64, linux-gnu           
+## status                                     
+## major          4                           
+## minor          4.2                         
+## year           2024                        
+## month          10                          
+## day            31                          
+## svn rev        87279                       
+## language       R                           
+## version.string R version 4.4.2 (2024-10-31)
+## nickname       Pile of Leaves
 ```
 
 A reproducible environment is available at https://github.com/paezha/Applied-Spatial-Statistics.

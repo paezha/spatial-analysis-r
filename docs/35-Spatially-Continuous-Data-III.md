@@ -24,7 +24,7 @@ Previously, in Chapter \@ref(spatially-continuous-data-ii), we discussed some li
 
 Begin by restarting `R` or at least clearing the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -32,7 +32,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 
-```r
+``` r
 library(isdas)
 library(gstat)
 library(spdep)
@@ -41,14 +41,14 @@ library(tidyverse)
 
 Begin by loading the data file:
 
-```r
+``` r
 # We have been working with the Walker Lake dataset for the last few chapters.
 data("Walker_Lake")  
 ```
 
 You can verify the contents of the dataframe:
 
-```r
+``` r
 summary(Walker_Lake)
 ```
 
@@ -97,7 +97,7 @@ Let us revisit the model for Walker Lake.
 
 As before, we first calculate the polynomial terms of the coordinates:
 
-```r
+``` r
 # Here we use `mutate()` to calculate the polynomial terms of the coordinates.
 Walker_Lake <- mutate(Walker_Lake,
                         X3 = X^3, X2Y = X^2 * Y, X2 = X^2, 
@@ -107,7 +107,7 @@ Walker_Lake <- mutate(Walker_Lake,
 
 And proceed to estimate the following cubic trend surface model, which provided the best fit to the data:
 
-```r
+``` r
 # Recall use of the linear model for walker lake
 WL.trend3 <- lm(formula = V ~ X3 + X2Y + X2 + X + XY + Y + Y2 + XY2 + Y3, 
                 data = Walker_Lake) 
@@ -146,7 +146,7 @@ summary(WL.trend3)
 
 To examine the residuals, first we label them as "positive" or "negative":
 
-```r
+``` r
 # The function `ifelse()` is used to label the residuals as "Positive" if they are 
 # greater than zero, or "Negative" if they are zero or less.
 Walker_Lake <- Walker_Lake |>
@@ -157,7 +157,7 @@ Walker_Lake <- Walker_Lake |>
 
 Once the residuals have been labeled we can be plotted as follows:
 
-```r
+``` r
 ggplot(data = Walker_Lake, 
        # Note color is only applied to results of positive or negative residuals
        aes(x = X, y = Y, color = residual3)) + 
@@ -169,7 +169,7 @@ ggplot(data = Walker_Lake,
 
 As seen before, there is considerable spatial autocorrelation as confirmed by Moran's $I$ coefficient:
 
-```r
+``` r
 # Take the coordinates of Walker Lake and convert to matrix.
 WL.listw <- as.matrix(Walker_Lake[,2:3]) |> 
   # Find the 5 nearest neighbors of each observations.
@@ -201,7 +201,7 @@ The fact that the residuals are not independent has important implications for p
 
 Imagine that you were asked to guess whether the residual was positive or negative at the locations indicated with triangles in the figure. These are locations where an observation was not made, and we only have the interpolated value of the variable according to the trend surface model:
 
-```r
+``` r
 ggplot(data = Walker_Lake, 
        aes(x = X, y = Y)) +
   geom_point(aes(color = residual3)) +
@@ -217,7 +217,7 @@ What would your guess be, and why? Would you say that your guess has a better th
 
 Now imagine that you were asked to guess whether the residual was positive or negative at the locations indicated with squares in the figure:
 
-```r
+``` r
 ggplot(data = Walker_Lake, 
        aes(x = X, y = Y)) +
   geom_point(aes(color = residual3)) +
@@ -245,7 +245,7 @@ One way of extending Moran's $I$ analysis to multiple scales is by means of the 
 
 Consider for example the following sequence of coefficients, computed for $k$=10 neighbors to $k$=30 neighbors. Notice how the `for` loop calculates spatial weights using the designated number of neighbors, before calculating Moran's $I$.
 
-```r
+``` r
 # Initialize the values of k
 k <- c(10:30)
 
@@ -275,7 +275,7 @@ for(i in 1:length(k)){
 
 Given the values of Moran's $I$ at different scales (i.e., values of $k$), the correlogram can be plotted as:
 
-```r
+``` r
 ggplot(data = correlogram,
        aes(x = k, 
            y = moranI)) + 
@@ -384,7 +384,7 @@ Analysis based on the semivariogram (called _variographic analysis_) is implemen
 
 We will illustrate the use of the semivariogram by means of the Walker Lake data. The package `gstat` accepts simple features objects of the `sf` package, so we convert our dataframe into such an object:
 
-```r
+``` r
 Walker_Lake.sf <- st_as_sf(Walker_Lake, coords = c("X", "Y"))
 class(Walker_Lake.sf)
 ```
@@ -395,7 +395,7 @@ class(Walker_Lake.sf)
 
 The empirical semivariogram is calculated by means of the `gstat::variogram` function, as follows:
 
-```r
+``` r
 # `variogram()` calculates the sample semivariogram from data, 
 # or if a linear model is given, for the residuals; in this case, 
 # the formula `V ~ 1` means that we are not using a model
@@ -421,7 +421,7 @@ The numbers indicate the number of pairs of observations used to calculate the s
 
 Since the sample variance is: 
 
-```r
+``` r
 # We are calculating the variance of X
 s2 <- var(Walker_Lake$V) 
 s2
@@ -433,7 +433,7 @@ s2
 
 It follows that the covariogram in this case is:
 
-```r
+``` r
 ggplot(data = variogram_z, 
        aes(x = dist, 
            y = s2 - gamma)) +
@@ -452,7 +452,7 @@ The above plots are the _empirical_ semivariogram and covariogram. These plots a
 
 Since the semivariogram is the expectation of the square, the function selected for modeling the theoretical semivariogram must be non-negative. Several functions satisfy this condition, a list of which are available in `gstat` as shown below:
 
-```r
+``` r
 # This function generates a variogram mode. Here, we are able to view 
 # the list of possible models for a semivariogram
 vgm() 
@@ -497,7 +497,7 @@ Some theoretical functions are shown next.
 
 Exponential semivariogram:
 
-```r
+``` r
 # We use "exp" to denote the use of an exponential semivariogram. 
 # Refer to the list on line 297 and explore the different outcomes 
 # of the listed variogram models! 
@@ -512,7 +512,7 @@ plot(variogramLine(vgm(1,
 
 Spherical semivariogram:
 
-```r
+``` r
 plot(variogramLine(vgm(1, 
                        "Sph",
                        1), 
@@ -524,7 +524,7 @@ plot(variogramLine(vgm(1,
 
 Gaussian semivariogram:
 
-```r
+``` r
 plot(variogramLine(vgm(1, 
                        "Gau", 
                        1), 
@@ -538,7 +538,7 @@ These plots illustrate some differences in the behavior of the models. For ident
 
 To fit a theoretical semivariogram to the empirical one, the function `fit.variogram` is used:
 
-```r
+``` r
 # `fit_variogram` selects the type of model that will fit 
 # the empirical semivariogram best
 variogram_z.t <- fit.variogram(variogram_z, model = vgm("Exp")) 
@@ -546,7 +546,7 @@ variogram_z.t <- fit.variogram(variogram_z, model = vgm("Exp"))
 
 The results of which can be plotted after passing the model the the function `variogramLine`:
 
-```r
+``` r
 # Notice how 'maxdist' is 130, and the model does not exceed that value.
 gamma.t <- variogramLine(variogram_z.t, 
                          maxdist = 130) 
@@ -567,7 +567,7 @@ ggplot(data = variogram_z,
 
 A set of models can be passed as an argument to `fit.variogram`, in which case the value (output) of the function is the model that provides the best fit to the empirical semivariogram:
 
-```r
+``` r
 variogram_z.t <- fit.variogram(variogram_z, 
                                # Models to choosing the best fit
                                model = vgm("Exp", 
@@ -584,7 +584,7 @@ variogram_z.t
 
 In this case, it can be seen that the best fitting model is the exponential, as follows:
 
-```r
+``` r
 gamma.t <- variogramLine(variogram_z.t, 
                          maxdist = 130)
 
@@ -606,7 +606,7 @@ For comparison, we will do the variographic analysis of a simulated random datas
 
 Generate coordinates for observations and expand on a grid:
 
-```r
+``` r
 #We are generating a regular sequence of coordinates by means of 'seq' 
 x <- seq(from = 0, 
          to = 250, 
@@ -622,7 +622,7 @@ df <- expand.grid(x = x,
 
 Then, create a random variable for this coordinates:
 
-```r
+``` r
 # `set.seed()` is used for replicability: it uses the seed 
 # in the argument for generating random numbers
 set.seed(100) 
@@ -631,13 +631,13 @@ df$z <- rnorm(n = 780, mean = 500, sd = 300)
 
 Finally, convert to a simple features object:
 
-```r
+``` r
 df <- st_as_sf(df, coords = c("x", "y")) 
 ```
 
 The empirical variogram is:
 
-```r
+``` r
 # Calculate the variogram
 variogram_df <- variogram(z ~ 1, data = df)
 

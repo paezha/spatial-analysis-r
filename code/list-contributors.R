@@ -24,10 +24,11 @@ library(tidyverse)
 #**********************************************************
 
 # git has to be in PATH
-out_json = gh::gh(endpoint = "/repos/paezha/spatial-analysis-R/contributors", .limit = "Inf")
+out_json = gh::gh(endpoint = "/repos/paezha/spatial-analysis-R/contributors", .limit = Inf)
 link = vapply(out_json, "[[", FUN.VALUE = "", "html_url")
 name = gsub(pattern = "https://github.com/", "", link)
 commits = paste0("https://github.com/paezha/spatial-analysis-R/commits?author=", name)
 out_df = tibble(name, link)
 # remove book authors
 filter(out_df, !grepl("paezha", name, TRUE))
+

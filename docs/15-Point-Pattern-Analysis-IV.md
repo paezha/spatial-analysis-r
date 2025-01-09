@@ -30,7 +30,7 @@ In this chapter, you will:
 
 As usual, it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -38,7 +38,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 
-```r
+``` r
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
 library(tidyverse) # Easily Install and Load the 'Tidyverse'
@@ -46,7 +46,7 @@ library(tidyverse) # Easily Install and Load the 'Tidyverse'
 
 Load the datasets that you will use for this practice:
 
-```r
+``` r
 data("pp1_df")
 data("pp2_df")
 data("pp3_df")
@@ -56,14 +56,14 @@ data("pp5_df")
 
 These five dataframes include the coordinates of events set in the space of a unit square. To convert these dataframes into `ppp` objects we first define a window:
 
-```r
+``` r
 # We use "owin" to define a window of coordinates which is in the five dataframes. 
 W <- owin(c(0, 1), c(0, 1))
 ```
 
 And then use the function `as.ppp` to convert into `ppp`: 
 
-```r
+``` r
 # `as.ppp()` is a function that we use to convert dataframes into ppp objects
 pp1.ppp <- as.ppp(pp1_df, W = W)
 pp2.ppp <- as.ppp(pp2_df, W = W)
@@ -104,7 +104,7 @@ The $\hat{F}$-function can be implemented in at least two ways: (1) by using a f
 
 We can illustrate this function with the point pattern `pp1.ppp`. First, we verify that `pp1.ppp` is already a `ppp` object:
 
-```r
+``` r
 class(pp1.ppp)
 ```
 
@@ -114,7 +114,7 @@ class(pp1.ppp)
 
 Begin by plotting the pattern:
 
-```r
+``` r
 plot(pp1.ppp)
 ```
 
@@ -122,7 +122,7 @@ plot(pp1.ppp)
 
 An empty space map is obtained by means of the `distmap()` function:
 
-```r
+``` r
 # The "distmap()" function computes the distance map of point pattern X and returns the distance map as a pixel image
 
 empty_space_map1 <- distmap(pp1.ppp) 
@@ -130,7 +130,7 @@ empty_space_map1 <- distmap(pp1.ppp)
 
 The plot of this is:
 
-```r
+``` r
 plot(empty_space_map1)
 ```
 
@@ -140,7 +140,7 @@ Similar to the Stienen diagrams that you used previously, this map shows the dis
 
 Compare the map above to `pp2.ppp`:
 
-```r
+``` r
 empty_space_map2 <- distmap(pp2.ppp)
 plot(empty_space_map2)
 ```
@@ -149,7 +149,7 @@ plot(empty_space_map2)
 
 In the second point pattern, there is more open space in the region. This is also apparent from the symbols map:
 
-```r
+``` r
 plot(pp2.ppp)
 ```
 
@@ -157,14 +157,14 @@ plot(pp2.ppp)
 
 The $\hat{F}$-function is implemented in `spatstat` as `Fest()` (for F-estimated), and it requires a `ppp` object as an input. Another possible input is whether a correction is to be used. This refers to boundary corrections. Since we have not yet discussed them, select "none":
 
-```r
+``` r
 # The "Fest()" function computes an estimate of the empty space function, and it also called the "point to nearest event" distribution. This function estimates the nearest neighbors of a point (in this example, for pp1)
 f_pattern1 <- Fest(pp1.ppp, correction = "none")
 ```
 
 This function can be plotted as follows:
 
-```r
+``` r
 plot(f_pattern1)
 ```
 
@@ -172,7 +172,7 @@ plot(f_pattern1)
 
 The black line is the empirical function, and we see that it is in general very similar to the theoretical function that corresponds to a null landscape. Compare to the second pattern:
 
-```r
+``` r
 f_pattern2 <- Fest(pp2.ppp, correction = "none")
 plot(f_pattern2)
 lines(x = c(0, 0.097), y = c(0.4, 0.4), col = "blue", lty = "dotted")
@@ -184,7 +184,7 @@ lines(x = c(0.097, 0.097), y = c(0.0, 0.4), col = "blue", lty = "dotted")
 
 In the empirical (black) pattern, points on a grid tend to be more distant from events than what you would expect from the null landscape. For example, whereas under the theoretical function 40% of points have a nearest event that is at a distance of approximately 0.045 or less, under the empirical function, the events are generally more distant from the points, and for the same value of F (0.4 or 40%) the distance is closer to 0.1. See:
 
-```r
+``` r
 # Repeat the plot of the F-function of `pp2.ppp` and use the function `lines()` to add lines to compare the distances for a given value of F, say 0.4 (or 40%)
 plot(f_pattern2)
 lines(x = c(0, 0.097), y = c(0.4, 0.4), col = "blue", lty = "dotted")
@@ -202,7 +202,7 @@ A limitation of the two techniques that we have seen so far is that they deal wi
 
 Consider for instance the following point pattern:
 
-```r
+``` r
 plot(pp3.ppp)
 ```
 
@@ -210,7 +210,7 @@ plot(pp3.ppp)
 
 The events above initially appear to be clustered. However, at a different scale, a second pattern becomes evident. In fact, what we observe is a _regular_ distribution of _clusters_. At a smaller scale, a single cluster may actually be a random distribution of events. In contrast, the following pattern appears to be a random distribution of regularly spaced events:
 
-```r
+``` r
 plot(pp4.ppp)
 ```
 
@@ -218,7 +218,7 @@ plot(pp4.ppp)
 
 Whereas the last point pattern is of clusters of dispersed events that are themselves regularly spaced:
 
-```r
+``` r
 plot(pp5.ppp)
 ```
 
@@ -226,7 +226,7 @@ plot(pp5.ppp)
 
 Both $\hat{G}(x)$ or $\hat{F}(x)$ when applied to any of these patterns will strongly hint at clustering at the scale of the first nearest neighbor. Regrettably, they fail to detect patterns that might exist at other scales. For instance:
 
-```r
+``` r
 f_pattern3 <- Fest(pp3.ppp, correction = "none")
 plot(f_pattern3)
 ```
@@ -234,7 +234,7 @@ plot(f_pattern3)
 <img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-19-1.png" width="672" />
 
 
-```r
+``` r
 g_pattern3 <- Gest(pp3.ppp, correction = "none")
 plot(g_pattern3)
 ```
@@ -262,7 +262,7 @@ The $\hat{K}$-function is implemented in the package `spatstat` as `Kest()`.
 
 To see how this function works, plot `pp3.ppp` once more:
 
-```r
+``` r
 plot(pp3.ppp)
 ```
 
@@ -270,7 +270,7 @@ plot(pp3.ppp)
 
 Next, use `Kest()` to calculate and plot the $\hat{K}$-function:
 
-```r
+``` r
 # `Kest()` function estimates nearest neighbors of a point on multiple scales, identifying more than just the distance to the first nearest neighbor. Here, we are applying the K-function to `pp3.ppp`. As before, ignore the correction; we will discuss this later 
 k_pattern3 <- Kest(pp3.ppp, correction = "none")
 plot(k_pattern3)
@@ -282,7 +282,7 @@ As seen from the plot, the function is suggestive of clustering at smaller scale
 
 Try this now with the last pattern:
 
-```r
+``` r
 plot(pp5.ppp)
 ```
 
@@ -290,7 +290,7 @@ plot(pp5.ppp)
 
 If you calculate and plot the $\hat{K}$-function:
 
-```r
+``` r
 k_pattern5 <- Kest(pp5.ppp, correction = "none")
 plot(k_pattern5)
 ```

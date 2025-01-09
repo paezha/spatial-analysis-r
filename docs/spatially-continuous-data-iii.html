@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 35 Spatially Continuous Data III | An Introduction to Spatial Data Analysis and Statistics: A Course in R</title>
   <meta name="description" content="This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad and Alexis Polidoro. Further testing and refinements are due to John Merrall and Anastasia Soukhov. The book is published with support of an Open Educational Resources grant from MacPherson Institute, McMaster University." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 35 Spatially Continuous Data III | An Introduction to Spatial Data Analysis and Statistics: A Course in R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2024-02-11" />
+<meta name="date" content="2025-01-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,14 +53,15 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
 <script src="libs/proj4-2.6.2/proj4.min.js"></script>
 <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.2.0/leaflet.js"></script>
+<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
 <link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet" />
 <link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet" />
 <script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script>
@@ -68,10 +69,10 @@
 <script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script>
 <script src="libs/lfx-heat-0.1.0/lfx-heat-prod.js"></script>
 <script src="libs/lfx-heat-0.1.0/lfx-heat-bindings.js"></script>
-<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 <link href="libs/colourpicker-1.1/colourpicker.min.css" rel="stylesheet" />
@@ -84,7 +85,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -94,7 +95,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -156,6 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -625,18 +627,18 @@ div.csl-indent {
 <div id="preliminaries-33" class="section level2 hasAnchor" number="35.3">
 <h2><span class="header-section-number">35.3</span> Preliminaries<a href="spatially-continuous-data-iii.html#preliminaries-33" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Begin by restarting <code>R</code> or at least clearing the working space to make sure that you do not have extraneous items there when you begin your work. The command in <code>R</code> to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
-<div class="sourceCode" id="cb755"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb755-1"><a href="spatially-continuous-data-iii.html#cb755-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb758-1"><a href="spatially-continuous-data-iii.html#cb758-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity:</p>
-<div class="sourceCode" id="cb756"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb756-1"><a href="spatially-continuous-data-iii.html#cb756-1" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
-<span id="cb756-2"><a href="spatially-continuous-data-iii.html#cb756-2" tabindex="-1"></a><span class="fu">library</span>(gstat)</span>
-<span id="cb756-3"><a href="spatially-continuous-data-iii.html#cb756-3" tabindex="-1"></a><span class="fu">library</span>(spdep)</span>
-<span id="cb756-4"><a href="spatially-continuous-data-iii.html#cb756-4" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb759"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb759-1"><a href="spatially-continuous-data-iii.html#cb759-1" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
+<span id="cb759-2"><a href="spatially-continuous-data-iii.html#cb759-2" tabindex="-1"></a><span class="fu">library</span>(gstat)</span>
+<span id="cb759-3"><a href="spatially-continuous-data-iii.html#cb759-3" tabindex="-1"></a><span class="fu">library</span>(spdep)</span>
+<span id="cb759-4"><a href="spatially-continuous-data-iii.html#cb759-4" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <p>Begin by loading the data file:</p>
-<div class="sourceCode" id="cb757"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb757-1"><a href="spatially-continuous-data-iii.html#cb757-1" tabindex="-1"></a><span class="co"># We have been working with the Walker Lake dataset for the last few chapters.</span></span>
-<span id="cb757-2"><a href="spatially-continuous-data-iii.html#cb757-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;Walker_Lake&quot;</span>)  </span></code></pre></div>
+<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb760-1"><a href="spatially-continuous-data-iii.html#cb760-1" tabindex="-1"></a><span class="co"># We have been working with the Walker Lake dataset for the last few chapters.</span></span>
+<span id="cb760-2"><a href="spatially-continuous-data-iii.html#cb760-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;Walker_Lake&quot;</span>)  </span></code></pre></div>
 <p>You can verify the contents of the dataframe:</p>
-<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb758-1"><a href="spatially-continuous-data-iii.html#cb758-1" tabindex="-1"></a><span class="fu">summary</span>(Walker_Lake)</span></code></pre></div>
+<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb761-1"><a href="spatially-continuous-data-iii.html#cb761-1" tabindex="-1"></a><span class="fu">summary</span>(Walker_Lake)</span></code></pre></div>
 <pre><code>##       ID                  X               Y               V         
 ##  Length:470         Min.   :  8.0   Min.   :  8.0   Min.   :   0.0  
 ##  Class :character   1st Qu.: 51.0   1st Qu.: 80.0   1st Qu.: 182.0  
@@ -673,16 +675,16 @@ CI_{z_p} = [z_{p_{lwr}}, z_{p_{upr}}].
 <p>As previously seen, however, use of trend surface analysis does not guarantee that the residuals of the model will be independent.</p>
 <p>Let us revisit the model for Walker Lake.</p>
 <p>As before, we first calculate the polynomial terms of the coordinates:</p>
-<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb760-1"><a href="spatially-continuous-data-iii.html#cb760-1" tabindex="-1"></a><span class="co"># Here we use `mutate()` to calculate the polynomial terms of the coordinates.</span></span>
-<span id="cb760-2"><a href="spatially-continuous-data-iii.html#cb760-2" tabindex="-1"></a>Walker_Lake <span class="ot">&lt;-</span> <span class="fu">mutate</span>(Walker_Lake,</span>
-<span id="cb760-3"><a href="spatially-continuous-data-iii.html#cb760-3" tabindex="-1"></a>                        <span class="at">X3 =</span> X<span class="sc">^</span><span class="dv">3</span>, <span class="at">X2Y =</span> X<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> Y, <span class="at">X2 =</span> X<span class="sc">^</span><span class="dv">2</span>, </span>
-<span id="cb760-4"><a href="spatially-continuous-data-iii.html#cb760-4" tabindex="-1"></a>                        <span class="at">XY =</span> X <span class="sc">*</span> Y,</span>
-<span id="cb760-5"><a href="spatially-continuous-data-iii.html#cb760-5" tabindex="-1"></a>                        <span class="at">Y2 =</span> Y<span class="sc">^</span><span class="dv">2</span>, <span class="at">XY2 =</span> X <span class="sc">*</span> Y<span class="sc">^</span><span class="dv">2</span>, <span class="at">Y3 =</span> Y<span class="sc">^</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb763"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb763-1"><a href="spatially-continuous-data-iii.html#cb763-1" tabindex="-1"></a><span class="co"># Here we use `mutate()` to calculate the polynomial terms of the coordinates.</span></span>
+<span id="cb763-2"><a href="spatially-continuous-data-iii.html#cb763-2" tabindex="-1"></a>Walker_Lake <span class="ot">&lt;-</span> <span class="fu">mutate</span>(Walker_Lake,</span>
+<span id="cb763-3"><a href="spatially-continuous-data-iii.html#cb763-3" tabindex="-1"></a>                        <span class="at">X3 =</span> X<span class="sc">^</span><span class="dv">3</span>, <span class="at">X2Y =</span> X<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> Y, <span class="at">X2 =</span> X<span class="sc">^</span><span class="dv">2</span>, </span>
+<span id="cb763-4"><a href="spatially-continuous-data-iii.html#cb763-4" tabindex="-1"></a>                        <span class="at">XY =</span> X <span class="sc">*</span> Y,</span>
+<span id="cb763-5"><a href="spatially-continuous-data-iii.html#cb763-5" tabindex="-1"></a>                        <span class="at">Y2 =</span> Y<span class="sc">^</span><span class="dv">2</span>, <span class="at">XY2 =</span> X <span class="sc">*</span> Y<span class="sc">^</span><span class="dv">2</span>, <span class="at">Y3 =</span> Y<span class="sc">^</span><span class="dv">3</span>)</span></code></pre></div>
 <p>And proceed to estimate the following cubic trend surface model, which provided the best fit to the data:</p>
-<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb761-1"><a href="spatially-continuous-data-iii.html#cb761-1" tabindex="-1"></a><span class="co"># Recall use of the linear model for walker lake</span></span>
-<span id="cb761-2"><a href="spatially-continuous-data-iii.html#cb761-2" tabindex="-1"></a>WL.trend3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> V <span class="sc">~</span> X3 <span class="sc">+</span> X2Y <span class="sc">+</span> X2 <span class="sc">+</span> X <span class="sc">+</span> XY <span class="sc">+</span> Y <span class="sc">+</span> Y2 <span class="sc">+</span> XY2 <span class="sc">+</span> Y3, </span>
-<span id="cb761-3"><a href="spatially-continuous-data-iii.html#cb761-3" tabindex="-1"></a>                <span class="at">data =</span> Walker_Lake) </span>
-<span id="cb761-4"><a href="spatially-continuous-data-iii.html#cb761-4" tabindex="-1"></a><span class="fu">summary</span>(WL.trend3)</span></code></pre></div>
+<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="spatially-continuous-data-iii.html#cb764-1" tabindex="-1"></a><span class="co"># Recall use of the linear model for walker lake</span></span>
+<span id="cb764-2"><a href="spatially-continuous-data-iii.html#cb764-2" tabindex="-1"></a>WL.trend3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> V <span class="sc">~</span> X3 <span class="sc">+</span> X2Y <span class="sc">+</span> X2 <span class="sc">+</span> X <span class="sc">+</span> XY <span class="sc">+</span> Y <span class="sc">+</span> Y2 <span class="sc">+</span> XY2 <span class="sc">+</span> Y3, </span>
+<span id="cb764-3"><a href="spatially-continuous-data-iii.html#cb764-3" tabindex="-1"></a>                <span class="at">data =</span> Walker_Lake) </span>
+<span id="cb764-4"><a href="spatially-continuous-data-iii.html#cb764-4" tabindex="-1"></a><span class="fu">summary</span>(WL.trend3)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = V ~ X3 + X2Y + X2 + X + XY + Y + Y2 + XY2 + Y3, 
@@ -711,31 +713,31 @@ CI_{z_p} = [z_{p_{lwr}}, z_{p_{upr}}].
 ## Multiple R-squared:  0.1719, Adjusted R-squared:  0.1557 
 ## F-statistic: 10.61 on 9 and 460 DF,  p-value: 5.381e-15</code></pre>
 <p>To examine the residuals, first we label them as “positive” or “negative”:</p>
-<div class="sourceCode" id="cb763"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb763-1"><a href="spatially-continuous-data-iii.html#cb763-1" tabindex="-1"></a><span class="co"># The function `ifelse()` is used to label the residuals as &quot;Positive&quot; if they are </span></span>
-<span id="cb763-2"><a href="spatially-continuous-data-iii.html#cb763-2" tabindex="-1"></a><span class="co"># greater than zero, or &quot;Negative&quot; if they are zero or less.</span></span>
-<span id="cb763-3"><a href="spatially-continuous-data-iii.html#cb763-3" tabindex="-1"></a>Walker_Lake <span class="ot">&lt;-</span> Walker_Lake <span class="sc">|&gt;</span></span>
-<span id="cb763-4"><a href="spatially-continuous-data-iii.html#cb763-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">residual3 =</span> <span class="fu">ifelse</span>(WL.trend3<span class="sc">$</span>residuals <span class="sc">&gt;</span> <span class="dv">0</span>, </span>
-<span id="cb763-5"><a href="spatially-continuous-data-iii.html#cb763-5" tabindex="-1"></a>                            <span class="st">&quot;Positive&quot;</span>, </span>
-<span id="cb763-6"><a href="spatially-continuous-data-iii.html#cb763-6" tabindex="-1"></a>                            <span class="st">&quot;Negative&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb766-1"><a href="spatially-continuous-data-iii.html#cb766-1" tabindex="-1"></a><span class="co"># The function `ifelse()` is used to label the residuals as &quot;Positive&quot; if they are </span></span>
+<span id="cb766-2"><a href="spatially-continuous-data-iii.html#cb766-2" tabindex="-1"></a><span class="co"># greater than zero, or &quot;Negative&quot; if they are zero or less.</span></span>
+<span id="cb766-3"><a href="spatially-continuous-data-iii.html#cb766-3" tabindex="-1"></a>Walker_Lake <span class="ot">&lt;-</span> Walker_Lake <span class="sc">|&gt;</span></span>
+<span id="cb766-4"><a href="spatially-continuous-data-iii.html#cb766-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">residual3 =</span> <span class="fu">ifelse</span>(WL.trend3<span class="sc">$</span>residuals <span class="sc">&gt;</span> <span class="dv">0</span>, </span>
+<span id="cb766-5"><a href="spatially-continuous-data-iii.html#cb766-5" tabindex="-1"></a>                            <span class="st">&quot;Positive&quot;</span>, </span>
+<span id="cb766-6"><a href="spatially-continuous-data-iii.html#cb766-6" tabindex="-1"></a>                            <span class="st">&quot;Negative&quot;</span>))</span></code></pre></div>
 <p>Once the residuals have been labeled we can be plotted as follows:</p>
-<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="spatially-continuous-data-iii.html#cb764-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Walker_Lake, </span>
-<span id="cb764-2"><a href="spatially-continuous-data-iii.html#cb764-2" tabindex="-1"></a>       <span class="co"># Note color is only applied to results of positive or negative residuals</span></span>
-<span id="cb764-3"><a href="spatially-continuous-data-iii.html#cb764-3" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y, <span class="at">color =</span> residual3)) <span class="sc">+</span> </span>
-<span id="cb764-4"><a href="spatially-continuous-data-iii.html#cb764-4" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb764-5"><a href="spatially-continuous-data-iii.html#cb764-5" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="co"># Ensures equal scales for both axes</span></span></code></pre></div>
+<div class="sourceCode" id="cb767"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb767-1"><a href="spatially-continuous-data-iii.html#cb767-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Walker_Lake, </span>
+<span id="cb767-2"><a href="spatially-continuous-data-iii.html#cb767-2" tabindex="-1"></a>       <span class="co"># Note color is only applied to results of positive or negative residuals</span></span>
+<span id="cb767-3"><a href="spatially-continuous-data-iii.html#cb767-3" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y, <span class="at">color =</span> residual3)) <span class="sc">+</span> </span>
+<span id="cb767-4"><a href="spatially-continuous-data-iii.html#cb767-4" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb767-5"><a href="spatially-continuous-data-iii.html#cb767-5" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="co"># Ensures equal scales for both axes</span></span></code></pre></div>
 <p><img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>As seen before, there is considerable spatial autocorrelation as confirmed by Moran’s <span class="math inline">\(I\)</span> coefficient:</p>
-<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb765-1"><a href="spatially-continuous-data-iii.html#cb765-1" tabindex="-1"></a><span class="co"># Take the coordinates of Walker Lake and convert to matrix.</span></span>
-<span id="cb765-2"><a href="spatially-continuous-data-iii.html#cb765-2" tabindex="-1"></a>WL.listw <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(Walker_Lake[,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]) <span class="sc">|&gt;</span> </span>
-<span id="cb765-3"><a href="spatially-continuous-data-iii.html#cb765-3" tabindex="-1"></a>  <span class="co"># Find the 5 nearest neighbors of each observations.</span></span>
-<span id="cb765-4"><a href="spatially-continuous-data-iii.html#cb765-4" tabindex="-1"></a>  <span class="fu">knearneigh</span>(<span class="at">k =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb765-5"><a href="spatially-continuous-data-iii.html#cb765-5" tabindex="-1"></a>  <span class="co"># Convert the nearest neighbors to `nb` object.</span></span>
-<span id="cb765-6"><a href="spatially-continuous-data-iii.html#cb765-6" tabindex="-1"></a>  <span class="fu">knn2nb</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb765-7"><a href="spatially-continuous-data-iii.html#cb765-7" tabindex="-1"></a>  <span class="co"># Convert the `nb` object into spatial weights. </span></span>
-<span id="cb765-8"><a href="spatially-continuous-data-iii.html#cb765-8" tabindex="-1"></a>  <span class="fu">nb2listw</span>() </span>
-<span id="cb765-9"><a href="spatially-continuous-data-iii.html#cb765-9" tabindex="-1"></a></span>
-<span id="cb765-10"><a href="spatially-continuous-data-iii.html#cb765-10" tabindex="-1"></a><span class="co"># Use Moran&#39;s test on the residuals of the trend surface model </span></span>
-<span id="cb765-11"><a href="spatially-continuous-data-iii.html#cb765-11" tabindex="-1"></a><span class="fu">moran.test</span>(<span class="at">x =</span> WL.trend3<span class="sc">$</span>residuals, <span class="at">listw =</span> WL.listw)</span></code></pre></div>
+<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb768-1"><a href="spatially-continuous-data-iii.html#cb768-1" tabindex="-1"></a><span class="co"># Take the coordinates of Walker Lake and convert to matrix.</span></span>
+<span id="cb768-2"><a href="spatially-continuous-data-iii.html#cb768-2" tabindex="-1"></a>WL.listw <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(Walker_Lake[,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]) <span class="sc">|&gt;</span> </span>
+<span id="cb768-3"><a href="spatially-continuous-data-iii.html#cb768-3" tabindex="-1"></a>  <span class="co"># Find the 5 nearest neighbors of each observations.</span></span>
+<span id="cb768-4"><a href="spatially-continuous-data-iii.html#cb768-4" tabindex="-1"></a>  <span class="fu">knearneigh</span>(<span class="at">k =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb768-5"><a href="spatially-continuous-data-iii.html#cb768-5" tabindex="-1"></a>  <span class="co"># Convert the nearest neighbors to `nb` object.</span></span>
+<span id="cb768-6"><a href="spatially-continuous-data-iii.html#cb768-6" tabindex="-1"></a>  <span class="fu">knn2nb</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb768-7"><a href="spatially-continuous-data-iii.html#cb768-7" tabindex="-1"></a>  <span class="co"># Convert the `nb` object into spatial weights. </span></span>
+<span id="cb768-8"><a href="spatially-continuous-data-iii.html#cb768-8" tabindex="-1"></a>  <span class="fu">nb2listw</span>() </span>
+<span id="cb768-9"><a href="spatially-continuous-data-iii.html#cb768-9" tabindex="-1"></a></span>
+<span id="cb768-10"><a href="spatially-continuous-data-iii.html#cb768-10" tabindex="-1"></a><span class="co"># Use Moran&#39;s test on the residuals of the trend surface model </span></span>
+<span id="cb768-11"><a href="spatially-continuous-data-iii.html#cb768-11" tabindex="-1"></a><span class="fu">moran.test</span>(<span class="at">x =</span> WL.trend3<span class="sc">$</span>residuals, <span class="at">listw =</span> WL.listw)</span></code></pre></div>
 <pre><code>## 
 ##  Moran I test under randomisation
 ## 
@@ -749,23 +751,23 @@ CI_{z_p} = [z_{p_{lwr}}, z_{p_{upr}}].
 ##      0.4633803457     -0.0021321962      0.0007325452</code></pre>
 <p>The fact that the residuals are not independent has important implications for prediction. Consider the following thought experiment.</p>
 <p>Imagine that you were asked to guess whether the residual was positive or negative at the locations indicated with triangles in the figure. These are locations where an observation was not made, and we only have the interpolated value of the variable according to the trend surface model:</p>
-<div class="sourceCode" id="cb767"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb767-1"><a href="spatially-continuous-data-iii.html#cb767-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Walker_Lake, </span>
-<span id="cb767-2"><a href="spatially-continuous-data-iii.html#cb767-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y)) <span class="sc">+</span></span>
-<span id="cb767-3"><a href="spatially-continuous-data-iii.html#cb767-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> residual3)) <span class="sc">+</span></span>
-<span id="cb767-4"><a href="spatially-continuous-data-iii.html#cb767-4" tabindex="-1"></a>  <span class="co"># Here we add coordinates for the triangles in the figure</span></span>
-<span id="cb767-5"><a href="spatially-continuous-data-iii.html#cb767-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">25</span>, <span class="dv">210</span>, <span class="dv">227</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">90</span>, <span class="dv">90</span>, <span class="dv">230</span>)), </span>
-<span id="cb767-6"><a href="spatially-continuous-data-iii.html#cb767-6" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb767-7"><a href="spatially-continuous-data-iii.html#cb767-7" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb770-1"><a href="spatially-continuous-data-iii.html#cb770-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Walker_Lake, </span>
+<span id="cb770-2"><a href="spatially-continuous-data-iii.html#cb770-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y)) <span class="sc">+</span></span>
+<span id="cb770-3"><a href="spatially-continuous-data-iii.html#cb770-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> residual3)) <span class="sc">+</span></span>
+<span id="cb770-4"><a href="spatially-continuous-data-iii.html#cb770-4" tabindex="-1"></a>  <span class="co"># Here we add coordinates for the triangles in the figure</span></span>
+<span id="cb770-5"><a href="spatially-continuous-data-iii.html#cb770-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">25</span>, <span class="dv">210</span>, <span class="dv">227</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">90</span>, <span class="dv">90</span>, <span class="dv">230</span>)), </span>
+<span id="cb770-6"><a href="spatially-continuous-data-iii.html#cb770-6" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb770-7"><a href="spatially-continuous-data-iii.html#cb770-7" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code></pre></div>
 <p><img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>What would your guess be, and why? Would you say that your guess has a better than 50% chance of being right?</p>
 <p>Now imagine that you were asked to guess whether the residual was positive or negative at the locations indicated with squares in the figure:</p>
-<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb768-1"><a href="spatially-continuous-data-iii.html#cb768-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Walker_Lake, </span>
-<span id="cb768-2"><a href="spatially-continuous-data-iii.html#cb768-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y)) <span class="sc">+</span></span>
-<span id="cb768-3"><a href="spatially-continuous-data-iii.html#cb768-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> residual3)) <span class="sc">+</span></span>
-<span id="cb768-4"><a href="spatially-continuous-data-iii.html#cb768-4" tabindex="-1"></a>  <span class="co"># Here we adding coordinates for the squares in the figure</span></span>
-<span id="cb768-5"><a href="spatially-continuous-data-iii.html#cb768-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">160</span>, <span class="dv">240</span>, <span class="dv">12</span>, <span class="dv">120</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">38</span>, <span class="dv">280</span>, <span class="dv">240</span>, <span class="dv">180</span>)), </span>
-<span id="cb768-6"><a href="spatially-continuous-data-iii.html#cb768-6" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">shape =</span> <span class="dv">15</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb768-7"><a href="spatially-continuous-data-iii.html#cb768-7" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb771"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb771-1"><a href="spatially-continuous-data-iii.html#cb771-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Walker_Lake, </span>
+<span id="cb771-2"><a href="spatially-continuous-data-iii.html#cb771-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y)) <span class="sc">+</span></span>
+<span id="cb771-3"><a href="spatially-continuous-data-iii.html#cb771-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> residual3)) <span class="sc">+</span></span>
+<span id="cb771-4"><a href="spatially-continuous-data-iii.html#cb771-4" tabindex="-1"></a>  <span class="co"># Here we adding coordinates for the squares in the figure</span></span>
+<span id="cb771-5"><a href="spatially-continuous-data-iii.html#cb771-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">160</span>, <span class="dv">240</span>, <span class="dv">12</span>, <span class="dv">120</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">38</span>, <span class="dv">280</span>, <span class="dv">240</span>, <span class="dv">180</span>)), </span>
+<span id="cb771-6"><a href="spatially-continuous-data-iii.html#cb771-6" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">shape =</span> <span class="dv">15</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb771-7"><a href="spatially-continuous-data-iii.html#cb771-7" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code></pre></div>
 <p><img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>Again, what would your guess be, and why? Would you be able to guess this way if the residuals were random?</p>
 <p>The fact that you can guess and be fairly sure about the quality of your guess is a consequence of the strong residual pattern. If the residuals were random, there would be no information left to use: the odds of a residual being positive or negative would essentially be 50%. However, when there is residual pattern, this information can be used to enhance the quality of your guesses about the residuals, or in other words, of the <span class="math inline">\(\hat{\epsilon}_p\)</span> terms. At the very least you can guess whether they are positive or negative (therefore reducing their confidence intervals), but possibly you can learn even more from them, as will be seen later.</p>
@@ -777,36 +779,36 @@ CI_{z_p} = [z_{p_{lwr}}, z_{p_{upr}}].
 <p>While this makes sense (mostly) in the case of area data, since the areas inherently introduce spatial discontinuities, it makes less sense in the case of fields, where the underlying process is typically smooth. In fact, more often we are interested in exploring the properties of the pattern over the field, not just the nearest neighbors.</p>
 <p>One way of extending Moran’s <span class="math inline">\(I\)</span> analysis to multiple scales is by means of the <em>correlogram</em>. The correlogram is simply a sequence of Moran’s <span class="math inline">\(I\)</span> coefficients computed at different scales.</p>
 <p>Consider for example the following sequence of coefficients, computed for <span class="math inline">\(k\)</span>=10 neighbors to <span class="math inline">\(k\)</span>=30 neighbors. Notice how the <code>for</code> loop calculates spatial weights using the designated number of neighbors, before calculating Moran’s <span class="math inline">\(I\)</span>.</p>
-<div class="sourceCode" id="cb769"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb769-1"><a href="spatially-continuous-data-iii.html#cb769-1" tabindex="-1"></a><span class="co"># Initialize the values of k</span></span>
-<span id="cb769-2"><a href="spatially-continuous-data-iii.html#cb769-2" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">30</span>)</span>
-<span id="cb769-3"><a href="spatially-continuous-data-iii.html#cb769-3" tabindex="-1"></a></span>
-<span id="cb769-4"><a href="spatially-continuous-data-iii.html#cb769-4" tabindex="-1"></a><span class="co"># Initialize an empty vector to store the results of calculating Moran&#39;s I </span></span>
-<span id="cb769-5"><a href="spatially-continuous-data-iii.html#cb769-5" tabindex="-1"></a>moranI <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="at">length =</span> <span class="fu">length</span>(k)) </span>
-<span id="cb769-6"><a href="spatially-continuous-data-iii.html#cb769-6" tabindex="-1"></a></span>
-<span id="cb769-7"><a href="spatially-continuous-data-iii.html#cb769-7" tabindex="-1"></a><span class="co"># Initialize an empty dataframe to store the values of k and moranI</span></span>
-<span id="cb769-8"><a href="spatially-continuous-data-iii.html#cb769-8" tabindex="-1"></a>correlogram <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(k, moranI) </span>
-<span id="cb769-9"><a href="spatially-continuous-data-iii.html#cb769-9" tabindex="-1"></a></span>
-<span id="cb769-10"><a href="spatially-continuous-data-iii.html#cb769-10" tabindex="-1"></a><span class="co"># A `for` loop is a way of repeating instructions a defined number of times, </span></span>
-<span id="cb769-11"><a href="spatially-continuous-data-iii.html#cb769-11" tabindex="-1"></a><span class="co"># here from 1 to the length of vector `k`.</span></span>
-<span id="cb769-12"><a href="spatially-continuous-data-iii.html#cb769-12" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(k)){</span>
-<span id="cb769-13"><a href="spatially-continuous-data-iii.html#cb769-13" tabindex="-1"></a>  listwk <span class="ot">&lt;-</span> Walker_Lake[,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>] <span class="sc">|&gt;</span></span>
-<span id="cb769-14"><a href="spatially-continuous-data-iii.html#cb769-14" tabindex="-1"></a>    <span class="fu">as.matrix</span>() <span class="sc">|&gt;</span></span>
-<span id="cb769-15"><a href="spatially-continuous-data-iii.html#cb769-15" tabindex="-1"></a>     <span class="co"># Use the ith element of vector `k` to find the nearest neighbors</span></span>
-<span id="cb769-16"><a href="spatially-continuous-data-iii.html#cb769-16" tabindex="-1"></a>    <span class="fu">knearneigh</span>(<span class="at">k =</span> k[i]) <span class="sc">|&gt;</span></span>
-<span id="cb769-17"><a href="spatially-continuous-data-iii.html#cb769-17" tabindex="-1"></a>    <span class="fu">knn2nb</span>() <span class="sc">|&gt;</span></span>
-<span id="cb769-18"><a href="spatially-continuous-data-iii.html#cb769-18" tabindex="-1"></a>    <span class="fu">nb2listw</span>()</span>
-<span id="cb769-19"><a href="spatially-continuous-data-iii.html#cb769-19" tabindex="-1"></a>  </span>
-<span id="cb769-20"><a href="spatially-continuous-data-iii.html#cb769-20" tabindex="-1"></a>  <span class="co"># Moran test for residuals</span></span>
-<span id="cb769-21"><a href="spatially-continuous-data-iii.html#cb769-21" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">moran.test</span>(<span class="at">x =</span> WL.trend3<span class="sc">$</span>residuals, <span class="at">listw =</span> listwk)</span>
-<span id="cb769-22"><a href="spatially-continuous-data-iii.html#cb769-22" tabindex="-1"></a>  </span>
-<span id="cb769-23"><a href="spatially-continuous-data-iii.html#cb769-23" tabindex="-1"></a>  <span class="co"># Assign the value of Moran&#39;s I statistic to the ith element of vector correlogram</span></span>
-<span id="cb769-24"><a href="spatially-continuous-data-iii.html#cb769-24" tabindex="-1"></a>  correlogram<span class="sc">$</span>moranI[i] <span class="ot">&lt;-</span> m<span class="sc">$</span>estimate[<span class="dv">1</span>] </span>
-<span id="cb769-25"><a href="spatially-continuous-data-iii.html#cb769-25" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb772-1"><a href="spatially-continuous-data-iii.html#cb772-1" tabindex="-1"></a><span class="co"># Initialize the values of k</span></span>
+<span id="cb772-2"><a href="spatially-continuous-data-iii.html#cb772-2" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">30</span>)</span>
+<span id="cb772-3"><a href="spatially-continuous-data-iii.html#cb772-3" tabindex="-1"></a></span>
+<span id="cb772-4"><a href="spatially-continuous-data-iii.html#cb772-4" tabindex="-1"></a><span class="co"># Initialize an empty vector to store the results of calculating Moran&#39;s I </span></span>
+<span id="cb772-5"><a href="spatially-continuous-data-iii.html#cb772-5" tabindex="-1"></a>moranI <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="at">length =</span> <span class="fu">length</span>(k)) </span>
+<span id="cb772-6"><a href="spatially-continuous-data-iii.html#cb772-6" tabindex="-1"></a></span>
+<span id="cb772-7"><a href="spatially-continuous-data-iii.html#cb772-7" tabindex="-1"></a><span class="co"># Initialize an empty dataframe to store the values of k and moranI</span></span>
+<span id="cb772-8"><a href="spatially-continuous-data-iii.html#cb772-8" tabindex="-1"></a>correlogram <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(k, moranI) </span>
+<span id="cb772-9"><a href="spatially-continuous-data-iii.html#cb772-9" tabindex="-1"></a></span>
+<span id="cb772-10"><a href="spatially-continuous-data-iii.html#cb772-10" tabindex="-1"></a><span class="co"># A `for` loop is a way of repeating instructions a defined number of times, </span></span>
+<span id="cb772-11"><a href="spatially-continuous-data-iii.html#cb772-11" tabindex="-1"></a><span class="co"># here from 1 to the length of vector `k`.</span></span>
+<span id="cb772-12"><a href="spatially-continuous-data-iii.html#cb772-12" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(k)){</span>
+<span id="cb772-13"><a href="spatially-continuous-data-iii.html#cb772-13" tabindex="-1"></a>  listwk <span class="ot">&lt;-</span> Walker_Lake[,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>] <span class="sc">|&gt;</span></span>
+<span id="cb772-14"><a href="spatially-continuous-data-iii.html#cb772-14" tabindex="-1"></a>    <span class="fu">as.matrix</span>() <span class="sc">|&gt;</span></span>
+<span id="cb772-15"><a href="spatially-continuous-data-iii.html#cb772-15" tabindex="-1"></a>     <span class="co"># Use the ith element of vector `k` to find the nearest neighbors</span></span>
+<span id="cb772-16"><a href="spatially-continuous-data-iii.html#cb772-16" tabindex="-1"></a>    <span class="fu">knearneigh</span>(<span class="at">k =</span> k[i]) <span class="sc">|&gt;</span></span>
+<span id="cb772-17"><a href="spatially-continuous-data-iii.html#cb772-17" tabindex="-1"></a>    <span class="fu">knn2nb</span>() <span class="sc">|&gt;</span></span>
+<span id="cb772-18"><a href="spatially-continuous-data-iii.html#cb772-18" tabindex="-1"></a>    <span class="fu">nb2listw</span>()</span>
+<span id="cb772-19"><a href="spatially-continuous-data-iii.html#cb772-19" tabindex="-1"></a>  </span>
+<span id="cb772-20"><a href="spatially-continuous-data-iii.html#cb772-20" tabindex="-1"></a>  <span class="co"># Moran test for residuals</span></span>
+<span id="cb772-21"><a href="spatially-continuous-data-iii.html#cb772-21" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">moran.test</span>(<span class="at">x =</span> WL.trend3<span class="sc">$</span>residuals, <span class="at">listw =</span> listwk)</span>
+<span id="cb772-22"><a href="spatially-continuous-data-iii.html#cb772-22" tabindex="-1"></a>  </span>
+<span id="cb772-23"><a href="spatially-continuous-data-iii.html#cb772-23" tabindex="-1"></a>  <span class="co"># Assign the value of Moran&#39;s I statistic to the ith element of vector correlogram</span></span>
+<span id="cb772-24"><a href="spatially-continuous-data-iii.html#cb772-24" tabindex="-1"></a>  correlogram<span class="sc">$</span>moranI[i] <span class="ot">&lt;-</span> m<span class="sc">$</span>estimate[<span class="dv">1</span>] </span>
+<span id="cb772-25"><a href="spatially-continuous-data-iii.html#cb772-25" tabindex="-1"></a>}</span></code></pre></div>
 <p>Given the values of Moran’s <span class="math inline">\(I\)</span> at different scales (i.e., values of <span class="math inline">\(k\)</span>), the correlogram can be plotted as:</p>
-<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb770-1"><a href="spatially-continuous-data-iii.html#cb770-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> correlogram,</span>
-<span id="cb770-2"><a href="spatially-continuous-data-iii.html#cb770-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> k, </span>
-<span id="cb770-3"><a href="spatially-continuous-data-iii.html#cb770-3" tabindex="-1"></a>           <span class="at">y =</span> moranI)) <span class="sc">+</span> </span>
-<span id="cb770-4"><a href="spatially-continuous-data-iii.html#cb770-4" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb773"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb773-1"><a href="spatially-continuous-data-iii.html#cb773-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> correlogram,</span>
+<span id="cb773-2"><a href="spatially-continuous-data-iii.html#cb773-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> k, </span>
+<span id="cb773-3"><a href="spatially-continuous-data-iii.html#cb773-3" tabindex="-1"></a>           <span class="at">y =</span> moranI)) <span class="sc">+</span> </span>
+<span id="cb773-4"><a href="spatially-continuous-data-iii.html#cb773-4" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>As can be seen in the plot, spatial autocorrelation tends to decline as the number of nearest neighbors used in the test grows - in other words, as the scale of the test increases. This is a common occurrence: when autocorrelation is present, observations tend to be more similar to their closest neighbors than to their more distant neighbors.</p>
 <p>The use of <span class="math inline">\(k\)</span>-nearest neighbors points to a problem, however. The scale of the process does not depend on distance, which would be a more natural metric for a continuous process. In this case, <span class="math inline">\(k\)</span>-nearest neighbors were used to ensure that each sum in the coefficient had the same number of observations. However, this means that “neighborhoods” will be geographically smaller where the observations are more dense, and larger where they are sparse.</p>
@@ -885,50 +887,50 @@ w_{ij}(\tilde{h})=\bigg\{\begin{array}{l l}
 <p>Instead of forming pairs with observations that are at exactly a distance <span class="math inline">\(h\)</span> (which would lead in many cases to too few pairs), pairs are formed with observations at approximately lag <span class="math inline">\(h\)</span> (or <span class="math inline">\(\tilde{h}\)</span>), with a tolerance given by <span class="math inline">\(\Delta h\)</span>.</p>
 <p>Analysis based on the semivariogram (called <em>variographic analysis</em>) is implemented in <code>R</code> in the <code>gstat</code> package.</p>
 <p>We will illustrate the use of the semivariogram by means of the Walker Lake data. The package <code>gstat</code> accepts simple features objects of the <code>sf</code> package, so we convert our dataframe into such an object:</p>
-<div class="sourceCode" id="cb771"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb771-1"><a href="spatially-continuous-data-iii.html#cb771-1" tabindex="-1"></a>Walker_Lake.sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(Walker_Lake, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;Y&quot;</span>))</span>
-<span id="cb771-2"><a href="spatially-continuous-data-iii.html#cb771-2" tabindex="-1"></a><span class="fu">class</span>(Walker_Lake.sf)</span></code></pre></div>
+<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb774-1"><a href="spatially-continuous-data-iii.html#cb774-1" tabindex="-1"></a>Walker_Lake.sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(Walker_Lake, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;Y&quot;</span>))</span>
+<span id="cb774-2"><a href="spatially-continuous-data-iii.html#cb774-2" tabindex="-1"></a><span class="fu">class</span>(Walker_Lake.sf)</span></code></pre></div>
 <pre><code>## [1] &quot;sf&quot;         &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
 <p>The empirical semivariogram is calculated by means of the <code>gstat::variogram</code> function, as follows:</p>
-<div class="sourceCode" id="cb773"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb773-1"><a href="spatially-continuous-data-iii.html#cb773-1" tabindex="-1"></a><span class="co"># `variogram()` calculates the sample semivariogram from data, </span></span>
-<span id="cb773-2"><a href="spatially-continuous-data-iii.html#cb773-2" tabindex="-1"></a><span class="co"># or if a linear model is given, for the residuals; in this case, </span></span>
-<span id="cb773-3"><a href="spatially-continuous-data-iii.html#cb773-3" tabindex="-1"></a><span class="co"># the formula `V ~ 1` means that we are not using a model</span></span>
-<span id="cb773-4"><a href="spatially-continuous-data-iii.html#cb773-4" tabindex="-1"></a>variogram_z <span class="ot">&lt;-</span> <span class="fu">variogram</span>(V <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Walker_Lake.sf) </span>
-<span id="cb773-5"><a href="spatially-continuous-data-iii.html#cb773-5" tabindex="-1"></a></span>
-<span id="cb773-6"><a href="spatially-continuous-data-iii.html#cb773-6" tabindex="-1"></a><span class="co">#Note we are plotting the data of `variogram_z`</span></span>
-<span id="cb773-7"><a href="spatially-continuous-data-iii.html#cb773-7" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> variogram_z,</span>
-<span id="cb773-8"><a href="spatially-continuous-data-iii.html#cb773-8" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> dist, </span>
-<span id="cb773-9"><a href="spatially-continuous-data-iii.html#cb773-9" tabindex="-1"></a>           <span class="at">y =</span> gamma)) <span class="sc">+</span> </span>
-<span id="cb773-10"><a href="spatially-continuous-data-iii.html#cb773-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb773-11"><a href="spatially-continuous-data-iii.html#cb773-11" tabindex="-1"></a>  <span class="co"># Add labels to indicate the number of pairs of observations used </span></span>
-<span id="cb773-12"><a href="spatially-continuous-data-iii.html#cb773-12" tabindex="-1"></a>  <span class="co"># in the calculation of each point in the variogram</span></span>
-<span id="cb773-13"><a href="spatially-continuous-data-iii.html#cb773-13" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> np), </span>
-<span id="cb773-14"><a href="spatially-continuous-data-iii.html#cb773-14" tabindex="-1"></a>            <span class="at">nudge_y =</span> <span class="sc">-</span><span class="dv">1500</span>) <span class="sc">+</span> </span>
-<span id="cb773-15"><a href="spatially-continuous-data-iii.html#cb773-15" tabindex="-1"></a>  <span class="co"># Add labels to axes</span></span>
-<span id="cb773-16"><a href="spatially-continuous-data-iii.html#cb773-16" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span></span>
-<span id="cb773-17"><a href="spatially-continuous-data-iii.html#cb773-17" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Semivariance&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb776-1"><a href="spatially-continuous-data-iii.html#cb776-1" tabindex="-1"></a><span class="co"># `variogram()` calculates the sample semivariogram from data, </span></span>
+<span id="cb776-2"><a href="spatially-continuous-data-iii.html#cb776-2" tabindex="-1"></a><span class="co"># or if a linear model is given, for the residuals; in this case, </span></span>
+<span id="cb776-3"><a href="spatially-continuous-data-iii.html#cb776-3" tabindex="-1"></a><span class="co"># the formula `V ~ 1` means that we are not using a model</span></span>
+<span id="cb776-4"><a href="spatially-continuous-data-iii.html#cb776-4" tabindex="-1"></a>variogram_z <span class="ot">&lt;-</span> <span class="fu">variogram</span>(V <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Walker_Lake.sf) </span>
+<span id="cb776-5"><a href="spatially-continuous-data-iii.html#cb776-5" tabindex="-1"></a></span>
+<span id="cb776-6"><a href="spatially-continuous-data-iii.html#cb776-6" tabindex="-1"></a><span class="co">#Note we are plotting the data of `variogram_z`</span></span>
+<span id="cb776-7"><a href="spatially-continuous-data-iii.html#cb776-7" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> variogram_z,</span>
+<span id="cb776-8"><a href="spatially-continuous-data-iii.html#cb776-8" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> dist, </span>
+<span id="cb776-9"><a href="spatially-continuous-data-iii.html#cb776-9" tabindex="-1"></a>           <span class="at">y =</span> gamma)) <span class="sc">+</span> </span>
+<span id="cb776-10"><a href="spatially-continuous-data-iii.html#cb776-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb776-11"><a href="spatially-continuous-data-iii.html#cb776-11" tabindex="-1"></a>  <span class="co"># Add labels to indicate the number of pairs of observations used </span></span>
+<span id="cb776-12"><a href="spatially-continuous-data-iii.html#cb776-12" tabindex="-1"></a>  <span class="co"># in the calculation of each point in the variogram</span></span>
+<span id="cb776-13"><a href="spatially-continuous-data-iii.html#cb776-13" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> np), </span>
+<span id="cb776-14"><a href="spatially-continuous-data-iii.html#cb776-14" tabindex="-1"></a>            <span class="at">nudge_y =</span> <span class="sc">-</span><span class="dv">1500</span>) <span class="sc">+</span> </span>
+<span id="cb776-15"><a href="spatially-continuous-data-iii.html#cb776-15" tabindex="-1"></a>  <span class="co"># Add labels to axes</span></span>
+<span id="cb776-16"><a href="spatially-continuous-data-iii.html#cb776-16" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span></span>
+<span id="cb776-17"><a href="spatially-continuous-data-iii.html#cb776-17" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Semivariance&quot;</span>)</span></code></pre></div>
 <p><img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>The numbers indicate the number of pairs of observations used to calculate the semivariance at the corresponding lag.</p>
 <p>Since the sample variance is:</p>
-<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb774-1"><a href="spatially-continuous-data-iii.html#cb774-1" tabindex="-1"></a><span class="co"># We are calculating the variance of X</span></span>
-<span id="cb774-2"><a href="spatially-continuous-data-iii.html#cb774-2" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> <span class="fu">var</span>(Walker_Lake<span class="sc">$</span>V) </span>
-<span id="cb774-3"><a href="spatially-continuous-data-iii.html#cb774-3" tabindex="-1"></a>s2</span></code></pre></div>
+<div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb777-1"><a href="spatially-continuous-data-iii.html#cb777-1" tabindex="-1"></a><span class="co"># We are calculating the variance of X</span></span>
+<span id="cb777-2"><a href="spatially-continuous-data-iii.html#cb777-2" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> <span class="fu">var</span>(Walker_Lake<span class="sc">$</span>V) </span>
+<span id="cb777-3"><a href="spatially-continuous-data-iii.html#cb777-3" tabindex="-1"></a>s2</span></code></pre></div>
 <pre><code>## [1] 90694.59</code></pre>
 <p>It follows that the covariogram in this case is:</p>
-<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb776-1"><a href="spatially-continuous-data-iii.html#cb776-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> variogram_z, </span>
-<span id="cb776-2"><a href="spatially-continuous-data-iii.html#cb776-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> dist, </span>
-<span id="cb776-3"><a href="spatially-continuous-data-iii.html#cb776-3" tabindex="-1"></a>           <span class="at">y =</span> s2 <span class="sc">-</span> gamma)) <span class="sc">+</span></span>
-<span id="cb776-4"><a href="spatially-continuous-data-iii.html#cb776-4" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb776-5"><a href="spatially-continuous-data-iii.html#cb776-5" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> np), </span>
-<span id="cb776-6"><a href="spatially-continuous-data-iii.html#cb776-6" tabindex="-1"></a>            <span class="at">nudge_y =</span> <span class="sc">-</span><span class="dv">1500</span>) <span class="sc">+</span></span>
-<span id="cb776-7"><a href="spatially-continuous-data-iii.html#cb776-7" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb776-8"><a href="spatially-continuous-data-iii.html#cb776-8" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Autocovariance&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb779-1"><a href="spatially-continuous-data-iii.html#cb779-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> variogram_z, </span>
+<span id="cb779-2"><a href="spatially-continuous-data-iii.html#cb779-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> dist, </span>
+<span id="cb779-3"><a href="spatially-continuous-data-iii.html#cb779-3" tabindex="-1"></a>           <span class="at">y =</span> s2 <span class="sc">-</span> gamma)) <span class="sc">+</span></span>
+<span id="cb779-4"><a href="spatially-continuous-data-iii.html#cb779-4" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb779-5"><a href="spatially-continuous-data-iii.html#cb779-5" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> np), </span>
+<span id="cb779-6"><a href="spatially-continuous-data-iii.html#cb779-6" tabindex="-1"></a>            <span class="at">nudge_y =</span> <span class="sc">-</span><span class="dv">1500</span>) <span class="sc">+</span></span>
+<span id="cb779-7"><a href="spatially-continuous-data-iii.html#cb779-7" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb779-8"><a href="spatially-continuous-data-iii.html#cb779-8" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Autocovariance&quot;</span>)</span></code></pre></div>
 <p><img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>As expected, the autocovariance (and hence, the autocorrelation) is stronger at short spatial lags, and declines at larger spatial lags.</p>
 <p>The above plots are the <em>empirical</em> semivariogram and covariogram. These plots are used to model a theoretical semivariogram, a function that can be used to estimate spatial dependence at any lag within the domain of the - and not just at the distances for which we have points in the empirical variogram.</p>
 <p>Since the semivariogram is the expectation of the square, the function selected for modeling the theoretical semivariogram must be non-negative. Several functions satisfy this condition, a list of which are available in <code>gstat</code> as shown below:</p>
-<div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb777-1"><a href="spatially-continuous-data-iii.html#cb777-1" tabindex="-1"></a><span class="co"># This function generates a variogram mode. Here, we are able to view </span></span>
-<span id="cb777-2"><a href="spatially-continuous-data-iii.html#cb777-2" tabindex="-1"></a><span class="co"># the list of possible models for a semivariogram</span></span>
-<span id="cb777-3"><a href="spatially-continuous-data-iii.html#cb777-3" tabindex="-1"></a><span class="fu">vgm</span>() </span></code></pre></div>
+<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb780-1"><a href="spatially-continuous-data-iii.html#cb780-1" tabindex="-1"></a><span class="co"># This function generates a variogram mode. Here, we are able to view </span></span>
+<span id="cb780-2"><a href="spatially-continuous-data-iii.html#cb780-2" tabindex="-1"></a><span class="co"># the list of possible models for a semivariogram</span></span>
+<span id="cb780-3"><a href="spatially-continuous-data-iii.html#cb780-3" tabindex="-1"></a><span class="fu">vgm</span>() </span></code></pre></div>
 <pre><code>##    short                                      long
 ## 1    Nug                              Nug (nugget)
 ## 2    Exp                         Exp (exponential)
@@ -961,113 +963,113 @@ FIGURE 35.3: Anatomy of a semivariogram
 <p>An additional element is the nugget. While the semivariogram in principle begins at zero, sometime discontinuities near the origin can be observed. The terminology is from mining, and reflects the fact that a nugget could be very different from the material around it, hence the jump in the semivariogram.</p>
 <p>Some theoretical functions are shown next.</p>
 <p>Exponential semivariogram:</p>
-<div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb779-1"><a href="spatially-continuous-data-iii.html#cb779-1" tabindex="-1"></a><span class="co"># We use &quot;exp&quot; to denote the use of an exponential semivariogram. </span></span>
-<span id="cb779-2"><a href="spatially-continuous-data-iii.html#cb779-2" tabindex="-1"></a><span class="co"># Refer to the list on line 297 and explore the different outcomes </span></span>
-<span id="cb779-3"><a href="spatially-continuous-data-iii.html#cb779-3" tabindex="-1"></a><span class="co"># of the listed variogram models! </span></span>
-<span id="cb779-4"><a href="spatially-continuous-data-iii.html#cb779-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">variogramLine</span>(<span class="fu">vgm</span>(<span class="dv">1</span>, </span>
-<span id="cb779-5"><a href="spatially-continuous-data-iii.html#cb779-5" tabindex="-1"></a>                       <span class="st">&quot;Exp&quot;</span>,</span>
-<span id="cb779-6"><a href="spatially-continuous-data-iii.html#cb779-6" tabindex="-1"></a>                       <span class="dv">1</span>), </span>
-<span id="cb779-7"><a href="spatially-continuous-data-iii.html#cb779-7" tabindex="-1"></a>                   <span class="dv">10</span>),</span>
-<span id="cb779-8"><a href="spatially-continuous-data-iii.html#cb779-8" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&#39;l&#39;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb782-1"><a href="spatially-continuous-data-iii.html#cb782-1" tabindex="-1"></a><span class="co"># We use &quot;exp&quot; to denote the use of an exponential semivariogram. </span></span>
+<span id="cb782-2"><a href="spatially-continuous-data-iii.html#cb782-2" tabindex="-1"></a><span class="co"># Refer to the list on line 297 and explore the different outcomes </span></span>
+<span id="cb782-3"><a href="spatially-continuous-data-iii.html#cb782-3" tabindex="-1"></a><span class="co"># of the listed variogram models! </span></span>
+<span id="cb782-4"><a href="spatially-continuous-data-iii.html#cb782-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">variogramLine</span>(<span class="fu">vgm</span>(<span class="dv">1</span>, </span>
+<span id="cb782-5"><a href="spatially-continuous-data-iii.html#cb782-5" tabindex="-1"></a>                       <span class="st">&quot;Exp&quot;</span>,</span>
+<span id="cb782-6"><a href="spatially-continuous-data-iii.html#cb782-6" tabindex="-1"></a>                       <span class="dv">1</span>), </span>
+<span id="cb782-7"><a href="spatially-continuous-data-iii.html#cb782-7" tabindex="-1"></a>                   <span class="dv">10</span>),</span>
+<span id="cb782-8"><a href="spatially-continuous-data-iii.html#cb782-8" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&#39;l&#39;</span>) </span></code></pre></div>
 <p><img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p>Spherical semivariogram:</p>
-<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb780-1"><a href="spatially-continuous-data-iii.html#cb780-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">variogramLine</span>(<span class="fu">vgm</span>(<span class="dv">1</span>, </span>
-<span id="cb780-2"><a href="spatially-continuous-data-iii.html#cb780-2" tabindex="-1"></a>                       <span class="st">&quot;Sph&quot;</span>,</span>
-<span id="cb780-3"><a href="spatially-continuous-data-iii.html#cb780-3" tabindex="-1"></a>                       <span class="dv">1</span>), </span>
-<span id="cb780-4"><a href="spatially-continuous-data-iii.html#cb780-4" tabindex="-1"></a>                   <span class="dv">10</span>), </span>
-<span id="cb780-5"><a href="spatially-continuous-data-iii.html#cb780-5" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&#39;l&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb783-1"><a href="spatially-continuous-data-iii.html#cb783-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">variogramLine</span>(<span class="fu">vgm</span>(<span class="dv">1</span>, </span>
+<span id="cb783-2"><a href="spatially-continuous-data-iii.html#cb783-2" tabindex="-1"></a>                       <span class="st">&quot;Sph&quot;</span>,</span>
+<span id="cb783-3"><a href="spatially-continuous-data-iii.html#cb783-3" tabindex="-1"></a>                       <span class="dv">1</span>), </span>
+<span id="cb783-4"><a href="spatially-continuous-data-iii.html#cb783-4" tabindex="-1"></a>                   <span class="dv">10</span>), </span>
+<span id="cb783-5"><a href="spatially-continuous-data-iii.html#cb783-5" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&#39;l&#39;</span>)</span></code></pre></div>
 <p><img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>Gaussian semivariogram:</p>
-<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="spatially-continuous-data-iii.html#cb781-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">variogramLine</span>(<span class="fu">vgm</span>(<span class="dv">1</span>, </span>
-<span id="cb781-2"><a href="spatially-continuous-data-iii.html#cb781-2" tabindex="-1"></a>                       <span class="st">&quot;Gau&quot;</span>, </span>
-<span id="cb781-3"><a href="spatially-continuous-data-iii.html#cb781-3" tabindex="-1"></a>                       <span class="dv">1</span>), </span>
-<span id="cb781-4"><a href="spatially-continuous-data-iii.html#cb781-4" tabindex="-1"></a>                   <span class="dv">10</span>), </span>
-<span id="cb781-5"><a href="spatially-continuous-data-iii.html#cb781-5" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&#39;l&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb784"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb784-1"><a href="spatially-continuous-data-iii.html#cb784-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">variogramLine</span>(<span class="fu">vgm</span>(<span class="dv">1</span>, </span>
+<span id="cb784-2"><a href="spatially-continuous-data-iii.html#cb784-2" tabindex="-1"></a>                       <span class="st">&quot;Gau&quot;</span>, </span>
+<span id="cb784-3"><a href="spatially-continuous-data-iii.html#cb784-3" tabindex="-1"></a>                       <span class="dv">1</span>), </span>
+<span id="cb784-4"><a href="spatially-continuous-data-iii.html#cb784-4" tabindex="-1"></a>                   <span class="dv">10</span>), </span>
+<span id="cb784-5"><a href="spatially-continuous-data-iii.html#cb784-5" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&#39;l&#39;</span>)</span></code></pre></div>
 <p><img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>These plots illustrate some differences in the behavior of the models. For identical parameters, the Gaussian model provides smoother changes near the origin. The spherical model reaches the sill more rapidly than the other models.</p>
 <p>To fit a theoretical semivariogram to the empirical one, the function <code>fit.variogram</code> is used:</p>
-<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb782-1"><a href="spatially-continuous-data-iii.html#cb782-1" tabindex="-1"></a><span class="co"># `fit_variogram` selects the type of model that will fit </span></span>
-<span id="cb782-2"><a href="spatially-continuous-data-iii.html#cb782-2" tabindex="-1"></a><span class="co"># the empirical semivariogram best</span></span>
-<span id="cb782-3"><a href="spatially-continuous-data-iii.html#cb782-3" tabindex="-1"></a>variogram_z.t <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(variogram_z, <span class="at">model =</span> <span class="fu">vgm</span>(<span class="st">&quot;Exp&quot;</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb785-1"><a href="spatially-continuous-data-iii.html#cb785-1" tabindex="-1"></a><span class="co"># `fit_variogram` selects the type of model that will fit </span></span>
+<span id="cb785-2"><a href="spatially-continuous-data-iii.html#cb785-2" tabindex="-1"></a><span class="co"># the empirical semivariogram best</span></span>
+<span id="cb785-3"><a href="spatially-continuous-data-iii.html#cb785-3" tabindex="-1"></a>variogram_z.t <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(variogram_z, <span class="at">model =</span> <span class="fu">vgm</span>(<span class="st">&quot;Exp&quot;</span>)) </span></code></pre></div>
 <p>The results of which can be plotted after passing the model the the function <code>variogramLine</code>:</p>
-<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb783-1"><a href="spatially-continuous-data-iii.html#cb783-1" tabindex="-1"></a><span class="co"># Notice how &#39;maxdist&#39; is 130, and the model does not exceed that value.</span></span>
-<span id="cb783-2"><a href="spatially-continuous-data-iii.html#cb783-2" tabindex="-1"></a>gamma.t <span class="ot">&lt;-</span> <span class="fu">variogramLine</span>(variogram_z.t, </span>
-<span id="cb783-3"><a href="spatially-continuous-data-iii.html#cb783-3" tabindex="-1"></a>                         <span class="at">maxdist =</span> <span class="dv">130</span>) </span>
-<span id="cb783-4"><a href="spatially-continuous-data-iii.html#cb783-4" tabindex="-1"></a></span>
-<span id="cb783-5"><a href="spatially-continuous-data-iii.html#cb783-5" tabindex="-1"></a><span class="co"># Plot</span></span>
-<span id="cb783-6"><a href="spatially-continuous-data-iii.html#cb783-6" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> variogram_z, </span>
-<span id="cb783-7"><a href="spatially-continuous-data-iii.html#cb783-7" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> dist, </span>
-<span id="cb783-8"><a href="spatially-continuous-data-iii.html#cb783-8" tabindex="-1"></a>           <span class="at">y =</span> gamma)) <span class="sc">+</span></span>
-<span id="cb783-9"><a href="spatially-continuous-data-iii.html#cb783-9" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
-<span id="cb783-10"><a href="spatially-continuous-data-iii.html#cb783-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> gamma.t,</span>
-<span id="cb783-11"><a href="spatially-continuous-data-iii.html#cb783-11" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> dist, </span>
-<span id="cb783-12"><a href="spatially-continuous-data-iii.html#cb783-12" tabindex="-1"></a>                <span class="at">y =</span> gamma)) <span class="sc">+</span></span>
-<span id="cb783-13"><a href="spatially-continuous-data-iii.html#cb783-13" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb783-14"><a href="spatially-continuous-data-iii.html#cb783-14" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Semivariance&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb786-1"><a href="spatially-continuous-data-iii.html#cb786-1" tabindex="-1"></a><span class="co"># Notice how &#39;maxdist&#39; is 130, and the model does not exceed that value.</span></span>
+<span id="cb786-2"><a href="spatially-continuous-data-iii.html#cb786-2" tabindex="-1"></a>gamma.t <span class="ot">&lt;-</span> <span class="fu">variogramLine</span>(variogram_z.t, </span>
+<span id="cb786-3"><a href="spatially-continuous-data-iii.html#cb786-3" tabindex="-1"></a>                         <span class="at">maxdist =</span> <span class="dv">130</span>) </span>
+<span id="cb786-4"><a href="spatially-continuous-data-iii.html#cb786-4" tabindex="-1"></a></span>
+<span id="cb786-5"><a href="spatially-continuous-data-iii.html#cb786-5" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb786-6"><a href="spatially-continuous-data-iii.html#cb786-6" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> variogram_z, </span>
+<span id="cb786-7"><a href="spatially-continuous-data-iii.html#cb786-7" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> dist, </span>
+<span id="cb786-8"><a href="spatially-continuous-data-iii.html#cb786-8" tabindex="-1"></a>           <span class="at">y =</span> gamma)) <span class="sc">+</span></span>
+<span id="cb786-9"><a href="spatially-continuous-data-iii.html#cb786-9" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb786-10"><a href="spatially-continuous-data-iii.html#cb786-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> gamma.t,</span>
+<span id="cb786-11"><a href="spatially-continuous-data-iii.html#cb786-11" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> dist, </span>
+<span id="cb786-12"><a href="spatially-continuous-data-iii.html#cb786-12" tabindex="-1"></a>                <span class="at">y =</span> gamma)) <span class="sc">+</span></span>
+<span id="cb786-13"><a href="spatially-continuous-data-iii.html#cb786-13" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb786-14"><a href="spatially-continuous-data-iii.html#cb786-14" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Semivariance&quot;</span>)</span></code></pre></div>
 <p><img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <p>A set of models can be passed as an argument to <code>fit.variogram</code>, in which case the value (output) of the function is the model that provides the best fit to the empirical semivariogram:</p>
-<div class="sourceCode" id="cb784"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb784-1"><a href="spatially-continuous-data-iii.html#cb784-1" tabindex="-1"></a>variogram_z.t <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(variogram_z, </span>
-<span id="cb784-2"><a href="spatially-continuous-data-iii.html#cb784-2" tabindex="-1"></a>                               <span class="co"># Models to choosing the best fit</span></span>
-<span id="cb784-3"><a href="spatially-continuous-data-iii.html#cb784-3" tabindex="-1"></a>                               <span class="at">model =</span> <span class="fu">vgm</span>(<span class="st">&quot;Exp&quot;</span>, </span>
-<span id="cb784-4"><a href="spatially-continuous-data-iii.html#cb784-4" tabindex="-1"></a>                                           <span class="st">&quot;Sph&quot;</span>, </span>
-<span id="cb784-5"><a href="spatially-continuous-data-iii.html#cb784-5" tabindex="-1"></a>                                           <span class="st">&quot;Gau&quot;</span>)) </span>
-<span id="cb784-6"><a href="spatially-continuous-data-iii.html#cb784-6" tabindex="-1"></a>variogram_z.t</span></code></pre></div>
+<div class="sourceCode" id="cb787"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb787-1"><a href="spatially-continuous-data-iii.html#cb787-1" tabindex="-1"></a>variogram_z.t <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(variogram_z, </span>
+<span id="cb787-2"><a href="spatially-continuous-data-iii.html#cb787-2" tabindex="-1"></a>                               <span class="co"># Models to choosing the best fit</span></span>
+<span id="cb787-3"><a href="spatially-continuous-data-iii.html#cb787-3" tabindex="-1"></a>                               <span class="at">model =</span> <span class="fu">vgm</span>(<span class="st">&quot;Exp&quot;</span>, </span>
+<span id="cb787-4"><a href="spatially-continuous-data-iii.html#cb787-4" tabindex="-1"></a>                                           <span class="st">&quot;Sph&quot;</span>, </span>
+<span id="cb787-5"><a href="spatially-continuous-data-iii.html#cb787-5" tabindex="-1"></a>                                           <span class="st">&quot;Gau&quot;</span>)) </span>
+<span id="cb787-6"><a href="spatially-continuous-data-iii.html#cb787-6" tabindex="-1"></a>variogram_z.t</span></code></pre></div>
 <pre><code>##   model     psill    range
 ## 1   Nug  4045.567  0.00000
 ## 2   Exp 90703.773 12.52591</code></pre>
 <p>In this case, it can be seen that the best fitting model is the exponential, as follows:</p>
-<div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb786-1"><a href="spatially-continuous-data-iii.html#cb786-1" tabindex="-1"></a>gamma.t <span class="ot">&lt;-</span> <span class="fu">variogramLine</span>(variogram_z.t, </span>
-<span id="cb786-2"><a href="spatially-continuous-data-iii.html#cb786-2" tabindex="-1"></a>                         <span class="at">maxdist =</span> <span class="dv">130</span>)</span>
-<span id="cb786-3"><a href="spatially-continuous-data-iii.html#cb786-3" tabindex="-1"></a></span>
-<span id="cb786-4"><a href="spatially-continuous-data-iii.html#cb786-4" tabindex="-1"></a><span class="co"># Plot </span></span>
-<span id="cb786-5"><a href="spatially-continuous-data-iii.html#cb786-5" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> variogram_z, </span>
-<span id="cb786-6"><a href="spatially-continuous-data-iii.html#cb786-6" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> dist, </span>
-<span id="cb786-7"><a href="spatially-continuous-data-iii.html#cb786-7" tabindex="-1"></a>           <span class="at">y =</span> gamma)) <span class="sc">+</span></span>
-<span id="cb786-8"><a href="spatially-continuous-data-iii.html#cb786-8" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
-<span id="cb786-9"><a href="spatially-continuous-data-iii.html#cb786-9" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> gamma.t,</span>
-<span id="cb786-10"><a href="spatially-continuous-data-iii.html#cb786-10" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> dist, </span>
-<span id="cb786-11"><a href="spatially-continuous-data-iii.html#cb786-11" tabindex="-1"></a>                <span class="at">y =</span> gamma)) <span class="sc">+</span></span>
-<span id="cb786-12"><a href="spatially-continuous-data-iii.html#cb786-12" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb786-13"><a href="spatially-continuous-data-iii.html#cb786-13" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Semivariance&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb789"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb789-1"><a href="spatially-continuous-data-iii.html#cb789-1" tabindex="-1"></a>gamma.t <span class="ot">&lt;-</span> <span class="fu">variogramLine</span>(variogram_z.t, </span>
+<span id="cb789-2"><a href="spatially-continuous-data-iii.html#cb789-2" tabindex="-1"></a>                         <span class="at">maxdist =</span> <span class="dv">130</span>)</span>
+<span id="cb789-3"><a href="spatially-continuous-data-iii.html#cb789-3" tabindex="-1"></a></span>
+<span id="cb789-4"><a href="spatially-continuous-data-iii.html#cb789-4" tabindex="-1"></a><span class="co"># Plot </span></span>
+<span id="cb789-5"><a href="spatially-continuous-data-iii.html#cb789-5" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> variogram_z, </span>
+<span id="cb789-6"><a href="spatially-continuous-data-iii.html#cb789-6" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> dist, </span>
+<span id="cb789-7"><a href="spatially-continuous-data-iii.html#cb789-7" tabindex="-1"></a>           <span class="at">y =</span> gamma)) <span class="sc">+</span></span>
+<span id="cb789-8"><a href="spatially-continuous-data-iii.html#cb789-8" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb789-9"><a href="spatially-continuous-data-iii.html#cb789-9" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> gamma.t,</span>
+<span id="cb789-10"><a href="spatially-continuous-data-iii.html#cb789-10" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> dist, </span>
+<span id="cb789-11"><a href="spatially-continuous-data-iii.html#cb789-11" tabindex="-1"></a>                <span class="at">y =</span> gamma)) <span class="sc">+</span></span>
+<span id="cb789-12"><a href="spatially-continuous-data-iii.html#cb789-12" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb789-13"><a href="spatially-continuous-data-iii.html#cb789-13" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Semivariance&quot;</span>)</span></code></pre></div>
 <p><img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <p>For comparison, we will do the variographic analysis of a simulated random dataset.</p>
 <p>Generate coordinates for observations and expand on a grid:</p>
-<div class="sourceCode" id="cb787"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb787-1"><a href="spatially-continuous-data-iii.html#cb787-1" tabindex="-1"></a><span class="co">#We are generating a regular sequence of coordinates by means of &#39;seq&#39; </span></span>
-<span id="cb787-2"><a href="spatially-continuous-data-iii.html#cb787-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, </span>
-<span id="cb787-3"><a href="spatially-continuous-data-iii.html#cb787-3" tabindex="-1"></a>         <span class="at">to =</span> <span class="dv">250</span>, </span>
-<span id="cb787-4"><a href="spatially-continuous-data-iii.html#cb787-4" tabindex="-1"></a>         <span class="at">by =</span> <span class="dv">10</span>)</span>
-<span id="cb787-5"><a href="spatially-continuous-data-iii.html#cb787-5" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, </span>
-<span id="cb787-6"><a href="spatially-continuous-data-iii.html#cb787-6" tabindex="-1"></a>         <span class="at">to =</span> <span class="dv">290</span>, </span>
-<span id="cb787-7"><a href="spatially-continuous-data-iii.html#cb787-7" tabindex="-1"></a>         <span class="at">by =</span> <span class="dv">10</span>)</span>
-<span id="cb787-8"><a href="spatially-continuous-data-iii.html#cb787-8" tabindex="-1"></a></span>
-<span id="cb787-9"><a href="spatially-continuous-data-iii.html#cb787-9" tabindex="-1"></a><span class="co"># Create a data frame `df` to store these values</span></span>
-<span id="cb787-10"><a href="spatially-continuous-data-iii.html#cb787-10" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> x, </span>
-<span id="cb787-11"><a href="spatially-continuous-data-iii.html#cb787-11" tabindex="-1"></a>                  <span class="at">y =</span> y)  </span></code></pre></div>
+<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb790-1"><a href="spatially-continuous-data-iii.html#cb790-1" tabindex="-1"></a><span class="co">#We are generating a regular sequence of coordinates by means of &#39;seq&#39; </span></span>
+<span id="cb790-2"><a href="spatially-continuous-data-iii.html#cb790-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, </span>
+<span id="cb790-3"><a href="spatially-continuous-data-iii.html#cb790-3" tabindex="-1"></a>         <span class="at">to =</span> <span class="dv">250</span>, </span>
+<span id="cb790-4"><a href="spatially-continuous-data-iii.html#cb790-4" tabindex="-1"></a>         <span class="at">by =</span> <span class="dv">10</span>)</span>
+<span id="cb790-5"><a href="spatially-continuous-data-iii.html#cb790-5" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, </span>
+<span id="cb790-6"><a href="spatially-continuous-data-iii.html#cb790-6" tabindex="-1"></a>         <span class="at">to =</span> <span class="dv">290</span>, </span>
+<span id="cb790-7"><a href="spatially-continuous-data-iii.html#cb790-7" tabindex="-1"></a>         <span class="at">by =</span> <span class="dv">10</span>)</span>
+<span id="cb790-8"><a href="spatially-continuous-data-iii.html#cb790-8" tabindex="-1"></a></span>
+<span id="cb790-9"><a href="spatially-continuous-data-iii.html#cb790-9" tabindex="-1"></a><span class="co"># Create a data frame `df` to store these values</span></span>
+<span id="cb790-10"><a href="spatially-continuous-data-iii.html#cb790-10" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> x, </span>
+<span id="cb790-11"><a href="spatially-continuous-data-iii.html#cb790-11" tabindex="-1"></a>                  <span class="at">y =</span> y)  </span></code></pre></div>
 <p>Then, create a random variable for this coordinates:</p>
-<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb788-1"><a href="spatially-continuous-data-iii.html#cb788-1" tabindex="-1"></a><span class="co"># `set.seed()` is used for replicability: it uses the seed </span></span>
-<span id="cb788-2"><a href="spatially-continuous-data-iii.html#cb788-2" tabindex="-1"></a><span class="co"># in the argument for generating random numbers</span></span>
-<span id="cb788-3"><a href="spatially-continuous-data-iii.html#cb788-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>) </span>
-<span id="cb788-4"><a href="spatially-continuous-data-iii.html#cb788-4" tabindex="-1"></a>df<span class="sc">$</span>z <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">780</span>, <span class="at">mean =</span> <span class="dv">500</span>, <span class="at">sd =</span> <span class="dv">300</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb791"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb791-1"><a href="spatially-continuous-data-iii.html#cb791-1" tabindex="-1"></a><span class="co"># `set.seed()` is used for replicability: it uses the seed </span></span>
+<span id="cb791-2"><a href="spatially-continuous-data-iii.html#cb791-2" tabindex="-1"></a><span class="co"># in the argument for generating random numbers</span></span>
+<span id="cb791-3"><a href="spatially-continuous-data-iii.html#cb791-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>) </span>
+<span id="cb791-4"><a href="spatially-continuous-data-iii.html#cb791-4" tabindex="-1"></a>df<span class="sc">$</span>z <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">780</span>, <span class="at">mean =</span> <span class="dv">500</span>, <span class="at">sd =</span> <span class="dv">300</span>)</span></code></pre></div>
 <p>Finally, convert to a simple features object:</p>
-<div class="sourceCode" id="cb789"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb789-1"><a href="spatially-continuous-data-iii.html#cb789-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb792"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb792-1"><a href="spatially-continuous-data-iii.html#cb792-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)) </span></code></pre></div>
 <p>The empirical variogram is:</p>
-<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb790-1"><a href="spatially-continuous-data-iii.html#cb790-1" tabindex="-1"></a><span class="co"># Calculate the variogram</span></span>
-<span id="cb790-2"><a href="spatially-continuous-data-iii.html#cb790-2" tabindex="-1"></a>variogram_df <span class="ot">&lt;-</span> <span class="fu">variogram</span>(z <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> df)</span>
-<span id="cb790-3"><a href="spatially-continuous-data-iii.html#cb790-3" tabindex="-1"></a></span>
-<span id="cb790-4"><a href="spatially-continuous-data-iii.html#cb790-4" tabindex="-1"></a><span class="co"># Plot</span></span>
-<span id="cb790-5"><a href="spatially-continuous-data-iii.html#cb790-5" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> variogram_df, <span class="fu">aes</span>(<span class="at">x =</span> dist, <span class="at">y =</span> gamma)) <span class="sc">+</span></span>
-<span id="cb790-6"><a href="spatially-continuous-data-iii.html#cb790-6" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb790-7"><a href="spatially-continuous-data-iii.html#cb790-7" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> np), <span class="at">nudge_y =</span> <span class="sc">-</span><span class="dv">1500</span>) <span class="sc">+</span> </span>
-<span id="cb790-8"><a href="spatially-continuous-data-iii.html#cb790-8" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">98100</span>)) <span class="sc">+</span></span>
-<span id="cb790-9"><a href="spatially-continuous-data-iii.html#cb790-9" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb790-10"><a href="spatially-continuous-data-iii.html#cb790-10" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Semivariance&quot;</span>)  </span></code></pre></div>
+<div class="sourceCode" id="cb793"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb793-1"><a href="spatially-continuous-data-iii.html#cb793-1" tabindex="-1"></a><span class="co"># Calculate the variogram</span></span>
+<span id="cb793-2"><a href="spatially-continuous-data-iii.html#cb793-2" tabindex="-1"></a>variogram_df <span class="ot">&lt;-</span> <span class="fu">variogram</span>(z <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> df)</span>
+<span id="cb793-3"><a href="spatially-continuous-data-iii.html#cb793-3" tabindex="-1"></a></span>
+<span id="cb793-4"><a href="spatially-continuous-data-iii.html#cb793-4" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb793-5"><a href="spatially-continuous-data-iii.html#cb793-5" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> variogram_df, <span class="fu">aes</span>(<span class="at">x =</span> dist, <span class="at">y =</span> gamma)) <span class="sc">+</span></span>
+<span id="cb793-6"><a href="spatially-continuous-data-iii.html#cb793-6" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb793-7"><a href="spatially-continuous-data-iii.html#cb793-7" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> np), <span class="at">nudge_y =</span> <span class="sc">-</span><span class="dv">1500</span>) <span class="sc">+</span> </span>
+<span id="cb793-8"><a href="spatially-continuous-data-iii.html#cb793-8" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">98100</span>)) <span class="sc">+</span></span>
+<span id="cb793-9"><a href="spatially-continuous-data-iii.html#cb793-9" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distance&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb793-10"><a href="spatially-continuous-data-iii.html#cb793-10" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Semivariance&quot;</span>)  </span></code></pre></div>
 <p><img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <p>The range of the semivariogram appears to be zero, or alternatively, there seems to be a pure nugget effect. This is as expected. Since the data are spatially random, they are not more similar at shorter distances than they would be at longer distances.</p>
 
 </div>
 </div>
 <h3>References</h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-Bailey1995" class="csl-entry">
 Bailey, T. C., and A. C. Gatrell. 1995. <em>Interactive Spatial Data Analysis</em>. Book. Essex: Addison Wesley Longman.
 </div>

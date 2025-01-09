@@ -27,7 +27,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -35,7 +35,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `spatstat`, a package designed for the analysis of point patterns (you can learn about `spatstat` [here](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) and [here](http://spatstat.org/resources/spatstatJSSpaper.pdf)):
 
-```r
+``` r
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 ```
 
@@ -49,14 +49,14 @@ library(isdas) # Companion Package for Book An Introduction to Spatial Data Anal
 ## loading 'isdas'
 ```
 
-```r
+``` r
 library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
 library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 Load a dataset of your choice. It could be one of the datasets that we have used before (Toronto Business Points, Bear GPS Locations), or one of the datasets included with the package `spatstat`. To see what datasets are available through the package, do the following:
 
-```r
+``` r
 vcdExtra::datasets("spatstat.data")
 ```
 
@@ -124,19 +124,21 @@ vcdExtra::datasets("spatstat.data")
 ## 60                  residualspaper  list     7
 ## 61                         shapley   ppp     6
 ## 62         shapley.extra (shapley)  list     3
-## 63                           simba  list  10x2
-## 64                          simdat   ppp     5
-## 65                       simplenet  list    10
-## 66                         spiders   ppx     3
-## 67                     sporophores   ppp     6
-## 68                         spruces   ppp     6
-## 69                      stonetools   ppp     6
-## 70                    swedishpines   ppp     5
-## 71                         urkiola   ppp     6
-## 72                        vesicles   ppp     5
-## 73       vesicles.extra (vesicles)  list     4
-## 74                            waka   ppp     6
-## 75                   waterstriders  list     3
+## 63                        shelling   ppp     5
+## 64            shelling2 (shelling)   ppp     5
+## 65                           simba  list  10x2
+## 66                          simdat   ppp     5
+## 67                       simplenet  list    10
+## 68                         spiders   ppx     3
+## 69                     sporophores   ppp     6
+## 70                         spruces   ppp     6
+## 71                      stonetools   ppp     6
+## 72                    swedishpines   ppp     5
+## 73                         urkiola   ppp     6
+## 74                        vesicles   ppp     5
+## 75       vesicles.extra (vesicles)  list     4
+## 76                            waka   ppp     6
+## 77                   waterstriders  list     3
 ##                                                                                        Title
 ## 1                                          Colour Sequences with Uniform Perceptual Contrast
 ## 2                                                                 Hughes' Amacrine Cell Data
@@ -200,19 +202,21 @@ vcdExtra::datasets("spatstat.data")
 ## 60                                     Data and Code From JRSS Discussion Paper on Residuals
 ## 61                                                      Galaxies in the Shapley Supercluster
 ## 62                                                      Galaxies in the Shapley Supercluster
-## 63            Simulated data from a two-group experiment with replication within each group.
-## 64                                                                   Simulated Point Pattern
-## 65                                                          Simple Example of Linear Network
-## 66                                               Spider Webs on Mortar Lines of a Brick Wall
-## 67                                                                          Sporophores Data
-## 68                                                                     Spruces Point Pattern
-## 69                                                                  Palaeolithic Stone Tools
-## 70                                                               Swedish Pines Point Pattern
-## 71                                                               Urkiola Woods Point Pattern
-## 72                                                                             Vesicles Data
-## 73                                                                             Vesicles Data
-## 74                                                               Trees in Waka national park
-## 75 Waterstriders data.  Three independent replications of a point pattern formed by insects.
+## 63                                                              Artillery Impacts in Ukraine
+## 64                                                              Artillery Impacts in Ukraine
+## 65            Simulated data from a two-group experiment with replication within each group.
+## 66                                                                   Simulated Point Pattern
+## 67                                                          Simple Example of Linear Network
+## 68                                               Spider Webs on Mortar Lines of a Brick Wall
+## 69                                                                          Sporophores Data
+## 70                                                                     Spruces Point Pattern
+## 71                                                                  Palaeolithic Stone Tools
+## 72                                                               Swedish Pines Point Pattern
+## 73                                                               Urkiola Woods Point Pattern
+## 74                                                                             Vesicles Data
+## 75                                                                             Vesicles Data
+## 76                                                               Trees in Waka national park
+## 77 Waterstriders data.  Three independent replications of a point pattern formed by insects.
 ```
 
 Load a dataset of your choice.
@@ -221,13 +225,13 @@ You can do this by using the `load()` function if the dataset is in your drive (
 
 On the other hand, if the dataset is included with the `spatstat` package you can do the following, for example to load the `gorillas` dataset:
 
-```r
+``` r
 gorillas.ppp <- gorillas
 ```
 
 As usual, you can check the object by means of the `summary` function:
 
-```r
+``` r
 summary(gorillas.ppp)
 ```
 
@@ -242,13 +246,13 @@ summary(gorillas.ppp)
 ## 
 ## Mark variables: group, season, date
 ## Summary:
-##     group              season               date           
-##  Length:647         Length:647         Min.   :2006-01-06  
-##  Class :character   Class :character   1st Qu.:2007-03-15  
-##  Mode  :character   Mode  :character   Median :2008-02-05  
-##                                        Mean   :2007-12-14  
-##                                        3rd Qu.:2008-09-23  
-##                                        Max.   :2009-05-31  
+##    group       season         date           
+##  major:350   dry  :275   Min.   :2006-01-06  
+##  minor:297   rainy:372   1st Qu.:2007-03-15  
+##                          Median :2008-02-05  
+##                          Mean   :2007-12-14  
+##                          3rd Qu.:2008-09-23  
+##                          Max.   :2009-05-31  
 ## 
 ## Window: polygonal boundary
 ## single connected closed polygon with 21 vertices

@@ -32,7 +32,7 @@ In this activity, you will:
 
 Remember to begin your work with a clean session. At least, you need to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -40,7 +40,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity (load other packages as appropriate). 
 
-```r
+``` r
 library(isdas)
 library(tidyverse)
 library(spatstat)
@@ -50,7 +50,7 @@ library(plotly)
 
 Load the data that you will use in this activity:
 
-```r
+``` r
 data("aquifer")
 ```
 
@@ -62,7 +62,7 @@ The data set consists of 85 georeferenced measurements of piezometric head. Poss
 
 Create an a unique identifier variable:
 
-```r
+``` r
 aquifer$ID <- factor(c(1:nrow(aquifer)))
 ```
 

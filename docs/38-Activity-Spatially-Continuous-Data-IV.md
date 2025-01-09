@@ -30,7 +30,7 @@ In this activity, you will:
 
 Restart `R` to begin work with a new session, or at least clear the working space to ensure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -38,7 +38,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity (load other packages as appropriate). 
 
-```r
+``` r
 library(isdas)
 library(gstat)
 library(sf)
@@ -48,7 +48,7 @@ library(stars)
 
 Load dataset:
 
-```r
+``` r
 data("aquifer")
 ```
 
@@ -60,7 +60,7 @@ The data set consists of 85 georeferenced measurements of piezometric head. Poss
 
 Convert to a `SpatialPointsDataFrame`:
 
-```r
+``` r
 aquifer.sf <- aquifer |>
   st_as_sf(coords = c("X", "Y"),
            remove = FALSE)
