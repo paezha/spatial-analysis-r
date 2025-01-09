@@ -558,33 +558,32 @@ A last note. Many other visualization alternatives (for instance, Excel) provide
 And, these are some figures created using `R` by talented people around the world.
 
 
-<<<<<<< HEAD
 
 
 <div class="figure">
-<img src="figures/02-Figure-4.png" alt="\label{fig:visualization-example-4} Example of visualization: Income inequality in the US" width="338" />
-<p class="caption">(\#fig:ch02-visualization-example-4)\label{fig:visualization-example-4} Example of visualization: Income inequality in the US</p>
+<img src="02-Figure-4.png" alt="\label{fig:visualization-example-4} Example of visualization: Forest cover in New Zealand" width="338" />
+<p class="caption">(\#fig:ch02-visualization-example-4)\label{fig:visualization-example-4} Example of visualization: Forest cover in New Zealand</p>
 </div>
 
 
 
 <div class="figure">
-<img src="figures/02-Figure-5.png" alt="\label{fig:visualization-example-5} Example of visualization: Types of forests in Brazil" width="332" />
-<p class="caption">(\#fig:ch02-visualization-example-5)\label{fig:visualization-example-5} Example of visualization: Types of forests in Brazil</p>
+<img src="02-Figure-5.png" alt="\label{fig:visualization-example-5} Example of visualization: Where the turtles are" width="334" />
+<p class="caption">(\#fig:ch02-visualization-example-5)\label{fig:visualization-example-5} Example of visualization: Where the turtles are</p>
 </div>
 
 
 
 <div class="figure">
-<img src="figures/02-Figure-6.png" alt="\label{fig:visualization-example-6} Example of visualization: Earthquakes in California" width="338" />
-<p class="caption">(\#fig:ch02-visualization-example-6)\label{fig:visualization-example-6} Example of visualization: Earthquakes in California</p>
+<img src="02-Figure-6.png" alt="\label{fig:visualization-example-6} Example of visualization: Earthquakes depths in Japan" width="338" />
+<p class="caption">(\#fig:ch02-visualization-example-6)\label{fig:visualization-example-6} Example of visualization: Earthquakes depths in Japan</p>
 </div>
 
 
 
 <div class="figure">
-<img src="figures/02-Figure-7.png" alt="\label{fig:visualization-example-7} Example of visualization: Population change in Japan" width="338" />
-<p class="caption">(\#fig:ch02-visualization-example-7)\label{fig:visualization-example-7} Example of visualization: Population change in Japan</p>
+<img src="02-Figure-7.png" alt="\label{fig:visualization-example-7} Example of visualization: Temperature and precipitation in Brazil" width="334" />
+<p class="caption">(\#fig:ch02-visualization-example-7)\label{fig:visualization-example-7} Example of visualization: Temperature and precipitation in Brazil</p>
 </div>
 
 This concludes your basic overview of basic operations and data structures in `R`. You will have an opportunity to learn more about creating maps in R with your reading.

@@ -1,7 +1,7 @@
 --- 
 title: "An Introduction to Spatial Data Analysis and Statistics: A Course in `R`"
 author: "Antonio Paez"
-date: "2025-01-07"
+date: "2025-01-08"
 site: bookdown::bookdown_site
 output: 
   bookdown::gitbook:
