@@ -29,7 +29,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 Before you begin your work restart the `R` session, or at least clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -39,7 +39,7 @@ Load the libraries you will use in this activity.
 
 In addition to `tidyverse`, you will need `sf`, a package that implements simple features in R (you can learn about `sf` [here](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html)) and `spdep`, a package that implements several spatial statistical methods (you can learn more about it [here](https://cran.r-project.org/web/packages/spdep/index.html)):
 
-```r
+``` r
 library(isdas)
 library(sf)
 library(spdep)
@@ -48,20 +48,20 @@ library(tidyverse)
 
 Begin by loading the data that you will use in this activity:
 
-```r
+``` r
 data(Hamilton_CT)
 ```
 
 This is a `sf` object with census tracts and selected demographic variables for the Hamilton CMA in Canada.
 You can obtain new (calculated) variables as follows. For instance, to obtain the proportion of residents who are between 20 and 34 years old, and between 35 and 49:
 
-```r
+``` r
 Hamilton_CT <- mutate(Hamilton_CT, Prop20to34 = (AGE_20_TO_24 + AGE_25_TO_29 + AGE_30_TO_34)/POPULATION, Prop35to49 = (AGE_35_TO_39 + AGE_40_TO_44 + AGE_45_TO_49)/POPULATION)
 ```
 
 This function is used to create local Moran maps:
 
-```r
+``` r
 localmoran.map <- function(p, listw, VAR, by){
   # p is a simple features object
   require(tidyverse)
@@ -101,7 +101,7 @@ localmoran.map <- function(p, listw, VAR, by){
 
 This function is used to create $G_i^*$ maps:
 
-```r
+``` r
 gistar.map <- function(p = p, listw = listw, VAR = VAR, by = by){
   require(tidyverse)
   require(spdep)
@@ -131,13 +131,13 @@ Create spatial weights.
 
 1) By contiguity:
 
-```r
+``` r
 Hamilton_CT.w <- nb2listw(poly2nb(pl = Hamilton_CT))
 ```
 
 2) Binary, by distance (3 km threshold) _including self_.
 
-```r
+``` r
 Hamilton_CT.3knb <- Hamilton_CT |> 
   st_centroid() |>
   dnearneigh(d1 = 0, d2 = 3)
@@ -147,7 +147,12 @@ Hamilton_CT.3knb <- Hamilton_CT |>
 ## Warning: st_centroid assumes attributes are constant over geometries
 ```
 
-```r
+```
+## Warning in dnearneigh(st_centroid(Hamilton_CT), d1 = 0, d2 = 3): neighbour
+## object has 188 sub-graphs
+```
+
+``` r
 Hamilton_CT.3kw <- nb2listw(include.self(Hamilton_CT.3knb), style = "B")
 ```
 

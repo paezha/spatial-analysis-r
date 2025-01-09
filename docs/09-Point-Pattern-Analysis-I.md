@@ -37,7 +37,7 @@ In this practice, you will learn:
 
 It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -45,7 +45,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 
-```r
+``` r
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 library(tidyverse) # Easily Install and Load the 'Tidyverse'
 library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
@@ -53,13 +53,13 @@ library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, T
 
 Load the data that you will use for this practice:
 
-```r
+``` r
 data("PointPatterns")
 ```
 
 Quickly check the contents of this dataframe:
 
-```r
+``` r
 summary(PointPatterns)
 ```
 
@@ -103,7 +103,7 @@ Imagine a point pattern that records crimes in a region. The pattern might be ra
 
 Consider for example the following patterns. To create the following figure, you can use _faceting_ by means of `ggplot2::facet_wrap()`:
 
-```r
+``` r
 # This uses function "ggplot" to plot data "PointPatterns" loaded 
 # into the data frame earlier, by means of X and Y coordinates
 
@@ -137,7 +137,7 @@ Notice the use of the "hat" symbol on top of the Greek lambda. This symbol is ca
 
 Consider one of the point patterns in your sample dataset, say "Pattern 1". If we filter for "Pattern 1" we can then summarize it:
 
-```r
+``` r
 filter(PointPatterns, Pattern == "Pattern 1") |> summary()
 ```
 
@@ -162,7 +162,7 @@ This is the _overall density_ of the point pattern.
 
 The overall density of a point process (calculated above) can be mapped by means of the `geom_bin2d` function of the `ggplot2` package. This function divides two dimensional space into bins and reports the number of events or the density of the events in the bins. We will give this a try next:
 
-```r
+``` r
 # `geom_bin2d()` creates a tessellation and counts the number of events
 # in each of the "tiles" in the tessellation. It then assigns colors based 
 # on the count of events. The `binwidth` determines the size of the squares 
@@ -194,7 +194,7 @@ We do this by means of the concept of _quadrats_.
 
 Imagine that instead of calculating the overall (or global) intensity of the point pattern, we subdivided the region into a set of smaller subregions. For instance, we could draw horizontal and vertical lines to create smaller squares:
 
-```r
+``` r
 # `geom_vline()` draws vertical lines that cross the x-axis at 
 # the points indicated; `geom_hline()` draws horizontal lines 
 # that cross the y-axis at the points indicated
@@ -218,7 +218,7 @@ Notice how we used to create the vertical lines (`geom_vline`) and horizontal li
 
 To make things more interesting, instead of calculating the overall density, we can calculate the density for each quadrat. Now the size of the quadrats will be $0.25\times 0.25$. Here we visualize the density of the quadrats:
 
-```r
+``` r
 ggplot() +
   geom_bin2d(data = filter(PointPatterns, 
                            Pattern == "Pattern 1"),
@@ -238,7 +238,7 @@ ggplot() +
 
 You can, of course, change the size of the quadrats. We can take a look at the four point patterns (by means of faceting), after creating a variable to easily control the size of the quadrat. Let us call this variable `q_size`:
 
-```r
+``` r
 # `q_size` controls the size of the quadrats; experiment changing this parameter
 q_size <- 0.5
 ggplot() +
@@ -265,7 +265,7 @@ To use this function, we need to convert the point patterns to a type of object 
 
 First, define the window by means of the `owin` function, and using the 0 to 1 interval for our region:
 
-```r
+``` r
 # `owin()` creates a window for `ppp` objects, which becomes 
 # the _region_ under study. Here, we define a window that is 
 # the unit square and we will discuss the importance of an 
@@ -277,7 +277,7 @@ Wnd <- owin(c(0,1), c(0,1))
 
 Now, a `ppp` object can be created:
 
-```r
+``` r
 # `as.ppp()` will take an object and convert it to a `ppp` object.
 # Here, it does a fairly good job of guessing the contents of the 
 # data frame! The second argument to create the `ppp` object is a 
@@ -288,7 +288,7 @@ ppp1 <- as.ppp(PointPatterns,
 
 If you examine these new `ppp` objects, you will see that they pack the same basic information (i.e., the coordinates), but also the range of the region and so on:
 
-```r
+``` r
 summary(ppp1)
 ```
 
@@ -296,7 +296,7 @@ summary(ppp1)
 ## Marked planar point pattern:  240 points
 ## Average intensity 240 points per square unit
 ## 
-## Coordinates are given to 8 decimal places
+## Coordinates are given to 16 decimal places
 ## 
 ## Multitype:
 ##           frequency proportion intensity
@@ -313,7 +313,7 @@ As you can see, the `ppp` object includes the four patterns, calculates the freq
 
 Objects of the class `ppp` can be plotted using base `R` plotting functions:
 
-```r
+``` r
 plot(ppp1)
 ```
 
@@ -321,7 +321,7 @@ plot(ppp1)
 
 To plot each pattern separately we can split the different patterns using the function `split.ppp()`. Notice how `$` works for indexing the patterns here, just as it does for indexing columns in a data frame:
 
-```r
+``` r
 plot(split.ppp(ppp1)$`Pattern 1`)
 ```
 
@@ -329,7 +329,7 @@ plot(split.ppp(ppp1)$`Pattern 1`)
 
 Once the patterns are in `ppp` form, `quadratcount` can be used to compute the counts of events. To calculate the count separately for each pattern, you need to use again `split.ppp()` (if you don't index a pattern, it will apply the function to all of them). The other two arguments are the number of quadrats in the horizontal (nx) and the vertical (ny) directions:  
 
-```r
+``` r
 quadratcount(split(ppp1),
              nx = 4,
              ny = 4)
@@ -379,7 +379,7 @@ It is important when conducting the type of analysis described above (and more g
 
 Consider for instance what would happen if the region was defined, instead of in the unit square, as a bigger region. Create a second window:
 
-```r
+``` r
 # This new window measure 3 units in the x-axis, 
 # and also 3 units in the y-axis (from -1 to 2)
 Wnd2 <- owin(c(-1,2), 
@@ -388,7 +388,7 @@ Wnd2 <- owin(c(-1,2),
 
 Create a second `ppp` object using this new window:
 
-```r
+``` r
 # Here, we use the same events as before, but place them in the larger window we just created
 ppp2 <- as.ppp(PointPatterns,
                Wnd2)
@@ -396,7 +396,7 @@ ppp2 <- as.ppp(PointPatterns,
 
 Repeat the plot but using the new `ppp` object: 
 
-```r
+``` r
 plot(split.ppp(ppp2)$`Pattern 1`)
 ```
 
@@ -404,21 +404,21 @@ plot(split.ppp(ppp2)$`Pattern 1`)
 
 Repeat but now using an even bigger region. Create a third window:
 
-```r
+``` r
 Wnd3 <- owin(c(-2, 3), 
              c(-2, 3)) 
 ```
 
 And also a third `ppp` object using the third window:
 
-```r
+``` r
 ppp3 <- as.ppp(PointPatterns, 
                Wnd3)
 ```
 
 Now the plot looks like this: 
 
-```r
+``` r
 plot(split.ppp(ppp3)$`Pattern 1`)
 ```
 

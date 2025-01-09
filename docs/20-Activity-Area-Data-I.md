@@ -27,7 +27,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 To start with a clean session restart the application or enter `command/ctrl + shift + F10`. A weaker alternative to this is to _only_ purge user-created objects from memory with the `R` command `rm` (for "remove"), followed by a list of items to be removed. This way at least the working space is clear of extraneous items when you begin your work:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -37,7 +37,7 @@ Load the libraries you will use in this activity.
 
 In addition to `tidyverse`, you will need `sf`, a package that implements simple features in R (you can learn more about this package [here](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html)):
 
-```r
+``` r
 library(tidyverse)
 library(sf)
 library(cartogram)
@@ -48,7 +48,7 @@ In the practice that preceded this activity, you learned about the area data and
 
 Begin by loading the data that you will use in this activity:
 
-```r
+``` r
 data("Hamilton_CT")
 ```
 
@@ -56,7 +56,7 @@ This is an `sf` object with census tracts and selected demographic variables for
 
 You can obtain new (calculated) variables as follows. For instance, to obtain the proportion of residents who are between 20 and 34 years old, and between 35 and 49:
 
-```r
+``` r
 Hamilton_CT <- Hamilton_CT |>
   mutate(Prop20to34 = (AGE_20_TO_24 + 
                          AGE_25_TO_29 + 

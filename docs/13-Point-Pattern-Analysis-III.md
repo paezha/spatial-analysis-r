@@ -36,7 +36,7 @@ In this practice, you will learn:
 
 As usual, it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -44,7 +44,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 
-```r
+``` r
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
 library(tidyverse) # Easily Install and Load the 'Tidyverse'
@@ -52,13 +52,13 @@ library(tidyverse) # Easily Install and Load the 'Tidyverse'
 
 Load the dataset that you will use for this practice:
 
-```r
+``` r
 data("pp0_df")
 ```
 
 Examine the contents of the data frame you just loaded:
 
-```r
+``` r
 summary(pp0_df)
 ```
 
@@ -74,7 +74,7 @@ summary(pp0_df)
 
 As you can see, this data frame includes a set of coordinates for two point patterns, labeled "Pattern 1" and "Pattern 2", each of which consists of $n=36$ events. The range of the coordinates (between 0 and 1) suggests a window as follows:
 
-```r
+``` r
 # Remember, `owin()` is used to create a window to frame 
 # a point pattern in the package `spatstat`
 W <- owin(c(0,1), 
@@ -85,7 +85,7 @@ This creates an `owin` object that defines a region in the unit square.
 
 Given window object `W`, it is possible to transform the dataframe into a `ppp` object: 
 
-```r
+``` r
 # Remember, `as.ppp()` will take a foreign object (foreign 
 # to `spatstat`) and convert it into a `ppp` object
 pp0.ppp <- as.ppp(pp0_df, 
@@ -100,7 +100,7 @@ Quadrats and kernel density are examples of density-based analysis. These techni
 
 For this reason, the following two patterns, despite being very different, give identical number of counts per quadrat:
 
-```r
+``` r
 # The `split()` function is used to divide data in the vector 
 # into groups using a categorical variable; in this case, the 
 # `ppp` object includes only the coordinates and a variable that 
@@ -113,7 +113,7 @@ plot(split(pp0.ppp))
 <img src="13-Point-Pattern-Analysis-III_files/figure-html/ch13-plot-pp0-1.png" width="672" />
 
 
-```r
+``` r
 # Arguments `nx` and `ny` indicate the number of quadrats on the 
 # x and y directions respectively
 plot(quadratcount(split(pp0.ppp), 
@@ -127,7 +127,7 @@ The two patterns above have similar _density_, However, "Pattern 1" displays _cl
 
 With some fiddling of the parameters, quadrats can be coaxed to tease out the variations in density, for instance:
 
-```r
+``` r
 plot(quadratcount(split(pp0.ppp), 
                   nx = 9, 
                   ny = 9))
@@ -139,7 +139,7 @@ As a visualization technique, this gives a better sense of the variations in den
 
 As an alternative, kernel density can be used to visualize the smoothed estimate of the density:
 
-```r
+``` r
 plot(density(split(pp0.ppp), 
              sigma = 0.075))
 ```
@@ -178,7 +178,7 @@ The package `spatstat` includes functions to calculate Euclidean distances. Thre
 
 With these functions we can calculate, for instance, the following distances:
 
-```r
+``` r
 # Function `nndist()` will calculate the distance of each 
 # event to its nearest neighbor
 pp0_nn1 <- nndist(split(pp0.ppp)$"Pattern 1")
@@ -188,7 +188,7 @@ The value of `nndist()` is a vector with $n$ distances, where $n$ is the number 
 
 Let us explore the distribution of these distances by means of a histogram:
 
-```r
+``` r
 # Remember, `geom_histogram()` adds a histogram to a `ggplot2` object; 
 # the `binwidth` argument defines the size of each bin for the histogram
 ggplot(data = data.frame(dist = pp0_nn1), 
@@ -202,7 +202,7 @@ Notice how most events (20 out of 36) have a nearest neighbor at a relatively sh
 
 Compare to the distribution of distances in "Pattern 2" of `pp0.ppp`:
 
-```r
+``` r
 # Calculate the distances to nearest neighbors in the second point
 # pattern, i.e., "Pattern 2"
 pp0_nn2 <- nndist(split(pp0.ppp)$"Pattern 2")
@@ -220,7 +220,7 @@ In this case, most events (more than 30 out of 36) have a nearest neighbor at a 
 
 The two histograms above are interesting in that they reveal, for "Point Pattern 1" that most events are only a short distance away from another event (indicative of clustering), whereas for "Point Pattern 2" the suggestion is that almost all events have a nearest neighbor at a distance that is constant (indicative of regularity). However, the histograms do not convey more spatial information. Another useful tool to explore the distribution of distances to nearest neighbors is a _Stienen diagram_. A Stienen diagram is essentially a proportional symbol plot of the events. The sizes of symbols are proportional to the distance to their nearest neighbor. For example, for "Pattern 1" in `pp0.ppp` (Notice the use of %mark% to add an attribute to the `ppp` object; the attribute is the distance to the nearest neighbor):
 
-```r
+``` r
 # The function %mark% is used to add a variable (a "mark") to a `ppp` object. In this example, the variable we are adding to "Pattern 1" is the distance from the event to its nearest neighbor, as calculated above
 split(pp0.ppp)$"Pattern 1" %mark% (pp0_nn1) %>%
   plot(markscale = 1, main = "Stienen diagram")
@@ -232,7 +232,7 @@ In this diagram, the largest circle is not very large: even events that are rela
 
 Compare to the Stienen diagram of "Pattern 2":
 
-```r
+``` r
 split(pp0.ppp)$"Pattern 2" %mark% (pp0_nn2) %>%
 plot(markscale = 1, main = "Stienen diagram")
 ```
@@ -243,14 +243,14 @@ Notice how all circles are very similar in size: this fits the definition of dis
 
 What would these diagrams look for a null landscape? We can use the function `runifpoint` from the `spatstat` package to generate a null landscape:
 
-```r
+``` r
 # `runifpoint()` is a function to generate random coordinates based on the uniform random distribution function. The argument tells the function to create n = 36 random coordinates for our null landscape; this null landscape is contained in the window `W`, same as our previous point patterns  
 rand_ppp <- runifpoint(n = 36, win = W)
 ```
 
 If we plot the Stienen diagram for this point pattern:
 
-```r
+``` r
 # Calculate the distances to nearest neighbors for the null landscape
 rand_nn <- nndist(rand_ppp)
 
@@ -273,7 +273,7 @@ What is needed is a convenient way to summarize the distribution of distances to
 
 Imagine for instance the following hypothetical distribution of distances of ten events to their nearest neighbors (the first event's nearest neighbor is at a distance of 1, the second event's nearest neighbor is at 2, the third's at 0.5, and so on):
 
-```r
+``` r
 nnd <- c(1, 2, 0.5, 2.5, 1.7, 4, 3.5, 1.2, 2.3, 2.8)
 ```
 
@@ -281,7 +281,7 @@ When $x = 0$, zero events have a nearest neighbor at that distance or less. Two 
 
 We can plot these numbers of events as a proportion:
 
-```r
+``` r
 # Create a data frame for plotting the proportion of events with a nearest neighbor at a distance $d_ij <= x$
 df <- data.frame(x = c(0, 1, 2, 3, 4), proportion = c(0, 3/10, 5/10, 8/10, 10/10))
 
@@ -308,7 +308,7 @@ When the empirical $\hat{G}(x)$ is greater than the theoretical function, this s
 
 The $G$-function is implemented in `spatstat` as `Gest` (for $G$ estimated):
 
-```r
+``` r
 # Use split to calculate the G-function only for "Pattern 1"
 g_pattern1 <- Gest(split(pp0.ppp)$"Pattern 1", correction = "none")
 ```
@@ -317,7 +317,7 @@ g_pattern1 <- Gest(split(pp0.ppp)$"Pattern 1", correction = "none")
 
 The `plot()` function can be used to visualize the estimated G (with r = x): 
 
-```r
+``` r
 plot(g_pattern1)
 ```
 
@@ -327,7 +327,7 @@ In the plot above, the empirical function is the solid black line, and the theor
 
 If you examine the empirical function, you will see that about 50% of events have a nearest neighbor at a distance of less than approximately 0.04. In the null landscape (theoretical function), in contrast, only about 16% of events have a nearest neighbor at less than 0.04:
 
-```r
+``` r
 plot(g_pattern1)
 lines(x = c(0.04, 0.04), y = c(-0.1, 0.5), lty = "dotted")
 lines(x = c(-0.1, 0.04), y = c(0.5, 0.5), lty = "dotted")
@@ -340,7 +340,7 @@ Notice that the empirical function is above the theoretical function. This sugge
 
 Compare to "Pattern 2":
 
-```r
+``` r
 g_pattern2 <- Gest(split(pp0.ppp)$"Pattern 2", correction = "none")
 plot(g_pattern2)
 ```
@@ -351,7 +351,7 @@ Now the empirical function is below the one for the null landscape. Notice too t
 
 And the random pattern that you created before:
 
-```r
+``` r
 g_pattern_rnd <- Gest(rand_ppp, correction = "none")
 plot(g_pattern_rnd)
 ```

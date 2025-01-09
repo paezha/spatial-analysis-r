@@ -29,7 +29,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -37,7 +37,7 @@ Note that `ls()` lists all objects currently on the worspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `spatstat`, a package designed for the analysis of point patterns (you can learn about `spatstat` [here](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) and [here](http://spatstat.org/resources/spatstatJSSpaper.pdf)):
 
-```r
+``` r
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
 library(tidyverse) # Easily Install and Load the 'Tidyverse'
@@ -46,7 +46,7 @@ library(tidyverse) # Easily Install and Load the 'Tidyverse'
 In the practice that preceded this activity, you learned about the concepts of intensity and density, about quadrats, and also how to create density maps. 
 Begin by loading the data that you will use in this activity:
 
-```r
+``` r
 data("bear_df")
 ```
 
@@ -58,35 +58,35 @@ The dataset includes coordinates of one bear's movement over a period of several
 
 Summarize the contents of this dataframe:
 
-```r
+``` r
 summary(bear_df)
 ```
 
 ```
 ##        x                y                  marks    
 ##  Min.   :515743   Min.   :6812138   Day Time  :502  
-##  1st Qu.:518995   1st Qu.:6813396   Night Time:498  
+##  1st Qu.:518994   1st Qu.:6813396   Night Time:498  
 ##  Median :519526   Median :6816724                   
 ##  Mean   :519321   Mean   :6816474                   
-##  3rd Qu.:519983   3rd Qu.:6818111                   
+##  3rd Qu.:519982   3rd Qu.:6818111                   
 ##  Max.   :522999   Max.   :6821440
 ```
 
 The Min. and Max. of `x` and `y` give us an idea of the region covered by this dataset. We can use these values to approximate a window for the region (as an experiment, you could try changing these values to create regions of different sizes):
 
-```r
+``` r
 W <- owin(xrange = c(515000, 523500), yrange = c(6812000, 6822000))
 ```
 
 Next, we can convert the dataframe into a `ppp`-class object suitable for analysis using the package `spatstat`:
 
-```r
+``` r
 bear.ppp <- as.ppp(bear_df, W = W)
 ```
 
 You can check the contents of the `ppp` object by means of `summary`:
 
-```r
+``` r
 summary(bear.ppp)
 ```
 
@@ -94,8 +94,7 @@ summary(bear.ppp)
 ## Marked planar point pattern:  1000 points
 ## Average intensity 1.176471e-05 points per square unit
 ## 
-## Coordinates are given to 1 decimal place
-## i.e. rounded to the nearest multiple of 0.1 units
+## Coordinates are given to 10 decimal places
 ## 
 ## Multitype:
 ##            frequency proportion    intensity

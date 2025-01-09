@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 26 Activity 12: Area Data IV | An Introduction to Spatial Data Analysis and Statistics: A Course in R</title>
   <meta name="description" content="This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad and Alexis Polidoro. Further testing and refinements are due to John Merrall and Anastasia Soukhov. The book is published with support of an Open Educational Resources grant from MacPherson Institute, McMaster University." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 26 Activity 12: Area Data IV | An Introduction to Spatial Data Analysis and Statistics: A Course in R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2024-02-11" />
+<meta name="date" content="2025-01-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,14 +53,15 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
 <script src="libs/proj4-2.6.2/proj4.min.js"></script>
 <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.2.0/leaflet.js"></script>
+<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
 <link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet" />
 <link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet" />
 <script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script>
@@ -68,10 +69,10 @@
 <script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script>
 <script src="libs/lfx-heat-0.1.0/lfx-heat-prod.js"></script>
 <script src="libs/lfx-heat-0.1.0/lfx-heat-bindings.js"></script>
-<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 <link href="libs/colourpicker-1.1/colourpicker.min.css" rel="stylesheet" />
@@ -84,7 +85,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -94,7 +95,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -156,6 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -630,92 +632,94 @@ div.csl-indent {
 <div id="preliminaries-24" class="section level2 hasAnchor" number="26.4">
 <h2><span class="header-section-number">26.4</span> Preliminaries<a href="activity-12-area-data-iv.html#preliminaries-24" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Before you begin your work restart the <code>R</code> session, or at least clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in <code>R</code> to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
-<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="activity-12-area-data-iv.html#cb529-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="activity-12-area-data-iv.html#cb530-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity.</p>
 <p>In addition to <code>tidyverse</code>, you will need <code>sf</code>, a package that implements simple features in R (you can learn about <code>sf</code> <a href="https://cran.r-project.org/web/packages/sf/vignettes/sf1.html">here</a>) and <code>spdep</code>, a package that implements several spatial statistical methods (you can learn more about it <a href="https://cran.r-project.org/web/packages/spdep/index.html">here</a>):</p>
-<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="activity-12-area-data-iv.html#cb530-1" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
-<span id="cb530-2"><a href="activity-12-area-data-iv.html#cb530-2" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb530-3"><a href="activity-12-area-data-iv.html#cb530-3" tabindex="-1"></a><span class="fu">library</span>(spdep)</span>
-<span id="cb530-4"><a href="activity-12-area-data-iv.html#cb530-4" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="activity-12-area-data-iv.html#cb531-1" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
+<span id="cb531-2"><a href="activity-12-area-data-iv.html#cb531-2" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb531-3"><a href="activity-12-area-data-iv.html#cb531-3" tabindex="-1"></a><span class="fu">library</span>(spdep)</span>
+<span id="cb531-4"><a href="activity-12-area-data-iv.html#cb531-4" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <p>Begin by loading the data that you will use in this activity:</p>
-<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="activity-12-area-data-iv.html#cb531-1" tabindex="-1"></a><span class="fu">data</span>(Hamilton_CT)</span></code></pre></div>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="activity-12-area-data-iv.html#cb532-1" tabindex="-1"></a><span class="fu">data</span>(Hamilton_CT)</span></code></pre></div>
 <p>This is a <code>sf</code> object with census tracts and selected demographic variables for the Hamilton CMA in Canada.
 You can obtain new (calculated) variables as follows. For instance, to obtain the proportion of residents who are between 20 and 34 years old, and between 35 and 49:</p>
-<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="activity-12-area-data-iv.html#cb532-1" tabindex="-1"></a>Hamilton_CT <span class="ot">&lt;-</span> <span class="fu">mutate</span>(Hamilton_CT, <span class="at">Prop20to34 =</span> (AGE_20_TO_24 <span class="sc">+</span> AGE_25_TO_29 <span class="sc">+</span> AGE_30_TO_34)<span class="sc">/</span>POPULATION, <span class="at">Prop35to49 =</span> (AGE_35_TO_39 <span class="sc">+</span> AGE_40_TO_44 <span class="sc">+</span> AGE_45_TO_49)<span class="sc">/</span>POPULATION)</span></code></pre></div>
+<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="activity-12-area-data-iv.html#cb533-1" tabindex="-1"></a>Hamilton_CT <span class="ot">&lt;-</span> <span class="fu">mutate</span>(Hamilton_CT, <span class="at">Prop20to34 =</span> (AGE_20_TO_24 <span class="sc">+</span> AGE_25_TO_29 <span class="sc">+</span> AGE_30_TO_34)<span class="sc">/</span>POPULATION, <span class="at">Prop35to49 =</span> (AGE_35_TO_39 <span class="sc">+</span> AGE_40_TO_44 <span class="sc">+</span> AGE_45_TO_49)<span class="sc">/</span>POPULATION)</span></code></pre></div>
 <p>This function is used to create local Moran maps:</p>
-<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="activity-12-area-data-iv.html#cb533-1" tabindex="-1"></a>localmoran.map <span class="ot">&lt;-</span> <span class="cf">function</span>(p, listw, VAR, by){</span>
-<span id="cb533-2"><a href="activity-12-area-data-iv.html#cb533-2" tabindex="-1"></a>  <span class="co"># p is a simple features object</span></span>
-<span id="cb533-3"><a href="activity-12-area-data-iv.html#cb533-3" tabindex="-1"></a>  <span class="fu">require</span>(tidyverse)</span>
-<span id="cb533-4"><a href="activity-12-area-data-iv.html#cb533-4" tabindex="-1"></a>  <span class="fu">require</span>(spdep)</span>
-<span id="cb533-5"><a href="activity-12-area-data-iv.html#cb533-5" tabindex="-1"></a>  <span class="fu">require</span>(plotly)</span>
-<span id="cb533-6"><a href="activity-12-area-data-iv.html#cb533-6" tabindex="-1"></a>  </span>
-<span id="cb533-7"><a href="activity-12-area-data-iv.html#cb533-7" tabindex="-1"></a>  df_msc <span class="ot">&lt;-</span> p <span class="sc">|&gt;</span> </span>
-<span id="cb533-8"><a href="activity-12-area-data-iv.html#cb533-8" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">VAR =</span> <span class="fu">as.name</span>(VAR),</span>
-<span id="cb533-9"><a href="activity-12-area-data-iv.html#cb533-9" tabindex="-1"></a>              <span class="at">key =</span> <span class="fu">as.name</span>(by)) <span class="sc">|&gt;</span></span>
-<span id="cb533-10"><a href="activity-12-area-data-iv.html#cb533-10" tabindex="-1"></a>    <span class="fu">transmute</span>(key,</span>
-<span id="cb533-11"><a href="activity-12-area-data-iv.html#cb533-11" tabindex="-1"></a>              VAR,</span>
-<span id="cb533-12"><a href="activity-12-area-data-iv.html#cb533-12" tabindex="-1"></a>              <span class="at">Z =</span> (VAR <span class="sc">-</span> <span class="fu">mean</span>(VAR)) <span class="sc">/</span> <span class="fu">var</span>(VAR),</span>
-<span id="cb533-13"><a href="activity-12-area-data-iv.html#cb533-13" tabindex="-1"></a>              <span class="at">SMA =</span> <span class="fu">lag.listw</span>(listw, Z),</span>
-<span id="cb533-14"><a href="activity-12-area-data-iv.html#cb533-14" tabindex="-1"></a>              <span class="at">Type =</span> <span class="fu">case_when</span>(Z <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> SMA <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">&quot;LL&quot;</span>,</span>
-<span id="cb533-15"><a href="activity-12-area-data-iv.html#cb533-15" tabindex="-1"></a>                               Z <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> SMA <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">&quot;HH&quot;</span>,</span>
-<span id="cb533-16"><a href="activity-12-area-data-iv.html#cb533-16" tabindex="-1"></a>                               <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;HL/LH&quot;</span>))</span>
-<span id="cb533-17"><a href="activity-12-area-data-iv.html#cb533-17" tabindex="-1"></a>  </span>
-<span id="cb533-18"><a href="activity-12-area-data-iv.html#cb533-18" tabindex="-1"></a>  local_I <span class="ot">&lt;-</span> <span class="fu">localmoran</span>(df_msc<span class="sc">$</span>VAR, listw)</span>
-<span id="cb533-19"><a href="activity-12-area-data-iv.html#cb533-19" tabindex="-1"></a>  </span>
-<span id="cb533-20"><a href="activity-12-area-data-iv.html#cb533-20" tabindex="-1"></a>  <span class="fu">colnames</span>(local_I) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Ii&quot;</span>, <span class="st">&quot;E.Ii&quot;</span>, <span class="st">&quot;Var.Ii&quot;</span>, <span class="st">&quot;Z.Ii&quot;</span>, <span class="st">&quot;p.val&quot;</span>)</span>
-<span id="cb533-21"><a href="activity-12-area-data-iv.html#cb533-21" tabindex="-1"></a>  </span>
-<span id="cb533-22"><a href="activity-12-area-data-iv.html#cb533-22" tabindex="-1"></a>  df_msc <span class="ot">&lt;-</span> <span class="fu">left_join</span>(df_msc, </span>
-<span id="cb533-23"><a href="activity-12-area-data-iv.html#cb533-23" tabindex="-1"></a>                      <span class="fu">data.frame</span>(<span class="at">key =</span> df_msc<span class="sc">$</span>key, </span>
-<span id="cb533-24"><a href="activity-12-area-data-iv.html#cb533-24" tabindex="-1"></a>                                 local_I),</span>
-<span id="cb533-25"><a href="activity-12-area-data-iv.html#cb533-25" tabindex="-1"></a>                      <span class="at">by =</span> <span class="st">&quot;key&quot;</span>)</span>
-<span id="cb533-26"><a href="activity-12-area-data-iv.html#cb533-26" tabindex="-1"></a>  </span>
-<span id="cb533-27"><a href="activity-12-area-data-iv.html#cb533-27" tabindex="-1"></a>  <span class="fu">plot_ly</span>(df_msc) <span class="sc">|&gt;</span></span>
-<span id="cb533-28"><a href="activity-12-area-data-iv.html#cb533-28" tabindex="-1"></a>    <span class="fu">add_sf</span>(<span class="at">type =</span> <span class="st">&quot;scatter&quot;</span>,</span>
-<span id="cb533-29"><a href="activity-12-area-data-iv.html#cb533-29" tabindex="-1"></a>           <span class="at">split =</span> <span class="sc">~</span>(p.val <span class="sc">&lt;</span> <span class="fl">0.05</span>), </span>
-<span id="cb533-30"><a href="activity-12-area-data-iv.html#cb533-30" tabindex="-1"></a>           <span class="at">color =</span> <span class="sc">~</span>Type, </span>
-<span id="cb533-31"><a href="activity-12-area-data-iv.html#cb533-31" tabindex="-1"></a>           <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, </span>
-<span id="cb533-32"><a href="activity-12-area-data-iv.html#cb533-32" tabindex="-1"></a>                      <span class="st">&quot;khaki1&quot;</span>,</span>
-<span id="cb533-33"><a href="activity-12-area-data-iv.html#cb533-33" tabindex="-1"></a>                      <span class="st">&quot;dodgerblue&quot;</span>, </span>
-<span id="cb533-34"><a href="activity-12-area-data-iv.html#cb533-34" tabindex="-1"></a>                      <span class="st">&quot;dodgerblue4&quot;</span>)) </span>
-<span id="cb533-35"><a href="activity-12-area-data-iv.html#cb533-35" tabindex="-1"></a>}</span></code></pre></div>
-<p>This function is used to create <span class="math inline">\(G_i^*\)</span> maps:</p>
-<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="activity-12-area-data-iv.html#cb534-1" tabindex="-1"></a>gistar.map <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">p =</span> p, <span class="at">listw =</span> listw, <span class="at">VAR =</span> VAR, <span class="at">by =</span> by){</span>
-<span id="cb534-2"><a href="activity-12-area-data-iv.html#cb534-2" tabindex="-1"></a>  <span class="fu">require</span>(tidyverse)</span>
-<span id="cb534-3"><a href="activity-12-area-data-iv.html#cb534-3" tabindex="-1"></a>  <span class="fu">require</span>(spdep)</span>
-<span id="cb534-4"><a href="activity-12-area-data-iv.html#cb534-4" tabindex="-1"></a>  <span class="fu">require</span>(sf)</span>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="activity-12-area-data-iv.html#cb534-1" tabindex="-1"></a>localmoran.map <span class="ot">&lt;-</span> <span class="cf">function</span>(p, listw, VAR, by){</span>
+<span id="cb534-2"><a href="activity-12-area-data-iv.html#cb534-2" tabindex="-1"></a>  <span class="co"># p is a simple features object</span></span>
+<span id="cb534-3"><a href="activity-12-area-data-iv.html#cb534-3" tabindex="-1"></a>  <span class="fu">require</span>(tidyverse)</span>
+<span id="cb534-4"><a href="activity-12-area-data-iv.html#cb534-4" tabindex="-1"></a>  <span class="fu">require</span>(spdep)</span>
 <span id="cb534-5"><a href="activity-12-area-data-iv.html#cb534-5" tabindex="-1"></a>  <span class="fu">require</span>(plotly)</span>
 <span id="cb534-6"><a href="activity-12-area-data-iv.html#cb534-6" tabindex="-1"></a>  </span>
-<span id="cb534-7"><a href="activity-12-area-data-iv.html#cb534-7" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">mutate</span>(p, <span class="at">key =</span> p[[by]])</span>
-<span id="cb534-8"><a href="activity-12-area-data-iv.html#cb534-8" tabindex="-1"></a>  </span>
-<span id="cb534-9"><a href="activity-12-area-data-iv.html#cb534-9" tabindex="-1"></a>  df.lg <span class="ot">&lt;-</span> <span class="fu">localG</span>(p[[VAR]], listw)</span>
-<span id="cb534-10"><a href="activity-12-area-data-iv.html#cb534-10" tabindex="-1"></a>  df.lg <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(df.lg)</span>
-<span id="cb534-11"><a href="activity-12-area-data-iv.html#cb534-11" tabindex="-1"></a>  df.lg <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Gstar =</span> df.lg, <span class="at">p.val =</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(df.lg), <span class="at">lower.tail =</span> <span class="cn">FALSE</span>))</span>
-<span id="cb534-12"><a href="activity-12-area-data-iv.html#cb534-12" tabindex="-1"></a>  </span>
-<span id="cb534-13"><a href="activity-12-area-data-iv.html#cb534-13" tabindex="-1"></a>  df.lg <span class="ot">&lt;-</span> <span class="fu">mutate</span>(df.lg, </span>
-<span id="cb534-14"><a href="activity-12-area-data-iv.html#cb534-14" tabindex="-1"></a>              <span class="at">Type =</span> <span class="fu">case_when</span>(Gstar <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> p.val <span class="sc">&lt;=</span> <span class="fl">0.05</span> <span class="sc">~</span> <span class="st">&quot;Low Concentration&quot;</span>,</span>
-<span id="cb534-15"><a href="activity-12-area-data-iv.html#cb534-15" tabindex="-1"></a>                               Gstar <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> p.val <span class="sc">&lt;=</span> <span class="fl">0.05</span> <span class="sc">~</span> <span class="st">&quot;High Concentration&quot;</span>,</span>
-<span id="cb534-16"><a href="activity-12-area-data-iv.html#cb534-16" tabindex="-1"></a>                               <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;Not Signicant&quot;</span>))</span>
-<span id="cb534-17"><a href="activity-12-area-data-iv.html#cb534-17" tabindex="-1"></a></span>
-<span id="cb534-18"><a href="activity-12-area-data-iv.html#cb534-18" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">left_join</span>(p, </span>
-<span id="cb534-19"><a href="activity-12-area-data-iv.html#cb534-19" tabindex="-1"></a>                  <span class="fu">data.frame</span>(<span class="at">key =</span> p[[by]], df.lg))</span>
-<span id="cb534-20"><a href="activity-12-area-data-iv.html#cb534-20" tabindex="-1"></a>  </span>
-<span id="cb534-21"><a href="activity-12-area-data-iv.html#cb534-21" tabindex="-1"></a>  <span class="fu">plot_ly</span>(p) <span class="sc">|&gt;</span></span>
-<span id="cb534-22"><a href="activity-12-area-data-iv.html#cb534-22" tabindex="-1"></a>    <span class="fu">add_sf</span>(<span class="at">split =</span> <span class="sc">~</span>(p.val <span class="sc">&lt;</span> <span class="fl">0.05</span>), <span class="at">color =</span> <span class="sc">~</span>Type, <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;gray&quot;</span>))</span>
-<span id="cb534-23"><a href="activity-12-area-data-iv.html#cb534-23" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb534-7"><a href="activity-12-area-data-iv.html#cb534-7" tabindex="-1"></a>  df_msc <span class="ot">&lt;-</span> p <span class="sc">|&gt;</span> </span>
+<span id="cb534-8"><a href="activity-12-area-data-iv.html#cb534-8" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">VAR =</span> <span class="fu">as.name</span>(VAR),</span>
+<span id="cb534-9"><a href="activity-12-area-data-iv.html#cb534-9" tabindex="-1"></a>              <span class="at">key =</span> <span class="fu">as.name</span>(by)) <span class="sc">|&gt;</span></span>
+<span id="cb534-10"><a href="activity-12-area-data-iv.html#cb534-10" tabindex="-1"></a>    <span class="fu">transmute</span>(key,</span>
+<span id="cb534-11"><a href="activity-12-area-data-iv.html#cb534-11" tabindex="-1"></a>              VAR,</span>
+<span id="cb534-12"><a href="activity-12-area-data-iv.html#cb534-12" tabindex="-1"></a>              <span class="at">Z =</span> (VAR <span class="sc">-</span> <span class="fu">mean</span>(VAR)) <span class="sc">/</span> <span class="fu">var</span>(VAR),</span>
+<span id="cb534-13"><a href="activity-12-area-data-iv.html#cb534-13" tabindex="-1"></a>              <span class="at">SMA =</span> <span class="fu">lag.listw</span>(listw, Z),</span>
+<span id="cb534-14"><a href="activity-12-area-data-iv.html#cb534-14" tabindex="-1"></a>              <span class="at">Type =</span> <span class="fu">case_when</span>(Z <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> SMA <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">&quot;LL&quot;</span>,</span>
+<span id="cb534-15"><a href="activity-12-area-data-iv.html#cb534-15" tabindex="-1"></a>                               Z <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> SMA <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">&quot;HH&quot;</span>,</span>
+<span id="cb534-16"><a href="activity-12-area-data-iv.html#cb534-16" tabindex="-1"></a>                               <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;HL/LH&quot;</span>))</span>
+<span id="cb534-17"><a href="activity-12-area-data-iv.html#cb534-17" tabindex="-1"></a>  </span>
+<span id="cb534-18"><a href="activity-12-area-data-iv.html#cb534-18" tabindex="-1"></a>  local_I <span class="ot">&lt;-</span> <span class="fu">localmoran</span>(df_msc<span class="sc">$</span>VAR, listw)</span>
+<span id="cb534-19"><a href="activity-12-area-data-iv.html#cb534-19" tabindex="-1"></a>  </span>
+<span id="cb534-20"><a href="activity-12-area-data-iv.html#cb534-20" tabindex="-1"></a>  <span class="fu">colnames</span>(local_I) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Ii&quot;</span>, <span class="st">&quot;E.Ii&quot;</span>, <span class="st">&quot;Var.Ii&quot;</span>, <span class="st">&quot;Z.Ii&quot;</span>, <span class="st">&quot;p.val&quot;</span>)</span>
+<span id="cb534-21"><a href="activity-12-area-data-iv.html#cb534-21" tabindex="-1"></a>  </span>
+<span id="cb534-22"><a href="activity-12-area-data-iv.html#cb534-22" tabindex="-1"></a>  df_msc <span class="ot">&lt;-</span> <span class="fu">left_join</span>(df_msc, </span>
+<span id="cb534-23"><a href="activity-12-area-data-iv.html#cb534-23" tabindex="-1"></a>                      <span class="fu">data.frame</span>(<span class="at">key =</span> df_msc<span class="sc">$</span>key, </span>
+<span id="cb534-24"><a href="activity-12-area-data-iv.html#cb534-24" tabindex="-1"></a>                                 local_I),</span>
+<span id="cb534-25"><a href="activity-12-area-data-iv.html#cb534-25" tabindex="-1"></a>                      <span class="at">by =</span> <span class="st">&quot;key&quot;</span>)</span>
+<span id="cb534-26"><a href="activity-12-area-data-iv.html#cb534-26" tabindex="-1"></a>  </span>
+<span id="cb534-27"><a href="activity-12-area-data-iv.html#cb534-27" tabindex="-1"></a>  <span class="fu">plot_ly</span>(df_msc) <span class="sc">|&gt;</span></span>
+<span id="cb534-28"><a href="activity-12-area-data-iv.html#cb534-28" tabindex="-1"></a>    <span class="fu">add_sf</span>(<span class="at">type =</span> <span class="st">&quot;scatter&quot;</span>,</span>
+<span id="cb534-29"><a href="activity-12-area-data-iv.html#cb534-29" tabindex="-1"></a>           <span class="at">split =</span> <span class="sc">~</span>(p.val <span class="sc">&lt;</span> <span class="fl">0.05</span>), </span>
+<span id="cb534-30"><a href="activity-12-area-data-iv.html#cb534-30" tabindex="-1"></a>           <span class="at">color =</span> <span class="sc">~</span>Type, </span>
+<span id="cb534-31"><a href="activity-12-area-data-iv.html#cb534-31" tabindex="-1"></a>           <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, </span>
+<span id="cb534-32"><a href="activity-12-area-data-iv.html#cb534-32" tabindex="-1"></a>                      <span class="st">&quot;khaki1&quot;</span>,</span>
+<span id="cb534-33"><a href="activity-12-area-data-iv.html#cb534-33" tabindex="-1"></a>                      <span class="st">&quot;dodgerblue&quot;</span>, </span>
+<span id="cb534-34"><a href="activity-12-area-data-iv.html#cb534-34" tabindex="-1"></a>                      <span class="st">&quot;dodgerblue4&quot;</span>)) </span>
+<span id="cb534-35"><a href="activity-12-area-data-iv.html#cb534-35" tabindex="-1"></a>}</span></code></pre></div>
+<p>This function is used to create <span class="math inline">\(G_i^*\)</span> maps:</p>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="activity-12-area-data-iv.html#cb535-1" tabindex="-1"></a>gistar.map <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">p =</span> p, <span class="at">listw =</span> listw, <span class="at">VAR =</span> VAR, <span class="at">by =</span> by){</span>
+<span id="cb535-2"><a href="activity-12-area-data-iv.html#cb535-2" tabindex="-1"></a>  <span class="fu">require</span>(tidyverse)</span>
+<span id="cb535-3"><a href="activity-12-area-data-iv.html#cb535-3" tabindex="-1"></a>  <span class="fu">require</span>(spdep)</span>
+<span id="cb535-4"><a href="activity-12-area-data-iv.html#cb535-4" tabindex="-1"></a>  <span class="fu">require</span>(sf)</span>
+<span id="cb535-5"><a href="activity-12-area-data-iv.html#cb535-5" tabindex="-1"></a>  <span class="fu">require</span>(plotly)</span>
+<span id="cb535-6"><a href="activity-12-area-data-iv.html#cb535-6" tabindex="-1"></a>  </span>
+<span id="cb535-7"><a href="activity-12-area-data-iv.html#cb535-7" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">mutate</span>(p, <span class="at">key =</span> p[[by]])</span>
+<span id="cb535-8"><a href="activity-12-area-data-iv.html#cb535-8" tabindex="-1"></a>  </span>
+<span id="cb535-9"><a href="activity-12-area-data-iv.html#cb535-9" tabindex="-1"></a>  df.lg <span class="ot">&lt;-</span> <span class="fu">localG</span>(p[[VAR]], listw)</span>
+<span id="cb535-10"><a href="activity-12-area-data-iv.html#cb535-10" tabindex="-1"></a>  df.lg <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(df.lg)</span>
+<span id="cb535-11"><a href="activity-12-area-data-iv.html#cb535-11" tabindex="-1"></a>  df.lg <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Gstar =</span> df.lg, <span class="at">p.val =</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(df.lg), <span class="at">lower.tail =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb535-12"><a href="activity-12-area-data-iv.html#cb535-12" tabindex="-1"></a>  </span>
+<span id="cb535-13"><a href="activity-12-area-data-iv.html#cb535-13" tabindex="-1"></a>  df.lg <span class="ot">&lt;-</span> <span class="fu">mutate</span>(df.lg, </span>
+<span id="cb535-14"><a href="activity-12-area-data-iv.html#cb535-14" tabindex="-1"></a>              <span class="at">Type =</span> <span class="fu">case_when</span>(Gstar <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> p.val <span class="sc">&lt;=</span> <span class="fl">0.05</span> <span class="sc">~</span> <span class="st">&quot;Low Concentration&quot;</span>,</span>
+<span id="cb535-15"><a href="activity-12-area-data-iv.html#cb535-15" tabindex="-1"></a>                               Gstar <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> p.val <span class="sc">&lt;=</span> <span class="fl">0.05</span> <span class="sc">~</span> <span class="st">&quot;High Concentration&quot;</span>,</span>
+<span id="cb535-16"><a href="activity-12-area-data-iv.html#cb535-16" tabindex="-1"></a>                               <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;Not Signicant&quot;</span>))</span>
+<span id="cb535-17"><a href="activity-12-area-data-iv.html#cb535-17" tabindex="-1"></a></span>
+<span id="cb535-18"><a href="activity-12-area-data-iv.html#cb535-18" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">left_join</span>(p, </span>
+<span id="cb535-19"><a href="activity-12-area-data-iv.html#cb535-19" tabindex="-1"></a>                  <span class="fu">data.frame</span>(<span class="at">key =</span> p[[by]], df.lg))</span>
+<span id="cb535-20"><a href="activity-12-area-data-iv.html#cb535-20" tabindex="-1"></a>  </span>
+<span id="cb535-21"><a href="activity-12-area-data-iv.html#cb535-21" tabindex="-1"></a>  <span class="fu">plot_ly</span>(p) <span class="sc">|&gt;</span></span>
+<span id="cb535-22"><a href="activity-12-area-data-iv.html#cb535-22" tabindex="-1"></a>    <span class="fu">add_sf</span>(<span class="at">split =</span> <span class="sc">~</span>(p.val <span class="sc">&lt;</span> <span class="fl">0.05</span>), <span class="at">color =</span> <span class="sc">~</span>Type, <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;gray&quot;</span>))</span>
+<span id="cb535-23"><a href="activity-12-area-data-iv.html#cb535-23" tabindex="-1"></a>}</span></code></pre></div>
 <p>Create spatial weights.</p>
 <ol style="list-style-type: decimal">
 <li>By contiguity:</li>
 </ol>
-<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="activity-12-area-data-iv.html#cb535-1" tabindex="-1"></a>Hamilton_CT.w <span class="ot">&lt;-</span> <span class="fu">nb2listw</span>(<span class="fu">poly2nb</span>(<span class="at">pl =</span> Hamilton_CT))</span></code></pre></div>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="activity-12-area-data-iv.html#cb536-1" tabindex="-1"></a>Hamilton_CT.w <span class="ot">&lt;-</span> <span class="fu">nb2listw</span>(<span class="fu">poly2nb</span>(<span class="at">pl =</span> Hamilton_CT))</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Binary, by distance (3 km threshold) <em>including self</em>.</li>
 </ol>
-<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="activity-12-area-data-iv.html#cb536-1" tabindex="-1"></a>Hamilton_CT<span class="fl">.3</span>knb <span class="ot">&lt;-</span> Hamilton_CT <span class="sc">|&gt;</span> </span>
-<span id="cb536-2"><a href="activity-12-area-data-iv.html#cb536-2" tabindex="-1"></a>  <span class="fu">st_centroid</span>() <span class="sc">|&gt;</span></span>
-<span id="cb536-3"><a href="activity-12-area-data-iv.html#cb536-3" tabindex="-1"></a>  <span class="fu">dnearneigh</span>(<span class="at">d1 =</span> <span class="dv">0</span>, <span class="at">d2 =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="activity-12-area-data-iv.html#cb537-1" tabindex="-1"></a>Hamilton_CT<span class="fl">.3</span>knb <span class="ot">&lt;-</span> Hamilton_CT <span class="sc">|&gt;</span> </span>
+<span id="cb537-2"><a href="activity-12-area-data-iv.html#cb537-2" tabindex="-1"></a>  <span class="fu">st_centroid</span>() <span class="sc">|&gt;</span></span>
+<span id="cb537-3"><a href="activity-12-area-data-iv.html#cb537-3" tabindex="-1"></a>  <span class="fu">dnearneigh</span>(<span class="at">d1 =</span> <span class="dv">0</span>, <span class="at">d2 =</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## Warning: st_centroid assumes attributes are constant over geometries</code></pre>
-<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="activity-12-area-data-iv.html#cb538-1" tabindex="-1"></a>Hamilton_CT<span class="fl">.3</span>kw <span class="ot">&lt;-</span> <span class="fu">nb2listw</span>(<span class="fu">include.self</span>(Hamilton_CT<span class="fl">.3</span>knb), <span class="at">style =</span> <span class="st">&quot;B&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in dnearneigh(st_centroid(Hamilton_CT), d1 = 0, d2 = 3): neighbour
+## object has 188 sub-graphs</code></pre>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="activity-12-area-data-iv.html#cb540-1" tabindex="-1"></a>Hamilton_CT<span class="fl">.3</span>kw <span class="ot">&lt;-</span> <span class="fu">nb2listw</span>(<span class="fu">include.self</span>(Hamilton_CT<span class="fl">.3</span>knb), <span class="at">style =</span> <span class="st">&quot;B&quot;</span>)</span></code></pre></div>
 <p>You are now ready for the next activity.</p>
 </div>
 <div id="activity-11" class="section level2 hasAnchor" number="26.5">

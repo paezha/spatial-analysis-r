@@ -8,7 +8,7 @@ Now that you have installed `R` and RStudio we can begin with an overview of bas
 
 Whenever you see a chunk of code in an `R` Notebook, you can run it (by clicking the 'play' icon on the top right corner) to see the results. Try it! You can also copy and paste to your console if you are reading the web version of the book.
 
-```r
+``` r
 print("Hello, Environment and Society 4GA3")
 ```
 
@@ -37,7 +37,7 @@ If you are reading this, you probably already read the introductory chapter that
 
 For instance, R can be instructed to conduct sums, as follows:
 
-```r
+``` r
 # `R` understands numbers and arithmetic operators such as `+` for addition
 2 + 2
 ```
@@ -48,7 +48,7 @@ For instance, R can be instructed to conduct sums, as follows:
 
 `R` can be instructed to do multiplications:
 
-```r
+``` r
 # The sign to instruct `R` to multiply is `*`
 2 * 3
 ```
@@ -59,7 +59,7 @@ For instance, R can be instructed to conduct sums, as follows:
 
 And sequences of operations, possibly using brackets to indicate their order. Compare the following two expressions:
 
-```r
+``` r
 2 * 3 + 5
 ```
 
@@ -67,7 +67,7 @@ And sequences of operations, possibly using brackets to indicate their order. Co
 ## [1] 11
 ```
 
-```r
+``` r
 2 * (3 + 5)
 ```
 
@@ -77,7 +77,7 @@ And sequences of operations, possibly using brackets to indicate their order. Co
 
 Other operations produce logical results (values of true and false):
 
-```r
+``` r
 # Is the statement true?
 3 > 2
 ```
@@ -86,7 +86,7 @@ Other operations produce logical results (values of true and false):
 ## [1] TRUE
 ```
 
-```r
+``` r
 # Is this true?
 3 < 2
 ```
@@ -97,7 +97,7 @@ Other operations produce logical results (values of true and false):
 
 And of course, you can combine operations in an expression:
 
-```r
+``` r
 2 * 3 + 5 < 2 * (3 + 5)
 ```
 
@@ -109,7 +109,7 @@ As you can see, `R` can be used as a calculator, but it is much more powerful th
 
 We can also create _variables_. You can think of a variable as a box with a name, whose contents can change. Variables are used to keep track of important stuff in your calculations, and to automate operations. To create a variable, a value is assigned to a name, using this notation `<-`. You can read this `x <- 2` as "assign the value of 2 to a variable called x". For instance:
 
-```r
+``` r
 # `<-` means "put the value of 2 in the object called `x`"
 x <- 2
 # `<-` means "put the value of 3 in the object called `y`"
@@ -120,7 +120,7 @@ z <- 5
 
 Check your "Global Environment", the tab where the contents of your "Workspace" are displayed for you. You can also simply type the name of the variable in the Console to see its contents. Now that we have some variables with values, we can express operations as follows (same as above)
 
-```r
+``` r
 x * y + z
 ```
 
@@ -128,7 +128,7 @@ x * y + z
 ## [1] 11
 ```
 
-```r
+``` r
 x * (y + z)
 ```
 
@@ -138,7 +138,7 @@ x * (y + z)
 
 However, if we wanted, we could change the values of any of `x`, `y`, and/or `z` and repeat the operations. This allows to automate some instructions:
 
-```r
+``` r
 x <- 4
 x * y + z
 ```
@@ -160,19 +160,19 @@ As you saw above `R` can work with different _data classes_. Some data are numbe
 
 The existence of different data classes is very useful, since it allows you to store information in different forms. For instance, you may want to save some text:
 
-```r
+``` r
 name <- "Hamilton"
 ```
 
 Or numerical information:
 
-```r
+``` r
 population <- 551751
 ```
 
 If you wish to check what class an object is, you can use the function `class`:
 
-```r
+``` r
 class(name)
 ```
 
@@ -180,7 +180,7 @@ class(name)
 ## [1] "character"
 ```
 
-```r
+``` r
 class(population)
 ```
 
@@ -192,7 +192,7 @@ class(population)
 
 `R` can work with different _data types_, including scalars (essentially matrices with only one element), vectors (matrices with one dimension of size 1) and matrices (more generally).
 
-```r
+``` r
 print('This is a scalar')
 ```
 
@@ -200,7 +200,7 @@ print('This is a scalar')
 ## [1] "This is a scalar"
 ```
 
-```r
+``` r
 1
 ```
 
@@ -208,7 +208,7 @@ print('This is a scalar')
 ## [1] 1
 ```
 
-```r
+``` r
 print('This is a vector')
 ```
 
@@ -216,7 +216,7 @@ print('This is a vector')
 ## [1] "This is a vector"
 ```
 
-```r
+``` r
 # c() is a function to concatenate, that is, to put values in a vector
 c(1,2,3,4)
 ```
@@ -225,7 +225,7 @@ c(1,2,3,4)
 ## [1] 1 2 3 4
 ```
 
-```r
+``` r
 print('This is a matrix')
 ```
 
@@ -233,7 +233,7 @@ print('This is a matrix')
 ## [1] "This is a matrix"
 ```
 
-```r
+``` r
 # matrix() creates a two-dimensional array with `nrow` rows, and `ncol` columns
 matrix(c(1,2,3,4),nrow = 2, ncol=2)
 ```
@@ -252,7 +252,7 @@ A data frame can accommodate large amounts of information (several billion indiv
 
 To illustrate a data frame, let us first create the following vectors, that include names (character class), populations (numeric class), average salaries (numeric class), and coordinates (numeric class) of some cities:
 
-```r
+``` r
 # c() is a function to concatenate, that is, to put values in a vector
 Name <- c('Hamilton','Waterloo','Toronto')
 Population <- c(551751, 219153, 2731571)
@@ -269,7 +269,7 @@ These vectors can be collected in a dataframe. This is done for convenience, so 
 
 We will now create a data frame. We will call it "Cities". There are rules for names (for example, they cannot begin with a number), but in most cases it helps if the names are intuitive and easy to remember. The function used to create a data frame is `data.frame()` and the arguments are the vectors that we wish to collect there.
 
-```r
+``` r
 Cities <- data.frame(Name, Population, AvgSalary, Latitude, Longitude)
 ```
 
@@ -285,7 +285,7 @@ Data frames store information that is related in a compact way.
 
 To perform operations effectively, it is useful to understand the way `R` locates information in a data frame. As noted before, each grid cell has an address, or in other words an index, that can be referenced in several convenient ways. For instance, assume that you wish to reference the first value of the data frame, that is, row 1 of column `Name`. To do this, you would use the following instruction:
 
-```r
+``` r
 # To index elements in a data frame we use square brackets `[]` 
 # The first number in the square bracket is the row, and the second number 
 # (separated by a comma) is the column 
@@ -300,7 +300,7 @@ This will recall the element in the first row and first column of `Cities`. It a
 
 As an alternative, you could type:
 
-```r
+``` r
 Cities$Name[1]
 ```
 
@@ -314,7 +314,7 @@ As you see, this has the same effect. The string sign `$` is used to reference c
 
 Indexing is useful to conduct operations. Suppose for instance, that you wished to calculate the total population of two cities, say Hamilton and Waterloo. You can execute the following instructions:
 
-```r
+``` r
 # The string sign `$` is used to make reference to a column in the data frame. 
 # The square brackets index the row in the column.
 Cities$Population[1] + Cities$Population[2]
@@ -326,7 +326,7 @@ Cities$Population[1] + Cities$Population[2]
 
 (More involved indexing is also possible, for example, if we use logical operators. Do not worry too much about the details at this point, just verify that the results are identical)
 
-```r
+``` r
 # The indexing now is a logical statement. The double equal sign `==` is used 
 # to make logical comparisons. `R` will find the rows for which `Cities$Name=='Hamilton'` 
 # in the first element of the sum, and the rows for which `Cities$Name=='Waterloo'` 
@@ -340,7 +340,7 @@ Cities$Population[Cities$Name=='Hamilton'] + Cities$Population[Cities$Name=='Wat
 
 Suppose that you wanted to calculate the total population of the cities in your data frame. To do this, you would use the function `sum()`:
 
-```r
+``` r
 # `sum()` is a function to add all elements in a numerical vector.
 # This could be a column in a data frame
 sum(Cities$Population)
@@ -352,7 +352,7 @@ sum(Cities$Population)
 
 You have already seen how it allows you to store in memory the results of some instruction, by means of an assignment `<-`. You can also perform many other useful operations. For instance, calculate the maximum value for a set of values:
 
-```r
+``` r
 # `max()` finds the maximum value in a numerical vector
 max(Cities$Population)
 ```
@@ -363,7 +363,7 @@ max(Cities$Population)
 
 And, if you wanted to find which city is the one with the largest population, you would use a logical statement as an index:
 
-```r
+``` r
 # `R` will find all rows for which the statement 
 # `Cities$Population==max(Cities$Population)`, that is, 
 # all the rows with a population identical to the maximum population!  
@@ -377,7 +377,7 @@ As you see, Toronto is the largest city (by population) in this dataset. Using i
 
 Likewise, the function for finding the minimum value for a set of values is `min()`:
 
-```r
+``` r
 # `min() finds the minimum value in a numerical vector
 min(Cities$Population)
 ```
@@ -395,7 +395,7 @@ Finding the maximum and minimum, aggregating (calculating the sum of a series of
 
 The data frame, in essence a table, informative as it is, is no usually the best way to learn from the data. Transformations (or _descriptive statistics_ as discussed above) are helpful to understand important properties of a dataset. In addition, visualization is often a valuable complement to data analysis. Say, we might be interested in finding which city has the largest population and which city has the smallest population in a dataset. We could achieve this by using similar instructions as before, for example:
 
-```r
+``` r
 # `paste()` is similar to `print()`, except that it converts everything #
 # to characters before printing. We use this function because the contents 
 # of `Name` in the data frame `Cities` are not characters, but levels of a factor`
@@ -407,7 +407,7 @@ paste('The city with the largest population is',
 ## [1] "The city with the largest population is Toronto"
 ```
 
-```r
+``` r
 paste('The city with the smallest population is', 
       Cities$Name[Cities$Population==min(Cities$Population)])
 ```
@@ -431,7 +431,7 @@ Once the package is installed, it becomes available, but to use it you must load
 
 Assuming that you already have installed `ggplot2`, we proceed to load it:
 
-```r
+``` r
 library(ggplot2) # Create Elegant Data Visualisations Using the Grammar of Graphics
 ```
 
@@ -441,7 +441,7 @@ The package `ggplot2` works by layering a series of objects, beginning with a bl
 
 For a bar chart, we would use the following instructions:
 
-```r
+``` r
 # The function `ggplot()` creates an object for plotting, 
 # using a data frame as indicated by the input argument `data =`. 
 # Furthermore, we can specify how to map elements in the data frame 
@@ -460,7 +460,7 @@ ggplot(data = Cities,
 
 Since this is the first time that we use `ggplot()`, it is informative to break down these instructions. We are asking `ggplot2` to create a plot that will use the data frame `Cities`. Furthermore, we tell it to use the values of `Names` in the x-axis, and the values of `Population` in the y-axis. Run the following chunk:
 
-```r
+``` r
 ggplot(data = Cities, 
        aes(x = Name, y = Population))
 ```
@@ -478,7 +478,7 @@ There are many different geoms that can be used in `ggplot2`. You can always con
 
 We will see how maps are used in spatial statistical analysis. The simplest one that can be created is a so-called _dot map_. A dot map simply displays the locations of events of interest, as points. A dot map is, in fact, simply a _scatterplot_ of the coordinates of events. We can use `ggplot2` to create a simple dot map of the cities in our sample dataset. For this, we create a `ggplot2` object, and for the `x` and `y` aesthetics we use the coordinates. The geometric element that we want to render is a point:
 
-```r
+``` r
 # The longitude is mapped to the x-axis of the plot and the latitude is mapped
 # to the y-axis of the plot. The function `geom_points()` is used to draw points:
 ggplot(data = Cities,
@@ -490,7 +490,7 @@ ggplot(data = Cities,
 
 This is a simple dot map that simply shows the locations of the cities. We can add labels by means of the geometric element text:
 
-```r
+``` r
 # `geom_text()` is used to write text on the plot, 
 # still using the longitude and latitude information:
 ggplot(data = Cities, 
@@ -503,7 +503,7 @@ ggplot(data = Cities,
 
 The dot map above tells us the location of the cities in our dataframe and their name. We can include more information in the plot in different ways. For example, a _proportional symbol map_ changes the size of the symbols (the points) to add information to the plot. To create a proportional symbol map, we add to the aesthetics the instruction to use some variable for the size of the symbols:
 
-```r
+``` r
 # The `size` of the points will be proportional to the
 # Population` values in the data frame
 ggplot(data = Cities, 
@@ -516,7 +516,7 @@ ggplot(data = Cities,
 
 Furthermore, we can fix the position of the labels by adding a vertical justification to the text (`vjust`), and to avoid the text from being cut we can also expand the limits of the plot (`expand_limits()`):
 
-```r
+``` r
 ggplot(data = Cities, 
        aes(x = Longitude, y = Latitude)) + 
   geom_point(aes(size = Population)) + 

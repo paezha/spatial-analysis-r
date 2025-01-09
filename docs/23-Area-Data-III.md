@@ -24,7 +24,7 @@ In this practice, you will learn about:
 
 As usual, it is good practice to restart the `R` session or at least to clear the working space to make sure that you do not have extraneous items there when you begin your work. The command in `R` to clear the workspace is `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -32,7 +32,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 
-```r
+``` r
 library(isdas)
 library(gridExtra)
 library(patchwork)
@@ -43,13 +43,13 @@ library(tidyverse)
 
 Read the data used in this chapter. This is an object of class `sf` (simple feature) with the census tracts of Hamilton CMA and some selected population variables from the 2011 Census of Canada:
 
-```r
+``` r
 data(Hamilton_CT)
 ```
 
 You can quickly verify the contents of the dataframe by means of `summary`:
 
-```r
+``` r
 summary(Hamilton_CT)
 ```
 
@@ -97,7 +97,7 @@ In the preceding chapter and activity you learned about different criteria to de
 
 We will begin this chapter by briefly revisiting some of these notions. In the following chunk, we create a spatial weights matrix for Hamilton CMA census tracts based on the adjacency criterion:
 
-```r
+``` r
 # Function `poly2nb()` builds a list of neighbors based on contiguous boundaries. The argument for this function is an object of class "sf", which contains multi-polygon objects. 
 
 # Function `nb2listw()` takes a list of neighbors and creates a matrix of spatial weights in the form of a list. Together, these two functions create a spatial weights matrix for the Census Tracts in Hamilton.
@@ -108,7 +108,7 @@ Hamilton_CT.w <- nb2listw(Hamilton_CT.nb)
 
 Once that you have a matrix of spatial weights, it can be used to calculate the spatial moving average. In this example, we calculate the spatial moving average of the variable for population density, i.e., `POP_DENSITY` which is found in the `sf` dataframe:
 
-```r
+``` r
 # The function `lag.listw()` takes as argument the population density by census tracts in Hamilton, and calculates the moving average, with the "moving" part given by the local neighborhoods around each zone as defined by `Hamilton_CT.w`
 
 POP_DENSITY.sma <- lag.listw(Hamilton_CT.w, Hamilton_CT$POP_DENSITY)
@@ -116,7 +116,7 @@ POP_DENSITY.sma <- lag.listw(Hamilton_CT.w, Hamilton_CT$POP_DENSITY)
 
 After calculating the spatial moving average of population density, we can join this new variable to the `sf` object:
 
-```r
+``` r
 Hamilton_CT$POP_DENSITY.sma <- POP_DENSITY.sma
 ```
 
@@ -130,7 +130,7 @@ We can illustrate the use of the spatial moving average as a smoother with the h
 
 To simulate a random spatial variable, we can randomize the observations that we already have, reassigning them at random to areas in the system. This is accomplished as follows:
 
-```r
+``` r
 # By sampling at random and without replacement from the original variable, we create a null landscape. We will call this `POP_DENSITY_s1`, where the "s1" part is to indicate that this is our first simulated random landscape. We will actually repeat this process below.
 
 POP_DENSITY_s1 <- sample(Hamilton_CT$POP_DENSITY)
@@ -138,7 +138,7 @@ POP_DENSITY_s1 <- sample(Hamilton_CT$POP_DENSITY)
 
 Calculate the spatial moving average for this randomized variable (i.e., null landscape):
 
-```r
+``` r
 # We use the function `lag.listw()` to calculate the spatial moving average, but now for the null landscape we just simulated. 
 
 POP_DENSITY_s1.sma <- lag.listw(Hamilton_CT.w, POP_DENSITY_s1)
@@ -146,7 +146,7 @@ POP_DENSITY_s1.sma <- lag.listw(Hamilton_CT.w, POP_DENSITY_s1)
 
 Once that you have seen how to randomize the variable, repeat the process to simulate a total of eight new variables/null landscapes, and calculate their spatial moving averages:
 
-```r
+``` r
 # Note that we are creating 8 null landscapes based on our original population density variable, and that we are calculating the spatial moving average for each of them. Each simulation has a new name: s2, s3, s4,..., s8. 
 
 # Null landscape/simulation #2
@@ -180,7 +180,7 @@ POP_DENSITY_s8.sma <- lag.listw(Hamilton_CT.w, POP_DENSITY_s8)
 
 Next, we will add all the null landscapes that you just simulated to the dataframes, as well as their spatial moving averages. This is useful for mapping and plotting purposes:
 
-```r
+``` r
 # Here we add the simulated landscapes to the `sf` dataframe.
 Hamilton_CT$POP_DENSITY_s1 <- POP_DENSITY_s1
 Hamilton_CT$POP_DENSITY_s2 <- POP_DENSITY_s2
@@ -204,7 +204,7 @@ Hamilton_CT$POP_DENSITY_s8.sma <- POP_DENSITY_s8.sma
 
 It would be useful to compare the original landscape of population density to the null landscapes that you created before. To create a single figure with choropleth maps of the empirical variable and the eight simulated variables using the `facet_wrap()` function of `ggplot2`, we must first reorganize the data so that all the population density variables are in a single column, and all spatial moving average variables are also in a single column. Further, we need a new column to identifies which variable the values in this column correspond to. We will solve this little data management problem by copying only the data we are interested in into a new dataframe (by means of `select()`), and then _pivoting_ the spatial moving averages into a single column (i.e., a long table): 
 
-```r
+``` r
 #"Hamilton_CT2 is a new dataframe. Here, the pipe operators (|>) are used to pass the original dataframe to the select() function, and then the output of that is passed on to the `gather()` function. Notice that we are selecting the empirical spatial moving average and the 8 simulated instances of population densities. 
 
 Hamilton_CT2 <- Hamilton_CT |> # This pipe operator passes the dataframe to `select()`
@@ -227,7 +227,7 @@ Hamilton_CT2 <- Hamilton_CT |> # This pipe operator passes the dataframe to `sel
 
 Now the new dataframe with all spatial moving averages in a single column can be used to create choropleth maps. The function `facet_wrap()` is used to create facet plots so that we can place all maps in a single figure:
 
-```r
+``` r
 ggplot() + 
   geom_sf(data = Hamilton_CT2, 
           aes(fill = DENSITY_SMA), color = NA) + 
@@ -248,7 +248,7 @@ An additional advantage of the spatial moving average is its use in the developm
 
 Let us explore the use of spatial moving average scatterplots. First, we will extract the density information from the original `sf` object, reorganize, and bind to `Hamilton_CT2` so that we can plot using faceting:
 
-```r
+``` r
 Hamilton_CT2 <- Hamilton_CT2 |> # Pass `Hamilton_CT2` as the first argument of `data.frame()`
   data.frame(Hamilton_CT |> # Pass `Hamilton_CT` to `st_drop_geometry()`
                st_drop_geometry() |> # Drop the geometry because it is already available in `Hamilton_CT2`.
@@ -270,7 +270,7 @@ Hamilton_CT2 <- Hamilton_CT2 |> # Pass `Hamilton_CT2` as the first argument of `
 
 After reorganizing the data we can create the scatterplot of the empirical population density and its spatial moving average, as well as the scatterplots of the simulated variables and their spatial moving averages for comparison (the plots include the 45 degree line). Again, the use of `facet_wrap()` allows us to put all plots in a single figure:
 
-```r
+``` r
 #We are adding a geom and line (slope = 1)
 ggplot(data = Hamilton_CT2, aes(x = DENSITY, y = DENSITY_SMA, color = VAR)) +
   geom_point() +
@@ -290,7 +290,7 @@ $$
 
 Recreate the previous figure, but now add fitted lines to the scatterplots by means of the function `geom_smooth()`. The method "lm" means _linear model_, so the fitted line is a straight line:
 
-```r
+``` r
 ggplot(data = Hamilton_CT2, aes(x = DENSITY, y = DENSITY_SMA, color = VAR)) +
   geom_point(alpha = 0.1) +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
@@ -323,7 +323,7 @@ In this way, the values of $z_i$ are given in _deviations from the mean_. By for
 
 Calculate the mean-centered version of POP_DENSIT, and then its spatial moving average:
 
-```r
+``` r
 df_mean_center_scatterplot <- transmute(Hamilton_CT, # Modify values in dataframe
                                         Density_z = POP_DENSITY - mean(POP_DENSITY), # Subtract the mean, so that the variable now is deviations from the mean 
                                         SMA_z = lag.listw(Hamilton_CT.w, Density_z)) # Calculate the spatial moving average of the newly created variable `Density_z`
@@ -331,7 +331,7 @@ df_mean_center_scatterplot <- transmute(Hamilton_CT, # Modify values in datafram
 
 Compare the following two plots. You will see that they are identical, but in the mean-centered one the origin of the axes coincides with the means of $x$ and the spatial moving average of $x$. In other words, we have the same data, but we have displaced the origin of the plot:
 
-```r
+``` r
 # Create a scatterplot of population density and its spatial moving average
 sc1 <- ggplot(data = filter(Hamilton_CT2, VAR == "POP_DENSITY.sma"),
               aes(x = DENSITY, y = DENSITY_SMA)) +
@@ -387,7 +387,7 @@ If $z_i$ is above the mean, it is a relatively high value in the distribution (s
 
 These four quadrants are shown in the following plot:
 
-```r
+``` r
 ggplot(data = df_mean_center_scatterplot, 
        aes(x = Density_z, y = SMA_z)) +
   geom_point(color = "gray") +
@@ -429,7 +429,7 @@ Moran's $I$ is a coefficient of _spatial autocorrelation_.
 
 We can calculate Moran's $I$ as follows, using as an example the mean-centered population density (notice how it is the sum of the products of $z_i$ by their spatial moving averages $\bar{z}_i$, divided by the variance):
 
-```r
+``` r
 # Try to decipher the formula. You should be able to see that we are calculating the sum of the products by their spatial moving averages, divided by variance
 sum(df_mean_center_scatterplot$Density_z *  df_mean_center_scatterplot$SMA_z) / sum(df_mean_center_scatterplot$Density_z^2)
 ```
@@ -444,7 +444,7 @@ Moran's $I$ is implemented in `R` in the `spdep` package, which makes its calcul
 
 The function `moran()` requires as input arguments a variable, a set of spatial weights, the number of zones ($n$), and the total sum of all weights (termed $S_0$) - which in the case of row-standardized spatial weights is equal to the number of zones. Therefore:
 
-```r
+``` r
 mc <- moran(Hamilton_CT$POP_DENSITY, Hamilton_CT.w, n = 188, S0 =  188)
 mc$I
 ```
@@ -455,7 +455,7 @@ mc$I
 
 You can verify that this matches the value calculated above. The kind of scatterplots that we used previously are called _Moran's scatterplots_, and they can also be created easily by means of the `moran.plot()` function of the `spdep` package:
 
-```r
+``` r
 # Confirming the results from the Moran coefficient above. We use "moran.plot" to illustrate the SMA of population density by census tract in Hamilton. 
 mp <- moran.plot(Hamilton_CT$POP_DENSITY, Hamilton_CT.w)
 ```
@@ -468,7 +468,7 @@ The tools described so far are useful to suggest whether a pattern is random; ho
 
 A test for autocorrelation based on Moran's $I$ is implemented in the `spdep` package:
 
-```r
+``` r
 #"moran.test" is calculating spatial autocorrelation of population density in Hamilton census tracts
 moran.test(Hamilton_CT$POP_DENSITY, Hamilton_CT.w)
 ```

@@ -28,7 +28,7 @@ O'Sullivan D and Unwin D (2010) Geographic Information Analysis, 2nd Edition, Ch
 
 It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -36,7 +36,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity. In addition to `tidyverse`, you will need `spatstat`, a package designed for the analysis of point patterns (you can learn about `spatstat` [here](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) and [here](http://spatstat.org/resources/spatstatJSSpaper.pdf)):
 
-```r
+``` r
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 library(tidyverse) # Easily Install and Load the 'Tidyverse'
 library(sf) # Simple Features for R
@@ -47,19 +47,19 @@ In the practice that preceded this activity, you learned about the concepts of i
 
 Begin by reading the geospatial files, namely the city boundary of Toronto. You need the `sf` object, which will be converted into a `spatstat` window object:
 
-```r
+``` r
 data("Toronto")
 ```
 
 Convert the `sf` object to an `owin` object:
 
-```r
+``` r
 Toronto.owin <- as.owin(Toronto)
 ```
 
 Next the data that you will use in this activity needs to be loaded. Each dataframe is converted into a `ppp` object using the `as.ppp` function, again after extracting the coordinates of the events from the `sf` object:
 
-```r
+``` r
 data("Fast_Food")
 Fast_Food.ppp <- as.ppp(st_coordinates(Fast_Food), W = Toronto.owin)
 # Add the classes of fast food to the ppp object:
@@ -82,7 +82,7 @@ These are locations of fast food restaurants and gas stands in Toronto (data are
 
 You can check the contents of `ppp` objects by means of `summary`:
 
-```r
+``` r
 summary(Fast_Food.ppp)
 ```
 
@@ -90,8 +90,7 @@ summary(Fast_Food.ppp)
 ## Marked planar point pattern:  614 points
 ## Average intensity 9.681378e-07 points per square unit
 ## 
-## Coordinates are given to 1 decimal place
-## i.e. rounded to the nearest multiple of 0.1 units
+## Coordinates are given to 10 decimal places
 ## 
 ## Multitype:
 ##           frequency proportion    intensity

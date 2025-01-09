@@ -39,7 +39,7 @@ In this chapter, you will:
 
 As usual, ti is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -47,7 +47,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 
-```r
+``` r
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
 library(tidyverse) # Easily Install and Load the 'Tidyverse'
@@ -55,7 +55,7 @@ library(tidyverse) # Easily Install and Load the 'Tidyverse'
 
 Load the datasets that you will use for this practice:
 
-```r
+``` r
 data("pp1_df")
 data("pp2_df")
 data("pp3_df")
@@ -65,13 +65,13 @@ data("pp5_df")
 
 These five dataframes include the coordinates of events set in the space of a unit square. To convert these dataframes into `ppp` objects we first define a window:
 
-```r
+``` r
 W <- owin(c(0, 1), c(0, 1))
 ```
 
 And then use the function `as.ppp` to convert into `ppp`: 
 
-```r
+``` r
 pp1.ppp <- as.ppp(pp1_df, W = W)
 pp2.ppp <- as.ppp(pp2_df, W = W)
 pp3.ppp <- as.ppp(pp3_df, W = W)
@@ -104,7 +104,7 @@ Similar expressions were presented for the $\hat{F}$-function and $\hat{K}$-func
 
 For instance, the $\hat{G}$-function of the pattern in `pp1.ppp` is shown below. It is quite close to the theoretical function, so the pattern is probably random. The question is, how probable is this?
 
-```r
+``` r
 g_pp1 <- Gest(pp1.ppp, correction = "none") 
 plot(g_pp1)
 ```
@@ -123,7 +123,7 @@ A null landscape is a landscape produced by a random process. In previous practi
 
 Before creating a null landscape, we can check the characteristics of the patterns in the dataset:
 
-```r
+``` r
 summary(pp1.ppp)
 ```
 
@@ -131,7 +131,7 @@ summary(pp1.ppp)
 ## Planar point pattern:  81 points
 ## Average intensity 81 points per square unit
 ## 
-## Coordinates are given to 8 decimal places
+## Coordinates are given to 16 decimal places
 ## 
 ## Window: rectangle = [0, 1] x [0, 1] units
 ## Window area = 1 square unit
@@ -141,21 +141,21 @@ You can verify that the intensity in every case is 81 points per square unit, an
 
 Lets copy the window from one of the patterns in the sample dataset:
 
-```r
+``` r
 # We can use `$` to index an item in the object `pp1.ppp`
 W <- pp1.ppp$window
 ```
 
 It is possible to generate a null landscape as follows, by means of the function `rpoisppp()`. The arguments of this function are a desired intensity ($\lambda$) and a window:
 
-```r
+``` r
 # The function `rpoisppp()` is used to generate null landscapes based on the Poisson distribution
 sim1 <- rpoispp(lambda = 81, win = W)
 ```
 
 The value (i.e., output) of this function is a `ppp` object that can be analyzed in all the ways that you already know. For instance, you can plot it:
 
-```r
+``` r
 plot(sim1)
 ```
 
@@ -163,14 +163,14 @@ plot(sim1)
 
 Importantly, you can apply any of the techniques that you have seen so far, for instance, the $\hat{G}$-function:
 
-```r
+``` r
 g_sim1 <- Gest(sim1, 
                correction = "none")
 ```
 
 We can try plotting the empirical functions (notice that the result of `Gest` is a dataframe with the values of `r`, the distance variable, the raw or empirical function, and the theoretical function). To plot using `ggplot2` you can stack the two dataframes as follows (after adding a factor to indicate if it is the empirical function or a simulation):
 
-```r
+``` r
 # Use `data.frame()` to create a table with the relevant elements of the `g_pp1` object; in this example we take `raw` and put it in a column called `G`, we take `r` and put it in a column called `r` and create a new variable called `Type` to indicate that these values are for the "Empirical" function. Then we use `rbind()` to bind the rows of this data frame, and a second data frame that keeps the same columns, but based on the simulated null landscape
 g_all <- data.frame(G = g_pp1$raw, 
                     x = g_pp1$r, 
@@ -183,7 +183,7 @@ g_all <- rbind(g_all,
 
 We can use `ggplot2` to create a plot of the two functions:
 
-```r
+``` r
 # By assigning `Type` to the aesthetic of `color` in `ggplot()`, we plot lines of different types in different colors
 ggplot(data = g_all,
        aes(x= x, 
@@ -196,7 +196,7 @@ ggplot(data = g_all,
 
 After seeing the plot above, we notice that the empirical function is very, very similar to the simulated null landscape. But is this purely a coincidence? After all, when we simulate a null landscape, there is the possibility, however improbable, that it will replicate some meaningful process purely by chance. To be sure, we can simulate and analyze a second null landscape:
 
-```r
+``` r
 sim2 <- rpoispp(lambda = 81, win = W)
 g_sim2 <- Gest(sim2, 
                correction = "none")
@@ -208,7 +208,7 @@ g_all <- rbind(g_all,
 
 Plot again:
 
-```r
+``` r
 ggplot(data = g_all, 
        aes(x= x, 
            y = G, 
@@ -220,7 +220,7 @@ ggplot(data = g_all,
 
 The empirical function continues to look very similar to the simulated null landscapes. We could simulate more null landscapes and increase our confidence that the empirical function indeed is similar to a null landscape (notice the use of a `for` loop to repeat the same instructions multiple times):
 
-```r
+``` r
 # Flow control functions include `for()`; this function will repeat the statements that follow a set number of times. In this example, we had already simulated 2 null landscapes above, so we want to simulate null landscapes 3 through 99
 for(i in 3:99){
   g_sim <- Gest(rpoispp(lambda = 81, 
@@ -235,7 +235,7 @@ for(i in 3:99){
 
 With this we have generated 99 distinct null landscapes. Try plotting the empirical function with the functions of all of these simulated landscapes:
 
-```r
+``` r
 ggplot(data = g_all, 
        aes(x= x,
            y = G,
@@ -249,7 +249,7 @@ You can see in the plot above that the empirical function is actually not visibl
 
 We can follow the same process but now for the second pattern `pp2.ppp` to the simulated null landscapes:
 
-```r
+``` r
 # Compute the G-function for the point pattern in `pp2.ppp` and then extract the value of G, the distance, and label it as an "Empirical" function in a new data frame (by means of `transmute()`)
 g_pp2 <- Gest(pp2.ppp, 
               correction = "none")
@@ -287,7 +287,7 @@ Since we lack a theoretical expression for the variance, we cannot obtain $p$-va
 
 As you saw above, using simulation for hypothesis testing is, in general terms, a relatively straightforward process (assuming that the null process is properly defined, etc.) The package `spatstat` includes a function, called `envelope()`, that can be used to generate simulation envelopes for several statistics used in point pattern analysis. For instance, for the $\hat{G}$-function, with 99 simulated landscapes:
 
-```r
+``` r
 # The function `envelope()` automates what we did above, simulating null landscapes; it takes as arguments a `ppp` object for the empirical pattern, a function that we desire to test, for example the function `Gest`, as well as the number of simulations that we wish to conduct. An additional argument `funargs = ` is used to pass other arguments to the function that is evaluated, i.e., in this example `Gest`
 env_pp1 <- envelope(pp1.ppp,
                     Gest, 
@@ -309,7 +309,7 @@ env_pp1 <- envelope(pp1.ppp,
 
 The envelopes can be plotted:
 
-```r
+``` r
 plot(env_pp1)
 ```
 
@@ -319,7 +319,7 @@ It is easy to see that in this case the empirical function falls within the simu
 
 Also, the $\hat{F}$-function:
 
-```r
+``` r
 env_pp2 <- envelope(pp2.ppp, 
                     Fest, 
                     nsim = 99, 
@@ -338,7 +338,7 @@ env_pp2 <- envelope(pp2.ppp,
 ## Done.
 ```
 
-```r
+``` r
 plot(env_pp2)
 ```
 
@@ -348,7 +348,7 @@ Now the empirical function lies well outside the simulation envelopes, which mak
 
 And finally, the $\hat{K}$-function:
 
-```r
+``` r
 env_pp3 <- envelope(pp3.ppp, 
                     Kest, 
                     nsim = 99, 
@@ -367,7 +367,7 @@ env_pp3 <- envelope(pp3.ppp,
 ## Done.
 ```
 
-```r
+``` r
 plot(env_pp3)
 ```
 
@@ -385,7 +385,7 @@ When defining the region (or window) for the analysis, care must be taken that i
 
 Consider for instance the first pattern in the dataset. This pattern was defined for a unit-square window. We can apply the $\hat{K}$-function to it:
 
-```r
+``` r
 k_env_pp1 <- envelope(pp1.ppp, 
                       Kest, 
                       nsim = 99,
@@ -404,7 +404,7 @@ k_env_pp1 <- envelope(pp1.ppp,
 ## Done.
 ```
 
-```r
+``` r
 plot(k_env_pp1)
 ```
 
@@ -414,7 +414,7 @@ Based on this we would most likely conclude that the pattern is random.
 
 But if we replace the unit-square window by a much larger window, as follows:
 
-```r
+``` r
 W2 <- owin(x = c(-2,4), 
            y = c(-2, 4))
 pp1_reg2 <- as.ppp(as.data.frame(pp1.ppp), 
@@ -426,7 +426,7 @@ plot(pp1_reg2)
 
 In the context of the larger window, the point pattern now looks clustered! See how the definition of the window would change your conclusions regarding the pattern:
 
-```r
+``` r
 k_env_pp1_reg2 <- envelope(pp1_reg2, 
                            Kest, 
                            nsim = 99, 
@@ -445,7 +445,7 @@ k_env_pp1_reg2 <- envelope(pp1_reg2,
 ## Done.
 ```
 
-```r
+``` r
 plot(k_env_pp1_reg2)
 ```
 
@@ -472,7 +472,7 @@ Several corrections are available in `spatstat` to deal with the possibility of 
 
 These corrections are variations of weighting schemes. In other words, the statistic is weighted to give an unbiased estimator. See:
 
-```r
+``` r
 plot(Gest(pp2.ppp, 
           correction = "all"))
 ```

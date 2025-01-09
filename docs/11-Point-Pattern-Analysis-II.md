@@ -33,7 +33,7 @@ In this practice, you will learn:
 
 As usual, It is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed. To clear the workspace from _all_ objects, do the following:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -41,7 +41,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 
-```r
+``` r
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
 library(tidyverse) # Easily Install and Load the 'Tidyverse'
@@ -49,14 +49,14 @@ library(tidyverse) # Easily Install and Load the 'Tidyverse'
 
 Load the datasets that you will use for this practice:
 
-```r
+``` r
 data("PointPatterns")
 data("pp0_df")
 ```
 
 `PointPatterns` is a data frame with four sets of spatial events, labeled as "Pattern 1", "Pattern 2", "Pattern 3", and "Pattern 4". Each set has $n=60$ events. You can check the class of this object by means of the function class `class()`.
 
-```r
+``` r
 class(PointPatterns)
 ```
 
@@ -68,7 +68,7 @@ The second data frame (i.e., `pp0_df`) includes the coordinates `x` and `y` of t
 
 The summary for `PointPatterns` shows that these point patterns are located in a square-unit window (check the max and min values of x and y):
 
-```r
+``` r
 summary(PointPatterns)
 ```
 
@@ -84,7 +84,7 @@ summary(PointPatterns)
 
 The same is true for `pp0_df`:
 
-```r
+``` r
 summary(pp0_df)
 ```
 
@@ -100,7 +100,7 @@ summary(pp0_df)
 
 As seen in the previous practice and activity, the package `spatstat` employs a type of object called `ppp` (for *p*lanar *p*oint *p*attern). Fortunately, it is relatively simple to convert a data frame into a `ppp` object by means of `as.ppp()`. This function requires that you define a window for the point pattern, something we can do by means of the `owin` function:
 
-```r
+``` r
 # "W" will appear in your environment as a defined window with boundaries of (1,1)
 W <- owin(xrange = c(0, 1),
           yrange = c(0, 1))
@@ -108,7 +108,7 @@ W <- owin(xrange = c(0, 1),
 
 Then the data frames are converted using the `as.ppp` function: 
 
-```r
+``` r
 # Converts the data frame to planar point pattern using the defined window "W"
 pp0.ppp <- as.ppp(pp0_df, 
                   W = W)
@@ -117,7 +117,7 @@ PointPatterns.ppp <- as.ppp(PointPatterns, W = W)
 
 You can verify that the new objects are indeed of `ppp`-class:
 
-```r
+``` r
 #"class" is an excellent tool to use when verifying the type of data object 
 class(pp0.ppp)
 ```
@@ -126,7 +126,7 @@ class(pp0.ppp)
 ## [1] "ppp"
 ```
 
-```r
+``` r
 class(PointPatterns.ppp)
 ```
 
@@ -140,7 +140,7 @@ In the preceding activity, you used a quadrat-based spatial independence test to
 
 Let's begin by plotting the patterns. You can use `split` to do plots for each pattern separately, instead of putting all of them in a single plot (this approach is not as refined as `ggplot2`, where we have greater control of the aspect of the plots; on the other hand, it is quick):
 
-```r
+``` r
 #The split functions separates without defining a window. 
 # This is a quicker option to get relative results
 plot(split(PointPatterns.ppp))
@@ -150,7 +150,7 @@ plot(split(PointPatterns.ppp))
 
 Recall that you can also plot individual patterns by using `$` followed by the factor that identifies the desired pattern (this is a way of indexing different patterns in `ppp`-class objects):
 
-```r
+``` r
 # Using "$" acts as a call sign to retrieve information from a data frame. 
 # In this case, you are calling "Pattern 4" from "PointPatterns.ppp"
 plot(split(PointPatterns.ppp)$"Pattern 4")
@@ -160,7 +160,7 @@ plot(split(PointPatterns.ppp)$"Pattern 4")
 
 Now calculate the quadrat-based test of independence:
 
-```r
+``` r
 # `quadrat.test()` generates a quadrat-based test of independence, in this case, 
 # for "Pattern 2" called from "PointPatterns.ppp", using 3 quadrats in the direction 
 # of the x-axis and 3 quadrats in the direction of the y-axis 
@@ -183,7 +183,7 @@ q_test
 
 Plot the results of the quadrat test:
 
-```r
+``` r
 plot(q_test)
 ```
 
@@ -205,7 +205,7 @@ where $Q$ is the number of quadrats. In other words, the test is based on the sq
 
 Consider for instance the first pattern in the examples:
 
-```r
+``` r
 plot(quadrat.test(split(PointPatterns.ppp)$"Pattern 1", 
                   nx = 3, 
                   ny = 3))
@@ -215,7 +215,7 @@ plot(quadrat.test(split(PointPatterns.ppp)$"Pattern 1",
 
 You can see that the Pearson residual of the top left quadrat is indeed -0.6567673, the next to its right is -0.2704336, and so on. The value of the test statistic should be then:
 
-```r
+``` r
 # The "Paste" function joins together several arguments as characters. 
 # Here, this is a string of values for "X2", where X2" is the squared 
 # sum of the residuals
@@ -232,7 +232,7 @@ paste("X2 = ",
 
 Which you can confirm by examining the results of the test (the small difference is due to rounding errors):
 
-```r
+``` r
 quadrat.test(split(PointPatterns.ppp)$"Pattern 1", 
              nx = 3, 
              ny = 3)
@@ -257,7 +257,7 @@ As hinted by the previous activity, one issue with quadrat analysis is the selec
 
 For example, the results of the test for "Pattern 2" in the dataset change when the number of quadrats is modified. For instance, with a small number of quadrats:
 
-```r
+``` r
 quadrat.test(split(PointPatterns.ppp)$"Pattern 2", 
              nx = 2, 
              ny = 1)
@@ -276,7 +276,7 @@ quadrat.test(split(PointPatterns.ppp)$"Pattern 2",
 
 Compare to four quadrats:
 
-```r
+``` r
 quadrat.test(split(PointPatterns.ppp)$"Pattern 2", 
              nx = 2, 
              ny = 2)
@@ -295,7 +295,7 @@ quadrat.test(split(PointPatterns.ppp)$"Pattern 2",
 
 And:
 
-```r
+``` r
 quadrat.test(split(PointPatterns.ppp)$"Pattern 2", 
              nx = 3, 
              ny = 2)
@@ -316,7 +316,7 @@ Why is the statistic generally smaller when there are fewer quadrats?
 
 A different issue emerges when the number of quadrats is large:
 
-```r
+``` r
 quadrat.test(split(PointPatterns.ppp)$"Pattern 2", 
              nx = 4, 
              ny = 4)
@@ -354,7 +354,7 @@ Another issue with quadrat analysis is that it is not sensitive to the relative 
 
 Consider for instance the following two patterns in `pp0`:
 
-```r
+``` r
 plot(split(pp0.ppp))
 ```
 
@@ -362,7 +362,7 @@ plot(split(pp0.ppp))
 
 These two patterns look quite different. And yet, when we count the events by quadrats:
 
-```r
+``` r
 plot(quadratcount(split(pp0.ppp), 
                   nx = 3, 
                   ny = 3))
@@ -382,7 +382,7 @@ Imagine now that we define a window that, unlike the quadrats which are fixed, c
 
 We can define such a window by selecting a function that declines with increasing distance. We will call this function a _kernel_. An example of a function that can work as a moving window is the following. 
 
-```r
+``` r
 # Here we create a data.frame to use for plotting; it includes a single column 
 # with a variable called `dist` for distance, that varies between -3 and 3; 
 # the function `stat_function()` is used in `ggplot2` to transform an input 
@@ -409,7 +409,7 @@ Kernel density is implemented in `spatstat` and can be used as follows.
 
 The input is a `ppp` object, and optionally a `sigma` argument that corresponds to the bandwidth of the kernel:
 
-```r
+``` r
 # The "density" function computes estimates of kernel density. Here we are creating 
 # a Kernel Density estimate using "pp0.ppp" from our data frame by means of a 
 # bandwidth defined by "sigma"
@@ -423,7 +423,7 @@ plot(kernel_density)
 
 Compare to the distribution of events:
 
-```r
+``` r
 plot(split(pp0.ppp))
 ```
 

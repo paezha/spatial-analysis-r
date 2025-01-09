@@ -26,7 +26,7 @@ In this activity, we will map another type of spatial data, called _areal data_.
 
 it is good practice to begin with a clean session to make sure that you do not have extraneous items there when you begin your work. The best practice is to restart the `R` session, which can be accomplished for example with `command/ctrl + shift + F10`. An alternative to _only_ purge user-created objects from memory is to use the `R` command `rm` (for "remove"), followed by a list of items to be removed:
 
-```r
+``` r
 rm(list = ls())
 ```
 
@@ -34,7 +34,7 @@ Note that `ls()` lists all objects currently on the workspace.
 
 Load the libraries you will use in this activity:
 
-```r
+``` r
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 ```
 
@@ -48,24 +48,24 @@ library(isdas) # Companion Package for Book An Introduction to Spatial Data Anal
 ## loading 'isdas'
 ```
 
-```r
+``` r
 library(sf) # Simple Features for R
 ```
 
 ```
-## Linking to GEOS 3.11.2, GDAL 3.6.2, PROJ 9.2.0; sf_use_s2() is TRUE
+## Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE
 ```
 
-```r
+``` r
 library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.3     ✔ readr     2.1.4
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
 ## ✔ purrr     1.0.2
 ```
 
@@ -80,13 +80,13 @@ library(tidyverse) # Easily Install and Load the 'Tidyverse'
 
 If you successfully loaded package `isdas` a dataset called `HamiltonDAs` should be available for analysis:
 
-```r
+``` r
 data(HamiltonDAs)
 ```
 
 Check the class of this object:
 
-```r
+``` r
 class(HamiltonDAs)
 ```
 
@@ -98,7 +98,7 @@ As you can see, this is an object of class `sf`, which stands for _simple featur
 
 You can examine the contents of the dataset by means of `head` (which will show the top rows):
 
-```r
+``` r
 head(HamiltonDAs)
 ```
 
@@ -126,7 +126,7 @@ head(HamiltonDAs)
 
 Or obtain the summary statistics by means of `summary`:
 
-```r
+``` r
 summary(HamiltonDAs)
 ```
 
@@ -155,7 +155,7 @@ The dataframe includes all _Dissemination Areas_ (or DAs for short) for the Hami
 
 To create a simple map we can use `ggplot2`, which previously we used to map points. Now, the geom for objects of class `sf` can be used to plot areas. To create such a map, we layer a geom object of type `sf` on a `ggplot2` object. For instance, to plot the DAs:
 
-```r
+``` r
 ggplot(HamiltonDAs) + 
   geom_sf(fill = "gray", color = "black", alpha = .3, size = .3)
 ```
@@ -168,7 +168,7 @@ This map only shows the DAs, which is nice. However, as you saw in the summary o
 
 Thematic maps can be created using these variables. The next chunk of code plots the DAs and adds info. The `fill` argument is used to select a variable to color the polygons. The function `cut_number` is used to classify the values of the variable in $k$ groups of equal size, in this case 5 (notice that the lines of the polygons are still black). The `scale_fill_brewer` function can be used to select different _palettes_ or coloring schemes):
 
-```r
+``` r
 ggplot(HamiltonDAs) +
   geom_sf(aes(fill = cut_number(HamiltonDAs$VAR1, 5)), color = "black", alpha = 1, size = .3) +
   scale_fill_brewer(palette = "Reds") +

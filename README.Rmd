@@ -67,7 +67,12 @@ I created a [template repository](https://github.com/paezha/ES4GA3-Sample-Reposi
 
 ### Examples of projects
 
-There will be some examples of projects in this [repository](https://github.com/paezha/student-projects).
+These are examples of projects completed in this course:
+
+- [Examining the Relationships Between Socioeconomic Variables and Particulate Air Pollution in the Toronto Metropolitan Area](https://github.com/paezha/Air-Pollution-Correlates-4GA3)  
+- [Evaluating Effects of Population Demographics on Access to Sexual Health Care: A Toronto Case Study](https://github.com/paezha/Sexual-Health-Clinics-4GA3)  
+- [Investigating Socio-Economic Disparities in the Damages Caused by Hurricane Katrina and Hurricane Rita in Southern Louisiana Counties](https://github.com/paezha/Hurricane-Damage-Lousiana-4GA3)  
+- [The Effects of Income and Unemployment on Crime in Toronto](https://github.com/paezha/Crime-in-Toronto-4GA3)  
 
 ## Contributing
 
@@ -99,10 +104,9 @@ During the project we aim to contribute 'upstream' to the packages that make geo
 This impact is recorded in [`our-impact.csv`](https://github.com/Robinlovelace/geocompr/blob/master/our-impact.csv).
 -->
 
+<!--
 ## Reproducing the book
 
-TODO
-<!--
 To ease reproducibility, we created the `geocompkg` package.
 Installing it from GitHub will install all the R packages needed build the book (you will a computer with necessary [system dependencies](https://github.com/r-spatial/sf#installing) and the [**remotes**](https://github.com/r-lib/remotes/) package installed):
 
@@ -129,19 +133,18 @@ browseURL("_book/index.html") # to view it
 # geocompkg:::generate_chapter_code()
 ```
 
+<!--
 ## The book in binder
 
 I think I got the binder to work.
 
 [![Launch Rstudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/paezha/spatial-analysis-r/main?urlpath=rstudio)
 
-<!--
 For many people the quickest way to get started with Geocomputation with R is in your web browser via Binder.
 To see an interactive RStudio Server instance click on the following button, which will open [mybinder.org](https://mybinder.org/v2/gh/robinlovelace/geocompr/master?urlpath=rstudio) with an R installation that has all the dependencies needed to reproduce the book:
 
 #You can also have a play with the repo in RStudio Cloud by clicking on this link (requires log-in):
 
--->
 
 ## The book in a Docker container
 
@@ -166,7 +169,6 @@ docker run -it geocompr/geocompr R
 ```
 
 See the [geocompr/docker](https://github.com/geocompr/docker#geocomputation-with-r-in-docker) repo for details, including how to share volumes between your computer and the Docker image, for using geographic R packages on your own data and for information on available tags.
--->
 
 ## Reproducing this README
 
@@ -253,11 +255,13 @@ ggplot(book_stats) +
 
 <!-- Book statistics: estimated number of pages per chapter over time. -->
 
+<!--
 ## Citations
-
-TODO
+-->
 
 <!--
+TODO
+
 To cite packages used in this book we use code from [Efficient R Programming](https://csgillespie.github.io/efficientR/):
 
 ```{r gen-cite, warning=FALSE}
@@ -303,4 +307,5 @@ As described in the GitHub repo [Robinlovelace/rmarkdown-citr-demo](https://gith
 #pkg_df$Title = gsub(pattern = pattern, replacement = "", x = pkg_df$Title, perl = TRUE)
 #knitr::kable(pkg_df)
 ```
+
 -->
