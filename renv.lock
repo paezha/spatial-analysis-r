@@ -1162,14 +1162,14 @@
     },
     "isdas": {
       "Package": "isdas",
-      "Version": "0.0.1-2024",
+      "Version": "0.0.1-2025",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "paezha",
       "RemoteRepo": "isdas",
       "RemoteRef": "master",
-      "RemoteSha": "6a4a559b34faf637a1c04b553fd1f89d753c00c1",
+      "RemoteSha": "62f26b00609e05cb596942654247175f7752bf5f",
       "Requirements": [
         "deldir",
         "dplyr",
@@ -1179,7 +1179,7 @@
         "sp",
         "spdep"
       ],
-      "Hash": "3e0142b6ceab43f2574456e6ca4119f1"
+      "Hash": "78590038c1a9a3704ff46a8843092d24"
     },
     "isoband": {
       "Package": "isoband",
