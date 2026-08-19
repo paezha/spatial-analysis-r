@@ -54,13 +54,13 @@ summary(Hamilton_CT)
 ```
 
 ```
-##        ID               AREA             TRACT             POPULATION   
-##  Min.   : 919807   Min.   :  0.3154   Length:188         Min.   :    5  
-##  1st Qu.: 927964   1st Qu.:  0.8552   Class :character   1st Qu.: 2639  
-##  Median : 948130   Median :  1.4157   Mode  :character   Median : 3595  
-##  Mean   : 948710   Mean   :  7.4578                      Mean   : 3835  
-##  3rd Qu.: 959722   3rd Qu.:  2.7775                      3rd Qu.: 4692  
-##  Max.   :1115750   Max.   :138.4466                      Max.   :11675  
+##        ID               AREA                TRACT       POPULATION   
+##  Min.   : 919807   Min.   :  0.3154   Length   :188   Min.   :    5  
+##  1st Qu.: 927964   1st Qu.:  0.8552   N.unique :188   1st Qu.: 2639  
+##  Median : 948130   Median :  1.4157   N.blank  :  0   Median : 3595  
+##  Mean   : 948710   Mean   :  7.4578   Min.nchar: 10   Mean   : 3835  
+##  3rd Qu.: 959722   3rd Qu.:  2.7775   Max.nchar: 10   3rd Qu.: 4692  
+##  Max.   :1115750   Max.   :138.4466                   Max.   :11675  
 ##   POP_DENSITY         AGE_LESS_20      AGE_20_TO_24    AGE_25_TO_29  
 ##  Min.   :    2.591   Min.   :   0.0   Min.   :  0.0   Min.   :  0.0  
 ##  1st Qu.: 1438.007   1st Qu.: 528.8   1st Qu.:168.8   1st Qu.:135.0  
@@ -238,7 +238,7 @@ ggplot() +
         axis.text.y = element_blank()) # Remove the axis labels to avoid cluttering the plots
 ```
 
-<img src="23-Area-Data-III_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<img src="23-Area-Data-III_files/figure-html/unnamed-chunk-12-1.png" alt="" width="672" />
 
 The empirical variable is the map in the upper left corner (labeled `POP_DENSITY.sma`). The remaining 8 maps are simulated variables. Would you say the map of the empirical variable is fairly different from the map of the simulated variables? What are the key differences?
 
@@ -279,7 +279,7 @@ ggplot(data = Hamilton_CT2, aes(x = DENSITY, y = DENSITY_SMA, color = VAR)) +
   facet_wrap(~ VAR, ncol = 3)
 ```
 
-<img src="23-Area-Data-III_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<img src="23-Area-Data-III_files/figure-html/unnamed-chunk-14-1.png" alt="" width="672" />
 
 What difference do you see between the empirical and simulated variables in these scatterplots?
 
@@ -304,7 +304,7 @@ ggplot(data = Hamilton_CT2, aes(x = DENSITY, y = DENSITY_SMA, color = VAR)) +
 ## `geom_smooth()` using formula = 'y ~ x'
 ```
 
-<img src="23-Area-Data-III_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="23-Area-Data-III_files/figure-html/unnamed-chunk-15-1.png" alt="" width="672" />
 
 You will notice that the slope of the line tends to be flat in the simulated variables; this is to be expected, since these variables are spatially random: _the values of the variable at $i$ are independent of the values of their local means!_. In other words, the probability that the map is random is pretty high (in fact, since these 8 of these maps are null landscapes, we know for a fact that they are random).
 
@@ -358,7 +358,7 @@ sc1 + sc2
 ## `geom_smooth()` using formula = 'y ~ x'
 ```
 
-<img src="23-Area-Data-III_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<img src="23-Area-Data-III_files/figure-html/unnamed-chunk-17-1.png" alt="" width="672" />
 
 How is it useful to displace the origin of the axes to the mean values of $x$ and its spatial moving average? To explain this, notice that the values on the top scatterplot are all positive. The values on the bottom scatterplot are positive or negative, depending if they are _above_ or _below_ the mean. This sign is interesting. Notice what happens when the variable $z_i$ multiplies its spatial moving average:
 $$
@@ -401,7 +401,7 @@ ggplot(data = df_mean_center_scatterplot,
   coord_equal()
 ```
 
-<img src="23-Area-Data-III_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+<img src="23-Area-Data-III_files/figure-html/unnamed-chunk-18-1.png" alt="" width="672" />
 
 We can take the products of $z_i$ by $\bar{z}_i$ for all $i$ and add them:
 $$
@@ -460,7 +460,7 @@ You can verify that this matches the value calculated above. The kind of scatter
 mp <- moran.plot(Hamilton_CT$POP_DENSITY, Hamilton_CT.w)
 ```
 
-<img src="23-Area-Data-III_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<img src="23-Area-Data-III_files/figure-html/unnamed-chunk-21-1.png" alt="" width="672" />
 
 ## Hypothesis Testing for Spatial Autocorrelation
 

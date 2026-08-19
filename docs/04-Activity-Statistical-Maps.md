@@ -36,24 +36,11 @@ Load the libraries you will use in this activity:
 
 ``` r
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
-```
-
-```
-## Warning: replacing previous import 'dplyr::lag' by 'stats::lag' when loading
-## 'isdas'
-```
-
-```
-## Warning: replacing previous import 'plotly::filter' by 'stats::filter' when
-## loading 'isdas'
-```
-
-``` r
 library(sf) # Simple Features for R
 ```
 
 ```
-## Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE
+## Linking to GEOS 3.12.2, GDAL 3.11.4, PROJ 9.4.1; sf_use_s2() is TRUE
 ```
 
 ``` r
@@ -62,11 +49,11 @@ library(tidyverse) # Easily Install and Load the 'Tidyverse'
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.2
+## ✔ dplyr     1.2.1     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.2
 ```
 
 ```
@@ -160,7 +147,7 @@ ggplot(HamiltonDAs) +
   geom_sf(fill = "gray", color = "black", alpha = .3, size = .3)
 ```
 
-<img src="04-Activity-Statistical-Maps_files/figure-html/ch04-plot-of-HamiltonDAs-1-1.png" width="672" />
+<img src="04-Activity-Statistical-Maps_files/figure-html/ch04-plot-of-HamiltonDAs-1-1.png" alt="" width="672" />
 
 We selected color "black" for the polygons, with a transparency alpha = 0.3 (alpha = 0 is completely transparent, alpha = 1 is completely opaque, try it!), and line size 0.3.
 
@@ -181,7 +168,7 @@ ggplot(HamiltonDAs) +
 ## ℹ Use `VAR1` instead.
 ```
 
-<img src="04-Activity-Statistical-Maps_files/figure-html/ch04-plot-of-HamiltonDAs-2-1.png" width="672" />
+<img src="04-Activity-Statistical-Maps_files/figure-html/ch04-plot-of-HamiltonDAs-2-1.png" alt="" width="672" />
 
 Now you have seen how to create a thematic map with polygons (areal data), you are ready for the following activity.
 

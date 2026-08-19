@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 38 Activity 18: Spatially Continuous Data IV | An Introduction to Spatial Data Analysis and Statistics: A Course in R</title>
   <meta name="description" content="This book was created as a resource for teaching applied spatial statistics at McMaster University by Antonio Paez, with support from Anastassios Dardas, Rajveer Ubhi, Megan Coad and Alexis Polidoro. Further testing and refinements are due to John Merrall and Anastasia Soukhov. The book is published with support of an Open Educational Resources grant from MacPherson Institute, McMaster University." />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 38 Activity 18: Spatially Continuous Data IV | An Introduction to Spatial Data Analysis and Statistics: A Course in R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Antonio Paez" />
 
 
-<meta name="date" content="2025-01-08" />
+<meta name="date" content="2026-08-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,7 +53,7 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<link href="libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
@@ -61,7 +61,7 @@
 <script src="libs/proj4-2.6.2/proj4.min.js"></script>
 <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.2.2/leaflet.js"></script>
+<script src="libs/leaflet-binding-2.2.3/leaflet.js"></script>
 <link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet" />
 <link href="libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet" />
 <script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script>
@@ -69,12 +69,12 @@
 <script src="libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script>
 <script src="libs/lfx-heat-0.1.0/lfx-heat-prod.js"></script>
 <script src="libs/lfx-heat-0.1.0/lfx-heat-bindings.js"></script>
-<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/plotly-binding-4.12.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
 <link href="libs/colourpicker-1.1/colourpicker.min.css" rel="stylesheet" />
 <script src="libs/colourpicker-1.1/colourpicker.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -84,8 +84,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -95,7 +96,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -157,7 +158,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -634,23 +634,23 @@ div.csl-indent {
 <div id="preliminaries-36" class="section level2 hasAnchor" number="38.4">
 <h2><span class="header-section-number">38.4</span> Preliminaries<a href="activity-18-spatially-continuous-data-iv.html#preliminaries-36" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Restart <code>R</code> to begin work with a new session, or at least clear the working space to ensure that you do not have extraneous items there when you begin your work. The command in R to clear the workspace is <code>rm</code> (for “remove”), followed by a list of items to be removed. To clear the workspace from <em>all</em> objects, do the following:</p>
-<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="activity-18-spatially-continuous-data-iv.html#cb831-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb816"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb816-1"><a href="activity-18-spatially-continuous-data-iv.html#cb816-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 <p>Note that <code>ls()</code> lists all objects currently on the workspace.</p>
 <p>Load the libraries you will use in this activity (load other packages as appropriate).</p>
-<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb832-1"><a href="activity-18-spatially-continuous-data-iv.html#cb832-1" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
-<span id="cb832-2"><a href="activity-18-spatially-continuous-data-iv.html#cb832-2" tabindex="-1"></a><span class="fu">library</span>(gstat)</span>
-<span id="cb832-3"><a href="activity-18-spatially-continuous-data-iv.html#cb832-3" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb832-4"><a href="activity-18-spatially-continuous-data-iv.html#cb832-4" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb832-5"><a href="activity-18-spatially-continuous-data-iv.html#cb832-5" tabindex="-1"></a><span class="fu">library</span>(stars)</span></code></pre></div>
+<div class="sourceCode" id="cb817"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb817-1"><a href="activity-18-spatially-continuous-data-iv.html#cb817-1" tabindex="-1"></a><span class="fu">library</span>(isdas)</span>
+<span id="cb817-2"><a href="activity-18-spatially-continuous-data-iv.html#cb817-2" tabindex="-1"></a><span class="fu">library</span>(gstat)</span>
+<span id="cb817-3"><a href="activity-18-spatially-continuous-data-iv.html#cb817-3" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb817-4"><a href="activity-18-spatially-continuous-data-iv.html#cb817-4" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb817-5"><a href="activity-18-spatially-continuous-data-iv.html#cb817-5" tabindex="-1"></a><span class="fu">library</span>(stars)</span></code></pre></div>
 <p>Load dataset:</p>
-<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb833-1"><a href="activity-18-spatially-continuous-data-iv.html#cb833-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;aquifer&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb818-1"><a href="activity-18-spatially-continuous-data-iv.html#cb818-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;aquifer&quot;</span>)</span></code></pre></div>
 <p>The data is a set of piezometric head (watertable pressure) observations of the Wolfcamp Aquifer in Texas (<a href="https://en.wikipedia.org/wiki/Hydraulic_head" class="uri">https://en.wikipedia.org/wiki/Hydraulic_head</a>). Measures of pressure can be used to infer the flow of underground water, since water flows from high to low pressure areas.</p>
 <p>These data were collected to evaluate potential flow of contamination related to a high level toxic waste repository in Texas. The Deaf Smith county site in Texas was one of three potential sites proposed for this repository. Beneath the site is a deep brine aquifer known as the Wolfcamp aquifer that may serve as a conduit of contamination leaking from the repository.</p>
 <p>The data set consists of 85 georeferenced measurements of piezometric head. Possible applications of interpolation are to determine sites at risk and to quantify uncertainty of the interpolated surface, to evaluate the best locations for monitoring stations.</p>
 <p>Convert to a <code>SpatialPointsDataFrame</code>:</p>
-<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="activity-18-spatially-continuous-data-iv.html#cb834-1" tabindex="-1"></a>aquifer.sf <span class="ot">&lt;-</span> aquifer <span class="sc">|&gt;</span></span>
-<span id="cb834-2"><a href="activity-18-spatially-continuous-data-iv.html#cb834-2" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;Y&quot;</span>),</span>
-<span id="cb834-3"><a href="activity-18-spatially-continuous-data-iv.html#cb834-3" tabindex="-1"></a>           <span class="at">remove =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="activity-18-spatially-continuous-data-iv.html#cb819-1" tabindex="-1"></a>aquifer.sf <span class="ot">&lt;-</span> aquifer <span class="sc">|&gt;</span></span>
+<span id="cb819-2"><a href="activity-18-spatially-continuous-data-iv.html#cb819-2" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;Y&quot;</span>),</span>
+<span id="cb819-3"><a href="activity-18-spatially-continuous-data-iv.html#cb819-3" tabindex="-1"></a>           <span class="at">remove =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div id="activity-17" class="section level2 hasAnchor" number="38.5">
 <h2><span class="header-section-number">38.5</span> Activity<a href="activity-18-spatially-continuous-data-iv.html#activity-17" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -668,21 +668,21 @@ field data.</p>
 <li><p>Imagine that you had to compare different modeling approaches (e.g., kriging, IDW). Propose a protocol to decide which method is more accurate.</p></li>
 </ol>
 
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div class="csl-entry">
-Anselin, Luc. 1988. <em>Spatial Econometrics: Methods and Models</em>. Book. Dordrecht: Kluwer.
+Anselin, Luc. 1988. <em>Spatial Econometrics: Methods and Models</em>. Book. Kluwer.
 </div>
 <div class="csl-entry">
-———. 1995. <span>“Local Indicators of Spatial Association - LISA.”</span> Journal Article. <em>Geographical Analysis</em> 27: 93–115.
+Anselin, Luc. 1995. <span>“Local Indicators of Spatial Association - LISA.”</span> Journal Article. <em>Geographical Analysis</em> 27: 93–115.
 </div>
 <div class="csl-entry">
 Baddeley, Adrian, Ege Rubak, and Rolf Turner. 2016. <em>Spatial Point Patterns: Methodology and Applications with r</em>. Book. Chapman; Hall/CRC.
 </div>
 <div class="csl-entry">
-Bailey, T. C., and A. C. Gatrell. 1995. <em>Interactive Spatial Data Analysis</em>. Book. Essex: Addison Wesley Longman.
+Bailey, T. C., and A. C. Gatrell. 1995. <em>Interactive Spatial Data Analysis</em>. Book. Addison Wesley Longman.
 </div>
 <div class="csl-entry">
-Bivand, R. S., E. J. Pebesma, and V. Gómez-Rubio. 2008. <em>Applied Spatial Data Analysis with r</em>. Book. New York: Springer Science+Business Media.
+Bivand, R. S., E. J. Pebesma, and V. Gómez-Rubio. 2008. <em>Applied Spatial Data Analysis with r</em>. Book. Springer Science+Business Media.
 </div>
 <div class="csl-entry">
 Brunsdon, C., A. S. Fotheringham, and M. E. Charlton. 1996. <span>“Geographically Weighted Regression: A Method for Exploring Spatial Nonstationarity.”</span> Journal Article. <em>Geographical Analysis</em> 28 (4): 281–98. <a href="https://ISI:A1996VL03500001">ISI:A1996VL03500001</a>.
@@ -691,33 +691,32 @@ Brunsdon, C., A. S. Fotheringham, and M. E. Charlton. 1996. <span>“Geographica
 Brunsdon, Chris, and Lex Comber. 2015. <em>An Introduction to r for Spatial Analysis and Mapping</em>. Book. Sage.
 </div>
 <div class="csl-entry">
-Cressie, N. A. C. 1993. <em>Statistics for Spatial Data</em>. Book. Wiley Series in Probability and Mathematical Statistics. New York: John Wiley &amp; Sons.
+Cressie, N. A. C. 1993. <em>Statistics for Spatial Data</em>. Book. Wiley Series in Probability and Mathematical Statistics. John Wiley &amp; Sons.
 </div>
 <div class="csl-entry">
-Farber, S., and A. Páez. 2007. <span>“A Systematic Investigation of Cross-Validation in GWR Model Estimation: Empirical Analysis and Monte Carlo Simulations.”</span> Journal Article. <em>Journal of Geographical Systems</em> 9 (4): 371–96. <a href="https://C:/Papers/Journal of Geographical Systems/Journal of Geographical Systems (2007) 9 (4) 371-396.pdf">C:/Papers/Journal of Geographical Systems/Journal of Geographical Systems (2007) 9 (4) 371-396.pdf</a>.
+Farber, S., and A. Páez. 2007. <span>“A Systematic Investigation of Cross-Validation in GWR Model Estimation: Empirical Analysis and Monte Carlo Simulations.”</span> Journal Article. <em>Journal of Geographical Systems</em> 9 (4): 371–96. <a href="https://C:/Papers/Journal%20of%20Geographical%20Systems/Journal%20of%20Geographical%20Systems%20(2007)%209%20(4)%20371-396.pdf">C:/Papers/Journal of Geographical Systems/Journal of Geographical Systems (2007) 9 (4) 371-396.pdf</a>.
 </div>
 <div class="csl-entry">
 Fotheringham, A. S., and C. Brunsdon. 1999. <span>“Local Forms of Spatial Analysis.”</span> Journal Article. <em>Geographical Analysis</em> 31 (4): 340–58.
 </div>
 <div class="csl-entry">
-Getis, A., and J. K. Ord. 1992. <span>“The Analysis of Spatial Association by Use of Distance Statistics.”</span> Journal Article. <em>Geographical Analysis</em> 24 (3): 189–206. <a href="https://ISI:A1992JF93400001
-C:/Papers/Geographical Analysis/Geographical Analysis (1992) 24 (3) 189-206.pdf">ISI:A1992JF93400001
+Getis, A., and J. K. Ord. 1992. <span>“The Analysis of Spatial Association by Use of Distance Statistics.”</span> Journal Article. <em>Geographical Analysis</em> 24 (3): 189–206. <a href="https://ISI:A1992JF93400001%0AC:/Papers/Geographical%20Analysis/Geographical%20Analysis%20(1992)%2024%20(3)%20189-206.pdf">ISI:A1992JF93400001
 C:/Papers/Geographical Analysis/Geographical Analysis (1992) 24 (3) 189-206.pdf</a>.
 </div>
 <div class="csl-entry">
 Geyer, Charles J, and Jesper Møller. 1994. <span>“Simulation Procedures and Likelihood Inference for Spatial Point Processes.”</span> <em>Scandinavian Journal of Statistics</em>, 359–73.
 </div>
 <div class="csl-entry">
-Griffith, D. A. 1988. <em>Advanced Spatial Statistics: Special Topics in the Exploration of Quantitative Spatial Data Series</em>. Book. Dordrecht: Kluwer.
+Griffith, D. A. 1988. <em>Advanced Spatial Statistics: Special Topics in the Exploration of Quantitative Spatial Data Series</em>. Book. Kluwer.
 </div>
 <div class="csl-entry">
 Haase, P. 1995. <span>“Spatial Pattern Analysis in Ecology Based on Ripley’s k-Function: Introduction and Methods of Edge Correction.”</span> <em>Journal of Vegetation Science</em> 6 (4): 575–82.
 </div>
 <div class="csl-entry">
-Haining, R. 1990. <em>Spatial Data Analysis in the Social and Environmental Sciences</em>. Book. Cambridge: Cambridge University Press.
+Haining, R. 1990. <em>Spatial Data Analysis in the Social and Environmental Sciences</em>. Book. Cambridge University Press.
 </div>
 <div class="csl-entry">
-Isaaks, E. H., and R. M. Srivastava. 1989. <em>Applied Geostatistics</em>. Book. New York: Oxford University Press.
+Isaaks, E. H., and R. M. Srivastava. 1989. <em>Applied Geostatistics</em>. Book. Oxford University Press.
 </div>
 <div class="csl-entry">
 Lloyd, Christopher D. 2010. <em>Local Models for Spatial Analysis</em>. CRC press.
@@ -729,18 +728,17 @@ Lovelace, Robin, Jacub Nowosad, and Jannes Muenchow. 2019. <em>Geocomputation wi
 McElreath, Richard. 2016. <em>Statistical Rethinking: A Bayesian Course with Examples in r and Stan</em>. Book. Vol. 122. CRC Press.
 </div>
 <div class="csl-entry">
-McGrew Jr, J Chapman, and Charles B Monroe. 2009. <em>An Introduction to Statistical Problem Solving in Geography</em>. Book. 2nd. Edition. Long Grove, Illinois: Waveland Press.
+McGrew Jr, J Chapman, and Charles B Monroe. 2009. <em>An Introduction to Statistical Problem Solving in Geography</em>. Book. 2nd. Edition. Waveland Press.
 </div>
 <div class="csl-entry">
-McMillen, D. P. 2003. <span>“Spatial Autocorrelation or Model Misspecification?”</span> Journal Article. <em>International Regional Science Review</em> 26 (2): 208–17. <a href="https://ISI:000181958400007
-C:/Papers/International Regional Science Review/International Regional Science Review (2003) 26 (2) 208-217.pdf">ISI:000181958400007
+McMillen, D. P. 2003. <span>“Spatial Autocorrelation or Model Misspecification?”</span> Journal Article. <em>International Regional Science Review</em> 26 (2): 208–17. <a href="https://ISI:000181958400007%0AC:/Papers/International%20Regional%20Science%20Review/International%20Regional%20Science%20Review%20(2003)%2026%20(2)%20208-217.pdf">ISI:000181958400007
 C:/Papers/International Regional Science Review/International Regional Science Review (2003) 26 (2) 208-217.pdf</a>.
 </div>
 <div class="csl-entry">
 Moller, Jesper, and Rasmus Plenge Waagepetersen. 2003. <em>Statistical Inference and Simulation for Spatial Point Processes</em>. Chapman; Hall/CRC.
 </div>
 <div class="csl-entry">
-O’Sullivan, David, and David Unwin. 2010. <em>Geographic Information Analysis</em>. Book. 2nd. Edition. Hoboken, New Jersey: John Wiley &amp; Sons.
+O’Sullivan, David, and David Unwin. 2010. <em>Geographic Information Analysis</em>. Book. 2nd. Edition. John Wiley &amp; Sons.
 </div>
 <div class="csl-entry">
 Paez, A., S. Farber, and D. Wheeler. 2011. <span>“A Simulation-Based Study of Geographically Weighted Regression as a Method for Investigating Spatially Varying Relationships.”</span> Journal Article. <em>Environment and Planning A</em> 43 (12): 2992–3010. <a href="https://doi.org/10.1068/a44111">https://doi.org/10.1068/a44111</a>.
@@ -761,13 +759,13 @@ Ripley, B. D. 1976. <span>“2nd-Order Analysis of Stationary Point Processes.�
 Tomlin, C Dana. 1990. <em>A Map Algebra</em>. Harvard Graduate School of Design Cambridge, MA.
 </div>
 <div class="csl-entry">
-Tong, Daoqin, and Alan T. Murray. 2012. <span>“Spatial Optimization in Geography.”</span> Journal Article. <em>Annals of the Association of American Geographers</em> 102 (6): 1290–1309. <a href="https://doi.org/10.1080/00045608.2012.685044">https://doi.org/10.1080/00045608.2012.685044</a>.
+Tong, Daoqin, and Alan T. Murray. 2012. <span>“Spatial Optimization in Geography.”</span> Journal Article. <em>Annals of the Association of American Geographers</em> 102 (6): 1290–309. <a href="https://doi.org/10.1080/00045608.2012.685044">https://doi.org/10.1080/00045608.2012.685044</a>.
 </div>
 <div class="csl-entry">
 Wickham, Hadley. 2015. <em>R Packages: Organize, Test, Document, and Share Your Code</em>. " O’Reilly Media, Inc.".
 </div>
 <div class="csl-entry">
-———. 2017. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.
+Wickham, Hadley. 2017. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.
 </div>
 <div class="csl-entry">
 Wickham, Hadley, and Garrett Grolemund. 2016. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. " O’Reilly Media, Inc.".
@@ -779,21 +777,21 @@ With, Kimberly A, and Anthony W King. 1997. <span>“The Use and Misuse of Neutr
 </div>
 </div>
 <h3>References</h3>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Bailey1995" class="csl-entry">
-Bailey, T. C., and A. C. Gatrell. 1995. <em>Interactive Spatial Data Analysis</em>. Book. Essex: Addison Wesley Longman.
+Bailey, T. C., and A. C. Gatrell. 1995. <em>Interactive Spatial Data Analysis</em>. Book. Addison Wesley Longman.
 </div>
 <div id="ref-Bivand2008" class="csl-entry">
-Bivand, R. S., E. J. Pebesma, and V. Gómez-Rubio. 2008. <em>Applied Spatial Data Analysis with r</em>. Book. New York: Springer Science+Business Media.
+Bivand, R. S., E. J. Pebesma, and V. Gómez-Rubio. 2008. <em>Applied Spatial Data Analysis with r</em>. Book. Springer Science+Business Media.
 </div>
 <div id="ref-Brunsdon2015R" class="csl-entry">
 Brunsdon, Chris, and Lex Comber. 2015. <em>An Introduction to r for Spatial Analysis and Mapping</em>. Book. Sage.
 </div>
 <div id="ref-Isaaks1989applied" class="csl-entry">
-Isaaks, E. H., and R. M. Srivastava. 1989. <em>Applied Geostatistics</em>. Book. New York: Oxford University Press.
+Isaaks, E. H., and R. M. Srivastava. 1989. <em>Applied Geostatistics</em>. Book. Oxford University Press.
 </div>
 <div id="ref-Osullivan2010" class="csl-entry">
-O’Sullivan, David, and David Unwin. 2010. <em>Geographic Information Analysis</em>. Book. 2nd. Edition. Hoboken, New Jersey: John Wiley &amp; Sons.
+O’Sullivan, David, and David Unwin. 2010. <em>Geographic Information Analysis</em>. Book. 2nd. Edition. John Wiley &amp; Sons.
 </div>
 </div>
             </section>
@@ -817,44 +815,44 @@ O’Sullivan, David, and David Unwin. 2010. <em>Geographic Information Analysis<
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": false,
-"linkedin": true,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": true,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": null,
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "lunr",
-"options": null
-},
-"toc": {
-"collapse": "subsection",
-"scroll_highlight": true
-},
-"toolbar": {
-"position": "fixed"
-},
-"info": true
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": true,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": true,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": null,
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "lunr",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection",
+    "scroll_highlight": true
+  },
+  "toolbar": {
+    "position": "fixed"
+  },
+  "info": true
 });
 });
 </script>

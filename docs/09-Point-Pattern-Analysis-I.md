@@ -119,7 +119,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="09-Point-Pattern-Analysis-I_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+<img src="09-Point-Pattern-Analysis-I_files/figure-html/unnamed-chunk-1-1.png" alt="" width="672" />
 
 As you can see, faceting is a convenient way to simultaneously plot different parts of a dataframe (in the present case, the different `Pattern`'s).
 
@@ -177,7 +177,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-2d-bins-1.png" width="672" />
+<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-2d-bins-1.png" alt="" width="672" />
 
 Let us see step-by-step how this plot is made. 
 
@@ -212,7 +212,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-add-grid-1.png" width="672" />
+<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-add-grid-1.png" alt="" width="672" />
 
 Notice how we used to create the vertical lines (`geom_vline`) and horizontal lines (`geom_hline`), from 0 to 1 every 0.25 units of distance respectively. This creates a tessellation that divides the original region into 16 smaller squares, or subregions. Each of the smaller squares used to subdivide the region is called a _quadrat_.
 
@@ -234,7 +234,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-2d-bin-change-size-1.png" width="672" />
+<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-2d-bin-change-size-1.png" alt="" width="672" />
 
 You can, of course, change the size of the quadrats. We can take a look at the four point patterns (by means of faceting), after creating a variable to easily control the size of the quadrat. Let us call this variable `q_size`:
 
@@ -255,7 +255,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-change-size-of-quadrats-1.png" width="672" />
+<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-change-size-of-quadrats-1.png" alt="" width="672" />
 
 Notice the differences in the density maps? Try changing the size of the quadrat to 1. What happens, and why? Next, try a smaller quadrat size, say 0.25. What happens, and why? Try even smaller quadrat sizes, but greater than zero. What happens now?
 
@@ -317,7 +317,7 @@ Objects of the class `ppp` can be plotted using base `R` plotting functions:
 plot(ppp1)
 ```
 
-<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-plot-ppp1-1.png" width="672" />
+<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-plot-ppp1-1.png" alt="" width="672" />
 
 To plot each pattern separately we can split the different patterns using the function `split.ppp()`. Notice how `$` works for indexing the patterns here, just as it does for indexing columns in a data frame:
 
@@ -325,7 +325,7 @@ To plot each pattern separately we can split the different patterns using the fu
 plot(split.ppp(ppp1)$`Pattern 1`)
 ```
 
-<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-split-ppp-1.png" width="672" />
+<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-split-ppp-1.png" alt="" width="672" />
 
 Once the patterns are in `ppp` form, `quadratcount` can be used to compute the counts of events. To calculate the count separately for each pattern, you need to use again `split.ppp()` (if you don't index a pattern, it will apply the function to all of them). The other two arguments are the number of quadrats in the horizontal (nx) and the vertical (ny) directions:  
 
@@ -340,35 +340,35 @@ quadratcount(split(ppp1),
 ## 
 ## Pattern 1:
 ##             x
-## y            [0,0.25) [0.25,0.5) [0.5,0.75) [0.75,1]
-##   [0.75,1]          3          5          1        6
-##   [0.5,0.75)        2          3          4        6
-##   [0.25,0.5)        5          4          2        3
-##   [0,0.25)          2          4          4        6
+## y            [0,0.25] (0.25,0.5] (0.5,0.75] (0.75,1]
+##   (0.75,1]          3          5          1        6
+##   (0.5,0.75]        2          3          4        6
+##   (0.25,0.5]        5          4          2        3
+##   [0,0.25]          2          4          4        6
 ## 
 ## Pattern 2:
 ##             x
-## y            [0,0.25) [0.25,0.5) [0.5,0.75) [0.75,1]
-##   [0.75,1]         14          2          2        6
-##   [0.5,0.75)        0          0          4        6
-##   [0.25,0.5)        6          3          1        2
-##   [0,0.25)          4          6          2        2
+## y            [0,0.25] (0.25,0.5] (0.5,0.75] (0.75,1]
+##   (0.75,1]         14          2          2        6
+##   (0.5,0.75]        0          0          4        6
+##   (0.25,0.5]        6          3          1        2
+##   [0,0.25]          4          6          2        2
 ## 
 ## Pattern 3:
 ##             x
-## y            [0,0.25) [0.25,0.5) [0.5,0.75) [0.75,1]
-##   [0.75,1]          2         11          5        7
-##   [0.5,0.75)        1          1          6        4
-##   [0.25,0.5)        1         10          3        2
-##   [0,0.25)          2          1          2        2
+## y            [0,0.25] (0.25,0.5] (0.5,0.75] (0.75,1]
+##   (0.75,1]          2         11          5        7
+##   (0.5,0.75]        1          1          6        4
+##   (0.25,0.5]        1         10          3        2
+##   [0,0.25]          2          1          2        2
 ## 
 ## Pattern 4:
 ##             x
-## y            [0,0.25) [0.25,0.5) [0.5,0.75) [0.75,1]
-##   [0.75,1]          4          5          6        3
-##   [0.5,0.75)        3          3          4        2
-##   [0.25,0.5)        3          3          4        2
-##   [0,0.25)          5          4          6        3
+## y            [0,0.25] (0.25,0.5] (0.5,0.75] (0.75,1]
+##   (0.75,1]          4          5          6        3
+##   (0.5,0.75]        3          3          4        2
+##   (0.25,0.5]        3          3          4        2
+##   [0,0.25]          5          4          6        3
 ```
 
 Compare the counts of the quadrats for each pattern. They should replicate what you observed in the density plots before.
@@ -400,7 +400,7 @@ Repeat the plot but using the new `ppp` object:
 plot(split.ppp(ppp2)$`Pattern 1`)
 ```
 
-<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-plot-ppp2-1.png" width="672" />
+<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-plot-ppp2-1.png" alt="" width="672" />
 
 Repeat but now using an even bigger region. Create a third window:
 
@@ -422,7 +422,7 @@ Now the plot looks like this:
 plot(split.ppp(ppp3)$`Pattern 1`)
 ```
 
-<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-plot-ppp3-1.png" width="672" />
+<img src="09-Point-Pattern-Analysis-I_files/figure-html/ch09-plot-ppp3-1.png" alt="" width="672" />
 
 Which of the three regions that you saw above is more appropriate? What do you think is the effect of selecting an inappropriate region for the analysis?
 

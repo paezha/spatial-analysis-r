@@ -118,7 +118,7 @@ Begin by plotting the pattern:
 plot(pp1.ppp)
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-7-1.png" alt="" width="672" />
 
 An empty space map is obtained by means of the `distmap()` function:
 
@@ -134,7 +134,7 @@ The plot of this is:
 plot(empty_space_map1)
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-9-1.png" alt="" width="672" />
 
 Similar to the Stienen diagrams that you used previously, this map shows the distance from any location on the map to the nearest event: the smaller the value, the closer the point is to an event. It is evident in this pixel image that the values are mostly smaller, illustrating that points are closer to events. 
 
@@ -145,7 +145,7 @@ empty_space_map2 <- distmap(pp2.ppp)
 plot(empty_space_map2)
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-10-1.png" alt="" width="672" />
 
 In the second point pattern, there is more open space in the region. This is also apparent from the symbols map:
 
@@ -153,7 +153,7 @@ In the second point pattern, there is more open space in the region. This is als
 plot(pp2.ppp)
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-11-1.png" alt="" width="672" />
 
 The $\hat{F}$-function is implemented in `spatstat` as `Fest()` (for F-estimated), and it requires a `ppp` object as an input. Another possible input is whether a correction is to be used. This refers to boundary corrections. Since we have not yet discussed them, select "none":
 
@@ -168,7 +168,7 @@ This function can be plotted as follows:
 plot(f_pattern1)
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-13-1.png" alt="" width="672" />
 
 The black line is the empirical function, and we see that it is in general very similar to the theoretical function that corresponds to a null landscape. Compare to the second pattern:
 
@@ -180,7 +180,7 @@ lines(x = c(0.045, 0.045), y = c(0.0, 0.4), col = "blue", lty = "dotted")
 lines(x = c(0.097, 0.097), y = c(0.0, 0.4), col = "blue", lty = "dotted")
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-14-1.png" alt="" width="672" />
 
 In the empirical (black) pattern, points on a grid tend to be more distant from events than what you would expect from the null landscape. For example, whereas under the theoretical function 40% of points have a nearest event that is at a distance of approximately 0.045 or less, under the empirical function, the events are generally more distant from the points, and for the same value of F (0.4 or 40%) the distance is closer to 0.1. See:
 
@@ -192,7 +192,7 @@ lines(x = c(0.045, 0.045), y = c(0.0, 0.4), col = "blue", lty = "dotted")
 lines(x = c(0.097, 0.097), y = c(0.0, 0.4), col = "blue", lty = "dotted")
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-15-1.png" alt="" width="672" />
 
 This suggests that the points are clustered. Try plotting the $\hat{G}$-functions for the patterns in this example, and compare.
 
@@ -206,7 +206,7 @@ Consider for instance the following point pattern:
 plot(pp3.ppp)
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-16-1.png" alt="" width="672" />
 
 The events above initially appear to be clustered. However, at a different scale, a second pattern becomes evident. In fact, what we observe is a _regular_ distribution of _clusters_. At a smaller scale, a single cluster may actually be a random distribution of events. In contrast, the following pattern appears to be a random distribution of regularly spaced events:
 
@@ -214,7 +214,7 @@ The events above initially appear to be clustered. However, at a different scale
 plot(pp4.ppp)
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-17-1.png" alt="" width="672" />
 
 Whereas the last point pattern is of clusters of dispersed events that are themselves regularly spaced:
 
@@ -222,7 +222,7 @@ Whereas the last point pattern is of clusters of dispersed events that are thems
 plot(pp5.ppp)
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-18-1.png" alt="" width="672" />
 
 Both $\hat{G}(x)$ or $\hat{F}(x)$ when applied to any of these patterns will strongly hint at clustering at the scale of the first nearest neighbor. Regrettably, they fail to detect patterns that might exist at other scales. For instance:
 
@@ -231,7 +231,7 @@ f_pattern3 <- Fest(pp3.ppp, correction = "none")
 plot(f_pattern3)
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-19-1.png" alt="" width="672" />
 
 
 ``` r
@@ -239,7 +239,7 @@ g_pattern3 <- Gest(pp3.ppp, correction = "none")
 plot(g_pattern3)
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-20-1.png" alt="" width="672" />
 
 A different technique, called the $\hat{K}$-function, is designed to detect patterns at multiple scales [see @Ripley1976; and @Haase1995spatial]. The intuition behind the function is as follows. 
 
@@ -266,7 +266,7 @@ To see how this function works, plot `pp3.ppp` once more:
 plot(pp3.ppp)
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-21-1.png" alt="" width="672" />
 
 Next, use `Kest()` to calculate and plot the $\hat{K}$-function:
 
@@ -276,7 +276,7 @@ k_pattern3 <- Kest(pp3.ppp, correction = "none")
 plot(k_pattern3)
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-22-1.png" alt="" width="672" />
 
 As seen from the plot, the function is suggestive of clustering at smaller scales, but regularity at a larger scale.
 
@@ -286,7 +286,7 @@ Try this now with the last pattern:
 plot(pp5.ppp)
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-23-1.png" alt="" width="672" />
 
 If you calculate and plot the $\hat{K}$-function:
 
@@ -295,7 +295,7 @@ k_pattern5 <- Kest(pp5.ppp, correction = "none")
 plot(k_pattern5)
 ```
 
-<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-24-1.png" width="672" />
+<img src="15-Point-Pattern-Analysis-IV_files/figure-html/unnamed-chunk-24-1.png" alt="" width="672" />
 
 You will see that the plot correctly suggests dispersion at the very small scale, followed by clustering at an intermediate scale. There are indeed clusters of nine events surrounded by empty space, before other clusters of regular events are detected at the largest scale, following a regular pattern.
 

@@ -111,14 +111,14 @@ These notes were developed using the following version of `R`:
 ## system         x86_64, linux-gnu           
 ## status                                     
 ## major          4                           
-## minor          4.2                         
-## year           2024                        
-## month          10                          
-## day            31                          
-## svn rev        87279                       
+## minor          6.1                         
+## year           2026                        
+## month          06                          
+## day            24                          
+## svn rev        90187                       
 ## language       R                           
-## version.string R version 4.4.2 (2024-10-31)
-## nickname       Pile of Leaves
+## version.string R version 4.6.1 (2026-06-24)
+## nickname       Happy Hop
 ```
 
 A reproducible environment is available at https://github.com/paezha/Applied-Spatial-Statistics.

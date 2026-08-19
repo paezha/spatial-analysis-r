@@ -91,7 +91,7 @@ sum(coin_flips)/n
 ```
 
 ```
-## [1] 0.49
+## [1] 0.499
 ```
 
 What happens if you change the `size` to 0, and why?
@@ -114,7 +114,7 @@ rnorm(1,
 ```
 
 ```
-## [1] 0.7784081
+## [1] 1.561249
 ```
 
 Let's say that the average height of men in Canada is 170.7 cm and the standard deviation is 7 cm. The height of a random person in this population would be:
@@ -126,7 +126,7 @@ rnorm(1,
 ```
 
 ```
-## [1] 173.1951
+## [1] 174.8525
 ```
 
 And the distribution of heights of `n` men in this population would be:
@@ -151,10 +151,10 @@ ggplot(data = height,
 ```
 
 ```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
 ```
 
-<img src="07-Maps-as-Processes_files/figure-html/ch07-height-population-1.png" width="672" />
+<img src="07-Maps-as-Processes_files/figure-html/ch07-height-population-1.png" alt="" width="672" />
 
 Men shorter than 150 cm would be extremely rare, as well as men taller than 190 cm.
 
@@ -215,7 +215,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="07-Maps-as-Processes_files/figure-html/ch07-plot-null-pattern-1.png" width="672" />
+<img src="07-Maps-as-Processes_files/figure-html/ch07-plot-null-pattern-1.png" alt="" width="672" />
 
 By changing the probability `prob` in the function `rbinom` you can make the event more or less likely, i.e., frequent. If you are working with the notebook version of this document you can try changing the parameters to see what happens.
 
@@ -259,7 +259,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="07-Maps-as-Processes_files/figure-html/ch07-plot-null-trend-1.png" width="672" />
+<img src="07-Maps-as-Processes_files/figure-html/ch07-plot-null-trend-1.png" alt="" width="672" />
 
 These two examples illustrate only two of many possible techniques to generate null landscapes. We will discuss other strategies to work with null landscapes later in the course.
 
@@ -299,7 +299,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="07-Maps-as-Processes_files/figure-html/ch07-plot-null-pattern-2-1.png" width="672" />
+<img src="07-Maps-as-Processes_files/figure-html/ch07-plot-null-pattern-2-1.png" alt="" width="672" />
 
 A _systematic_ or _deterministic_ process is one that contains no elements of randomness, and can therefore be predicted with complete certainty. For instance (note the use of `xlim` to set the extent of x axis in the plot):
 
@@ -329,7 +329,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="07-Maps-as-Processes_files/figure-html/ch07-deterministic-pattern-1.png" width="672" />
+<img src="07-Maps-as-Processes_files/figure-html/ch07-deterministic-pattern-1.png" alt="" width="672" />
 
 In the process above, we used the function `round()` and the coordinate `x`. The function gives a value of one for all points with x > 0.5, and a value of zero to all points with x <= 0.5. The pattern is fully deterministic: if I know the value of the x coordinate I can predict whether an event will be present.
 
@@ -358,7 +358,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="07-Maps-as-Processes_files/figure-html/ch07-stochastic-process-1.png" width="672" />
+<img src="07-Maps-as-Processes_files/figure-html/ch07-stochastic-process-1.png" alt="" width="672" />
 
 The process above has a deterministic component (the probability of an event is zero if x <= 0.5), and a random component (the probability of a coordinate being an event is 0.5 when x > 0.5). The landscape is not fully random, but also it is not fully deterministic. Instead, it is the result of a stochastic process, a process that combines deterministic and random elements.
 
@@ -398,7 +398,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="07-Maps-as-Processes_files/figure-html/ch07-plot-pattern-1-1.png" width="672" />
+<img src="07-Maps-as-Processes_files/figure-html/ch07-plot-pattern-1-1.png" alt="" width="672" />
 
 Since the probability of a "success" in the binomial experiment is proportional to the value of x (the coordinate of the event), now the events are clustered to the right of the plot. The underlying process in this case can be described in simple terms as "the probability of an event increases in the east direction". In a real process, this could be possibly as a result of wind conditions, soil fertility, or other environmental factors that follow a trend.
 
@@ -423,7 +423,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="07-Maps-as-Processes_files/figure-html/ch07-p-as-function-of-y-1.png" width="672" />
+<img src="07-Maps-as-Processes_files/figure-html/ch07-p-as-function-of-y-1.png" alt="" width="672" />
 
 Since the probability of a "success" in the binomial experiment is proportional to the value of y (the coordinate of the event), now the events are clustered to the top. The probability could be the interaction of the two coordinates:
 
@@ -444,7 +444,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="07-Maps-as-Processes_files/figure-html/ch07-ch07-p-as-function-of-x-and-y-1.png" width="672" />
+<img src="07-Maps-as-Processes_files/figure-html/ch07-ch07-p-as-function-of-x-and-y-1.png" alt="" width="672" />
 
 Which of course means that the events cluster on the top-right corner.
 
@@ -479,7 +479,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="07-Maps-as-Processes_files/figure-html/ch07-plot-p-as-function-of-dist-to-centre-1.png" width="672" />
+<img src="07-Maps-as-Processes_files/figure-html/ch07-plot-p-as-function-of-dist-to-centre-1.png" alt="" width="672" />
 
 As you would expect, there are few events near the center, and the number of events tends to increase away from the center.
 
@@ -512,7 +512,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="07-Maps-as-Processes_files/figure-html/ch07-plot-trend-height-1.png" width="672" />
+<img src="07-Maps-as-Processes_files/figure-html/ch07-plot-trend-height-1.png" alt="" width="672" />
 
 As expected, shorter people are towards the "front" (bottom of the plot) and taller people towards the back. It is not a uniform process, since there is still some randomness, but a trend can be clearly appreciated.
 
