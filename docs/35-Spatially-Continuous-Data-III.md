@@ -53,14 +53,14 @@ summary(Walker_Lake)
 ```
 
 ```
-##       ID                  X               Y               V         
-##  Length:470         Min.   :  8.0   Min.   :  8.0   Min.   :   0.0  
-##  Class :character   1st Qu.: 51.0   1st Qu.: 80.0   1st Qu.: 182.0  
-##  Mode  :character   Median : 89.0   Median :139.5   Median : 425.2  
-##                     Mean   :111.1   Mean   :141.3   Mean   : 435.4  
-##                     3rd Qu.:170.0   3rd Qu.:208.0   3rd Qu.: 644.4  
-##                     Max.   :251.0   Max.   :291.0   Max.   :1528.1  
-##                                                                     
+##          ID            X               Y               V         
+##  Length   :470   Min.   :  8.0   Min.   :  8.0   Min.   :   0.0  
+##  N.unique :470   1st Qu.: 51.0   1st Qu.: 80.0   1st Qu.: 182.0  
+##  N.blank  :  0   Median : 89.0   Median :139.5   Median : 425.2  
+##  Min.nchar:  1   Mean   :111.1   Mean   :141.3   Mean   : 435.4  
+##  Max.nchar:  3   3rd Qu.:170.0   3rd Qu.:208.0   3rd Qu.: 644.4  
+##                  Max.   :251.0   Max.   :291.0   Max.   :1528.1  
+##                                                                  
 ##        U           T      
 ##  Min.   :   0.00   1: 45  
 ##  1st Qu.:  83.95   2:425  
@@ -68,7 +68,7 @@ summary(Walker_Lake)
 ##  Mean   : 613.27          
 ##  3rd Qu.: 883.20          
 ##  Max.   :5190.10          
-##  NA's   :195
+##  NAs    :195
 ```
 
 ## Residual spatial pattern
@@ -165,7 +165,7 @@ ggplot(data = Walker_Lake,
   coord_equal() # Ensures equal scales for both axes
 ```
 
-<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-8-1.png" alt="" width="672" />
 
 As seen before, there is considerable spatial autocorrelation as confirmed by Moran's $I$ coefficient:
 
@@ -211,7 +211,7 @@ ggplot(data = Walker_Lake,
   coord_equal()
 ```
 
-<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-10-1.png" alt="" width="672" />
 
 What would your guess be, and why? Would you say that your guess has a better than 50% chance of being right?
 
@@ -227,7 +227,7 @@ ggplot(data = Walker_Lake,
   coord_equal()
 ```
 
-<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-11-1.png" alt="" width="672" />
 
 Again, what would your guess be, and why? Would you be able to guess this way if the residuals were random?
 
@@ -282,7 +282,7 @@ ggplot(data = correlogram,
   geom_point()
 ```
 
-<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-13-1.png" alt="" width="672" />
 
 As can be seen in the plot, spatial autocorrelation tends to decline as the number of nearest neighbors used in the test grows - in other words, as the scale of the test increases. This is a common occurrence: when autocorrelation is present, observations tend to be more similar to their closest neighbors than to their more distant neighbors. 
 
@@ -415,7 +415,7 @@ ggplot(data = variogram_z,
   ylab("Semivariance")
 ```
 
-<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-15-1.png" alt="" width="672" />
 
 The numbers indicate the number of pairs of observations used to calculate the semivariance at the corresponding lag.
 
@@ -444,7 +444,7 @@ ggplot(data = variogram_z,
   ylab("Autocovariance")
 ```
 
-<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-17-1.png" alt="" width="672" />
 
 As expected, the autocovariance (and hence, the autocorrelation) is stronger at short spatial lags, and declines at larger spatial lags.
 
@@ -508,7 +508,7 @@ plot(variogramLine(vgm(1,
      type = 'l') 
 ```
 
-<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-19-1.png" alt="" width="672" />
 
 Spherical semivariogram:
 
@@ -520,7 +520,7 @@ plot(variogramLine(vgm(1,
      type = 'l')
 ```
 
-<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-20-1.png" alt="" width="672" />
 
 Gaussian semivariogram:
 
@@ -532,7 +532,7 @@ plot(variogramLine(vgm(1,
      type = 'l')
 ```
 
-<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-21-1.png" alt="" width="672" />
 
 These plots illustrate some differences in the behavior of the models. For identical parameters, the Gaussian model provides smoother changes near the origin. The spherical model reaches the sill more rapidly than the other models.
 
@@ -563,7 +563,7 @@ ggplot(data = variogram_z,
   ylab("Semivariance")
 ```
 
-<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-23-1.png" alt="" width="672" />
 
 A set of models can be passed as an argument to `fit.variogram`, in which case the value (output) of the function is the model that provides the best fit to the empirical semivariogram:
 
@@ -600,7 +600,7 @@ ggplot(data = variogram_z,
   ylab("Semivariance")
 ```
 
-<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-25-1.png" alt="" width="672" />
 
 For comparison, we will do the variographic analysis of a simulated random dataset.
 
@@ -650,6 +650,6 @@ ggplot(data = variogram_df, aes(x = dist, y = gamma)) +
   ylab("Semivariance")  
 ```
 
-<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-29-1.png" width="672" />
+<img src="35-Spatially-Continuous-Data-III_files/figure-html/unnamed-chunk-29-1.png" alt="" width="672" />
 
 The range of the semivariogram appears to be zero, or alternatively, there seems to be a pure nugget effect. This is as expected. Since the data are spatially random, they are not more similar at shorter distances than they would be at longer distances.

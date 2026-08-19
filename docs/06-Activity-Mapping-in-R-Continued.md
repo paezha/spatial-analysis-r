@@ -39,16 +39,6 @@ library(tidyverse) # Easily Install and Load the 'Tidyverse'
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 ```
 
-```
-## Warning: replacing previous import 'dplyr::lag' by 'stats::lag' when loading
-## 'isdas'
-```
-
-```
-## Warning: replacing previous import 'plotly::filter' by 'stats::filter' when
-## loading 'isdas'
-```
-
 Now that your workspace is clear, you can proceed to invoke the datasets required for this activity:
 
 ``` r

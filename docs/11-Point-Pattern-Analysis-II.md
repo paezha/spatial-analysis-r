@@ -146,7 +146,7 @@ Let's begin by plotting the patterns. You can use `split` to do plots for each p
 plot(split(PointPatterns.ppp))
 ```
 
-<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-split-ppp-then-plot-1.png" width="672" />
+<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-split-ppp-then-plot-1.png" alt="" width="672" />
 
 Recall that you can also plot individual patterns by using `$` followed by the factor that identifies the desired pattern (this is a way of indexing different patterns in `ppp`-class objects):
 
@@ -156,7 +156,7 @@ Recall that you can also plot individual patterns by using `$` followed by the f
 plot(split(PointPatterns.ppp)$"Pattern 4")
 ```
 
-<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-split-then-plot-Pattern-4-1.png" width="672" />
+<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-split-then-plot-Pattern-4-1.png" alt="" width="672" />
 
 Now calculate the quadrat-based test of independence:
 
@@ -187,7 +187,7 @@ Plot the results of the quadrat test:
 plot(q_test)
 ```
 
-<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-plot-results-quadrat-test-1.png" width="672" />
+<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-plot-results-quadrat-test-1.png" alt="" width="672" />
 
 As seen in the preceding chapter, the expected distribution of events on quadrats under the null landscape tends to be quite even. This is because each quadrat has equal probability of having the same number of events (depending on size, when the quadrats are not all the same size the number will be proportional to the size of the quadrat).
 
@@ -211,7 +211,7 @@ plot(quadrat.test(split(PointPatterns.ppp)$"Pattern 1",
                   ny = 3))
 ```
 
-<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-plot-quadrat-test-Pattern-1-1.png" width="672" />
+<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-plot-quadrat-test-Pattern-1-1.png" alt="" width="672" />
 
 You can see that the Pearson residual of the top left quadrat is indeed -0.6567673, the next to its right is -0.2704336, and so on. The value of the test statistic should be then:
 
@@ -358,7 +358,7 @@ Consider for instance the following two patterns in `pp0`:
 plot(split(pp0.ppp))
 ```
 
-<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-plot-pp0-1.png" width="672" />
+<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-plot-pp0-1.png" alt="" width="672" />
 
 These two patterns look quite different. And yet, when we count the events by quadrats:
 
@@ -368,7 +368,7 @@ plot(quadratcount(split(pp0.ppp),
                   ny = 3))
 ```
 
-<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-quadrat-count-pp0-1.png" width="672" />
+<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-quadrat-count-pp0-1.png" alt="" width="672" />
 
 This example highlights how quadrats are relatively coarse measures of density, and fail to distinguish between fairly different event distributions, in particular because quadrat analysis does not take into account the relative position of the events with respect to each other.
 
@@ -397,7 +397,7 @@ ggplot(data = data.frame(dist = c(-3, 3)),
   ylim(c(0, 0.45))
 ```
 
-<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-plot-kernel-1.png" width="672" />
+<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-plot-kernel-1.png" alt="" width="672" />
 
 As you can see, the value of the function declines with increasing distance from the center of the window (when dist == 0; note that the value never becomes zero!). Since we used the normal distribution, this is a _Gaussian kernel_. The shape of the Gaussian kernel depends on the standard deviation, which controls how "big" the window is, or alternatively, how quickly the function decays. We will call the standard deviation the _kernel bandwidth_ of the function. 
 
@@ -419,7 +419,7 @@ kernel_density <- density(split(pp0.ppp),
 plot(kernel_density)
 ```
 
-<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-plot-kernel-density-1.png" width="672" />
+<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-plot-kernel-density-1.png" alt="" width="672" />
 
 Compare to the distribution of events:
 
@@ -427,7 +427,7 @@ Compare to the distribution of events:
 plot(split(pp0.ppp))
 ```
 
-<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-replot-pp0-1.png" width="672" />
+<img src="11-Point-Pattern-Analysis-II_files/figure-html/ch11-replot-pp0-1.png" alt="" width="672" />
 
 It is important to note that the gradation of colors is different in the two kernel density plots. Whereas the smallest value in the plot on the left is less than 20 and the largest is greater than 100, on the other plot the range is only between 45 to approximately 50. Thus, the intensity of the process is much higher at places in Pattern 1 that in Pattern 2.
 

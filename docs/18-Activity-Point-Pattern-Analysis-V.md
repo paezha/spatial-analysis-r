@@ -37,19 +37,6 @@ Load the libraries you will use in this activity. In addition to `tidyverse`, yo
 
 ``` r
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
-```
-
-```
-## Warning: replacing previous import 'dplyr::lag' by 'stats::lag' when loading
-## 'isdas'
-```
-
-```
-## Warning: replacing previous import 'plotly::filter' by 'stats::filter' when
-## loading 'isdas'
-```
-
-``` r
 library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
 library(tidyverse) # Easily Install and Load the 'Tidyverse'
 ```
@@ -58,6 +45,13 @@ Load a dataset of your choice. It could be one of the datasets that we have used
 
 ``` r
 vcdExtra::datasets("spatstat.data")
+```
+
+```
+## Registered S3 methods overwritten by 'vcdExtra':
+##   method      from
+##   pairs.table vcd 
+##   print.Kappa vcd
 ```
 
 ```
@@ -104,41 +98,42 @@ vcdExtra::datasets("spatstat.data")
 ## 40                         lansing   ppp     6
 ## 41                         letterR  owin     5
 ## 42                        longleaf   ppp     6
-## 43                          mucosa   ppp     6
-## 44          mucosa.subwin (mucosa)  owin     4
-## 45                       murchison  list     3
-## 46                         nbfires   ppp     6
-## 47         nbfires.extra (nbfires)  list     2
-## 48              nbw.rect (nbfires)  owin     4
-## 49               nbw.seg (nbfires)  list     5
-## 50                         nztrees   ppp     5
-## 51                           osteo  list  40x5
-## 52                         paracou   ppp     6
-## 53                       ponderosa   ppp     5
-## 54     ponderosa.extra (ponderosa)  list     2
-## 55                       pyramidal  list  31x2
-## 56                         redwood   ppp     5
-## 57                        redwood3   ppp     5
-## 58                     redwoodfull   ppp     5
-## 59 redwoodfull.extra (redwoodfull)  list     5
-## 60                  residualspaper  list     7
-## 61                         shapley   ppp     6
-## 62         shapley.extra (shapley)  list     3
-## 63                        shelling   ppp     5
-## 64            shelling2 (shelling)   ppp     5
-## 65                           simba  list  10x2
-## 66                          simdat   ppp     5
-## 67                       simplenet  list    10
-## 68                         spiders   ppx     3
-## 69                     sporophores   ppp     6
-## 70                         spruces   ppp     6
-## 71                      stonetools   ppp     6
-## 72                    swedishpines   ppp     5
-## 73                         urkiola   ppp     6
-## 74                        vesicles   ppp     5
-## 75       vesicles.extra (vesicles)  list     4
-## 76                            waka   ppp     6
-## 77                   waterstriders  list     3
+## 43                      meningitis  list     2
+## 44                          mucosa   ppp     6
+## 45          mucosa.subwin (mucosa)  owin     4
+## 46                       murchison  list     3
+## 47                         nbfires   ppp     6
+## 48         nbfires.extra (nbfires)  list     2
+## 49              nbw.rect (nbfires)  owin     4
+## 50               nbw.seg (nbfires)  list     5
+## 51                         nztrees   ppp     5
+## 52                           osteo  list  40x5
+## 53                         paracou   ppp     6
+## 54                       ponderosa   ppp     5
+## 55     ponderosa.extra (ponderosa)  list     2
+## 56                       pyramidal  list  31x2
+## 57                         redwood   ppp     5
+## 58                        redwood3   ppp     5
+## 59                     redwoodfull   ppp     5
+## 60 redwoodfull.extra (redwoodfull)  list     5
+## 61                  residualspaper  list     7
+## 62                         shapley   ppp     6
+## 63         shapley.extra (shapley)  list     3
+## 64                        shelling   ppp     5
+## 65            shelling2 (shelling)   ppp     5
+## 66                           simba  list  10x2
+## 67                          simdat   ppp     5
+## 68                       simplenet  list    10
+## 69                         spiders   ppx     3
+## 70                     sporophores   ppp     6
+## 71                         spruces   ppp     6
+## 72                      stonetools   ppp     6
+## 73                    swedishpines   ppp     5
+## 74                         urkiola   ppp     6
+## 75                        vesicles   ppp     5
+## 76       vesicles.extra (vesicles)  list     4
+## 77                            waka   ppp     6
+## 78                   waterstriders  list     3
 ##                                                                                        Title
 ## 1                                          Colour Sequences with Uniform Perceptual Contrast
 ## 2                                                                 Hughes' Amacrine Cell Data
@@ -182,41 +177,42 @@ vcdExtra::datasets("spatstat.data")
 ## 40                                                               Lansing Woods Point Pattern
 ## 41                                                               Window in Shape of Letter R
 ## 42                                                              Longleaf Pines Point Pattern
-## 43                                                                   Cells in Gastric Mucosa
+## 43                                           Invasive Meningococcal Disease Cases in Germany
 ## 44                                                                   Cells in Gastric Mucosa
-## 45                                                                   Murchison gold deposits
-## 46                                              Point Patterns of New Brunswick Forest Fires
+## 45                                                                   Cells in Gastric Mucosa
+## 46                                                                   Murchison gold deposits
 ## 47                                              Point Patterns of New Brunswick Forest Fires
 ## 48                                              Point Patterns of New Brunswick Forest Fires
 ## 49                                              Point Patterns of New Brunswick Forest Fires
-## 50                                                           New Zealand Trees Point Pattern
-## 51                       Osteocyte Lacunae Data: Replicated Three-Dimensional Point Patterns
-## 52                                                   Kimboto trees at Paracou, French Guiana
-## 53                                                         Ponderosa Pine Tree Point Pattern
+## 50                                              Point Patterns of New Brunswick Forest Fires
+## 51                                                           New Zealand Trees Point Pattern
+## 52                       Osteocyte Lacunae Data: Replicated Three-Dimensional Point Patterns
+## 53                                                   Kimboto trees at Paracou, French Guiana
 ## 54                                                         Ponderosa Pine Tree Point Pattern
-## 55                                                     Pyramidal Neurons in Cingulate Cortex
-## 56                                       California Redwoods Point Pattern (Ripley's Subset)
+## 55                                                         Ponderosa Pine Tree Point Pattern
+## 56                                                     Pyramidal Neurons in Cingulate Cortex
 ## 57                                       California Redwoods Point Pattern (Ripley's Subset)
-## 58                                        California Redwoods Point Pattern (Entire Dataset)
+## 58                                       California Redwoods Point Pattern (Ripley's Subset)
 ## 59                                        California Redwoods Point Pattern (Entire Dataset)
-## 60                                     Data and Code From JRSS Discussion Paper on Residuals
-## 61                                                      Galaxies in the Shapley Supercluster
+## 60                                        California Redwoods Point Pattern (Entire Dataset)
+## 61                                     Data and Code From JRSS Discussion Paper on Residuals
 ## 62                                                      Galaxies in the Shapley Supercluster
-## 63                                                              Artillery Impacts in Ukraine
+## 63                                                      Galaxies in the Shapley Supercluster
 ## 64                                                              Artillery Impacts in Ukraine
-## 65            Simulated data from a two-group experiment with replication within each group.
-## 66                                                                   Simulated Point Pattern
-## 67                                                          Simple Example of Linear Network
-## 68                                               Spider Webs on Mortar Lines of a Brick Wall
-## 69                                                                          Sporophores Data
-## 70                                                                     Spruces Point Pattern
-## 71                                                                  Palaeolithic Stone Tools
-## 72                                                               Swedish Pines Point Pattern
-## 73                                                               Urkiola Woods Point Pattern
-## 74                                                                             Vesicles Data
+## 65                                                              Artillery Impacts in Ukraine
+## 66            Simulated data from a two-group experiment with replication within each group.
+## 67                                                                   Simulated Point Pattern
+## 68                                                          Simple Example of Linear Network
+## 69                                               Spider Webs on Mortar Lines of a Brick Wall
+## 70                                                                          Sporophores Data
+## 71                                                                     Spruces Point Pattern
+## 72                                                                  Palaeolithic Stone Tools
+## 73                                                               Swedish Pines Point Pattern
+## 74                                                               Urkiola Woods Point Pattern
 ## 75                                                                             Vesicles Data
-## 76                                                               Trees in Waka national park
-## 77 Waterstriders data.  Three independent replications of a point pattern formed by insects.
+## 76                                                                             Vesicles Data
+## 77                                                               Trees in Waka national park
+## 78 Waterstriders data.  Three independent replications of a point pattern formed by insects.
 ```
 
 Load a dataset of your choice.

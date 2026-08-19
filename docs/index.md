@@ -1,7 +1,7 @@
 --- 
 title: "An Introduction to Spatial Data Analysis and Statistics: A Course in `R`"
 author: "Antonio Paez"
-date: "2025-01-08"
+date: "2026-08-19"
 site: bookdown::bookdown_site
 output: 
   bookdown::gitbook:
@@ -61,7 +61,7 @@ The online version of the book is hosted at [geocompr.robinlovelace.net](https:/
 # {-}
 
 <!--
-<img src="images/voronoi_ponyo.gif" width="100%" />
+<img src="images/voronoi_ponyo.gif" alt="" width="100%" />
 -->
 
 <!-- 
@@ -219,7 +219,7 @@ Under the following terms:
 
 These freedoms cannot be revoked by the licensor (that is me) as long as you follow the license terms.
 
-<img src="images/license.png" width="10%" />
+<img src="images/license.png" alt="" width="10%" />
 
 <!--
 ## How to support this project {-}

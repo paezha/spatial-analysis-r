@@ -65,10 +65,10 @@ summary(bear_df)
 ```
 ##        x                y                  marks    
 ##  Min.   :515743   Min.   :6812138   Day Time  :502  
-##  1st Qu.:518994   1st Qu.:6813396   Night Time:498  
+##  1st Qu.:518995   1st Qu.:6813396   Night Time:498  
 ##  Median :519526   Median :6816724                   
 ##  Mean   :519321   Mean   :6816474                   
-##  3rd Qu.:519982   3rd Qu.:6818111                   
+##  3rd Qu.:519983   3rd Qu.:6818112                   
 ##  Max.   :522999   Max.   :6821440
 ```
 

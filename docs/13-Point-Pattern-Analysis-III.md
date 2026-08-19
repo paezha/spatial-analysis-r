@@ -110,7 +110,7 @@ For this reason, the following two patterns, despite being very different, give 
 plot(split(pp0.ppp))
 ```
 
-<img src="13-Point-Pattern-Analysis-III_files/figure-html/ch13-plot-pp0-1.png" width="672" />
+<img src="13-Point-Pattern-Analysis-III_files/figure-html/ch13-plot-pp0-1.png" alt="" width="672" />
 
 
 ``` r
@@ -121,7 +121,7 @@ plot(quadratcount(split(pp0.ppp),
                   ny = 3))
 ```
 
-<img src="13-Point-Pattern-Analysis-III_files/figure-html/ch13-plot-quadrat-count-pp0-1.png" width="672" />
+<img src="13-Point-Pattern-Analysis-III_files/figure-html/ch13-plot-quadrat-count-pp0-1.png" alt="" width="672" />
 
 The two patterns above have similar _density_, However, "Pattern 1" displays _clustering_, a situation characterized by events generally being in close proximity to others. "Pattern 2", on the other hand, displays _dispersion_ or _regularity_, a situation where points tend to be located at similar distances from each other.
 
@@ -133,7 +133,7 @@ plot(quadratcount(split(pp0.ppp),
                   ny = 9))
 ```
 
-<img src="13-Point-Pattern-Analysis-III_files/figure-html/ch13-plot-quadrat-count-smaller-quadrats-1.png" width="672" />
+<img src="13-Point-Pattern-Analysis-III_files/figure-html/ch13-plot-quadrat-count-smaller-quadrats-1.png" alt="" width="672" />
 
 As a visualization technique, this gives a better sense of the variations in density. However, as noted previously, the quality of the test of independence deteriorates when there are many quadrats with small counts.
 
@@ -144,7 +144,7 @@ plot(density(split(pp0.ppp),
              sigma = 0.075))
 ```
 
-<img src="13-Point-Pattern-Analysis-III_files/figure-html/ch13-plot-kernel-density-pp0-1.png" width="672" />
+<img src="13-Point-Pattern-Analysis-III_files/figure-html/ch13-plot-kernel-density-pp0-1.png" alt="" width="672" />
 
 However, even when we can visualize the variations in density, we cannot, from the kernel estimate alone, tell if high/low values exceed those of a null landscape - in other words, we lack at the moment a way to test the hypothesis that the density is higher than what would be expected from a null landscape.
 
@@ -196,7 +196,7 @@ ggplot(data = data.frame(dist = pp0_nn1),
   geom_histogram(binwidth = 0.03)
 ```
 
-<img src="13-Point-Pattern-Analysis-III_files/figure-html/ch13-histogram-distances-1.png" width="672" />
+<img src="13-Point-Pattern-Analysis-III_files/figure-html/ch13-histogram-distances-1.png" alt="" width="672" />
 
 Notice how most events (20 out of 36) have a nearest neighbor at a relatively short distance (<0.05). What does this mean?
 
@@ -214,7 +214,7 @@ ggplot(data = data.frame(dist = pp0_nn2),
   geom_histogram(binwidth = 0.03)
 ```
 
-<img src="13-Point-Pattern-Analysis-III_files/figure-html/ch13-histogram-distances-Pattern-2-1.png" width="672" />
+<img src="13-Point-Pattern-Analysis-III_files/figure-html/ch13-histogram-distances-Pattern-2-1.png" alt="" width="672" />
 
 In this case, most events (more than 30 out of 36) have a nearest neighbor at a distance of approximately 0.15. What does this mean?
 
@@ -226,7 +226,7 @@ split(pp0.ppp)$"Pattern 1" %mark% (pp0_nn1) %>%
   plot(markscale = 1, main = "Stienen diagram")
 ```
 
-<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-1-1.png" alt="" width="672" />
 
 In this diagram, the largest circle is not very large: even events that are relatively isolated are not a long distance away from their nearest neighbor. This fits the definition of clustering as a situation where events tend to be relatively close to each other.
 
@@ -237,7 +237,7 @@ split(pp0.ppp)$"Pattern 2" %mark% (pp0_nn2) %>%
 plot(markscale = 1, main = "Stienen diagram")
 ```
 
-<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-2-1.png" alt="" width="672" />
 
 Notice how all circles are very similar in size: this fits the definition of dispersion, where events are more or less equally distant from their nearest neighbors.
 
@@ -259,7 +259,7 @@ rand_ppp %mark% (rand_nn) %>%
   plot(markscale = 1, main = "Stienen diagram")
 ```
 
-<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-4-1.png" alt="" width="672" />
 
 In a null landscape, the distribution of the size of the symbols would tend to be random!
 
@@ -290,7 +290,7 @@ ggplot() +
   geom_line(data = df, aes(x = x, y = proportion))
 ```
 
-<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-6-1.png" alt="" width="672" />
 
 The cumulative distribution function of distances from event to nearest neighbor is called a _$G$-function_.
 
@@ -321,7 +321,7 @@ The `plot()` function can be used to visualize the estimated G (with r = x):
 plot(g_pattern1)
 ```
 
-<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-8-1.png" alt="" width="672" />
 
 In the plot above, the empirical function is the solid black line, and the theoretical is the dashed red line.
 
@@ -334,7 +334,7 @@ lines(x = c(-0.1, 0.04), y = c(0.5, 0.5), lty = "dotted")
 lines(x = c(-0.1, 0.04), y = c(0.16, 0.16), lty = "dotted", col = "red")
 ```
 
-<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-9-1.png" alt="" width="672" />
 
 Notice that the empirical function is above the theoretical function. This suggests is that in the actual landscape events tend to be much closer to other events in comparison the null landscape, and would therefore be suggestive of clustering.
 
@@ -345,7 +345,7 @@ g_pattern2 <- Gest(split(pp0.ppp)$"Pattern 2", correction = "none")
 plot(g_pattern2)
 ```
 
-<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-10-1.png" alt="" width="672" />
 
 Now the empirical function is below the one for the null landscape. Notice too that all events have a nearest neighbor in a limited range of distances, between 0.14 and 0.18. This is indicative of a dispersed, or regular pattern.
 
@@ -356,7 +356,7 @@ g_pattern_rnd <- Gest(rand_ppp, correction = "none")
 plot(g_pattern_rnd)
 ```
 
-<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="13-Point-Pattern-Analysis-III_files/figure-html/unnamed-chunk-11-1.png" alt="" width="672" />
 
 In this case, the empirical function more closely resembles the theoretical function for the null landscape. This suggests a random pattern. 
 

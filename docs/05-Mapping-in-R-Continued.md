@@ -54,16 +54,6 @@ library(tidyverse) # Easily Install and Load the 'Tidyverse'
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
 ```
 
-```
-## Warning: replacing previous import 'dplyr::lag' by 'stats::lag' when loading
-## 'isdas'
-```
-
-```
-## Warning: replacing previous import 'plotly::filter' by 'stats::filter' when
-## loading 'isdas'
-```
-
 Now that your workspace is clear, you can proceed to invoke the sample dataset. You can do this by means of the function `data`.
 
 ``` r
@@ -91,7 +81,7 @@ summary(missing_df)
 ##  Mean   :0.49295   Mean   :0.46645   Mean   : 458.8   Mean   : 562.1  
 ##  3rd Qu.:0.78580   3rd Qu.:0.74981   3rd Qu.: 465.4   3rd Qu.: 594.2  
 ##  Max.   :0.95719   Max.   :0.98715   Max.   :1050.0   Max.   :1050.0  
-##                                      NA's   :5        NA's   :5       
+##                                      NAs    :5        NAs    :5       
 ##       VAR3         Observed 
 ##  Min.   :  50.0   FALSE: 5  
 ##  1st Qu.: 630.3   TRUE :60  
@@ -99,7 +89,7 @@ summary(missing_df)
 ##  Mean   : 638.1             
 ##  3rd Qu.: 646.0             
 ##  Max.   :1050.0             
-##  NA's   :5
+##  NAs    :5
 ```
 
 This function reports the minimum, maximum, mean, median, and quantile values of a numeric variable. When variables are characters or factors, their frequency is reported. For instance, in `missing_df`, there are five instances of `FALSE` and sixty instances of `TRUE`.
@@ -187,7 +177,7 @@ summary(filter(missing_df, Observed == FALSE))
 ##  Mean   :0.452   Mean   :0.524   Mean   :NaN   Mean   :NaN   Mean   :NaN  
 ##  3rd Qu.:0.620   3rd Qu.:0.830   3rd Qu.: NA   3rd Qu.: NA   3rd Qu.: NA  
 ##  Max.   :0.880   Max.   :0.850   Max.   : NA   Max.   : NA   Max.   : NA  
-##                                  NA's   :5     NA's   :5     NA's   :5    
+##                                  NAs    :5     NAs    :5     NAs    :5    
 ##   Observed
 ##  FALSE:5  
 ##  TRUE :0  
@@ -212,7 +202,7 @@ summary(missing_df[missing_df$Observed == FALSE,])
 ##  Mean   :0.452   Mean   :0.524   Mean   :NaN   Mean   :NaN   Mean   :NaN  
 ##  3rd Qu.:0.620   3rd Qu.:0.830   3rd Qu.: NA   3rd Qu.: NA   3rd Qu.: NA  
 ##  Max.   :0.880   Max.   :0.850   Max.   : NA   Max.   : NA   Max.   : NA  
-##                                  NA's   :5     NA's   :5     NA's   :5    
+##                                  NAs    :5     NAs    :5     NAs    :5    
 ##   Observed
 ##  FALSE:5  
 ##  TRUE :0  
@@ -245,7 +235,7 @@ subset(missing_df, Observed == FALSE) |> summary()
 ##  Mean   :0.452   Mean   :0.524   Mean   :NaN   Mean   :NaN   Mean   :NaN  
 ##  3rd Qu.:0.620   3rd Qu.:0.830   3rd Qu.: NA   3rd Qu.: NA   3rd Qu.: NA  
 ##  Max.   :0.880   Max.   :0.850   Max.   : NA   Max.   : NA   Max.   : NA  
-##                                  NA's   :5     NA's   :5     NA's   :5    
+##                                  NAs    :5     NAs    :5     NAs    :5    
 ##   Observed
 ##  FALSE:5  
 ##  TRUE :0  
@@ -277,7 +267,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="05-Mapping-in-R-Continued_files/figure-html/ch05-plot-data-1.png" width="672" />
+<img src="05-Mapping-in-R-Continued_files/figure-html/ch05-plot-data-1.png" alt="" width="672" />
 
 The above simply plots the coordinates, so that we can see the spatial distribution of the observations. (Notice the use of `coord_fixed` to maintain the aspect ratio of the plot to 1, i.e. the relationship between width and height). You have control of the `shape` of the markers, as well as their `size`. You can consult the shapes available [here](http://sape.inf.usi.ch/quick-reference/ggplot2/shape). Experiment with different shapes and sizes if you wish.
 
@@ -294,7 +284,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="05-Mapping-in-R-Continued_files/figure-html/ch05-plot-data-color-1.png" width="672" />
+<img src="05-Mapping-in-R-Continued_files/figure-html/ch05-plot-data-color-1.png" alt="" width="672" />
 
 The `shape` and `size` assignments happen outside of `aes`, and so are applied equally to all observations. In some cases, you might want to let other aesthetic attributes vary with the values of a variable in the dataframe. For instance, if we let the sizes change with the value of the variable:
 
@@ -314,7 +304,7 @@ ggplot() +
 ## (`geom_point()`).
 ```
 
-<img src="05-Mapping-in-R-Continued_files/figure-html/ch05-plot-data-color-size-1.png" width="672" />
+<img src="05-Mapping-in-R-Continued_files/figure-html/ch05-plot-data-color-size-1.png" alt="" width="672" />
 
 Note how there is a warning, saying that five observations were removed because data were missing! These are likely the five locations where `Observed == FALSE`!
 
@@ -331,7 +321,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="05-Mapping-in-R-Continued_files/figure-html/ch05-plot-data-color-shape-1.png" width="672" />
+<img src="05-Mapping-in-R-Continued_files/figure-html/ch05-plot-data-color-shape-1.png" alt="" width="672" />
 Now it is easy to see the locations of the five observations that were `Observed == FALSE`!, which are labeled with gray circles. 
 
 You can change the coloring scheme by means of `scale_color_distiller` (you can can check the different color palettes available [here](http://ggplot2.tidyverse.org/reference/scale_brewer.html)):
@@ -348,7 +338,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="05-Mapping-in-R-Continued_files/figure-html/ch05-plot-data-color-palette-1.png" width="672" />
+<img src="05-Mapping-in-R-Continued_files/figure-html/ch05-plot-data-color-palette-1.png" alt="" width="672" />
 
 You will notice maybe that with this coloring scheme some observations become very light and difficult to distinguish from the background. This can be solved in many different ways (for instance, by changing the color of the background!). A simple fix is to add a layer with hollow symbols, as follows:
 
@@ -369,7 +359,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="05-Mapping-in-R-Continued_files/figure-html/ch05-plot-data-improved-1.png" width="672" />
+<img src="05-Mapping-in-R-Continued_files/figure-html/ch05-plot-data-improved-1.png" alt="" width="672" />
 
 Finally, you could try subsetting the data to have greater control of the appearance of your plot, for instance:
 
@@ -398,7 +388,7 @@ ggplot() +
   coord_fixed()
 ```
 
-<img src="05-Mapping-in-R-Continued_files/figure-html/ch05-plot-data-subsetting-1.png" width="672" />
+<img src="05-Mapping-in-R-Continued_files/figure-html/ch05-plot-data-subsetting-1.png" alt="" width="672" />
 
 These are examples of creating and improving the aspect of simple symbol maps, which are often used to represent observations in space.
 

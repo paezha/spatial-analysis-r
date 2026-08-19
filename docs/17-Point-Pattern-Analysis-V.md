@@ -109,7 +109,7 @@ g_pp1 <- Gest(pp1.ppp, correction = "none")
 plot(g_pp1)
 ```
 
-<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-6-1.png" alt="" width="672" />
 
 3. To make a decision whether to reject the null hypothesis (or contrariwise, fail to reject it), we need to know _how close is close_ to the expected value. This step depends on how much _variability_ there is of the random process around its expected value. In other words, we need to know the _variance_ of the expected value under the null hypothesis.
 
@@ -159,7 +159,7 @@ The value (i.e., output) of this function is a `ppp` object that can be analyzed
 plot(sim1)
 ```
 
-<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-10-1.png" alt="" width="672" />
 
 Importantly, you can apply any of the techniques that you have seen so far, for instance, the $\hat{G}$-function:
 
@@ -192,7 +192,7 @@ ggplot(data = g_all,
   geom_line()
 ```
 
-<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-13-1.png" alt="" width="672" />
 
 After seeing the plot above, we notice that the empirical function is very, very similar to the simulated null landscape. But is this purely a coincidence? After all, when we simulate a null landscape, there is the possibility, however improbable, that it will replicate some meaningful process purely by chance. To be sure, we can simulate and analyze a second null landscape:
 
@@ -216,7 +216,7 @@ ggplot(data = g_all,
   geom_line()
 ```
 
-<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-15-1.png" alt="" width="672" />
 
 The empirical function continues to look very similar to the simulated null landscapes. We could simulate more null landscapes and increase our confidence that the empirical function indeed is similar to a null landscape (notice the use of a `for` loop to repeat the same instructions multiple times):
 
@@ -243,7 +243,7 @@ ggplot(data = g_all,
   geom_line()
 ```
 
-<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-17-1.png" alt="" width="672" />
 
 You can see in the plot above that the empirical function is actually not visible! It is obscured by the null landscapes, since it falls somewhere within the limits of the functions for all the simulated patterns. The interpretation of this is as follows: out of 100 patterns (the empirical pattern and 99 null landscapes), the empirical pattern is not noticeably different from the random ones. How confident would you be rejecting the null hypothesis, i.e., deciding that the empirical pattern is _not_ random?
 
@@ -275,7 +275,7 @@ ggplot(data = filter(g_all,
   geom_line()
 ```
 
-<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-18-1.png" alt="" width="672" />
 
 We can see that the empirical $\hat{G}$-function of `pp2.ppp` is quite distinct from the 99 null landscapes that we generated! How confident would you be rejecting the null hypothesis now?
 
@@ -296,7 +296,7 @@ env_pp1 <- envelope(pp1.ppp,
 ```
 
 ```
-## Generating 99 simulations of CSR  ...
+## Generating 99 simulated realisations of CSR  ...
 ## 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 ## 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
 ## 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
@@ -313,7 +313,7 @@ The envelopes can be plotted:
 plot(env_pp1)
 ```
 
-<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-20-1.png" alt="" width="672" />
 
 It is easy to see that in this case the empirical function falls within the simulation envelopes, and thus it is very unlikely to be different from the null landscapes.
 
@@ -327,7 +327,7 @@ env_pp2 <- envelope(pp2.ppp,
 ```
 
 ```
-## Generating 99 simulations of CSR  ...
+## Generating 99 simulated realisations of CSR  ...
 ## 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 ## 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
 ## 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
@@ -342,7 +342,7 @@ env_pp2 <- envelope(pp2.ppp,
 plot(env_pp2)
 ```
 
-<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-21-1.png" alt="" width="672" />
 
 Now the empirical function lies well outside the simulation envelopes, which makes it very unlikely that it is similar to the null landscapes.
 
@@ -356,7 +356,7 @@ env_pp3 <- envelope(pp3.ppp,
 ```
 
 ```
-## Generating 99 simulations of CSR  ...
+## Generating 99 simulated realisations of CSR  ...
 ## 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 ## 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
 ## 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
@@ -371,7 +371,7 @@ env_pp3 <- envelope(pp3.ppp,
 plot(env_pp3)
 ```
 
-<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-22-1.png" alt="" width="672" />
 
 Again, the empirical function lies mostly outside of the simulation envelopes, meaning that it is very improbable that it represents a random process. Simulation envelopes are a powerful way to test the hypothesis of null landscapes in the case of spatial point patterns.
 
@@ -393,7 +393,7 @@ k_env_pp1 <- envelope(pp1.ppp,
 ```
 
 ```
-## Generating 99 simulations of CSR  ...
+## Generating 99 simulated realisations of CSR  ...
 ## 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 ## 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
 ## 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
@@ -408,7 +408,7 @@ k_env_pp1 <- envelope(pp1.ppp,
 plot(k_env_pp1)
 ```
 
-<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-23-1.png" alt="" width="672" />
 
 Based on this we would most likely conclude that the pattern is random.
 
@@ -422,7 +422,7 @@ pp1_reg2 <- as.ppp(as.data.frame(pp1.ppp),
 plot(pp1_reg2)
 ```
 
-<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-24-1.png" width="672" />
+<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-24-1.png" alt="" width="672" />
 
 In the context of the larger window, the point pattern now looks clustered! See how the definition of the window would change your conclusions regarding the pattern:
 
@@ -434,7 +434,7 @@ k_env_pp1_reg2 <- envelope(pp1_reg2,
 ```
 
 ```
-## Generating 99 simulations of CSR  ...
+## Generating 99 simulated realisations of CSR  ...
 ## 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 ## 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
 ## 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
@@ -449,7 +449,7 @@ k_env_pp1_reg2 <- envelope(pp1_reg2,
 plot(k_env_pp1_reg2)
 ```
 
-<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-25-1.png" alt="" width="672" />
 
 Care must be taken when defining the window/region for analysis to avoid spurious results.
 
@@ -477,7 +477,7 @@ plot(Gest(pp2.ppp,
           correction = "all"))
 ```
 
-<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+<img src="17-Point-Pattern-Analysis-V_files/figure-html/unnamed-chunk-26-1.png" alt="" width="672" />
 
 The different corrections are plotted. It can be seen in this case that the corrections are relatively small, relative to the uncorrected empirical line; however, this is not always the case.
 

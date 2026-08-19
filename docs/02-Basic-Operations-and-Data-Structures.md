@@ -456,7 +456,7 @@ ggplot(data = Cities,
   geom_bar(stat = "identity")
 ```
 
-<img src="02-Basic-Operations-and-Data-Structures_files/figure-html/ch02-bar-chart-1.png" width="672" />
+<img src="02-Basic-Operations-and-Data-Structures_files/figure-html/ch02-bar-chart-1.png" alt="" width="672" />
 
 Since this is the first time that we use `ggplot()`, it is informative to break down these instructions. We are asking `ggplot2` to create a plot that will use the data frame `Cities`. Furthermore, we tell it to use the values of `Names` in the x-axis, and the values of `Population` in the y-axis. Run the following chunk:
 
@@ -465,7 +465,7 @@ ggplot(data = Cities,
        aes(x = Name, y = Population))
 ```
 
-<img src="02-Basic-Operations-and-Data-Structures_files/figure-html/ch02-bar-chart-step-1-1.png" width="672" />
+<img src="02-Basic-Operations-and-Data-Structures_files/figure-html/ch02-bar-chart-step-1-1.png" alt="" width="672" />
 
 Notice how `ggplot2` creates a blank plot, and it has yet to actually render any of the population information in there. We layer elements on a plot by using the `+` sign. It is only when we tell the package to add some geometric element that it renders something on the plot. In the previous case, we told `ggplot2` to draw bars (by using the `geom_bar()` function). The argument of `geom_bar` was `stat = 'identity'`, to indicate that the data for the y-axis was to be used 'as-is' without further statistical transformations.
 
@@ -486,7 +486,7 @@ ggplot(data = Cities,
   geom_point()
 ```
 
-<img src="02-Basic-Operations-and-Data-Structures_files/figure-html/ch02-simple-symbol-map-1.png" width="672" />
+<img src="02-Basic-Operations-and-Data-Structures_files/figure-html/ch02-simple-symbol-map-1.png" alt="" width="672" />
 
 This is a simple dot map that simply shows the locations of the cities. We can add labels by means of the geometric element text:
 
@@ -499,7 +499,7 @@ ggplot(data = Cities,
   geom_text(aes(label = Name))
 ```
 
-<img src="02-Basic-Operations-and-Data-Structures_files/figure-html/ch02-symbol-map-with-labels-1.png" width="672" />
+<img src="02-Basic-Operations-and-Data-Structures_files/figure-html/ch02-symbol-map-with-labels-1.png" alt="" width="672" />
 
 The dot map above tells us the location of the cities in our dataframe and their name. We can include more information in the plot in different ways. For example, a _proportional symbol map_ changes the size of the symbols (the points) to add information to the plot. To create a proportional symbol map, we add to the aesthetics the instruction to use some variable for the size of the symbols:
 
@@ -512,7 +512,7 @@ ggplot(data = Cities,
   geom_text(aes(label = Name))
 ```
 
-<img src="02-Basic-Operations-and-Data-Structures_files/figure-html/ch02-symbol-map-with-sized-symbols-1.png" width="672" />
+<img src="02-Basic-Operations-and-Data-Structures_files/figure-html/ch02-symbol-map-with-sized-symbols-1.png" alt="" width="672" />
 
 Furthermore, we can fix the position of the labels by adding a vertical justification to the text (`vjust`), and to avoid the text from being cut we can also expand the limits of the plot (`expand_limits()`):
 
@@ -526,7 +526,7 @@ ggplot(data = Cities,
                 y = c(43.2, 43.7))
 ```
 
-<img src="02-Basic-Operations-and-Data-Structures_files/figure-html/ch02-prettifying-the-symbol-map-1.png" width="672" />
+<img src="02-Basic-Operations-and-Data-Structures_files/figure-html/ch02-prettifying-the-symbol-map-1.png" alt="" width="672" />
 
 The example above has guided you in the creation of a relatively simple proportional symbols map! You can see that creating a plot is simply a matter of instructing `R` (through `ggplot2`) to complete a series of instructions:
 
@@ -568,7 +568,7 @@ And, these are some figures created using `R` by talented people around the worl
 
 
 <div class="figure">
-<img src="02-Figure-5.png" alt="\label{fig:visualization-example-5} Example of visualization: Where the turtles are" width="334" />
+<img src="02-Figure-5.png" alt="\label{fig:visualization-example-5} Example of visualization: Where the turtles are" width="338" />
 <p class="caption">(\#fig:ch02-visualization-example-5)\label{fig:visualization-example-5} Example of visualization: Where the turtles are</p>
 </div>
 
@@ -582,7 +582,7 @@ And, these are some figures created using `R` by talented people around the worl
 
 
 <div class="figure">
-<img src="02-Figure-7.png" alt="\label{fig:visualization-example-7} Example of visualization: Temperature and precipitation in Brazil" width="334" />
+<img src="02-Figure-7.png" alt="\label{fig:visualization-example-7} Example of visualization: Temperature and precipitation in Brazil" width="338" />
 <p class="caption">(\#fig:ch02-visualization-example-7)\label{fig:visualization-example-7} Example of visualization: Temperature and precipitation in Brazil</p>
 </div>
 

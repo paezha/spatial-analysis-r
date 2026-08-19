@@ -40,19 +40,6 @@ Load the libraries you will use in this activity. In addition to `tidyverse`, yo
 
 ``` r
 library(isdas) # Companion Package for Book An Introduction to Spatial Data Analysis and Statistics
-```
-
-```
-## Warning: replacing previous import 'dplyr::lag' by 'stats::lag' when loading
-## 'isdas'
-```
-
-```
-## Warning: replacing previous import 'plotly::filter' by 'stats::filter' when
-## loading 'isdas'
-```
-
-``` r
 library(sf) # Simple Features for R
 library(spatstat) # Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests
 library(tidyverse) # Easily Install and Load the 'Tidyverse'
@@ -100,7 +87,7 @@ ggplot() +
   coord_sf()
 ```
 
-<img src="10-Activity-Point-Pattern-Analysis-I_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="10-Activity-Point-Pattern-Analysis-I_files/figure-html/unnamed-chunk-6-1.png" alt="" width="672" />
 
 As discussed in the preceding chapter, the package `spatstat` offers a very rich collection of tools to do point pattern analysis. To convert the three sets of events (i.e., the fast food establishments, gas stands, and Paez Mart) into `ppp` objects we first must define a region or _window_. To do this we take the `sf` and convert to an `owin` (a window object) for use with the package `spatstat` (this is done via `SpatialPolygons`, hence `as(x, "Spatial")`:
 
@@ -139,7 +126,7 @@ You can also plot the results of the `quadratcount()` function!
 plot(q_count)
 ```
 
-<img src="10-Activity-Point-Pattern-Analysis-I_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<img src="10-Activity-Point-Pattern-Analysis-I_files/figure-html/unnamed-chunk-10-1.png" alt="" width="672" />
 
 A useful function in the `spatstat` package is `quadrat.test`. This function implements a statistical test that compares the empirical distribution of events by quadrats to the distribution of events as expected under the hypothesis that the underlying process is _random_.
 
@@ -176,7 +163,7 @@ Try plotting the results of `quadrat.test`:
 plot(q_test)
 ```
 
-<img src="10-Activity-Point-Pattern-Analysis-I_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<img src="10-Activity-Point-Pattern-Analysis-I_files/figure-html/unnamed-chunk-12-1.png" alt="" width="672" />
 
 Now that you have seen how to do some analysis using quadrats, you are ready for the next activity.
 
